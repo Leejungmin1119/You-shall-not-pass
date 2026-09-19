@@ -13,33 +13,33 @@ MonoBehaviour:
   m_Name: "\uC774\uB3D9\uC2A4\uD0EF"
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementStats
   MoveThreshold: 0.25
-  GroundAcceleration: 5
-  GroundDeceleration: 20
-  AirAcceleration: 5
-  AirDeceleration: 5
-  WallJumpMoveAcceleration: 5
-  WallJumpMoveDeceleration: 5
+  GroundAcceleration: 8
+  GroundDeceleration: 15
+  AirAcceleration: 7
+  AirDeceleration: 10
+  WallJumpMoveAcceleration: 7
+  WallJumpMoveDeceleration: 10
   MaxRunSpeed: 1000
   GroundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   MaxSlopeAngle: 70
-  JumpHeight: 6.5
+  JumpHeight: 3
   JumpHeightCompensationFactor: 1.054
-  TimeTillJumpApex: 0.35
-  GravityOnReleaseMultiplier: 2
-  MaxFallSpeed: 26
+  TimeTillJumpApex: 0.5
+  GravityOnReleaseMultiplier: 2.5
+  MaxFallSpeed: 9
   TimeForUpwardsCancel: 0.027
   ApexThreshold: 0.97
-  ApexHangTime: 0.075
+  ApexHangTime: 0.01
   JumpBufferTime: 0.125
   JumpCoyoteTime: 0.1
   MinAngleForWallSlide: 85
   MaxAngleForWallSlide: 95
-  WallJumpDirection: {x: -20, y: 6.5}
-  WallJumpCoyoteTime: 0.125
-  WallJumpCancleTime: 0.15
-  WallJumpGravityOnReleaseMultiplier: 1
-  DebugShowIsGrounded: 0
-  DebugShowWallHit: 0
+  WallJumpDirection: {x: -10, y: 4}
+  WallJumpCoyoteTime: 0.02
+  WallJumpCancleTime: 0.1
+  WallJumpGravityOnReleaseMultiplier: 2
+  DebugShowIsGrounded: 1
+  DebugShowWallHit: 1
   ExtraRayDebugDistance: 0.25
