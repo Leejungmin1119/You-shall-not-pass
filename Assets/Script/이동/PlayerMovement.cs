@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         Controller = GetComponent<MovementController>();
         _input = new PlayerInputAdapter();
+        //
     }
 
     private void Update()

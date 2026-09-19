@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Movement")]
 public class PlayerMovementStats : ScriptableObject
 {
+    //
     [Header("Walk")]
     [Range(0f, 1f)] public float MoveThreshold = 0.25f;
     [Range(0.25f, 50f)] public float GroundAcceleration = 5f;
