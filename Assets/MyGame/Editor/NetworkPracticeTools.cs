@@ -22,7 +22,11 @@ public static class NetworkPracticeTools
     {
         var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/MyGame/Prefabs/NetworkPlatformPlayer.prefab");
         if (prefab == null || prefab.GetComponent<NetworkIdentity>() == null ||
-            prefab.GetComponent<NetworkPlayerController>() == null || prefab.GetComponent<PlayerMovement>() == null)
+            prefab.GetComponent<NetworkPlayerController>() == null ||
+            prefab.GetComponent<NetworkPlayerScore>() == null ||
+            prefab.GetComponent<NetworkPlayerEffects>() == null ||
+            prefab.GetComponent<NetworkPlayerBombSpawner>() == null ||
+            prefab.GetComponent<PlayerMovement>() == null)
             throw new Exception("Network platform player components missing.");
         if (prefab.GetComponent<InputManager>() != null)
             throw new Exception("Network player must use the scene input manager.");
