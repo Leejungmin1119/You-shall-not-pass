@@ -28,3 +28,31 @@
 Tools → Network Practice → Validate Setup에서 연결 설정을 검사할 수 있습니다. 빌드 씬 목록의 첫 번째 씬으로 NetworkPlatform을 등록했습니다. 기존 SampleScene도 목록에 유지했습니다.
 
 검증: 게임 코드 Unity 컴파일, 편집기 도구 별도 C# 컴파일, 씬/프리팹 GUID 연결 검사 통과. 실제 Host/Client 실행 검증은 자동 검증 환경의 IL 후처리 프로세스 연결 문제로 완료하지 못했습니다.
+
+## 9~10일차 기능
+
+- H: 서버에 자기 캐릭터 피해 20 요청 (연습용)
+- 체력은 SyncVar로 공유하고 HP 텍스트에 표시
+- 체력 0: 플랫폼 이동의 MovementLocked 활성화 및 속도 0
+- F: 준비 상태 전환, Ready/Not Ready 텍스트 동기화
+- Host에서 Enter: 정확히 4명이 접속하고 모두 준비했는지 검사
+- 최대 접속 수는 4명, Enter는 시작 가능 로그만 출력
+- 씬 전환과 부활은 아직 구현하지 않음
+
+이동은 기존 ClientToServer 방식이며 사망 이동 제한도 정상 클라이언트의 동작 제한이다. 서버의 비정상 이동 검증은 별도 구현이 필요하다.
+
+## 11일차: 4인 로비와 씬 전환
+
+빌드는 LobbyScene에서 시작합니다. 로비 화면은 CapstoneLobbyUI가 Play 시 생성하는 임시 UI이며 영어로 표시합니다.
+- Create room: Host 시작. Join room: 입력한 LAN IP로 Client 접속 (로컬 테스트는 localhost).
+- 4개 슬롯은 실제 접속 플레이어와 동기화된 준비 상태를 표시합니다.
+- Ready up 또는 F: 준비 상태 변경.
+- 정확히 4명이 모두 준비하면 Host의 Start game 버튼 / Enter로 GameScene에 함께 이동.
+- LobbyScene의 NetworkManager는 유지되며 GameScene에는 중복 매니저가 없습니다.
+- 로비에서는 플레이어 이동과 물리 계산을 멈춥니다.
+- Leave / Cancel 또는 게임의 Leave game으로 접속 종료. Offline Scene 설정으로 LobbyScene에 복귀합니다.
+- NetworkPlatform / NetworkPractice는 기존 실습용으로 남겨둡니다.
+
+검증 시 최신 빌드 4개(Host 포함)로 접속해 준비 전 시작 차단, 준비 표시, 전원 씬 이동, 접속 종료를 확인하세요.
+
+이번 변경 검증: Unity의 기존 참조 목록을 사용한 C# 컴파일(경고 없음), 씬 내부 참조 검사 통과. Unity 자동 실행은 소켓 권한 제한으로 중단되어 화면 렌더링과 실제 4인 접속은 미검증입니다.

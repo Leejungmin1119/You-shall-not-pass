@@ -10,10 +10,12 @@ public class NetworkPlayerController : NetworkBehaviour
 
     private Rigidbody2D body;
     private PlayerMovement platformMovement;
+    private NetworkPlayerHealth playerHealth;
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        playerHealth = GetComponent<NetworkPlayerHealth>();
         body.simulated = false;
         platformMovement = GetComponent<PlayerMovement>();
         if (platformMovement != null) platformMovement.enabled = false;
@@ -22,13 +24,21 @@ public class NetworkPlayerController : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
-        body.simulated = true;
-        if (platformMovement != null) platformMovement.enabled = true;
+        bool inLobby = NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby;
+        body.simulated = !inLobby;
+        if (platformMovement != null) platformMovement.enabled = !inLobby;
     }
 
     private void FixedUpdate()
     {
         if (!isLocalPlayer) return;
+        if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby) return;
+        if (playerHealth != null && playerHealth.IsDead)
+        {
+            if (platformMovement != null) platformMovement.MovementLocked = true;
+            body.linearVelocity = Vector2.zero;
+            return;
+        }
 
         if (platformMovement != null || Keyboard.current == null) return;
         var keyboard = Keyboard.current;

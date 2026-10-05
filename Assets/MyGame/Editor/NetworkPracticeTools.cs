@@ -17,6 +17,13 @@ public static class NetworkPracticeTools
             EditorSceneManager.OpenScene(ScenePath);
     }
 
+    [MenuItem("Tools/Network Practice/Open Lobby Scene")]
+    public static void OpenLobbyScene()
+    {
+        if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            EditorSceneManager.OpenScene("Assets/MyGame/Scenes/LobbyScene.unity");
+    }
+
     [MenuItem("Tools/Network Practice/Validate Setup")]
     public static void Validate()
     {

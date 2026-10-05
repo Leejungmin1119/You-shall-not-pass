@@ -18,6 +18,7 @@ public class NetworkPlayerBombSpawner : NetworkBehaviour
     private void Update()
     {
         if (!isLocalPlayer || Keyboard.current == null) return;
+        if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby) return;
 
         if (Keyboard.current.bKey.wasPressedThisFrame)
         {

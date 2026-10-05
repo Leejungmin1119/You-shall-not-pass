@@ -38,6 +38,7 @@ public class NetworkPlayerEffects : NetworkBehaviour
     private void Update()
     {
         if (!isLocalPlayer || Keyboard.current == null) return;
+        if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby) return;
 
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
