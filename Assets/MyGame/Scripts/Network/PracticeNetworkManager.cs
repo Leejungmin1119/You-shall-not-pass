@@ -47,11 +47,21 @@ public class PracticeNetworkManager : NetworkManager
         if (networkSceneName == gameSceneName || NetworkServer.isLoadingScene) return;
         if (!CanStartGame())
         {
-            Debug.Log("Server: Exactly 4 players must connect and all must be ready.");
+            GetComponent<CapstoneLobbyUI>()?.ShowNotice(
+                "READY UP!", "Waiting for players and everyone to be ready.", false);
             return;
         }
-        Debug.Log("Server: Moving all players to GameScene.");
+
         ServerChangeScene(gameSceneName);
+    }
+
+    // 각 클라이언트가 게임 씬 로딩을 마친 뒤 자기 화면에 표시한다.
+    public override void OnClientSceneChanged()
+    {
+        base.OnClientSceneChanged();
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == gameSceneName)
+            GetComponent<CapstoneLobbyUI>()?.ShowNotice(
+                "GAME START!", "You shall not pass. Good luck!", true);
     }
 
     public override void Update()
