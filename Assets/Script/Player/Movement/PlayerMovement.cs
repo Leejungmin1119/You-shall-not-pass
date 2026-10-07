@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
         _input.Read();
 
-        Debug.Log(Controller.IsGrounded());
+        //Debug.Log(Controller.IsGrounded());
     }
 
     private void FixedUpdate()
@@ -94,6 +94,32 @@ public class PlayerMovement : MonoBehaviour
 
         _rb.linearVelocity = Velocity;
         _input.Clear();
+    }
+
+    /// <summary>
+    /// 부활 위치에서 속도, 점프 상태와 입력 버퍼를 초기화한다.
+    /// </summary>
+    public void ResetMovement()
+    {
+        Velocity = Vector2.zero;
+        _rb.linearVelocity = Vector2.zero;
+        _rb.angularVelocity = 0f;
+        ResetJumpValues();
+        ResetWallJumpValues();
+        _fastFallReleaseSpeed = 0f;
+        _apexPoint = 0f;
+        _timePastApexThreshold = 0f;
+        _jumpBufferTimer = 0f;
+        _jumpReleasedDuringBuffer = false;
+        _coyoteTimer = 0f;
+        _wallJumpCoyoteTimer = 0f;
+        WallJumpCancleTime = -1f;
+        _wallJumpFastFallReleaseSpeed = 0f;
+        _wallJumpApexPoint = 0f;
+        _timePastWallJumpApexThreshold = 0f;
+        _lastWallDir = 0;
+        _input.Clear();
+        Controller.ResetSensors();
     }
 
     private void ClampVelocity()
@@ -272,7 +298,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (IsJumping)
         {
-            Debug.Log("실행중");
+            //Debug.Log("실행중");
             if (Velocity.y >= 0f)
             {
                 _apexPoint = Mathf.InverseLerp(moveStats.InitialJumpVelocity, 0f, Velocity.y);
@@ -305,7 +331,7 @@ public class PlayerMovement : MonoBehaviour
         // 빠른 하강(컷오프)
         if (_isFastFalling)
         {
-            Debug.Log("실행중2");
+            //Debug.Log("실행중2");
             if (_fastFallTime >= moveStats.TimeForUpwardsCancel)
             {
                 Velocity.y += moveStats.Gravity * moveStats.GravityOnReleaseMultiplier * timeStep;
@@ -426,7 +452,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 Velocity.y += moveStats.WallJumpGravity *
                               moveStats.WallJumpGravityOnReleaseMultiplier *
-                              timeStep;
+                            timeStep;
             }
             else
             {

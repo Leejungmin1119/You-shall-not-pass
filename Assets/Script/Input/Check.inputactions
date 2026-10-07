@@ -194,61 +194,6 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Keyboard Arrows",
-                    "id": "160557b2-d930-4793-a26b-b0d81ce98a47",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "e33550fa-ea21-449c-a8dd-b684b27442d8",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "37b174ec-518b-4ddb-b948-a58bbfc415d8",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "fbe374bb-fc22-4cb6-9dae-ac500267bdd0",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "bbae0b7d-eab7-4b1f-85fd-d9f868d2b9a7",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "a7028ca2-6519-4c7c-8fc8-86531848ccde",
                     "path": "<Keyboard>/space",
@@ -967,6 +912,78 @@
                     "processors": "",
                     "groups": "",
                     "action": "CutsceneAdvance",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Camera",
+            "id": "e53336a5-ab48-49e5-8aa4-f345f09ee3ab",
+            "actions": [
+                {
+                    "name": "Pan",
+                    "type": "Value",
+                    "id": "a7ba13e4-6458-45e3-8e65-7e38d3216ceb",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
+                    "priority": 0
+                },
+                {
+                    "name": "ToggleMapView",
+                    "type": "Button",
+                    "id": "1d4737d0-cefb-42f1-a654-be5561ab5104",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "1DAxis",
+                    "id": "00e0a7a7-9b09-4ac6-b175-005f2ef66ddd",
+                    "path": "1DAxis(whichSideWins=0)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Negative",
+                    "id": "ee59e26f-5660-4408-a83c-e2b98fb1b6bc",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "6c38cb6b-9b0b-46f6-bccb-a586af0eac44",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pan",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "bee94689-b420-4248-890f-befa8ecdbc60",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleMapView",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

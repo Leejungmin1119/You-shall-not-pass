@@ -64,6 +64,16 @@ public class MovementController : MonoBehaviour
         CalculateRaySpacing();
     }
 
+    /// <summary>
+    /// 부활 전 접촉 기록을 지우고 현재 위치에서 지면과 벽을 다시 확인한다.
+    /// </summary>
+    public void ResetSensors()
+    {
+        _internalState = default;
+        CalculateRaySpacing();
+        PollSensors(Vector2.zero);
+    }
+
     public void PollSensors(Vector2 moveDelta)
     {
         _internalState.Reset();

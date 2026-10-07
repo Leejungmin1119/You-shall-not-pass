@@ -28,6 +28,7 @@ public class InputManager : MonoBehaviour
     public static bool InventoryWasPressed;
     public static bool PlayerDetailWasPressed;
     public static bool DeleteSaveWasPressed;
+    public static bool MapViewWasPressed;
 
     // 기타 상호작용 키 입력
     public static bool InteractionWasPressed;
@@ -52,13 +53,13 @@ public class InputManager : MonoBehaviour
     private string interactionOverridePath;
     private bool hasInteractionBindingCache;
 
-
     //UI 창 관련
     private InputAction menuOpen;
     private InputAction menuclose;
     private InputAction Inventory;
     private InputAction Playerdetail;
     private InputAction deleteSave;
+    private InputAction toggleMapView;
 
     private void Awake()
     {
@@ -83,11 +84,29 @@ public class InputManager : MonoBehaviour
         Inventory = PlayerInput.actions.FindAction("Inventory");
         Playerdetail =PlayerInput.actions.FindAction("PlayerDetail");
         deleteSave = PlayerInput.actions.FindAction("DeleteSave", true);
+        toggleMapView = PlayerInput.actions.FindAction("Camera/ToggleMapView", true);
 
         // Player/UI 맵의 상호작용은 이름을 분리해 현재 맵과 무관하게 확실히 찾습니다.
         Interaction = PlayerInput.actions.FindActionMap("Player", true).FindAction("Interaction", true);
         cutsceneAdvance = PlayerInput.actions.FindActionMap("UI", true).FindAction("CutsceneAdvance", true);
         SynchronizeCutsceneAdvanceBinding();
+    }
+
+    /// <summary>
+    /// 플레이어의 기본 입력 맵과 별도로 전체 맵 보기 입력을 활성화합니다.
+    /// </summary>
+    private void OnEnable()
+    {
+        toggleMapView?.Enable();
+    }
+
+    /// <summary>
+    /// 전체 맵 보기 입력을 해제하고 해당 프레임의 입력 상태를 초기화합니다.
+    /// </summary>
+    private void OnDisable()
+    {
+        toggleMapView?.Disable();
+        MapViewWasPressed = false;
     }
 
     private void Update()
@@ -121,6 +140,7 @@ public class InputManager : MonoBehaviour
         InventoryWasPressed = Inventory.WasPressedThisFrame();
         PlayerDetailWasPressed = Playerdetail.WasPressedThisFrame();
         DeleteSaveWasPressed = deleteSave.WasPressedThisFrame();
+        MapViewWasPressed = toggleMapView.WasPressedThisFrame();
         #endregion
 
         // 리바인드 UI가 적용한 오버라이드를 감지해 컷씬 진행 키에 한 번만 반영합니다.
@@ -152,6 +172,7 @@ public class InputManager : MonoBehaviour
         InventoryWasPressed = false;
         PlayerDetailWasPressed = false;
         DeleteSaveWasPressed = false;
+        MapViewWasPressed = false;
 
         InteractionWasPressed = false;
         CutsceneAdvanceWasPressed = false;
