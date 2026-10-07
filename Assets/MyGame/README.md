@@ -72,3 +72,17 @@ LobbyScene의 Play 화면을 금속 바닥, 화물 상자, 환기구와 별이 �
 기존 ClientToServer NetworkTransform 위치를 UI 캐릭터 표시에도 사용합니다.
 로비 물리는 꺼져 있고 게임 씬에서는 기존 플랫폼 이동을 사용합니다.
 색은 netId 기반이며 현재 2인 시작 조건은 유지했습니다. 장식 상자는 이동을 막지 않습니다.
+
+## 12~13일차: 룸 플레이어 분리와 이름 입력
+
+LobbyScene은 CapstoneRoomManager(NetworkRoomManager 상속)를 사용합니다.
+Room Player Prefab은 CapstoneRoomPlayer, 게임 Player Prefab은 NetworkPlatformPlayer입니다.
+로비 오른쪽 PLAYER NAME에 입력하고 Save name을 누르면 서버가 이름을 검증·저장합니다.
+공백 이름은 거절하고 제어 문자와 TMP 태그 문자를 제거하며 최대 16자로 제한합니다.
+승인된 이름은 로비에서 공유되고 게임 시작 시 OnRoomServerSceneLoadedForPlayer에서 NetworkPlayerProfile로 복사됩니다.
+게임의 이름·점수 표시는 NetworkPlayerScore가 함께 갱신합니다.
+이름 변경 시 준비를 해제합니다. 텍스트 입력 중 WASD/F/Enter 게임 입력은 처리하지 않습니다. Esc로 입력 포커스를 해제할 수 있습니다.
+Min Players=2(현재 테스트 설정), Max Connections=4. 전원 준비 후 Host가 Launch game/Enter로 시작합니다.
+기존 PracticeNetworkManager와 연습 씬은 유지합니다.
+
+검증: 이번 이름 기능의 C# 컴파일과 씬·프리팹 내부 참조 검사 통과. Unity 창 접근 시간 초과로 실제 Host/Client 이름 동기화·씬 전환은 미검증입니다. 최신 빌드로 이름 저장, 양쪽 로비 표시, 게임 이름표 유지, 입력 중 단축키 차단을 확인하세요.

@@ -281,9 +281,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 424522510}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ec6fd914954a48a797606260b996e8c, type: 3}
+  m_Script: {fileID: 11500000, guid: a0245ba92dea49e3aaa1c92b9ce4fe9c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PracticeNetworkManager
+  m_EditorClassIdentifier: Assembly-CSharp::CapstoneRoomManager
   dontDestroyOnLoad: 1
   runInBackground: 1
   headlessStartMode: 0
@@ -318,6 +318,11 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
+  showRoomGUI: 0
+  minPlayers: 2
+  roomPlayerPrefab: {fileID: 8300000000000000100, guid: 4b6d7a346b6e4c4aaefb1c5373128614, type: 3}
+  RoomScene: Assets/MyGame/Scenes/LobbyScene.unity
+  GameplayScene: Assets/MyGame/Scenes/GameScene.unity
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

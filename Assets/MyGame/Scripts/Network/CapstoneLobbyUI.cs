@@ -5,8 +5,11 @@ using UnityEngine;
 // 우주선 대기실. 실제 네트워크 플레이어의 위치와 준비 상태를 화면에 표시한다.
 public class CapstoneLobbyUI : MonoBehaviour
 {
-    private PracticeNetworkManager manager;
+    private CapstoneRoomManager manager;
     private string address = "localhost";
+    private string requestedName = "";
+    private uint editingPlayerId;
+    public bool IsEditingText { get; private set; }
     private GUIStyle title, heading, text, small, button, input;
     [Header("중앙 알림")]
     [SerializeField] private float noticeDuration = 2.4f;
@@ -52,7 +55,7 @@ public class CapstoneLobbyUI : MonoBehaviour
 
     private void Awake()
     {
-        manager = GetComponent<PracticeNetworkManager>();
+        manager = GetComponent<CapstoneRoomManager>();
         address = manager.networkAddress;
     }
 
@@ -90,6 +93,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         GUI.enabled = enabled;
         bool clicked = GUI.Button(rect, label, button);
         GUI.enabled = true;
+        if (clicked) { GUI.FocusControl(null); IsEditingText = false; }
         return clicked;
     }
 
@@ -130,7 +134,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         GUI.color = old;
     }
 
-    private void DrawCrew(float x, float y, uint id, bool ready, bool local, bool preview = false)
+    private void DrawCrew(float x, float y, uint id, bool ready, bool local, bool preview = false, string playerName = null)
     {
         Color color = CrewColors[(int)(id % 4)];
         // 작은 정비 로봇: 넓은 어깨, 두 눈의 바이저, 안테나.
@@ -146,7 +150,13 @@ public class CapstoneLobbyUI : MonoBehaviour
         Box(new Rect(x - 2, y - 45, 4, 10), color);
         Rounded(new Rect(x - 5, y - 51, 10, 10), ready ? Accent : color, 5);
         if (preview) return;
-        GUI.Label(new Rect(x - 100, y - 84, 200, 28), "P" + id + (local ? " / YOU" : ""), centered);
+        string displayName = (string.IsNullOrEmpty(playerName) ? "P" + id : playerName) + (local ? " / YOU" : "");
+        centered.fontSize = 17;
+        float nameWidth = centered.CalcSize(new GUIContent(displayName)).x;
+        if (nameWidth > 190) centered.fontSize = Mathf.Clamp((int)(17 * 190 / nameWidth), 10, 17);
+        centered.wordWrap = false;
+        GUI.Label(new Rect(x - 100, y - 84, 200, 28), displayName, centered);
+        centered.fontSize = 17;
         badge.normal.textColor = ready ? Accent : new Color(1f, .75f, .4f);
         GUI.Label(new Rect(x - 80, y + 44, 160, 24), ready ? "READY" : "WAITING", badge);
     }
@@ -199,6 +209,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         GUI.matrix = Matrix4x4.Scale(new Vector3(Screen.width / 1280f, Screen.height / 720f, 1));
         if (!manager.IsLobby)
         {
+            IsEditingText = false;
             if (Action(new Rect(1100, 20, 160, 40), "Leave game")) Leave();
             DrawNotice();
             GUI.matrix = oldMatrix;
@@ -218,13 +229,13 @@ public class CapstoneLobbyUI : MonoBehaviour
         GUI.Label(new Rect(78, 108, 780, 32), "CREW QUARTERS     /     Walk around. Meet your team. Ready up.", small);
 
         var players = NetworkClient.spawned.Values.Where(n => n != null)
-            .Select(n => n.GetComponent<NetworkPlayerLobby>()).Where(n => n != null)
+            .Select(n => n.GetComponent<CapstoneRoomPlayer>()).Where(n => n != null)
             .OrderBy(n => n.netId).ToArray();
         foreach (var player in players.OrderByDescending(n => n.transform.position.y))
         {
             Vector3 position = player.transform.position;
             DrawCrew(500 + Mathf.Clamp(position.x, -5, 5) * 64,
-                390 - Mathf.Clamp(position.y, -2, 2) * 47, player.netId, player.IsReady, player.isLocalPlayer);
+                390 - Mathf.Clamp(position.y, -2, 2) * 47, player.netId, player.IsReady, player.isLocalPlayer, false, player.PlayerName);
         }
         if (players.Length == 0)
         {
@@ -235,13 +246,14 @@ public class CapstoneLobbyUI : MonoBehaviour
 
         bool connected = NetworkClient.isConnected;
         bool active = NetworkClient.active || NetworkServer.active;
-        Rounded(new Rect(948, 155, 275, 410), Panel, 18);
+        Rounded(new Rect(948, 155, 275, 528), Panel, 18);
         GUI.Label(new Rect(972, 179, 232, 36), "BOARDING", heading);
         GUI.Label(new Rect(972, 226, 232, 48), connected
             ? (NetworkServer.active ? "HOST / ROOM OPEN" : "CONNECTED")
             : active ? "Connecting..." : "Your crew is waiting.", text);
         GUI.Label(new Rect(972, 292, 220, 24), "HOST IP ADDRESS", small);
         GUI.enabled = !active;
+        GUI.SetNextControlName("HostAddress");
         address = GUI.TextField(new Rect(972, 323, 226, 44), address, input);
         GUI.enabled = true;
         if (Action(new Rect(972, 387, 226, 43), "Create room", !active)) manager.StartHost();
@@ -253,10 +265,30 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (Action(new Rect(972, 502, 226, 40), "Leave / Cancel", active)) Leave();
         int ready = players.Count(n => n.IsReady);
         var local = players.FirstOrDefault(n => n.isLocalPlayer);
+        if (local != null && editingPlayerId != local.netId)
+        {
+            editingPlayerId = local.netId;
+            requestedName = local.PlayerName;
+        }
+        if (local == null) editingPlayerId = 0;
+        GUI.Label(new Rect(972, 564, 226, 22), "PLAYER NAME / 1-16 CHARACTERS", small);
+        GUI.enabled = local != null;
+        GUI.SetNextControlName("PlayerName");
+        requestedName = GUI.TextField(new Rect(972, 591, 226, 38), requestedName, 16, input);
+        GUI.enabled = true;
+        if (Action(new Rect(972, 640, 226, 30), "Save name", local != null))
+            local.RequestName(requestedName);
+        string focused = GUI.GetNameOfFocusedControl();
+        IsEditingText = focused == "PlayerName" || focused == "HostAddress";
+        if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Escape)
+        {
+            GUI.FocusControl(null);
+            IsEditingText = false;
+        }
         if (Action(new Rect(78, 586, 393, 57), local != null && local.IsReady ? "Cancel ready  [ F ]" : "Ready up  [ F ]", connected && local != null)) local.ToggleReady();
         if (Action(new Rect(500, 586, 397, 57), "Launch game  [ ENTER ]", NetworkServer.active && connected && manager.CanStartGame())) manager.TryStartGame();
-        GUI.Label(new Rect(78, 668, 805, 29), $"WASD / ARROWS : MOVE     |     {players.Length} / 4 ON BOARD     |     {ready} READY", small);
-        GUI.Label(new Rect(963, 596, 257, 62), "All players ready?\nThe host launches the game.", text);
+        GUI.Label(new Rect(78, 668, 805, 29), $"WASD / ARROWS : MOVE     |     {players.Length} / 4 ON BOARD     |     {ready} READY / MIN {manager.minPlayers}", small);
+
         DrawNotice();
         GUI.matrix = oldMatrix;
     }
