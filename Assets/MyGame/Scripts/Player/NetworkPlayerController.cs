@@ -24,7 +24,8 @@ public class NetworkPlayerController : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
-        bool inLobby = NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby;
+        bool inLobby = (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
+            || (NetworkManager.singleton is CapstoneRoomManager roomManager && roomManager.IsLobby);
         body.simulated = !inLobby;
         if (platformMovement != null) platformMovement.enabled = !inLobby;
         if (inLobby)
@@ -35,6 +36,7 @@ public class NetworkPlayerController : NetworkBehaviour
     // 기존 ClientToServer NetworkTransform이 위치를 다른 접속자에게 전달한다.
     private void MoveInLobby()
     {
+        if (NetworkManager.singleton is CapstoneRoomManager manager && manager.IsEditingText) return;
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
         Vector2 input = new Vector2(
@@ -52,7 +54,8 @@ public class NetworkPlayerController : NetworkBehaviour
     private void FixedUpdate()
     {
         if (!isLocalPlayer) return;
-        if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
+        if ((NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
+            || (NetworkManager.singleton is CapstoneRoomManager roomManager && roomManager.IsLobby))
         {
             MoveInLobby();
             return;

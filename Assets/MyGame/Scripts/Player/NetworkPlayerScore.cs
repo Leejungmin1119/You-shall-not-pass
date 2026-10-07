@@ -29,6 +29,7 @@ public class NetworkPlayerScore : NetworkBehaviour
     {
         if (!isLocalPlayer || Keyboard.current == null) return;
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby) return;
+        if (NetworkManager.singleton is CapstoneRoomManager roomManager && roomManager.IsLobby) return;
 
         bool scoreKeyPressed = platformMovement != null
             ? Keyboard.current.pKey.wasPressedThisFrame
@@ -52,9 +53,14 @@ public class NetworkPlayerScore : NetworkBehaviour
         UpdatePlayerText();
     }
 
+    public void RefreshDisplay() => UpdatePlayerText();
+
     private void UpdatePlayerText()
     {
         if (nameText == null) return;
-        nameText.text = $"Player {netId}\nScore: {score}";
+        var profile = GetComponent<NetworkPlayerProfile>();
+        string displayName = profile != null ? profile.PlayerName : $"Player {netId}";
+        nameText.richText = false;
+        nameText.text = $"{displayName}\nScore: {score}";
     }
 }

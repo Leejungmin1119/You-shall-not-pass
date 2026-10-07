@@ -39,6 +39,7 @@ public class NetworkPlayerEffects : NetworkBehaviour
     {
         if (!isLocalPlayer || Keyboard.current == null) return;
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby) return;
+        if (NetworkManager.singleton is CapstoneRoomManager roomManager && roomManager.IsLobby) return;
 
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
