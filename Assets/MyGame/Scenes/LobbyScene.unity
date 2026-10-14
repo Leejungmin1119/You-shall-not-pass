@@ -204,6 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 424522514}
   - component: {fileID: 424522512}
+  - component: {fileID: 424522518}
   - component: {fileID: 424522516}
   - component: {fileID: 424522515}
   - component: {fileID: 424522517}
@@ -292,7 +293,7 @@ MonoBehaviour:
   offlineScene: Assets/MyGame/Scenes/LobbyScene.unity
   onlineScene: 
   offlineSceneLoadDelay: 0
-  transport: {fileID: 424522512}
+  transport: {fileID: 424522518}
   networkAddress: localhost
   maxConnections: 4
   disconnectInactiveConnections: 0
@@ -954,6 +955,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &424522518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424522510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc83d60ca8e1488ebbb43c2c481b59a6, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PasswordRelayTransport
+  relayUrl:
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
