@@ -6,7 +6,9 @@ using UnityEngine;
 public class CapstoneLobbyUI : MonoBehaviour
 {
     private CapstoneRoomManager manager;
-    private string address = "localhost";
+    private string roomPassword = "";
+    private bool localWifi = true;
+    public static string PendingConnectionError;
     private string requestedName = "";
     private uint editingPlayerId;
     public bool IsEditingText { get; private set; }
@@ -56,7 +58,11 @@ public class CapstoneLobbyUI : MonoBehaviour
     private void Awake()
     {
         manager = GetComponent<CapstoneRoomManager>();
-        address = manager.networkAddress;
+        if (!string.IsNullOrEmpty(PendingConnectionError))
+        {
+            ShowNotice("ROOM CONNECTION", PendingConnectionError, false);
+            PendingConnectionError = null;
+        }
     }
 
     private GUIStyle Style(int size, Color color, FontStyle weight = FontStyle.Normal)
@@ -99,7 +105,8 @@ public class CapstoneLobbyUI : MonoBehaviour
 
     private void Leave()
     {
-        if (NetworkServer.active && NetworkClient.active) manager.StopHost();
+        if (manager.Lan != null && manager.Lan.Searching) manager.Lan.Cancel();
+        else if (NetworkServer.active && NetworkClient.active) manager.StopHost();
         else if (NetworkClient.active) manager.StopClient();
         else if (NetworkServer.active) manager.StopServer();
     }
@@ -245,22 +252,33 @@ public class CapstoneLobbyUI : MonoBehaviour
         }
 
         bool connected = NetworkClient.isConnected;
-        bool active = NetworkClient.active || NetworkServer.active;
+        bool searching = manager.Lan != null && manager.Lan.Searching;
+        bool active = NetworkClient.active || NetworkServer.active || searching;
         Rounded(new Rect(948, 155, 275, 528), Panel, 18);
         GUI.Label(new Rect(972, 179, 232, 36), "BOARDING", heading);
         GUI.Label(new Rect(972, 226, 232, 48), connected
-            ? (NetworkServer.active ? "HOST / ROOM OPEN" : "CONNECTED")
-            : active ? "Connecting..." : "Your crew is waiting.", text);
-        GUI.Label(new Rect(972, 292, 220, 24), "HOST IP ADDRESS", small);
-        GUI.enabled = !active;
-        GUI.SetNextControlName("HostAddress");
-        address = GUI.TextField(new Rect(972, 323, 226, 44), address, input);
-        GUI.enabled = true;
-        if (Action(new Rect(972, 387, 226, 43), "Create room", !active)) manager.StartHost();
-        if (Action(new Rect(972, 441, 226, 43), "Join room", !active && !string.IsNullOrWhiteSpace(address)))
+            ? (NetworkServer.active ? (!(manager.transport is PasswordRelayTransport) || ((PasswordRelayTransport)manager.transport).RoomOpen ? "HOST / ROOM OPEN" : "Opening room...") : "CONNECTED")
+            : searching ? "Searching Wi-Fi rooms..." : active ? "Connecting..." : "Your crew is waiting.", text);
+        if (Action(new Rect(972, 286, 107, 34), localWifi ? "Wi-Fi *" : "Wi-Fi", !active)) localWifi = true;
+        if (Action(new Rect(1091, 286, 107, 34), localWifi ? "Internet" : "Internet *", !active)) localWifi = false;
+        if (localWifi)
         {
-            manager.networkAddress = address.Trim();
-            manager.StartClient();
+            GUI.Label(new Rect(972, 330, 226, 55), "Same Wi-Fi.\nNo IP address needed.", small);
+        }
+        else
+        {
+            GUI.enabled = !active;
+            GUI.SetNextControlName("RoomPassword");
+            roomPassword = GUI.PasswordField(new Rect(972, 331, 226, 43), roomPassword, '*', 64, input);
+            GUI.enabled = true;
+        }
+        if (Action(new Rect(972, 387, 226, 43), "Create room", !active))
+        {
+            if (localWifi) manager.BeginLanRoom(true); else manager.BeginRoom(true, roomPassword);
+        }
+        if (Action(new Rect(972, 441, 226, 43), localWifi ? "Find & join room" : "Join room", !active && (localWifi || roomPassword.Length >= 8)))
+        {
+            if (localWifi) manager.BeginLanRoom(false); else manager.BeginRoom(false, roomPassword);
         }
         if (Action(new Rect(972, 502, 226, 40), "Leave / Cancel", active)) Leave();
         int ready = players.Count(n => n.IsReady);
@@ -279,7 +297,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (Action(new Rect(972, 640, 226, 30), "Save name", local != null))
             local.RequestName(requestedName);
         string focused = GUI.GetNameOfFocusedControl();
-        IsEditingText = focused == "PlayerName" || focused == "HostAddress";
+        IsEditingText = focused == "PlayerName" || focused == "RoomPassword";
         if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Escape)
         {
             GUI.FocusControl(null);
@@ -289,6 +307,15 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (Action(new Rect(500, 586, 397, 57), "Launch game  [ ENTER ]", NetworkServer.active && connected && manager.CanStartGame())) manager.TryStartGame();
         GUI.Label(new Rect(78, 668, 805, 29), $"WASD / ARROWS : MOVE     |     {players.Length} / 4 ON BOARD     |     {ready} READY / MIN {manager.minPlayers}", small);
 
+        if (searching && manager.Lan.Rooms.Length > 1)
+        {
+            var available = manager.Lan.Rooms;
+            Rounded(new Rect(280, 225, 620, 335), Panel, 16);
+            GUI.Label(new Rect(315, 245, 550, 38), "CHOOSE A WI-FI ROOM", heading);
+            for (int i = 0; i < Mathf.Min(available.Length, 5); i++)
+                if (Action(new Rect(315, 290 + i * 46, 550, 38), "Join Wi-Fi room " + (i + 1)))
+                    manager.Lan.Join(available[i]);
+        }
         DrawNotice();
         GUI.matrix = oldMatrix;
     }

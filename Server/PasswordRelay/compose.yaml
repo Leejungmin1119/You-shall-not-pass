@@ -1,0 +1,23 @@
+services:
+  relay:
+    build: .
+    restart: unless-stopped
+    expose:
+      - '8080'
+  proxy:
+    image: caddy:2
+    restart: unless-stopped
+    environment:
+      RELAY_DOMAIN: ${RELAY_DOMAIN:?Set your public domain in .env}
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - relay
+volumes:
+  caddy_data:
+  caddy_config:
