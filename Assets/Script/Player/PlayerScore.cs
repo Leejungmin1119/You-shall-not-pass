@@ -1,3 +1,4 @@
+using System;
 using Mirror;
 using UnityEngine;
 
@@ -8,8 +9,20 @@ public sealed class PlayerScore : NetworkBehaviour
 {
     [SerializeField, Min(1)] private int WinScore = 10;
     [SerializeField, Range(2, 10)] private int GoalScore = 2;
-    [SyncVar, SerializeField] private int score;
+    [SerializeField, Min(1)] private int HitScore = 1;
+    [SyncVar(hook = nameof(OnScoreChanged)), SerializeField] private int score;
     public int Score => score;
+
+    /// <summary>
+    /// 각 화면에 새 점수가 도착했을 때 알린다. 이름표와 HUD 점수판이 구독한다.
+    /// 호스트에서는 서버가 값을 바꾸는 순간 함께 호출된다.
+    /// </summary>
+    public event Action<int> ScoreChanged;
+
+    private void OnScoreChanged(int oldScore, int newScore)
+    {
+        ScoreChanged?.Invoke(newScore);
+    }
 
     /// <summary>
     /// 서버에서 새 플레이어의 점수를 초기화한다.
@@ -29,6 +42,18 @@ public sealed class PlayerScore : NetworkBehaviour
         int limit = Mathf.Max(1, WinScore);
         score = (int)System.Math.Min((long)score + Mathf.Clamp(GoalScore, 2, 10), limit);
         Debug.Log($"골인! 현재 점수: {score}");
+        WinCheck();
+    }
+
+    /// <summary>
+    /// 서버에서 함정 적중 점수를 추가하고 승리 점수로 제한한다.
+    /// </summary>
+    [Server]
+    public void AddHitScore()
+    {
+        int limit = Mathf.Max(1, WinScore);
+        score = (int)System.Math.Min((long)score + Mathf.Max(1, HitScore), limit);
+        Debug.Log($"적중! 현재 점수: {score}");
         WinCheck();
     }
 

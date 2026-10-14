@@ -276,7 +276,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 470005336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 2748279ec00f9b74e880c4791923684d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Mirror.Components::Mirror.NetworkTransformReliable
   syncDirection: 1
@@ -401,6 +401,7 @@ MonoBehaviour:
   syncInterval: 0
   WinScore: 10
   GoalScore: 2
+  HitScore: 1
   score: 0
 --- !u!114 &1802239348659915158
 MonoBehaviour:

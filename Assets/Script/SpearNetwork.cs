@@ -42,6 +42,7 @@ public class SpearNetwork : MonoBehaviour
     public static event Action<SpearHitMessage, bool> HitReceived;
 
     private SpearDropper _dropper;
+    private rolechangeManager _roleManager;
     private bool _serverHandlersRegistered;
     private bool _clientHandlersRegistered;
     private uint _nextSpearId;
@@ -114,6 +115,15 @@ public class SpearNetwork : MonoBehaviour
             return;
         }
 
+        // 공격자는 함정을 쓸 수 없다(기획서 3장: 공격자인 동안 인벤토리 사용 불가).
+        if (connection.identity != null &&
+            connection.identity.TryGetComponent(out PlayerState requester) &&
+            requester.IsRoleManaged && requester.IsAttacker)
+        {
+            Debug.Log($"[창] 요청 거부(공격자): 연결 {connection.connectionId}");
+            return;
+        }
+
         double now = NetworkTime.localTime;
         if (_lastUseTime.TryGetValue(connection.connectionId, out double lastTime) &&
             now - lastTime < UseCooldown)
@@ -144,6 +154,26 @@ public class SpearNetwork : MonoBehaviour
         if (identity == null)
         {
             return;
+        }
+
+        // 역할 교대가 있는 게임 씬이면 교대가 받아들여진 적중만 알린다.
+        // 이미 교대된 뒤 도착한 적중(동시 적중)이나 자기 함정은 여기서 걸러진다.
+        if (_roleManager == null)
+        {
+            _roleManager = FindFirstObjectByType<rolechangeManager>();
+        }
+
+        if (_roleManager != null)
+        {
+            NetworkConnectionToClient ownerConnection;
+            NetworkServer.connections.TryGetValue(spear.OwnerId, out ownerConnection);
+            NetworkIdentity hitter = ownerConnection != null ? ownerConnection.identity : null;
+
+            if (!_roleManager.TryChangeAfterHit(identity, target.transform.position, hitter))
+            {
+                Debug.Log($"[창] 적중 무시: 창 {spear.SpearId}, 맞은 netId {identity.netId}");
+                return;
+            }
         }
 
         NetworkServer.SendToAll(new SpearHitMessage
@@ -178,6 +208,13 @@ public class SpearNetwork : MonoBehaviour
 
         Debug.Log($"[창] 판정 수신: 창 {message.SpearId} (주인 연결 {message.OwnerId}) → " +
                   (isMine ? "내가 맞음" : $"플레이어 {message.HitNetId}가 맞음"));
+
+        // 교대되면 필드의 창을 모두 없앤다(기획서 3장 RoleSwap [제안]).
+        // 남겨 두면 새 공격자가 남은 창에 바로 맞을 수 있다.
+        foreach (Spear spear in FindObjectsByType<Spear>(FindObjectsSortMode.None))
+        {
+            Destroy(spear.gameObject);
+        }
 
         HitReceived?.Invoke(message, isMine);
     }

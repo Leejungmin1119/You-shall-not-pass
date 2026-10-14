@@ -71,6 +71,23 @@ public sealed class FallZone : NetworkBehaviour
     }
 
     /// <summary>
+    /// 지정 위치 뒤쪽의 부활 위치를 찾는다. 함정 적중 교대도 같은 SafeZone 규칙을 쓰도록 공개한다.
+    /// 탐색에 실패하면 예비 부활 위치를 쓰고, 그것도 없으면 false를 반환한다.
+    /// </summary>
+    [Server]
+    public bool TryGetRespawnPosition(Vector2 from, out Vector2 position)
+    {
+        if (TryFindRespawnPosition(from, out position))
+            return true;
+        if (respawnPoint != null)
+        {
+            position = respawnPoint.position;
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
     /// 고정된 Y에서 뒤쪽 후보를 확인하고, SafeZone이 있으면 Ray 시작 위치를 반환한다.
     /// </summary>
     private bool TryFindRespawnPosition(Vector2 fallPosition, out Vector2 position)

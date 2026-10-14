@@ -289,7 +289,7 @@ MonoBehaviour:
   headlessStartMode: 0
   editorAutoStart: 0
   sendRate: 60
-  offlineScene: Assets/MyGame/Scenes/LobbyScene.unity
+  offlineScene: Assets/Scenes/LobbyScene.unity
   onlineScene: 
   offlineSceneLoadDelay: 0
   transport: {fileID: 424522512}
@@ -321,7 +321,7 @@ MonoBehaviour:
   showRoomGUI: 1
   minPlayers: 1
   roomPlayerPrefab: {fileID: 8300000000000000100, guid: 4b6d7a346b6e4c4aaefb1c5373128614, type: 3}
-  RoomScene: Assets/MyGame/Scenes/LobbyScene.unity
+  RoomScene: Assets/Scenes/LobbyScene.unity
   GameplayScene: Assets/Scenes/SampleScene.unity
   _allPlayersReady: 0
   clientIndex: 0

@@ -50,6 +50,14 @@ public class SpearDropper : MonoBehaviour
 
         if (NetworkClient.isConnected)
         {
+            // 공격자의 클릭은 보내지 않는다. 호스트도 거부하지만 쓸데없는 요청과 로그를 줄인다.
+            if (NetworkClient.localPlayer != null &&
+                NetworkClient.localPlayer.TryGetComponent(out PlayerState localState) &&
+                localState.IsRoleManaged && localState.IsAttacker)
+            {
+                return null;
+            }
+
             SpearNetwork.SendUseRequest(cursorWorld);
             return null;
         }

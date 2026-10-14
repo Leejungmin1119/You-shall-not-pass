@@ -126,6 +126,13 @@ public class Spear : MonoBehaviour
                 continue;
             }
 
+            // 게임 씬에서는 방어자도 숨겨진 캐릭터를 갖고 있다. 현재 공격자만 맞을 수 있다.
+            PlayerState state = target.GetComponent<PlayerState>();
+            if (state != null && state.IsRoleManaged && !state.IsAttacker)
+            {
+                continue;
+            }
+
             // 다른 PC의 캐릭터는 Rigidbody2D.simulated가 꺼져 있어 Physics2D.OverlapBox에 잡히지 않는다.
             // (실험으로 확인: simulated=false면 overlap=False, bounds는 정상)
             // 그래서 콜라이더의 bounds를 직접 비교한다.

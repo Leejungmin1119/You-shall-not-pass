@@ -13,6 +13,7 @@ public sealed class rolechangeManager : NetworkBehaviour
     private readonly List<PlayerState> _players = new List<PlayerState>(4);
     private bool _started;
     private MapViewController _mapView;
+    private FallZone _fallZone;
 
     /// <summary>
     /// 역할 교대 후 추적 대상을 변경할 카메라 관리자를 보관한다.
@@ -118,6 +119,41 @@ public sealed class rolechangeManager : NetworkBehaviour
         attackerNetId = next.netId;
         ApplyRoles();
         Debug.Log($"낙사 공수 교대: 플레이어 {index + 1} → 플레이어 {(index + 1) % _players.Count + 1}", this);
+        return true;
+    }
+
+    /// <summary>
+    /// 현재 공격자가 함정에 맞은 것을 한 번 처리한다. 함정 주인에게 점수를 주고
+    /// 다음 공격자를 맞은 위치 뒤쪽(낙사와 같은 SafeZone 규칙)에 배치한다.
+    /// 교대가 끝난 뒤 도착한 다른 적중은 공격자가 바뀌어 있으므로 무시된다(동시 적중 1건만 인정).
+    /// </summary>
+    [Server]
+    public bool TryChangeAfterHit(NetworkIdentity hitPlayer, Vector2 hitPosition, NetworkIdentity hitter)
+    {
+        if (!_started || !IsCurrentAttacker(hitPlayer)) return false;
+        // 자기 함정이나 주인을 알 수 없는 함정은 점수와 교대를 만들지 않는다.
+        if (hitter == null || hitter == hitPlayer) return false;
+        int index = _players.FindIndex(p => p != null && p.netIdentity == hitPlayer);
+        if (index < 0) return false;
+
+        if (_fallZone == null) _fallZone = FindFirstObjectByType<FallZone>();
+        if (_fallZone == null || !_fallZone.TryGetRespawnPosition(hitPosition, out Vector2 position))
+        {
+            Debug.LogError("적중 후 부활 위치를 찾지 못했습니다. FallZone의 SafeZone과 예비 부활 위치를 확인하세요.", this);
+            return false;
+        }
+
+        if (!_players[index].TryDie()) return false;
+
+        if (hitter.TryGetComponent(out PlayerScore hitterScore))
+            hitterScore.AddHitScore();
+
+        PlayerState next = _players[(index + 1) % _players.Count];
+        next.Respawn(position);
+        attackerNetId = next.netId;
+        ApplyRoles();
+        Debug.Log($"적중 공수 교대: 플레이어 {index + 1} → 플레이어 {(index + 1) % _players.Count + 1}, " +
+                  $"적중자 netId={hitter.netId}, 맞은 위치 {hitPosition}, 부활 위치 {position}", this);
         return true;
     }
 

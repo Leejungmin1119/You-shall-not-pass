@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public static class NetworkPracticeTools
 {
-    public const string ScenePath = "Assets/MyGame/Scenes/NetworkPlatform.unity";
+    public const string ScenePath = "Assets/Scenes/NetworkPlatform.unity";
     [MenuItem("Tools/Network Practice/Open Platform Scene")]
     public static void OpenScene()
     {
@@ -21,7 +21,7 @@ public static class NetworkPracticeTools
     public static void OpenLobbyScene()
     {
         if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-            EditorSceneManager.OpenScene("Assets/MyGame/Scenes/LobbyScene.unity");
+            EditorSceneManager.OpenScene("Assets/Scenes/LobbyScene.unity");
     }
 
     [MenuItem("Tools/Network Practice/Validate Setup")]

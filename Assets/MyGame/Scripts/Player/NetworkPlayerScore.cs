@@ -1,54 +1,39 @@
-    using Mirror;
+using Mirror;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
+/// <summary>
+/// 머리 위 이름표에 이름과 점수를 표시한다.
+/// 점수는 게임 규칙을 가진 PlayerScore 하나로 통일해서, 여기서는 읽기만 한다.
+/// </summary>
 public class NetworkPlayerScore : NetworkBehaviour
 {
     [Header("화면 표시")]
     [SerializeField] private TMP_Text nameText;
 
-    [SyncVar(hook = nameof(OnScoreChanged))]
-    private int score;
-
-    private PlayerMovement platformMovement;
+    // 연습용 NetworkPlayer 프리팹에는 PlayerScore가 없어서 null일 수 있다. 그때는 이름만 표시한다.
+    private PlayerScore gameScore;
 
     private void Awake()
     {
-        platformMovement = GetComponent<PlayerMovement>();
+        gameScore = GetComponent<PlayerScore>();
     }
 
     public override void OnStartClient()
     {
         base.OnStartClient();
+        if (gameScore != null) gameScore.ScoreChanged += OnScoreChanged;
         UpdatePlayerText();
         Debug.Log($"플레이어 생성: netId = {netId}");
     }
 
-    private void Update()
+    public override void OnStopClient()
     {
-        if (!isLocalPlayer || Keyboard.current == null) return;
-        if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby) return;
-        if (NetworkManager.singleton is CapstoneRoomManager roomManager && roomManager.IsLobby) return;
-
-        bool scoreKeyPressed = platformMovement != null
-            ? Keyboard.current.pKey.wasPressedThisFrame
-            : Keyboard.current.spaceKey.wasPressedThisFrame;
-
-        if (scoreKeyPressed)
-        {
-            CmdAddScore();
-        }
+        if (gameScore != null) gameScore.ScoreChanged -= OnScoreChanged;
+        base.OnStopClient();
     }
 
-    [Command]
-    private void CmdAddScore()
-    {
-        score++;
-        Debug.Log($"서버 점수 증가: netId = {netId}, score = {score}");
-    }
-
-    private void OnScoreChanged(int oldScore, int newScore)
+    private void OnScoreChanged(int newScore)
     {
         UpdatePlayerText();
     }
@@ -61,6 +46,6 @@ public class NetworkPlayerScore : NetworkBehaviour
         var profile = GetComponent<NetworkPlayerProfile>();
         string displayName = profile != null ? profile.PlayerName : $"Player {netId}";
         nameText.richText = false;
-        nameText.text = $"{displayName}\nScore: {score}";
+        nameText.text = gameScore != null ? $"{displayName}\nScore: {gameScore.Score}" : displayName;
     }
 }
