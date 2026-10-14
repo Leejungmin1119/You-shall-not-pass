@@ -12,6 +12,7 @@ public class CapstoneRoomManager : NetworkRoomManager
     public override void Awake()
     {
         base.Awake();
+        if (singleton != this) return;
         showRoomGUI = false;
         relayTransport = GetComponent<PasswordRelayTransport>();
         lanTransport = GetComponent<kcp2k.KcpTransport>();
