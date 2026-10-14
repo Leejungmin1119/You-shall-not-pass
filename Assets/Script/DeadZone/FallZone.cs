@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
+using Mirror;
 
 /// <summary>
-/// 낙사 시 뒤쪽 SafeZone을 확인하고, 지정한 높이에서 즉시 부활을 요청한다.
+/// 자기 플레이어의 낙사 접촉을 전달하고 서버에서 부활 위치를 탐색한다.
 /// </summary>
-[RequireComponent(typeof(BoxCollider2D))]
-public sealed class FallZone : MonoBehaviour
+[RequireComponent(typeof(BoxCollider2D), typeof(NetworkIdentity))]
+public sealed class FallZone : NetworkBehaviour
 {
+    [SerializeField] private rolechangeManager roleManager;
     [Header("부활 영역")]
     [SerializeField] private Transform respawnPoint; // 탐색 실패 시 사용할 예비 위치
     [Tooltip("자식 SafeZone 콜라이더들을 담은 부모입니다.")]
@@ -22,6 +24,7 @@ public sealed class FallZone : MonoBehaviour
     // 낙사할 때마다 배열을 생성하지 않고 첫 번째 탐색 결과를 재사용한다.
     private readonly RaycastHit2D[] _areaHit = new RaycastHit2D[1];
     private ContactFilter2D _areaFilter;
+    private bool _reportedMissingRespawn;
 
     /// <summary>
     /// SafeZone 레이어를 대상으로 트리거도 탐지하도록 필터를 준비한다.
@@ -33,34 +36,51 @@ public sealed class FallZone : MonoBehaviour
     }
 
     /// <summary>
-    /// 낙사한 플레이어에게 탐색한 위치 또는 예비 위치로 즉시 부활을 요청한다.
+    /// 자기 플레이어가 낙사 영역에 진입하면 서버에 해당 영역을 전달한다.
     /// </summary>
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 플레이어의 자식 콜라이더가 진입한 경우에도 같은 플레이어를 찾는다.
-        PlayerState player = other.GetComponentInParent<PlayerState>();
-        if (player == null)
+        NetworkIdentity player = other.GetComponentInParent<NetworkIdentity>();
+        if (player != null && player.isLocalPlayer)
+            CmdRequestFall();
+    }
+
+    /// <summary>
+    /// 서버에서 요청자의 위치를 읽고 다음 공격자의 등장 위치를 탐색한다.
+    /// </summary>
+    [Command(requiresAuthority = false)]
+    private void CmdRequestFall(NetworkConnectionToClient sender = null)
+    {
+        if (NetworkServer.isLoadingScene || !isActiveAndEnabled ||
+            sender?.identity == null || roleManager == null)
             return;
 
-        if (TryFindRespawnPosition(player, out Vector2 position))
-            player.TryDie(position);
+        if (!roleManager.IsCurrentAttacker(sender.identity) ||
+            !sender.identity.TryGetComponent(out Rigidbody2D body))
+            return;
+
+        if (TryFindRespawnPosition(body.position, out Vector2 position))
+            roleManager.TryChangeAfterFall(sender.identity, position);
         else if (respawnPoint != null)
-            player.TryDie((Vector2)respawnPoint.position);
-        else
+            roleManager.TryChangeAfterFall(sender.identity, (Vector2)respawnPoint.position);
+        else if (!_reportedMissingRespawn)
+        {
+            _reportedMissingRespawn = true;
             Debug.LogError("부활 가능한 SafeZone과 예비 부활 위치가 없습니다.", this);
+        }
     }
 
     /// <summary>
     /// 고정된 Y에서 뒤쪽 후보를 확인하고, SafeZone이 있으면 Ray 시작 위치를 반환한다.
     /// </summary>
-    private bool TryFindRespawnPosition(PlayerState player, out Vector2 position)
+    private bool TryFindRespawnPosition(Vector2 fallPosition, out Vector2 position)
     {
         position = default;
         if (safeZoneBounds == null)
             return false;
 
         // 첫 후보는 사망 위치에서 지정 거리만큼 왼쪽으로 떨어진 위치다.
-        float firstX = player.transform.position.x - backDistance;
+        float firstX = fallPosition.x - backDistance;
 
         for (int attempt = 0; attempt < maxSearchAttempts; attempt++)
         {

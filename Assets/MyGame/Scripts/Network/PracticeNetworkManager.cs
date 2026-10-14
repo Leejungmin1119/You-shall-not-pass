@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PracticeNetworkManager : NetworkManager
 {
-    [SerializeField] private string gameSceneName = "GameScene";
+    [SerializeField] private string gameSceneName = "SampleScene";
     public bool IsLobby => UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "LobbyScene";
     public override void OnStartServer()
     {
@@ -14,7 +14,7 @@ public class PracticeNetworkManager : NetworkManager
 
     public override void OnStartClient()
     {
-        base.OnStartClient();   
+        base.OnStartClient();
         Debug.Log("클라이언트가 시작되었습니다.");
     }
 
@@ -29,9 +29,14 @@ public class PracticeNetworkManager : NetworkManager
         base.OnClientConnect();
         Debug.Log("클라이언트: 서버 접속에 성공했습니다.");
     }
+    /// <summary>
+    /// 최소 2명이 접속하고 모든 참가자가 준비했으면 시작을 허용한다.
+    /// 최대 인원은 NetworkManager의 Max Connections 설정을 따른다.
+    /// </summary>
     public bool CanStartGame()
     {
-        if (!NetworkServer.active || NetworkServer.connections.Count != 2) return false;
+        if (!NetworkServer.active || NetworkServer.connections.Count < 2 ||
+            NetworkServer.connections.Count > maxConnections) return false;
         foreach (NetworkConnectionToClient connection in NetworkServer.connections.Values)
         {
             if (connection.identity == null) return false;

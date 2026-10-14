@@ -318,11 +318,26 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  showRoomGUI: 0
-  minPlayers: 2
+  showRoomGUI: 1
+  minPlayers: 1
   roomPlayerPrefab: {fileID: 8300000000000000100, guid: 4b6d7a346b6e4c4aaefb1c5373128614, type: 3}
   RoomScene: Assets/MyGame/Scenes/LobbyScene.unity
-  GameplayScene: Assets/MyGame/Scenes/GameScene.unity
+  GameplayScene: Assets/Scenes/SampleScene.unity
+  _allPlayersReady: 0
+  clientIndex: 0
+--- !u!114 &424522517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424522510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66883b296e534401b6eb9f8be9260654, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CapstoneLobbyUI
+  noticeDuration: 2.4
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -939,18 +954,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &424522517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424522510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66883b296e534401b6eb9f8be9260654, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CapstoneLobbyUI
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

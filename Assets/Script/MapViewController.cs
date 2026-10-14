@@ -10,7 +10,7 @@ public class MapViewController : MonoBehaviour
     [SerializeField] private CinemachineCamera trackingCamera;// 기존 플래이어 추적 카메라
     [SerializeField] private CinemachineCamera mapCamera;// 맵을 보여줄 카메라
     [SerializeField] private Camera outputCamera;// ?
-    [Tooltip("Tab 전체 보기로 표시할 영역입니다. MapCamera에 붙인 BoxCollider2D도 지정할 수 있습니다.")]
+    [Tooltip("전체 보기와 추적 카메라가 사용할 고정 경계입니다. 이동하는 카메라 밖에 배치합니다.")]
     [SerializeField] private BoxCollider2D mapBounds;// 전체 맵
 
     [Header("재입력 제한")]
@@ -29,20 +29,24 @@ public class MapViewController : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        exceptionCheck();
+        if (!ValidateReferences())
+            return;
 
-        // MapCamera에 붙은 콜라이더가 카메라 이동을 따라가도 기준 영역은 고정합니다.
+        // 카메라와 분리된 고정 경계의 월드 좌표를 보관합니다.
         mapViewBounds = mapBounds.bounds;
         originalMapPriority = mapCamera.Priority;
         SetMapView(false);
     }
-    private void exceptionCheck()
+    /// <summary>
+    /// 필수 참조와 고정 경계 연결을 확인하고 출력 카메라의 Brain을 보관한다.
+    /// </summary>
+    private bool ValidateReferences()
     {
         if (trackingCamera == null || mapCamera == null || outputCamera == null ||mapBounds == null)
         {
             Debug.LogError("필요한 참조가 부족합니다.");
             enabled = false;
-            return;
+            return false;
         }
 
         brain = outputCamera.GetComponent<CinemachineBrain>();
@@ -50,8 +54,26 @@ public class MapViewController : MonoBehaviour
         {
             Debug.LogError("전체 보기 전환을 위해 출력 Camera에 CinemachineBrain이 필요합니다.", this);
             enabled = false;
-            return;
+            return false;
         }
+
+        if (mapBounds.transform.IsChildOf(mapCamera.transform))
+        {
+            Debug.LogError("맵 경계는 이동하는 MapCamera 밖의 고정 오브젝트에 배치해야 합니다.", this);
+            enabled = false;
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// 실행 중 생성된 플레이어를 기존 추적 카메라의 대상으로 지정한다.
+    /// 전체 맵 카메라는 추적 대상을 사용하지 않는다.
+    /// </summary>
+    public void SetTrackingTarget(Transform target)
+    {
+        trackingCamera.Follow = target;
     }
 
     /// <summary>

@@ -11,16 +11,21 @@ public class NetworkPlayerController : NetworkBehaviour
     private Rigidbody2D body;
     private PlayerMovement platformMovement;
     private NetworkPlayerHealth playerHealth;
+    private PlayerState playerState;
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         playerHealth = GetComponent<NetworkPlayerHealth>();
+        playerState = GetComponent<PlayerState>();
         body.simulated = false;
         platformMovement = GetComponent<PlayerMovement>();
         if (platformMovement != null) platformMovement.enabled = false;
     }
 
+    /// <summary>
+    /// 자기 플레이어만 이동을 활성화하고 게임 씬의 카메라 추적 대상을 연결한다.
+    /// </summary>
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
@@ -30,6 +35,41 @@ public class NetworkPlayerController : NetworkBehaviour
         if (platformMovement != null) platformMovement.enabled = !inLobby;
         if (inLobby)
             transform.position = new Vector3(((int)(netId % 4) - 1.5f) * 1.8f, 0f, 0f);
+        else if (playerState != null && playerState.IsRoleManaged)
+            ApplyAttackerRole(playerState.IsAttacker);
+        else
+            BindLocalCamera();
+    }
+
+    /// <summary>
+    /// 역할 교대가 있는 게임에서 공격자만 표시하고 자기 공격자의 이동을 활성화한다.
+    /// </summary>
+    public void ApplyAttackerRole(bool isAttacker)
+    {
+        var sprite = GetComponent<SpriteRenderer>();
+        if (sprite != null) sprite.enabled = isAttacker;
+        bool canMove = isLocalPlayer && isAttacker;
+        if (body.simulated && !canMove)
+        {
+            body.linearVelocity = Vector2.zero;
+            body.angularVelocity = 0f;
+        }
+        body.simulated = canMove;
+        if (platformMovement != null)
+        {
+            platformMovement.MovementLocked = !canMove;
+            platformMovement.enabled = canMove;
+        }
+    }
+
+    /// <summary>
+    /// 씬에 배치된 추적 카메라가 네트워크로 생성된 자기 플레이어를 따라가게 한다.
+    /// </summary>
+    private void BindLocalCamera()
+    {
+        MapViewController mapView = FindFirstObjectByType<MapViewController>();
+        if (mapView != null)
+            mapView.SetTrackingTarget(transform);
     }
 
     // 로비에서는 플랫폼 물리 대신 평면 이동을 사용한다.
@@ -67,12 +107,15 @@ public class NetworkPlayerController : NetworkBehaviour
             return;
         }
 
+        if (playerState != null && playerState.IsRoleManaged && !playerState.IsAttacker)
+            return;
+
         if (platformMovement != null || Keyboard.current == null) return;
         var keyboard = Keyboard.current;
         float horizontal = (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed ? 1f : 0f)
-                         - (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed ? 1f : 0f);
+                        - (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed ? 1f : 0f);
         float vertical = (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed ? 1f : 0f)
-                       - (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed ? 1f : 0f);
+                    - (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed ? 1f : 0f);
 
         Vector2 direction =
             new Vector2(horizontal, vertical).normalized;
