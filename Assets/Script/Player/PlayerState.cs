@@ -22,19 +22,21 @@ public sealed class PlayerState : NetworkBehaviour
     private bool _goalCompleted;
     [SyncVar] private PlayerStatus status = PlayerStatus.Alive;
     public PlayerStatus Status => status;
-    private rolechangeManager _roleManager;
+    private double _invincibleUntil;
+    private const double RespawnInvincibleTime = 0.5;
 
-    public bool IsRoleManaged => _roleManager != null;
-    public bool IsAttacker => _roleManager != null && _roleManager.IsCurrentAttacker(netIdentity);
+    // 피격 중복 방지는 서버 시각으로 판단하며 낙사에는 적용하지 않는다.
+    public bool CanReceiveHit => status == PlayerStatus.Alive && NetworkTime.time >= _invincibleUntil;
 
+    /// <summary>
+    /// 상태 변경과 부활에 필요한 자기 컴포넌트만 보관한다.
+    /// </summary>
     private void Awake()
     {
         _score = GetComponent<PlayerScore>();
         _movement = GetComponent<PlayerMovement>();
         _body = GetComponent<Rigidbody2D>();
         _networkTransform = GetComponent<NetworkTransformReliable>();
-        // Mirror가 아직 활성화하지 않은 씬 관리자도 찾아 초기 생성 순서에 영향을 받지 않는다.
-        _roleManager = FindFirstObjectByType<rolechangeManager>(FindObjectsInactive.Include);
     }
 
     /// <summary>
@@ -45,33 +47,7 @@ public sealed class PlayerState : NetworkBehaviour
         status = PlayerStatus.Alive;
         _lastDeathStep = double.NegativeInfinity;
         _goalCompleted = false;
-        _roleManager?.RegisterPlayer(this);
-    }
-
-    /// <summary>
-    /// 클라이언트에서 역할 관리 대상에 등록하고 현재 공격자 상태를 적용한다.
-    /// </summary>
-    public override void OnStartClient()
-    {
-        if (_roleManager == null)
-            _roleManager = FindFirstObjectByType<rolechangeManager>(FindObjectsInactive.Include);
-        _roleManager?.RegisterPlayer(this);
-    }
-
-    /// <summary>
-    /// 제거된 플레이어를 역할 관리 목록에서 해제한다.
-    /// </summary>
-    public override void OnStopClient()
-    {
-        _roleManager?.UnregisterPlayer(this);
-    }
-
-    /// <summary>
-    /// 서버에서 연결이 종료된 플레이어를 역할 관리 목록에서 해제한다.
-    /// </summary>
-    public override void OnStopServer()
-    {
-        _roleManager?.UnregisterPlayer(this);
+        _invincibleUntil = 0;
     }
 
     /// <summary>
@@ -90,7 +66,7 @@ public sealed class PlayerState : NetworkBehaviour
     }
 
     /// <summary>
-    /// 서버에서 중복 사망을 막고 기존 공격자를 사망 상태로 변경한다.
+    /// 서버에서 같은 물리 프레임의 중복 사망을 막고 해당 플레이어를 사망 처리한다.
     /// </summary>
     [Server]
     public bool TryDie()
@@ -101,7 +77,7 @@ public sealed class PlayerState : NetworkBehaviour
         _lastDeathStep = Time.fixedTimeAsDouble;
         status = PlayerStatus.Dead;// 사망으로 변경
 
-        Debug.Log("낙사로 인한 사망");
+        Debug.Log($"플레이어 사망: netId={netId}");
 
         return true;
     }
@@ -116,6 +92,7 @@ public sealed class PlayerState : NetworkBehaviour
         _networkTransform.ServerTeleport(destination, transform.rotation);
         RpcResetMovement(position);
         _goalCompleted = false;
+        _invincibleUntil = NetworkTime.time + RespawnInvincibleTime;
 
         // 부활 처리 후 상태 변경
         status = PlayerStatus.Alive;

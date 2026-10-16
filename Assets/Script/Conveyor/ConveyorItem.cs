@@ -66,6 +66,10 @@ public class ConveyorItem : MonoBehaviour, IPointerClickHandler
     {
         _controller = controller;
         _entry = entry;
+        ItemData data = controller.GetItemData(entry.ItemId);
+        _image.sprite = data != null ? data.Icon : null;
+        _image.preserveAspect = true;
+        _image.color = Color.white;
         _startPosition = _rectTransform.anchoredPosition;
         // Canvas 배치가 확정된 뒤 실제 아이템 왼쪽 끝을 기준으로 계산한다.
         Canvas.ForceUpdateCanvases();

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371a41e7ea7148b48a335c5a028c8d81, type: 3}
+  m_Name: Bomb
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  Id: 4
+  DisplayName: "\uD3ED\uD0C4"
+  Icon: {fileID: 21300000, guid: dfa5ea95955d9a044b67d54fa4794bb6, type: 3}
+  Prefab: {fileID: 5398901121930274095, guid: 22805cb62e0361f42a86a27636575b63, type: 3}
+  Price: 30
+  SpawnWeight: 25
+  Placement: 0
+  Count: 1
+  Spacing: 1
+  FallTime: 1
+  Lifetime: 0.2

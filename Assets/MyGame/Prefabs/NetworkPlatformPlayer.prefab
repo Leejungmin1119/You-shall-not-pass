@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 8200000000000000110}
   - component: {fileID: 5397608380628682180}
   - component: {fileID: 1802239348659915158}
+  - component: {fileID: 8183973826032094447}
   m_Layer: 3
   m_Name: NetworkPlatformPlayer
   m_TagString: Player
@@ -422,6 +423,21 @@ MonoBehaviour:
   maxCost: 300
   MoneyTimer: 5
   GetCost: 10
+--- !u!114 &8183973826032094447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470005336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb769884885e3c4d884eaae05da7e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHeldItem
+  syncDirection: 0
+  syncMode: 1
+  syncInterval: 0
 --- !u!1 &2903386058226145057
 GameObject:
   m_ObjectHideFlags: 0

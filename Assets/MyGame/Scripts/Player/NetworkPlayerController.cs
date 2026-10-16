@@ -11,13 +11,14 @@ public class NetworkPlayerController : NetworkBehaviour
     private Rigidbody2D body;
     private PlayerMovement platformMovement;
     private NetworkPlayerHealth playerHealth;
-    private PlayerState playerState;
 
+    /// <summary>
+    /// 이동에 필요한 컴포넌트를 보관하고 소유권이 확인되기 전에는 물리를 끈다.
+    /// </summary>
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         playerHealth = GetComponent<NetworkPlayerHealth>();
-        playerState = GetComponent<PlayerState>();
         body.simulated = false;
         platformMovement = GetComponent<PlayerMovement>();
         if (platformMovement != null) platformMovement.enabled = false;
@@ -32,33 +33,31 @@ public class NetworkPlayerController : NetworkBehaviour
         bool inLobby = (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
             || (NetworkManager.singleton is CapstoneRoomManager roomManager && roomManager.IsLobby);
         body.simulated = !inLobby;
-        if (platformMovement != null) platformMovement.enabled = !inLobby;
+        if (platformMovement != null)
+        {
+            platformMovement.MovementLocked = false;
+            platformMovement.enabled = !inLobby;
+        }
         if (inLobby)
             transform.position = new Vector3(((int)(netId % 4) - 1.5f) * 1.8f, 0f, 0f);
-        else if (playerState != null && playerState.IsRoleManaged)
-            ApplyAttackerRole(playerState.IsAttacker);
         else
             BindLocalCamera();
     }
 
     /// <summary>
-    /// 역할 교대가 있는 게임에서 공격자만 표시하고 자기 공격자의 이동을 활성화한다.
+    /// 모든 캐릭터를 표시하며 다른 플레이어는 반투명하게 보여준다.
+    /// 원격 캐릭터의 물리는 끈 상태로 두고 NetworkTransform이 위치를 적용한다.
     /// </summary>
-    public void ApplyAttackerRole(bool isAttacker)
+    public override void OnStartClient()
     {
+        base.OnStartClient();
         var sprite = GetComponent<SpriteRenderer>();
-        if (sprite != null) sprite.enabled = isAttacker;
-        bool canMove = isLocalPlayer && isAttacker;
-        if (body.simulated && !canMove)
+        if (sprite != null)
         {
-            body.linearVelocity = Vector2.zero;
-            body.angularVelocity = 0f;
-        }
-        body.simulated = canMove;
-        if (platformMovement != null)
-        {
-            platformMovement.MovementLocked = !canMove;
-            platformMovement.enabled = canMove;
+            sprite.enabled = true;
+            Color color = sprite.color;
+            color.a = isLocalPlayer ? 1f : 0.5f;
+            sprite.color = color;
         }
     }
 
@@ -72,8 +71,9 @@ public class NetworkPlayerController : NetworkBehaviour
             mapView.SetTrackingTarget(transform);
     }
 
-    // 로비에서는 플랫폼 물리 대신 평면 이동을 사용한다.
-    // 기존 ClientToServer NetworkTransform이 위치를 다른 접속자에게 전달한다.
+    /// <summary>
+    /// 로비에서 평면 이동을 처리한다. 변경된 위치는 NetworkTransform이 전송한다.
+    /// </summary>
     private void MoveInLobby()
     {
         if (NetworkManager.singleton is CapstoneRoomManager manager && manager.IsEditingText) return;
@@ -91,6 +91,9 @@ public class NetworkPlayerController : NetworkBehaviour
         transform.position = position;
     }
 
+    /// <summary>
+    /// 소유자의 로비 이동과 사망 잠금을 처리하고 게임 이동은 PlayerMovement에 맡긴다.
+    /// </summary>
     private void FixedUpdate()
     {
         if (!isLocalPlayer) return;
@@ -106,9 +109,6 @@ public class NetworkPlayerController : NetworkBehaviour
             body.linearVelocity = Vector2.zero;
             return;
         }
-
-        if (playerState != null && playerState.IsRoleManaged && !playerState.IsAttacker)
-            return;
 
         if (platformMovement != null || Keyboard.current == null) return;
         var keyboard = Keyboard.current;

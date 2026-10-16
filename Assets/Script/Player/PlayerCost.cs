@@ -2,7 +2,7 @@ using Mirror;
 using UnityEngine;
 
 /// <summary>
-/// 서버에서 개인 코스트를 지급하고 구매 요청을 처리한다.
+/// 서버에서 개인 코스트 지급과 잔액 차감만 처리한다.
 /// </summary>
 public class PlayerCost : NetworkBehaviour
 {
@@ -73,37 +73,4 @@ public class PlayerCost : NetworkBehaviour
         return true;
     }
 
-    /// <summary>
-    /// 소유한 플레이어에서 선택한 아이템 ID만 서버에 전달한다.
-    /// </summary>
-    public bool RequestCollect(uint itemId)
-    {
-        if (!isLocalPlayer || !isClient)
-            return false;
-        CmdTryCollect(itemId);
-        return true;
-    }
-
-    /// <summary>
-    /// 서버의 컨베이어에 구매를 요청하고 요청자에게만 결과를 돌려준다.
-    /// </summary>
-    [Command]
-    private void CmdTryCollect(uint itemId)
-    {
-        ConveyorController conveyor = FindFirstObjectByType<ConveyorController>();
-        bool succeeded = conveyor != null && conveyor.TryCollect(itemId, this);
-        TargetCollectResult(itemId, succeeded);
-    }
-
-    /// <summary>
-    /// 구매자의 요청 대기를 해제하고 구매 결과를 표시한다.
-    /// </summary>
-    [TargetRpc]
-    private void TargetCollectResult(uint itemId, bool succeeded)
-    {
-        ConveyorController conveyor = FindFirstObjectByType<ConveyorController>();
-        if (conveyor != null)
-            conveyor.CompleteCollectRequest(itemId);
-        Debug.Log(succeeded ? "습득 완료." : "구매 실패: 아이템이 없거나 코스트가 부족합니다.");
-    }
 }
