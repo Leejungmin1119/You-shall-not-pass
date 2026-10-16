@@ -1,5 +1,7 @@
 # Race networking
 
+> This is a networking foundation and existing-spear integration, not completion of every networking requirement in the supplied design PDFs. See [네트워크 구현 현황과 남은 작업](../../docs/NETWORK_IMPLEMENTATION_STATUS.md) for the Korean completion matrix, remaining work, provisional decisions and validation limits.
+
 This branch integrates the simultaneous-race rules with the existing Mirror/KCP LAN room flow. `LobbyScene` still starts `Assets/Scenes/SampleScene.unity`. The existing one-player test minimum and four-player maximum are preserved. Internet relay deployment is separate; the relay URL is still unset.
 
 ## Replicated state and authority
