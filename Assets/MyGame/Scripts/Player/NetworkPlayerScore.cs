@@ -27,6 +27,7 @@ public class NetworkPlayerScore : NetworkBehaviour
 
     private void Update()
     {
+        if (RaceSession.Instance != null) return;
         if (!isLocalPlayer || Keyboard.current == null) return;
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby) return;
         if (NetworkManager.singleton is CapstoneRoomManager roomManager && roomManager.IsLobby) return;
@@ -44,6 +45,7 @@ public class NetworkPlayerScore : NetworkBehaviour
     [Command]
     private void CmdAddScore()
     {
+        if (RaceSession.Instance != null) return;
         score++;
         Debug.Log($"서버 점수 증가: netId = {netId}, score = {score}");
     }
@@ -61,6 +63,7 @@ public class NetworkPlayerScore : NetworkBehaviour
         var profile = GetComponent<NetworkPlayerProfile>();
         string displayName = profile != null ? profile.PlayerName : $"Player {netId}";
         nameText.richText = false;
-        nameText.text = $"{displayName}\nScore: {score}";
+        int displayedScore = RaceSession.Instance != null ? GetComponent<PlayerScore>().Score : score;
+        nameText.text = $"{displayName}\nScore: {displayedScore}";
     }
 }

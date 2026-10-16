@@ -2048,6 +2048,8 @@ GameObject:
   - component: {fileID: 1082430698}
   - component: {fileID: 1082430697}
   - component: {fileID: 1082430696}
+  - component: {fileID: 1082430700}
+  - component: {fileID: 1082430699}
   m_Layer: 0
   m_Name: rolechangeManager
   m_TagString: Untagged
@@ -2103,6 +2105,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1082430699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082430695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a7c6c43323a84f81b2cf41bd280bb2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RaceSession
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  rules: {fileID: 11400000, guid: 1cb4fc2efd23c4fdfb0eb2ee9efc6efe, type: 2}
+  startPoint: {fileID: 1830686330}
+  fieldBounds: {fileID: 1477400975}
+--- !u!114 &1082430700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082430695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 514b214f26db7444db8b69fd67522055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RaceTrapService
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!1 &1127472253
 GameObject:
   m_ObjectHideFlags: 0

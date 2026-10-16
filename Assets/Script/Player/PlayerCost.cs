@@ -22,6 +22,14 @@ public class PlayerCost : NetworkBehaviour
     /// </summary>
     public override void OnStartServer()
     {
+        if (RaceSession.Instance != null)
+        {
+            var rules = RaceSession.Instance.Rules;
+            startingCost = rules.startCost;
+            maxCost = rules.costMax;
+            MoneyTimer = rules.costTickSeconds;
+            GetCost = rules.costTickAmount;
+        }
         currentCost = Mathf.Clamp(startingCost, 0, Mathf.Max(0, maxCost));
         autoGainTimer = 0f;
 
@@ -37,6 +45,7 @@ public class PlayerCost : NetworkBehaviour
     /// </summary>
     private void Update()
     {
+        if (RaceSession.Instance != null && !RaceSession.Instance.IsRacing) return;
         if (!isServer || !canAutoGain)
             return;
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
@@ -80,6 +89,8 @@ public class PlayerCost : NetworkBehaviour
     {
         if (!isLocalPlayer || !isClient)
             return false;
+        if (RaceSession.Instance != null)
+            return GetComponent<NetworkRaceInventory>()?.RequestBuy(itemId, false) == true;
         CmdTryCollect(itemId);
         return true;
     }
@@ -90,6 +101,7 @@ public class PlayerCost : NetworkBehaviour
     [Command]
     private void CmdTryCollect(uint itemId)
     {
+        if (RaceSession.Instance != null) return;
         ConveyorController conveyor = FindFirstObjectByType<ConveyorController>();
         bool succeeded = conveyor != null && conveyor.TryCollect(itemId, this);
         TargetCollectResult(itemId, succeeded);

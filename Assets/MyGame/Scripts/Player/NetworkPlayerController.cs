@@ -35,6 +35,11 @@ public class NetworkPlayerController : NetworkBehaviour
         if (platformMovement != null) platformMovement.enabled = !inLobby;
         if (inLobby)
             transform.position = new Vector3(((int)(netId % 4) - 1.5f) * 1.8f, 0f, 0f);
+        else if (RaceSession.Instance != null)
+        {
+            BindLocalCamera();
+            ApplyRaceState();
+        }
         else if (playerState != null && playerState.IsRoleManaged)
             ApplyAttackerRole(playerState.IsAttacker);
         else
@@ -72,6 +77,30 @@ public class NetworkPlayerController : NetworkBehaviour
             mapView.SetTrackingTarget(transform);
     }
 
+    private void Update()
+    {
+        if (RaceSession.Instance != null) ApplyRaceState();
+    }
+
+    private void ApplyRaceState()
+    {
+        bool canMove = isLocalPlayer && RaceSession.Instance.IsRacing &&
+            playerState != null && playerState.Status == PlayerStatus.Alive;
+        if (body.simulated && !canMove)
+        {
+            body.linearVelocity = Vector2.zero;
+            body.angularVelocity = 0f;
+        }
+        body.simulated = canMove;
+        if (platformMovement != null)
+        {
+            platformMovement.MovementLocked = !canMove;
+            platformMovement.enabled = canMove;
+        }
+        var sprite = GetComponent<SpriteRenderer>();
+        if (sprite != null) sprite.enabled = true;
+    }
+
     // 로비에서는 플랫폼 물리 대신 평면 이동을 사용한다.
     // 기존 ClientToServer NetworkTransform이 위치를 다른 접속자에게 전달한다.
     private void MoveInLobby()
@@ -100,6 +129,7 @@ public class NetworkPlayerController : NetworkBehaviour
             MoveInLobby();
             return;
         }
+        if (RaceSession.Instance != null) return;
         if (playerHealth != null && playerHealth.IsDead)
         {
             if (platformMovement != null) platformMovement.MovementLocked = true;

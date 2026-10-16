@@ -8,7 +8,7 @@ public sealed class PlayerScore : NetworkBehaviour
 {
     [SerializeField, Min(1)] private int WinScore = 10;
     [SerializeField, Range(2, 10)] private int GoalScore = 2;
-    [SyncVar, SerializeField] private int score;
+    [SyncVar(hook = nameof(OnScoreChanged)), SerializeField] private int score;
     public int Score => score;
 
     /// <summary>
@@ -31,6 +31,19 @@ public sealed class PlayerScore : NetworkBehaviour
         Debug.Log($"골인! 현재 점수: {score}");
         WinCheck();
     }
+
+    [Server]
+    public void ServerAddScore(int amount)
+    {
+        if (amount <= 0) return;
+        var race = RaceSession.Instance;
+        int limit = race != null ? race.Rules.winScore : Mathf.Max(1, WinScore);
+        score = (int)System.Math.Min((long)score + amount, limit);
+        race?.CheckScoreLimit();
+    }
+
+    private void OnScoreChanged(int previous, int current)
+        => GetComponent<NetworkPlayerScore>()?.RefreshDisplay();
 
     /// <summary>
     /// Inspector에서 지정한 승리 점수에 도달했는지 서버에서 확인한다.

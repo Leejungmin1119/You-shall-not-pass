@@ -46,7 +46,15 @@ public class SpearDropper : MonoBehaviour
     /// </summary>
     public Spear Drop(Vector2 screenPosition)
     {
+        if (_camera == null) return null;
+        if (UnityEngine.EventSystems.EventSystem.current != null &&
+            UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return null;
         Vector2 cursorWorld = _camera.ScreenToWorldPoint(screenPosition);
+        if (RaceSession.Instance != null)
+        {
+            NetworkClient.localPlayer?.GetComponent<NetworkRaceInventory>()?.RequestUse(cursorWorld);
+            return null;
+        }
 
         if (NetworkClient.isConnected)
         {

@@ -4,7 +4,8 @@ using UnityEngine;
 public enum PlayerStatus
 {
     Alive,
-    Dead
+    Dead,
+    Finished
 }
 
 /// <summary>
@@ -20,6 +21,12 @@ public sealed class PlayerState : NetworkBehaviour
     private NetworkTransformReliable _networkTransform;
     private double _lastDeathStep = double.NegativeInfinity;
     private bool _goalCompleted;
+    [SyncVar] private double invincibleUntil;
+    [SyncVar] private int inventoryCount;
+    public int InventoryCount => inventoryCount;
+    public bool IsInvincible => NetworkTime.time < invincibleUntil;
+    public bool IsDamageable => status == PlayerStatus.Alive && !IsInvincible &&
+        (RaceSession.Instance == null || RaceSession.Instance.IsRacing);
     [SyncVar] private PlayerStatus status = PlayerStatus.Alive;
     public PlayerStatus Status => status;
     private rolechangeManager _roleManager;
@@ -45,7 +52,8 @@ public sealed class PlayerState : NetworkBehaviour
         status = PlayerStatus.Alive;
         _lastDeathStep = double.NegativeInfinity;
         _goalCompleted = false;
-        _roleManager?.RegisterPlayer(this);
+        if (RaceSession.Instance != null) RaceSession.Instance.Register(this);
+        else _roleManager?.RegisterPlayer(this);
     }
 
     /// <summary>
@@ -55,7 +63,8 @@ public sealed class PlayerState : NetworkBehaviour
     {
         if (_roleManager == null)
             _roleManager = FindFirstObjectByType<rolechangeManager>(FindObjectsInactive.Include);
-        _roleManager?.RegisterPlayer(this);
+        if (RaceSession.Instance != null) RaceSession.Instance.Register(this);
+        else _roleManager?.RegisterPlayer(this);
     }
 
     /// <summary>
@@ -63,6 +72,7 @@ public sealed class PlayerState : NetworkBehaviour
     /// </summary>
     public override void OnStopClient()
     {
+        RaceSession.Instance?.Unregister(this);
         _roleManager?.UnregisterPlayer(this);
     }
 
@@ -71,6 +81,7 @@ public sealed class PlayerState : NetworkBehaviour
     /// </summary>
     public override void OnStopServer()
     {
+        RaceSession.Instance?.Unregister(this);
         _roleManager?.UnregisterPlayer(this);
     }
 
@@ -84,6 +95,8 @@ public sealed class PlayerState : NetworkBehaviour
             _lastDeathStep == Time.fixedTimeAsDouble)
             return false;
 
+        if (RaceSession.Instance != null)
+            return RaceSession.Instance.TryFinish(this);
         _goalCompleted = true;
         _score.AddGoalScore();
         return true;
@@ -119,7 +132,19 @@ public sealed class PlayerState : NetworkBehaviour
 
         // 부활 처리 후 상태 변경
         status = PlayerStatus.Alive;
+        if (RaceSession.Instance != null)
+            invincibleUntil = NetworkTime.time + RaceSession.Instance.Rules.invincibleSeconds;
     }
+
+    [Server]
+    public void ServerMarkFinished()
+    {
+        _goalCompleted = true;
+        status = PlayerStatus.Finished;
+    }
+
+    [Server]
+    public void ServerSetInventoryCount(int count) => inventoryCount = count;
 
     /// <summary>
     /// 실제 이동을 실행하는 소유자만 물리 위치와 속도, 점프와 입력 상태를 초기화한다.

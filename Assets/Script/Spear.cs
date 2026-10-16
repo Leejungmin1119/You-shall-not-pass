@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -23,6 +24,7 @@ public class Spear : MonoBehaviour
     private float _stuckDuration;
     private LayerMask _groundLayer;
     private bool _isJudge;
+    private readonly HashSet<int> raceVictims = new HashSet<int>();
 
     private bool _isStuck;
     private float _stuckTimer;
@@ -107,7 +109,8 @@ public class Spear : MonoBehaviour
     /// </summary>
     private void CheckAttackerHit(float previousY)
     {
-        if (!_isJudge || HasHit)
+        bool raceMode = RaceSession.Instance != null;
+        if (!_isJudge || (!raceMode && HasHit))
         {
             return;
         }
@@ -126,6 +129,9 @@ public class Spear : MonoBehaviour
                 continue;
             }
 
+            if (raceMode && (raceVictims.Contains(target.GetInstanceID()) ||
+                !target.TryGetComponent(out PlayerState state) || !state.IsDamageable)) continue;
+
             // 다른 PC의 캐릭터는 Rigidbody2D.simulated가 꺼져 있어 Physics2D.OverlapBox에 잡히지 않는다.
             // (실험으로 확인: simulated=false면 overlap=False, bounds는 정상)
             // 그래서 콜라이더의 bounds를 직접 비교한다.
@@ -143,6 +149,7 @@ public class Spear : MonoBehaviour
                 continue;
             }
 
+            if (raceMode) raceVictims.Add(target.GetInstanceID());
             HasHit = true;
             HitAttacker = target;
 
@@ -150,7 +157,7 @@ public class Spear : MonoBehaviour
                       $"{(_isStuck ? "꽂힌 창에 닿음" : "떨어지는 창에 맞음")}");
 
             AttackerHit?.Invoke(this, target);
-            return;
+            if (!raceMode) return;
         }
     }
 

@@ -55,8 +55,13 @@ public sealed class FallZone : NetworkBehaviour
             sender?.identity == null || roleManager == null)
             return;
 
-        if (!roleManager.IsCurrentAttacker(sender.identity) ||
-            !sender.identity.TryGetComponent(out Rigidbody2D body))
+        if (!sender.identity.TryGetComponent(out Rigidbody2D body)) return;
+        if (RaceSession.Instance != null)
+        {
+            ServerTryContact(sender);
+            return;
+        }
+        if (!roleManager.IsCurrentAttacker(sender.identity))
             return;
 
         if (TryFindRespawnPosition(body.position, out Vector2 position))
@@ -70,10 +75,38 @@ public sealed class FallZone : NetworkBehaviour
         }
     }
 
+    private void Update()
+    {
+        var race = RaceSession.Instance;
+        if (!isServer || race == null || !race.IsRacing) return;
+        foreach (var player in race.Players)
+            if (player != null) ServerTryContact(player.connectionToClient);
+    }
+
+    [Server]
+    public bool ServerTryContact(NetworkConnectionToClient sender)
+    {
+        var race = RaceSession.Instance;
+        if (race == null || !race.IsRacing || NetworkServer.isLoadingScene ||
+            !isActiveAndEnabled || sender?.identity == null ||
+            !sender.identity.TryGetComponent(out PlayerState player) || player.Status != PlayerStatus.Alive)
+            return false;
+        var zone = GetComponent<BoxCollider2D>();
+        var collider = player.GetComponent<Collider2D>();
+        if (!zone.enabled || collider == null) return false;
+        Bounds area = zone.bounds;
+        area.Expand(0.5f);
+        if (!area.Intersects(collider.bounds)) return false;
+        if (TryFindRespawnPosition(player.transform.position, out var safe)) player.Respawn(safe);
+        else if (respawnPoint != null) player.Respawn(respawnPoint.position);
+        else return false;
+        return true;
+    }
+
     /// <summary>
     /// 고정된 Y에서 뒤쪽 후보를 확인하고, SafeZone이 있으면 Ray 시작 위치를 반환한다.
     /// </summary>
-    private bool TryFindRespawnPosition(Vector2 fallPosition, out Vector2 position)
+    public bool TryFindRespawnPosition(Vector2 fallPosition, out Vector2 position)
     {
         position = default;
         if (safeZoneBounds == null)

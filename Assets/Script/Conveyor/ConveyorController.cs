@@ -9,6 +9,7 @@ public struct ConveyorEntry
 {
     public uint Id;
     public int Price;
+    public int ItemType;
     public double SpawnTime;
     public float Lifetime;
     public bool Purchased;
@@ -36,6 +37,7 @@ public class ConveyorController : NetworkBehaviour
     private readonly Dictionary<uint, ConveyorItem> views = new Dictionary<uint, ConveyorItem>();
     private float _spawnTimer;
     private uint nextItemId;
+    private bool raceInitialItemsSpawned;
 
     /// <summary>
     /// 역할과 코스트가 연결된 자기 수비자만 컨베이어를 클릭할 수 있다.
@@ -46,6 +48,9 @@ public class ConveyorController : NetworkBehaviour
         {
             if (!isClient || NetworkClient.localPlayer == null)
                 return false;
+            if (RaceSession.Instance != null)
+                return RaceSession.Instance.IsRacing &&
+                    NetworkClient.localPlayer.GetComponent<NetworkRaceInventory>()?.HeldSlot < 0;
             PlayerState player = NetworkClient.localPlayer.GetComponent<PlayerState>();
             return player != null && player.IsRoleManaged && !player.IsAttacker &&
                 player.GetComponent<PlayerCost>() != null;
@@ -97,6 +102,19 @@ public class ConveyorController : NetworkBehaviour
     /// </summary>
     private void Update()
     {
+        var race = RaceSession.Instance;
+        if (race != null)
+        {
+            if (!isServer || !race.IsRacing) return;
+            spawnInterval = race.Rules.conveyorSpawnSeconds;
+            travelDuration = race.Rules.conveyorCrossSeconds;
+            if (!raceInitialItemsSpawned)
+            {
+                raceInitialItemsSpawned = true;
+                for (int i = 0; i < 4; i++) SpawnItem(i * travelDuration / 4f);
+                _spawnTimer = 0;
+            }
+        }
         if (!isServer || spawnInterval <= 0f || travelDuration <= 0f)
             return;
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
@@ -119,13 +137,30 @@ public class ConveyorController : NetworkBehaviour
     /// 서버에서 고유 ID를 부여해 아이템을 목록에 추가한다. UI는 클라이언트가 만든다.
     /// </summary>
     [Server]
-    private void SpawnItem()
+    private void SpawnItem(float age = 0f)
     {
+        RaceItemDefinition definition = null;
+        var race = RaceSession.Instance;
+        if (race != null)
+        {
+            int totalWeight = 0;
+            foreach (var item in race.Rules.items)
+                if (race.Traps.Supports(item)) totalWeight += Mathf.Max(0, item.weight);
+            if (totalWeight <= 0) return;
+            int pick = Random.Range(0, totalWeight);
+            foreach (var item in race.Rules.items)
+            {
+                if (!race.Traps.Supports(item)) continue;
+                pick -= Mathf.Max(0, item.weight);
+                if (pick < 0) { definition = item; break; }
+            }
+        }
         items.Add(new ConveyorEntry
         {
             Id = ++nextItemId,
-            Price = Mathf.Max(1, itemPrice),
-            SpawnTime = NetworkTime.time,
+            Price = definition != null ? definition.price : Mathf.Max(1, itemPrice),
+            ItemType = definition != null ? definition.id : 0,
+            SpawnTime = NetworkTime.time - age,
             Lifetime = travelDuration
         });
     }
@@ -136,6 +171,7 @@ public class ConveyorController : NetworkBehaviour
     [Server]
     public bool TryCollect(uint itemId, PlayerCost buyer)
     {
+        if (RaceSession.Instance != null) return false;
         if (buyer == null || !buyer.isServer || buyer.connectionToClient == null)
             return false;
         PlayerState player = buyer.GetComponent<PlayerState>();
@@ -162,11 +198,45 @@ public class ConveyorController : NetworkBehaviour
         return false;
     }
 
+    public System.Collections.Generic.IReadOnlyList<ConveyorEntry> Items => items;
+
+    [Server]
+    public void ServerClear()
+    {
+        items.Clear();
+        _spawnTimer = 0;
+    }
+
+    [Server]
+    public RaceRequestResult ServerBuy(uint itemId, NetworkRaceInventory buyer, int round, bool equip)
+    {
+        if (buyer == null || buyer.connectionToClient == null) return RaceRequestResult.Unavailable;
+        var result = buyer.ValidatePurchase(round, out int slot);
+        if (result != RaceRequestResult.Success) return result;
+        for (int i = 0; i < items.Count; i++)
+        {
+            var item = items[i];
+            if (item.Id != itemId) continue;
+            if (NetworkTime.time >= item.SpawnTime + item.Lifetime) return RaceRequestResult.Unavailable;
+            var definition = RaceSession.Instance.Rules.FindItem(item.ItemType);
+            if (definition == null || !RaceSession.Instance.Traps.Supports(definition))
+                return RaceRequestResult.UnsupportedItem;
+            if (!buyer.GetComponent<PlayerCost>().TrySpendCost(item.Price)) return RaceRequestResult.NotEnoughCost;
+            buyer.ServerStore(slot, item.ItemType, equip);
+            item.Purchased = true;
+            items[i] = item;
+            items.RemoveAt(i);
+            return RaceRequestResult.Success;
+        }
+        return RaceRequestResult.Unavailable;
+    }
+
     /// <summary>
     /// 공용 목록에 추가된 아이템을 지정 위치에 UI로 생성한다.
     /// </summary>
     private void ShowItem(int index)
     {
+        if (itemPrefab == null || viewport == null || spawnPoint == null) return;
         ConveyorEntry entry = items[index];
         if (views.ContainsKey(entry.Id))
             return;

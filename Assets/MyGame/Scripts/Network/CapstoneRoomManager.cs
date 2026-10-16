@@ -115,6 +115,11 @@ public class CapstoneRoomManager : NetworkRoomManager
         return true;
     }
 
+    public override void OnRoomServerDisconnect(NetworkConnectionToClient connection)
+    {
+        RaceSession.Instance?.AbortForDisconnect();
+    }
+
     public override void OnRoomClientSceneChanged()
     {
         if (Utils.IsSceneActive(GameplayScene))

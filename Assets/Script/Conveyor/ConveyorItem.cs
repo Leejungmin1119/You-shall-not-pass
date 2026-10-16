@@ -112,14 +112,20 @@ public class ConveyorItem : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (_isCollecting || _requestPending ||
-            eventData.button != PointerEventData.InputButton.Right || _controller == null)
+            (eventData.button != PointerEventData.InputButton.Right &&
+             eventData.button != PointerEventData.InputButton.Left) || _controller == null)
             return;
 
         // 호스트는 응답이 즉시 올 수도 있으므로 요청 전 대기 상태를 설정한다.
         _requestPending = true;
         _image.raycastTarget = false;
-        if (!_controller.RequestCollect(_entry.Id))
-            CompleteCollectRequest();
+        bool sent;
+        if (RaceSession.Instance != null)
+            sent = NetworkClient.localPlayer != null &&
+                NetworkClient.localPlayer.GetComponent<NetworkRaceInventory>()?.RequestBuy(
+                    _entry.Id, eventData.button == PointerEventData.InputButton.Right) == true;
+        else sent = _controller.RequestCollect(_entry.Id);
+        if (!sent) CompleteCollectRequest();
     }
 
     /// <summary>

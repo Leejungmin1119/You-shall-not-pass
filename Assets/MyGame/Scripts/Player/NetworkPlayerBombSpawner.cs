@@ -17,6 +17,7 @@ public class NetworkPlayerBombSpawner : NetworkBehaviour
 
     private void Update()
     {
+        if (RaceSession.Instance != null) return;
         if (!isLocalPlayer || Keyboard.current == null) return;
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby) return;
         if (NetworkManager.singleton is CapstoneRoomManager roomManager && roomManager.IsLobby) return;
@@ -41,6 +42,7 @@ public class NetworkPlayerBombSpawner : NetworkBehaviour
     [Command]
     private void CmdTrySpawnBomb(Vector2 requestedPosition)
     {
+        if (RaceSession.Instance != null) return;
         if (bombPrefab == null)
         {
             TargetBombRejected(connectionToClient, "bombPrefab이 비어 있습니다.");

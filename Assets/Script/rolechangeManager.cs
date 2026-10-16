@@ -28,7 +28,7 @@ public sealed class rolechangeManager : NetworkBehaviour
     public void RegisterPlayer(PlayerState player)
     {
         if (!_players.Contains(player)) _players.Add(player);
-        ApplyRoles();
+        if (RaceSession.Instance == null) ApplyRoles();
     }
 
     /// <summary>
@@ -44,6 +44,7 @@ public sealed class rolechangeManager : NetworkBehaviour
     /// </summary>
     private void Update()
     {
+        if (RaceSession.Instance != null) return;
         if (!isServer || _started || NetworkServer.isLoadingScene ||
             NetworkServer.connections.Count == 0)
             return;
@@ -134,6 +135,7 @@ public sealed class rolechangeManager : NetworkBehaviour
     /// </summary>
     private void ApplyRoles()
     {
+        if (RaceSession.Instance != null) return;
         foreach (PlayerState player in _players)
         {
             if (player == null) continue;

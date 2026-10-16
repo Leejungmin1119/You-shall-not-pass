@@ -102,6 +102,7 @@ public class SpearNetwork : MonoBehaviour
 
     private void OnUseRequest(NetworkConnectionToClient connection, SpearUseRequest request)
     {
+        if (RaceSession.Instance != null) return;
         if (_dropper == null)
         {
             return;
