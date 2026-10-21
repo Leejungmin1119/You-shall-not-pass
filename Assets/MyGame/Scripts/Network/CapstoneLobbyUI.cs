@@ -118,6 +118,12 @@ public class CapstoneLobbyUI : MonoBehaviour
         new Color(.66f, .56f, 1f), new Color(1f, .83f, .35f)
     };
 
+    /// <summary>로비와 게임 HUD에서 동일한 플레이어 식별 색상을 사용한다.</summary>
+    public static Color GetCrewColor(uint playerId)
+    {
+        return CrewColors[(int)(playerId % 4)];
+    }
+
     private void Rounded(Rect rect, Color color, float radius = 12)
     {
         if (circle == null)
@@ -143,7 +149,7 @@ public class CapstoneLobbyUI : MonoBehaviour
 
     private void DrawCrew(float x, float y, uint id, bool ready, bool local, bool preview = false, string playerName = null)
     {
-        Color color = CrewColors[(int)(id % 4)];
+        Color color = GetCrewColor(id);
         // 작은 정비 로봇: 넓은 어깨, 두 눈의 바이저, 안테나.
         Rounded(new Rect(x - 25, y + 27, 50, 12), new Color(0, 0, 0, .3f), 5);
         float step = preview ? 0 : Mathf.Sin(Time.unscaledTime * 10f) * 2f;

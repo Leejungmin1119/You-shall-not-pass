@@ -1,3 +1,4 @@
+using System;
 using Mirror;
 using UnityEngine;
 
@@ -12,24 +13,41 @@ public class PlayerCost : NetworkBehaviour
     [SerializeField, Min(0.01f)] private float MoneyTimer = 5f;
     [SerializeField, Min(1)] private int GetCost = 10;
 
-    [SyncVar] private int currentCost;
+    [SyncVar(hook = nameof(OnCostChanged))] private int currentCost;
     private float autoGainTimer;
     private bool canAutoGain;
+    private PlayerState state;
     public int CurrentCost => currentCost;
+
+    public event Action<int> CostChanged;
+
+    /// <summary>동기화된 잔액 변경을 HUD에 알린다.</summary>
+    private void OnCostChanged(int previous, int current)
+    {
+        CostChanged?.Invoke(current);
+    }
 
     /// <summary>
     /// 서버에서 초기 코스트를 설정하고 지급 설정을 확인한다.
     /// </summary>
     public override void OnStartServer()
     {
-        currentCost = Mathf.Clamp(startingCost, 0, Mathf.Max(0, maxCost));
-        autoGainTimer = 0f;
+        state = GetComponent<PlayerState>();
+        ResetCost();
 
         canAutoGain = maxCost >= 0 && GetCost > 0 && MoneyTimer > 0f &&
             !float.IsNaN(MoneyTimer) && !float.IsInfinity(MoneyTimer);
 
         if (!canAutoGain)
             Debug.LogError("코스트 상한, 지급 간격과 지급량을 확인하세요. 자동 지급을 중단합니다.", this);
+    }
+
+    /// <summary>서버에서 시작 코스트와 자동 획득 대기시간을 함께 초기화한다.</summary>
+    [Server]
+    public void ResetCost()
+    {
+        currentCost = Mathf.Clamp(startingCost, 0, Mathf.Max(0, maxCost));
+        autoGainTimer = 0f;
     }
 
     /// <summary>
@@ -40,6 +58,10 @@ public class PlayerCost : NetworkBehaviour
         if (!isServer || !canAutoGain)
             return;
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
+            return;
+
+        // 맵 소개와 시작 카운트다운은 자동 지급 대기시간에도 포함하지 않는다.
+        if (state != null && state.Race != null && !state.Race.IsRunning)
             return;
 
         autoGainTimer += Time.deltaTime;

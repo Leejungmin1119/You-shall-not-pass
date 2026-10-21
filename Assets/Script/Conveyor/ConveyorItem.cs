@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// 공용 아이템의 이동을 표시하고 우클릭 구매 요청과 투명화 연출을 처리한다.
+/// 공용 아이템 이동과 좌클릭 보관·우클릭 즉시 구매, 투명화 연출을 처리한다.
 /// </summary>
 [RequireComponent(typeof(RectTransform), typeof(UnityEngine.UI.Image))]
 public class ConveyorItem : MonoBehaviour, IPointerClickHandler
@@ -111,18 +111,23 @@ public class ConveyorItem : MonoBehaviour, IPointerClickHandler
     }
 
     /// <summary>
-    /// 우클릭 시 중복 요청을 막고 서버에 구매를 요청한다. 즉시 습득하지 않는다.
+    /// 좌클릭은 인벤토리, 우클릭은 손에 들기로 구분해 서버에 구매를 요청한다.
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
         if (_isCollecting || _requestPending ||
-            eventData.button != PointerEventData.InputButton.Right || _controller == null)
+            _controller == null || (eventData.button != PointerEventData.InputButton.Right &&
+            eventData.button != PointerEventData.InputButton.Left))
             return;
+
+        PurchaseDestination destination = eventData.button == PointerEventData.InputButton.Left
+            ? PurchaseDestination.Inventory
+            : PurchaseDestination.Hand;
 
         // 호스트는 응답이 즉시 올 수도 있으므로 요청 전 대기 상태를 설정한다.
         _requestPending = true;
         _image.raycastTarget = false;
-        if (!_controller.RequestCollect(_entry.Id))
+        if (!_controller.RequestCollect(_entry.Id, destination))
             CompleteCollectRequest();
     }
 

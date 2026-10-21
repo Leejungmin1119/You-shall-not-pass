@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 /// <summary>
 /// 서버에서 손에 든 아이템 하나를 관리하고 소유자의 구매·사용 입력과 커서 표시를 연결한다.
-/// 부활해도 보유 상태는 유지하며 인벤토리나 취소 기능은 아직 사용하지 않는다.
+/// 구매 방식에 따라 인벤토리에 저장하거나 즉시 손에 든다. 부활해도 보유 상태는 유지한다.
 /// </summary>
 [RequireComponent(typeof(PlayerCost), typeof(PlayerState))]
 public sealed class PlayerHeldItem : NetworkBehaviour
@@ -28,7 +28,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     private PointerEventData pointerData;
     public int HeldItemId => heldItemId;
     public bool HasHeldItem => heldItemId != 0;
-    public bool CanHoldItem => state != null && state.Status == PlayerStatus.Alive && !HasHeldItem;
+    public bool CanHoldItem => state != null && state.CanAct && !HasHeldItem;
     public bool CanRequestPurchase => isLocalPlayer && isClient && !requestPending && CanHoldItem;
 
     /// <summary>자기 상태와 게임 씬의 구매·생성 담당을 보관한다.</summary>
@@ -65,6 +65,17 @@ public sealed class PlayerHeldItem : NetworkBehaviour
             foreach (SpriteRenderer marker in previews) if (marker != null) marker.enabled = false;
             return;
         }
+        if (!state.CanAct)
+        {
+            if (conveyor.HeldIcon != null)
+                conveyor.HeldIcon.enabled = false;
+
+            foreach (SpriteRenderer marker in previews)
+                marker.enabled = false;
+
+            return;
+        }
+
         UpdateMissileAim(screenPosition);
         UpdateHeldVisual(screenPosition);
         if (InputManager.AttackWasPressed)
@@ -101,7 +112,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     [Command(channel = Channels.Unreliable)]
     private void CmdUpdateMissileAim(Vector2 position)
     {
-        if (!hasActiveMissiles || NetworkServer.isLoadingScene || itemNetwork == null ||
+        if (!state.CanAct || !hasActiveMissiles || NetworkServer.isLoadingScene || itemNetwork == null ||
             NetworkTime.time < nextServerAimTime || !itemNetwork.IsValidAim(position)) return;
         nextServerAimTime = NetworkTime.time + AimInterval * 0.8f;
         foreach (Missile missile in activeMissiles)
@@ -109,20 +120,21 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     }
 
     /// <summary>빈손인 소유자만 판매 항목 번호를 서버에 전달한다.</summary>
-    public bool RequestPurchase(uint offerId)
+    public bool RequestPurchase(uint offerId, PurchaseDestination destination = PurchaseDestination.Hand)
     {
         if (!CanRequestPurchase || conveyor == null) return false;
         requestPending = true;
-        CmdRequestPurchase(offerId);
+        CmdRequestPurchase(offerId, destination);
         return true;
     }
 
     /// <summary>서버가 판매 목록과 잔액을 확인하고 구매 결과를 요청자에게 보낸다.</summary>
     [Command]
-    private void CmdRequestPurchase(uint offerId)
+    private void CmdRequestPurchase(uint offerId, PurchaseDestination destination)
     {
-        bool success = !NetworkServer.isLoadingScene && conveyor != null && conveyor.TryCollect(offerId, this);
-        TargetPurchaseResult(offerId, success);
+        bool success = !NetworkServer.isLoadingScene && conveyor != null &&
+            conveyor.TryCollect(offerId, this, destination);
+        TargetPurchaseResult(offerId, success, destination);
     }
 
     /// <summary>서버에서 구매 검사가 끝난 아이템을 손에 넣는다.</summary>
@@ -132,11 +144,32 @@ public sealed class PlayerHeldItem : NetworkBehaviour
         heldItemId = data.Id;
     }
 
+    /// <summary>라운드 종료 시 보유 아이템과 이전 미사일 조준 기록을 비운다.</summary>
+    [Server]
+    public void ClearHeldItem()
+    {
+        heldItemId = 0;
+        activeMissiles.Clear();
+        hasActiveMissiles = false;
+        nextUseTime = 0;
+        nextServerAimTime = 0;
+        TargetResetHeldState();
+    }
+
+    /// <summary>소유자 화면의 요청 잠금과 남은 커서·착지 표시도 초기화한다.</summary>
+    [TargetRpc]
+    private void TargetResetHeldState()
+    {
+        requestPending = false;
+        nextAimSendTime = 0;
+        RefreshHeldVisual();
+    }
+
     /// <summary>UI 위 클릭을 차단하고 현재 카메라의 월드 좌표와 화면 상단을 전달한다.</summary>
     public bool RequestUse(Vector2 screenPosition)
     {
         if (!isLocalPlayer || !isClient || requestPending || !HasHeldItem ||
-            state.Status != PlayerStatus.Alive || conveyor == null || conveyor.OutputCamera == null ||
+            !state.CanAct || conveyor == null || conveyor.OutputCamera == null ||
             !IsValidScreenPosition(screenPosition) || IsPointerOverUI(screenPosition))
             return false;
         Camera camera = conveyor.OutputCamera;
@@ -153,7 +186,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     private void CmdRequestUse(Vector2 cursor, float startY)
     {
         ItemData data = conveyor != null ? conveyor.GetItemData(heldItemId) : null;
-        bool success = !NetworkServer.isLoadingScene && state.Status == PlayerStatus.Alive &&
+        bool success = !NetworkServer.isLoadingScene && state.CanAct &&
             NetworkTime.time >= nextUseTime && data != null && itemNetwork != null &&
             itemNetwork.TryUse(data, netIdentity, cursor, startY);
         if (success)
@@ -166,11 +199,16 @@ public sealed class PlayerHeldItem : NetworkBehaviour
 
     /// <summary>구매 응답을 받으면 중복 요청 잠금을 풀고 판매 UI의 대기 상태를 해제한다.</summary>
     [TargetRpc]
-    private void TargetPurchaseResult(uint offerId, bool success)
+    private void TargetPurchaseResult(uint offerId, bool success, PurchaseDestination destination)
     {
         requestPending = false;
         if (conveyor != null) conveyor.CompleteCollectRequest(offerId);
-        Debug.Log(success ? "구매 완료: 아이템을 손에 들었습니다." : "구매 실패: 상품, 잔액 또는 손에 든 상태를 확인하세요.");
+        if (!success)
+            Debug.Log("구매 실패: 상품, 잔액, 빈 슬롯 또는 손에 든 상태를 확인하세요.");
+        else
+            Debug.Log(destination == PurchaseDestination.Inventory
+                ? "구매 완료: 인벤토리에 저장했습니다."
+                : "구매 완료: 아이템을 손에 들었습니다.");
     }
 
     /// <summary>사용 실패 시에도 보유 아이템은 유지하며 다음 입력을 허용한다.</summary>
@@ -195,6 +233,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
         if (conveyor == null || conveyor.HeldIcon == null) return;
         conveyor.HeldIcon.sprite = heldData != null ? heldData.Icon : null;
         conveyor.HeldIcon.enabled = heldData != null;
+        conveyor.HeldIcon.rectTransform.pivot = new Vector2(0.5f, 0.5f);
         conveyor.HeldIcon.rectTransform.localScale = Vector3.one * (heldData != null ? heldData.HeldIconScale : 1f);
         if (heldData == null || heldData.Prefab == null || heldData.Placement != ItemPlacement.Drop) return;
         for (int index = 0; index < heldData.Count; index++)
@@ -204,14 +243,13 @@ public sealed class PlayerHeldItem : NetworkBehaviour
         }
     }
 
-    /// <summary>커서 아이콘은 클릭을 가로채지 않고, UI 밖에서는 착지할 곳을 표시한다.</summary>
+    /// <summary>아이콘 중심을 마우스에 맞추고, UI 밖에서는 착지할 곳을 표시한다.</summary>
     private void UpdateHeldVisual(Vector2 screenPosition)
     {
         if (conveyor.HeldIcon != null)
         {
             conveyor.HeldIcon.enabled = heldData != null;
-            float iconScale = heldData != null ? heldData.HeldIconScale : 1f;
-            conveyor.HeldIcon.rectTransform.position = screenPosition + new Vector2(24f, -24f) * iconScale;
+            conveyor.HeldIcon.rectTransform.position = screenPosition;
         }
         bool show = heldData != null && !requestPending && !IsPointerOverUI(screenPosition) &&
             conveyor.OutputCamera != null && itemNetwork != null;

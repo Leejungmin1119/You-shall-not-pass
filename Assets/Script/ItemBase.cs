@@ -30,6 +30,21 @@ public abstract class ItemBase : MonoBehaviour
         instances[InstanceId] = this;
     }
 
+    /// <summary>라운드 종료 시 등록된 함정을 즉시 멈추고 파괴한다.</summary>
+    public static void ClearAll()
+    {
+        foreach (ItemBase item in instances.Values)
+        {
+            if (item == null)
+                continue;
+
+            item.gameObject.SetActive(false);
+            Destroy(item.gameObject);
+        }
+
+        instances.Clear();
+    }
+
     /// <summary>수신한 위치 또는 폭발 상태를 해당 아이템에 적용한다.</summary>
     public static void ReceiveState(ItemStateMessage message)
     {

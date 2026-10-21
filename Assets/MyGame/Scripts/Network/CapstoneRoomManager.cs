@@ -9,9 +9,17 @@ public class CapstoneRoomManager : NetworkRoomManager
     private PasswordRelayTransport relayTransport;
     private kcp2k.KcpTransport lanTransport;
     public LanRoomConnector Lan { get; private set; }
+
+    /// <summary>실제로 유지되는 방 관리자만 통신과 로비 서비스를 초기화한다.</summary>
     public override void Awake()
     {
         base.Awake();
+
+        // 로비 복귀 시 생성된 중복 관리자는 기본 클래스에서 삭제된다.
+        // 여기서 계속 초기화하면 유지 중인 Transport.active를 덮어쓰게 된다.
+        if (singleton != this)
+            return;
+
         showRoomGUI = false;
         relayTransport = GetComponent<PasswordRelayTransport>();
         lanTransport = GetComponent<kcp2k.KcpTransport>();
@@ -99,6 +107,17 @@ public class CapstoneRoomManager : NetworkRoomManager
         ServerChangeScene(GameplayScene);
     }
 
+    /// <summary>기존 방과 참가자 연결을 유지한 채 전원을 로비로 돌려보낸다.</summary>
+    [Server]
+    public void ReturnToLobby()
+    {
+        if (IsLobby || NetworkServer.isLoadingScene)
+            return;
+
+        // NetworkRoomManager가 기존 로비 플레이어를 복구하고 준비 상태를 해제한다.
+        ServerChangeScene(RoomScene);
+    }
+
     public override bool OnRoomServerSceneLoadedForPlayer(
         NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
     {
@@ -110,6 +129,7 @@ public class CapstoneRoomManager : NetworkRoomManager
             return false;
         }
         profile.SetPlayerName(lobby.PlayerName);
+        profile.SetPlayerColor(CapstoneLobbyUI.GetCrewColor(lobby.netId));
         Debug.Log($"Server: copied player name '{lobby.PlayerName}' to game player.");
         return true;
     }

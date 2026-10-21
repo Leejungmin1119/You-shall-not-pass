@@ -39,6 +39,7 @@ public class ConveyorController : NetworkBehaviour
     private readonly Dictionary<uint, ConveyorItem> views = new Dictionary<uint, ConveyorItem>();
     private float _spawnTimer;
     private uint nextItemId;
+    private RaceManager race;
     public Camera OutputCamera => outputCamera;
     public UnityEngine.UI.Image HeldIcon => heldIcon;
 
@@ -61,6 +62,7 @@ public class ConveyorController : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
+        race = FindFirstObjectByType<RaceManager>(FindObjectsInactive.Include);
         nextItemId = 0;
         _spawnTimer = spawnInterval;
         if (!ValidateCatalog()) enabled = false;
@@ -149,6 +151,9 @@ public class ConveyorController : NetworkBehaviour
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
             return;
 
+        if (race != null && !race.IsRunning)
+            return;
+
         for (int index = items.Count - 1; index >= 0; index--)
         {
             if (NetworkTime.time >= items[index].SpawnTime + items[index].Lifetime)
@@ -160,6 +165,23 @@ public class ConveyorController : NetworkBehaviour
             _spawnTimer -= spawnInterval;
             SpawnItem();
         }
+    }
+
+    /// <summary>이전 라운드 상품을 지우고 새 상품 한 개부터 컨베이어를 다시 시작한다.</summary>
+    [Server]
+    public void ResetForRound()
+    {
+        ClearItems();
+        _spawnTimer = 0;
+        SpawnItem();
+    }
+
+    /// <summary>상품 ID는 재사용하지 않고 목록과 생성 대기시간만 비운다.</summary>
+    [Server]
+    public void ClearItems()
+    {
+        items.Clear();
+        _spawnTimer = 0;
     }
 
     /// <summary>
@@ -197,14 +219,30 @@ public class ConveyorController : NetworkBehaviour
     /// 서버에서 생존 여부, 아이템과 잔액을 확인하고 구매자 코스트만 차감한다.
     /// </summary>
     [Server]
-    public bool TryCollect(uint itemId, PlayerHeldItem buyer)
+    public bool TryCollect(uint itemId, PlayerHeldItem buyer,
+        PurchaseDestination destination = PurchaseDestination.Hand)
     {
+        if (destination != PurchaseDestination.Inventory && destination != PurchaseDestination.Hand)
+            return false;
+
         if (buyer == null || !buyer.isServer || buyer.connectionToClient == null)
             return false;
         if (!buyer.CanHoldItem || !buyer.TryGetComponent(out PlayerCost cost))
             return false;
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
             return false;
+
+        PlayerInventory inventory = null;
+        int emptySlot = -1;
+        if (destination == PurchaseDestination.Inventory)
+        {
+            if (!buyer.TryGetComponent(out inventory))
+                return false;
+
+            emptySlot = inventory.FindEmptySlot();
+            if (emptySlot < 0)
+                return false;
+        }
 
         for (int index = 0; index < items.Count; index++)
         {
@@ -217,7 +255,10 @@ public class ConveyorController : NetworkBehaviour
                 return false;
 
             // 이 구간은 서버의 한 호출 안에서 실행되므로 구매가 중간에 끼어들지 않는다.
-            buyer.HoldItem(data);
+            if (destination == PurchaseDestination.Inventory)
+                inventory.StoreItem(emptySlot, data.Id);
+            else
+                buyer.HoldItem(data);
             // 제거 이유를 함께 보내 구매는 투명화, 만료는 삭제로 표시한다.
             item.Purchased = true;
             items[index] = item;
@@ -278,11 +319,11 @@ public class ConveyorController : NetworkBehaviour
     /// <summary>
     /// 자기 플레이어의 보유 담당을 통해 서버에 구매를 요청한다.
     /// </summary>
-    public bool RequestCollect(uint itemId)
+    public bool RequestCollect(uint itemId, PurchaseDestination destination = PurchaseDestination.Hand)
     {
         if (!CanLocalPlayerCollect)
             return false;
-        return NetworkClient.localPlayer.GetComponent<PlayerHeldItem>().RequestPurchase(itemId);
+        return NetworkClient.localPlayer.GetComponent<PlayerHeldItem>().RequestPurchase(itemId, destination);
     }
 
     /// <summary>

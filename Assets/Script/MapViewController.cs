@@ -1,3 +1,4 @@
+using Mirror;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -22,6 +23,10 @@ public class MapViewController : MonoBehaviour
     private Bounds mapViewBounds;// 전체 맵의 크기를 저장할 변수
     private float lastAspect;//
     private float nextMapViewTime;
+    private PlayerState localPlayer;
+    private PlayerState observedPlayer;
+    private bool wasSpectating;
+    [SerializeField] private RaceManager race;
     public bool IsMapView { get; private set; }
 
     /// <summary>
@@ -73,7 +78,44 @@ public class MapViewController : MonoBehaviour
     /// </summary>
     public void SetTrackingTarget(Transform target)
     {
+        localPlayer = target != null ? target.GetComponent<PlayerState>() : null;
+        observedPlayer = localPlayer;
         trackingCamera.Follow = target;
+    }
+
+    /// <summary>골인하면 미도착자를 관전하고 다음 라운드에는 자기 캐릭터로 복귀한다.</summary>
+    private void UpdateSpectatorTarget()
+    {
+        if (localPlayer == null)
+            return;
+
+        bool spectating = localPlayer.Status == PlayerStatus.Finished;
+
+        if (!spectating)
+        {
+            if (wasSpectating)
+            {
+                observedPlayer = localPlayer;
+                trackingCamera.Follow = localPlayer.transform;
+                SetMapView(false);
+            }
+        }
+        else if (!wasSpectating || observedPlayer == null || observedPlayer.Status == PlayerStatus.Finished)
+        {
+            // 관전 대상이 골인하거나 퇴장했을 때만 접속자 목록을 다시 확인한다.
+            foreach (NetworkIdentity identity in NetworkClient.spawned.Values)
+            {
+                if (identity == null || !identity.TryGetComponent(out PlayerState candidate) ||
+                    candidate == localPlayer || candidate.Status == PlayerStatus.Finished)
+                    continue;
+
+                observedPlayer = candidate;
+                trackingCamera.Follow = candidate.transform;
+                break;
+            }
+        }
+
+        wasSpectating = spectating;
     }
 
     /// <summary>
@@ -81,8 +123,28 @@ public class MapViewController : MonoBehaviour
     /// </summary>
     private void LateUpdate()
     {
-        // 이동확인(이동시 원래시점 복귀)
-        if (InputManager.Movement.x !=  0f || InputManager.Movement.y != 0f)
+        // 시작 연출과 카운트다운 동안에는 Tab과 관전 처리가 카메라를 바꾸지 않는다.
+        if (race != null && race.IsPreparing)
+        {
+            // 다음 라운드 준비에 들어오면 관전하던 대상을 자기 플레이어로 되돌린다.
+            if (wasSpectating && localPlayer != null)
+            {
+                observedPlayer = localPlayer;
+                trackingCamera.Follow = localPlayer.transform;
+                wasSpectating = false;
+            }
+
+            if (IsMapView)
+                SetMapView(false);
+
+            return;
+        }
+
+        UpdateSpectatorTarget();
+
+        // 관전 중 방향키 입력은 Tab 전체 보기를 닫지 않는다.
+        if ((localPlayer == null || localPlayer.CanAct) &&
+            (InputManager.Movement.x != 0f || InputManager.Movement.y != 0f))
         {
             if (IsMapView)
                 SetMapView(false);

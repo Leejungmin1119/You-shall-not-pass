@@ -11,6 +11,7 @@ public class NetworkPlayerController : NetworkBehaviour
     private Rigidbody2D body;
     private PlayerMovement platformMovement;
     private NetworkPlayerHealth playerHealth;
+    private PlayerState playerState;
 
     /// <summary>
     /// 이동에 필요한 컴포넌트를 보관하고 소유권이 확인되기 전에는 물리를 끈다.
@@ -19,6 +20,7 @@ public class NetworkPlayerController : NetworkBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         playerHealth = GetComponent<NetworkPlayerHealth>();
+        playerState = GetComponent<PlayerState>();
         body.simulated = false;
         platformMovement = GetComponent<PlayerMovement>();
         if (platformMovement != null) platformMovement.enabled = false;
@@ -54,7 +56,7 @@ public class NetworkPlayerController : NetworkBehaviour
         var sprite = GetComponent<SpriteRenderer>();
         if (sprite != null)
         {
-            sprite.enabled = true;
+            sprite.enabled = playerState == null || playerState.Status != PlayerStatus.Finished;
             Color color = sprite.color;
             color.a = isLocalPlayer ? 1f : 0.5f;
             sprite.color = color;
@@ -103,6 +105,19 @@ public class NetworkPlayerController : NetworkBehaviour
             MoveInLobby();
             return;
         }
+        // 골인·대기·판 종료 상태는 소유자의 물리와 이동도 함께 멈춘다.
+        bool canMove = playerState == null || playerState.CanAct;
+        body.simulated = canMove;
+
+        if (platformMovement != null)
+            platformMovement.MovementLocked = !canMove;
+
+        if (!canMove)
+        {
+            body.linearVelocity = Vector2.zero;
+            return;
+        }
+
         if (playerHealth != null && playerHealth.IsDead)
         {
             if (platformMovement != null) platformMovement.MovementLocked = true;
