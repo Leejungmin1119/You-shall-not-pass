@@ -25,9 +25,9 @@ public sealed class RaceManager : NetworkBehaviour
     [Header("라운드 시작 연출")]
     [SerializeField, Min(0.1f)] private float mapPreviewDuration = 6f;
     [SerializeField, Min(0f)] private float cameraReturnDuration = 1.5f;
-    [SerializeField, Min(0.1f)] private float countdownThreeDuration = 2f;
-    [SerializeField, Min(0.1f)] private float countdownTwoDuration = 2f;
-    [SerializeField, Min(0.1f)] private float countdownOneDuration = 3f;
+    [SerializeField, Min(0.1f)] private float countdownThreeDuration = 1f;
+    [SerializeField, Min(0.1f)] private float countdownTwoDuration = 1f;
+    [SerializeField, Min(0.1f)] private float countdownOneDuration = 1f;
 
     [SyncVar] private RacePhase phase;
     [SyncVar] private double phaseStartedAt;

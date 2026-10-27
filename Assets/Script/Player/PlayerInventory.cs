@@ -15,10 +15,57 @@ public sealed class PlayerInventory : NetworkBehaviour
     public const int Capacity = 3;
 
     private readonly SyncList<int> items = new SyncList<int>();
+    [SyncVar(hook = nameof(OnSelectionChanged))] private int selectedSlot = -1;
     private PlayerInventoryUI view;
 
     public IReadOnlyList<int> Items => items;
+    public int SelectedSlot => selectedSlot;
     public event Action<int> SlotChanged;
+    public event Action SelectionChanged;
+
+    /// <summary>선택 변경을 소유자의 슬롯 강조 표시에 전달한다.</summary>
+    private void OnSelectionChanged(int previous, int current)
+    {
+        SelectionChanged?.Invoke();
+    }
+
+    /// <summary>슬롯이 비었거나 범위를 벗어났으면 빈 아이템 번호를 반환한다.</summary>
+    public int GetItem(int slot)
+    {
+        return slot >= 0 && slot < items.Count ? items[slot] : 0;
+    }
+
+    /// <summary>같은 슬롯은 취소하고, 빈손이면 저장된 아이템을 손에 든다. 슬롯은 사용 전까지 예약한다.</summary>
+    [Server]
+    internal bool TrySelectSlot(int slot, PlayerHeldItem holder, ItemData data)
+    {
+        if (slot < 0 || slot >= items.Count)
+            return false;
+
+        if (selectedSlot == slot && holder.HasHeldItem)
+        {
+            holder.ReturnHeldItem();
+            selectedSlot = -1;
+            return true;
+        }
+
+        if (!holder.CanHoldItem || data == null || items[slot] != data.Id)
+            return false;
+
+        selectedSlot = slot;
+        holder.HoldItem(data);
+        return true;
+    }
+
+    /// <summary>실제 사용에 성공한 아이템만 원래 슬롯에서 소모하고 선택을 해제한다.</summary>
+    [Server]
+    internal void ConsumeSelectedItem()
+    {
+        if (selectedSlot >= 0 && selectedSlot < items.Count)
+            items[selectedSlot] = 0;
+
+        selectedSlot = -1;
+    }
 
     /// <summary>서버에서 빈 슬롯 3개를 준비한다. 0은 비어 있는 칸이다.</summary>
     public override void OnStartServer()
@@ -75,6 +122,8 @@ public sealed class PlayerInventory : NetworkBehaviour
     [Server]
     public void ClearInventory()
     {
+        selectedSlot = -1;
+
         for (int index = 0; index < items.Count; index++)
             items[index] = 0;
     }

@@ -40,8 +40,19 @@ public class ConveyorController : NetworkBehaviour
     private float _spawnTimer;
     private uint nextItemId;
     private RaceManager race;
+    private RectTransform uiTransform;
+    private Vector2 initialAnchoredPosition;
     public Camera OutputCamera => outputCamera;
     public UnityEngine.UI.Image HeldIcon => heldIcon;
+
+    /// <summary>네트워크 생성 위치가 적용되기 전에 씬의 앵커 기준 UI 위치를 보관한다.</summary>
+    private void Awake()
+    {
+        uiTransform = transform as RectTransform;
+
+        if (uiTransform != null)
+            initialAnchoredPosition = uiTransform.anchoredPosition;
+    }
 
     /// <summary>
     /// 살아 있고 빈손이며 요청 대기 중이 아닌 자기 플레이어만 구매할 수 있다.
@@ -117,6 +128,11 @@ public class ConveyorController : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
+
+        // Mirror가 보낸 호스트의 로컬 좌표 대신 각 Canvas의 앵커 기준 배치를 사용한다.
+        if (uiTransform != null)
+            uiTransform.anchoredPosition = initialAnchoredPosition;
+
         if (itemPrefab == null || viewport == null || spawnPoint == null)
         {
             Debug.LogError("컨베이어의 Item Prefab, Viewport, Spawn Point를 연결하세요.", this);
@@ -232,17 +248,13 @@ public class ConveyorController : NetworkBehaviour
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
             return false;
 
-        PlayerInventory inventory = null;
-        int emptySlot = -1;
-        if (destination == PurchaseDestination.Inventory)
-        {
-            if (!buyer.TryGetComponent(out inventory))
-                return false;
+        // 즉시 구매도 취소할 때 돌아갈 빈 슬롯을 먼저 확보한다.
+        if (!buyer.TryGetComponent(out PlayerInventory inventory))
+            return false;
 
-            emptySlot = inventory.FindEmptySlot();
-            if (emptySlot < 0)
-                return false;
-        }
+        int emptySlot = inventory.FindEmptySlot();
+        if (emptySlot < 0)
+            return false;
 
         for (int index = 0; index < items.Count; index++)
         {
@@ -255,10 +267,11 @@ public class ConveyorController : NetworkBehaviour
                 return false;
 
             // 이 구간은 서버의 한 호출 안에서 실행되므로 구매가 중간에 끼어들지 않는다.
-            if (destination == PurchaseDestination.Inventory)
-                inventory.StoreItem(emptySlot, data.Id);
-            else
-                buyer.HoldItem(data);
+            inventory.StoreItem(emptySlot, data.Id);
+
+            if (destination == PurchaseDestination.Hand)
+                inventory.TrySelectSlot(emptySlot, buyer, data);
+
             // 제거 이유를 함께 보내 구매는 투명화, 만료는 삭제로 표시한다.
             item.Purchased = true;
             items[index] = item;

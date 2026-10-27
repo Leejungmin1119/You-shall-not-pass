@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>좌측 상단에 이름·플레이어 이미지·코스트·점수를 순서대로 표시한다.</summary>
+/// <summary>좌측 상단에 이름·플레이어 이미지·점수를 순서대로 표시한다.</summary>
 public sealed class PlayerInfoHUD : MonoBehaviour
 {
     [Serializable]
@@ -13,10 +13,8 @@ public sealed class PlayerInfoHUD : MonoBehaviour
         [SerializeField] private UnityEngine.UI.Image icon;
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text scoreText;
-        [SerializeField] private TMP_Text costText;
 
         private PlayerScore score;
-        private PlayerCost cost;
         public NetworkPlayerProfile Profile { get; private set; }
 
         /// <summary>칸을 플레이어에 연결하고 현재 값 표시와 변경 알림 구독을 수행한다.</summary>
@@ -31,9 +29,7 @@ public sealed class PlayerInfoHUD : MonoBehaviour
 
             Profile = profile;
             score = profile.GetComponent<PlayerScore>();
-            cost = profile.GetComponent<PlayerCost>();
             score.ScoreChanged += RefreshScore;
-            cost.CostChanged += RefreshCost;
 
             var visual = profile.GetComponent<SpriteRenderer>();
             if (visual != null)
@@ -42,7 +38,6 @@ public sealed class PlayerInfoHUD : MonoBehaviour
             icon.enabled = icon.sprite != null;
             RefreshName();
             RefreshScore(score.Score);
-            RefreshCost(cost.CurrentCost);
         }
 
         /// <summary>값 변경 구독을 해제하고 빈 플레이어 칸으로 되돌린다.</summary>
@@ -51,12 +46,8 @@ public sealed class PlayerInfoHUD : MonoBehaviour
             if (score != null)
                 score.ScoreChanged -= RefreshScore;
 
-            if (cost != null)
-                cost.CostChanged -= RefreshCost;
-
             Profile = null;
             score = null;
-            cost = null;
             if (icon != null)
                 icon.enabled = false;
 
@@ -69,8 +60,6 @@ public sealed class PlayerInfoHUD : MonoBehaviour
             if (scoreText != null)
                 scoreText.text = "Score: —";
 
-            if (costText != null)
-                costText.text = "—";
         }
 
         /// <summary>현재 이름을 표시하며 사용자 이름은 리치 텍스트로 해석하지 않는다.</summary>
@@ -87,11 +76,6 @@ public sealed class PlayerInfoHUD : MonoBehaviour
             scoreText.SetText("Score: {0}", value);
         }
 
-        /// <summary>코스트 변경이 있을 때만 플레이어 정보 아래의 잔액을 갱신한다.</summary>
-        private void RefreshCost(int value)
-        {
-            costText.SetText("{0}", value);
-        }
     }
 
     [SerializeField] private PlayerSlot[] slots = Array.Empty<PlayerSlot>();
@@ -108,8 +92,7 @@ public sealed class PlayerInfoHUD : MonoBehaviour
     /// <summary>게임 플레이어를 등록하고 모든 화면에서 같은 네트워크 ID 순서로 배치한다.</summary>
     public void RegisterPlayer(NetworkPlayerProfile player)
     {
-        if (players.Contains(player) || !player.TryGetComponent<PlayerScore>(out _) ||
-            !player.TryGetComponent<PlayerCost>(out _))
+        if (players.Contains(player) || !player.TryGetComponent<PlayerScore>(out _))
             return;
 
         players.Add(player);
@@ -156,7 +139,7 @@ public sealed class PlayerInfoHUD : MonoBehaviour
         layout.cellSize = new Vector2((width - layout.spacing.x * (columns - 1)) / columns, 152f);
     }
 
-    /// <summary>씬 종료 시 점수·코스트 이벤트 연결을 모두 해제한다.</summary>
+    /// <summary>씬 종료 시 점수 이벤트 연결을 모두 해제한다.</summary>
     private void OnDestroy()
     {
         foreach (PlayerSlot slot in slots)

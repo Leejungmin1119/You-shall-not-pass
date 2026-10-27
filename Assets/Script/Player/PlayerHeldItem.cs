@@ -18,9 +18,11 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     private double nextServerAimTime;
     private const float AimInterval = 0.05f;
     private PlayerState state;
+    private PlayerInventory inventory;
     private ConveyorController conveyor;
     private SpearNetwork itemNetwork;
     private ItemData heldData;
+    private Vector2 heldWorldSize;
     private bool requestPending;
     private double nextUseTime;
     private readonly List<SpriteRenderer> previews = new List<SpriteRenderer>(3);
@@ -35,6 +37,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     private void Awake()
     {
         state = GetComponent<PlayerState>();
+        inventory = GetComponent<PlayerInventory>();
         FindSceneReferences();
     }
 
@@ -77,6 +80,14 @@ public sealed class PlayerHeldItem : NetworkBehaviour
         }
 
         UpdateMissileAim(screenPosition);
+
+        if (InputManager.FirstSkillWasPressed)
+            RequestSelectSlot(0);
+        else if (InputManager.SecondSkillWasPressed)
+            RequestSelectSlot(1);
+        else if (InputManager.ThirdSkillWasPressed)
+            RequestSelectSlot(2);
+
         UpdateHeldVisual(screenPosition);
         if (InputManager.AttackWasPressed)
             RequestUse(screenPosition);
@@ -117,6 +128,43 @@ public sealed class PlayerHeldItem : NetworkBehaviour
         nextServerAimTime = NetworkTime.time + AimInterval * 0.8f;
         foreach (Missile missile in activeMissiles)
             if (missile != null) missile.SetAim(position);
+    }
+
+    /// <summary>소유자가 유효한 슬롯 선택 또는 같은 슬롯의 취소를 서버에 요청한다.</summary>
+    public bool RequestSelectSlot(int slot)
+    {
+        if (!isLocalPlayer || !isClient || requestPending || !state.CanAct ||
+            inventory == null || inventory.GetItem(slot) == 0 ||
+            (HasHeldItem && inventory.SelectedSlot != slot))
+            return false;
+
+        requestPending = true;
+        CmdSelectSlot(slot);
+        return true;
+    }
+
+    /// <summary>서버의 슬롯 내용과 행동 가능 상태로 선택·취소를 판단한다.</summary>
+    [Command]
+    private void CmdSelectSlot(int slot)
+    {
+        if (!NetworkServer.isLoadingScene && state.CanAct && inventory != null && conveyor != null)
+            inventory.TrySelectSlot(slot, this, conveyor.GetItemData(inventory.GetItem(slot)));
+
+        TargetSelectionComplete();
+    }
+
+    /// <summary>선택 요청의 처리가 끝나면 다음 구매·사용 입력을 허용한다.</summary>
+    [TargetRpc]
+    private void TargetSelectionComplete()
+    {
+        requestPending = false;
+    }
+
+    /// <summary>슬롯에 예약된 아이템은 유지하고 손에 든 상태만 취소한다.</summary>
+    [Server]
+    internal void ReturnHeldItem()
+    {
+        heldItemId = 0;
     }
 
     /// <summary>빈손인 소유자만 판매 항목 번호를 서버에 전달한다.</summary>
@@ -191,6 +239,9 @@ public sealed class PlayerHeldItem : NetworkBehaviour
             itemNetwork.TryUse(data, netIdentity, cursor, startY);
         if (success)
         {
+            if (inventory != null)
+                inventory.ConsumeSelectedItem();
+
             heldItemId = 0;
             nextUseTime = NetworkTime.time + Mathf.Max(0f, itemNetwork.UseCooldown);
         }
@@ -234,7 +285,21 @@ public sealed class PlayerHeldItem : NetworkBehaviour
         conveyor.HeldIcon.sprite = heldData != null ? heldData.Icon : null;
         conveyor.HeldIcon.enabled = heldData != null;
         conveyor.HeldIcon.rectTransform.pivot = new Vector2(0.5f, 0.5f);
-        conveyor.HeldIcon.rectTransform.localScale = Vector3.one * (heldData != null ? heldData.HeldIconScale : 1f);
+        conveyor.HeldIcon.rectTransform.localScale = Vector3.one;
+        conveyor.HeldIcon.preserveAspect = false;
+
+        // UI 전용 배율 대신 실제 생성될 프리팹의 스프라이트 크기를 사용한다.
+        heldWorldSize = Vector2.zero;
+        SpriteRenderer visual = heldData != null && heldData.Prefab != null
+            ? heldData.Prefab.GetComponentInChildren<SpriteRenderer>() : null;
+
+        if (visual != null && visual.sprite != null)
+        {
+            Vector3 size = visual.sprite.bounds.size;
+            Vector3 scale = visual.transform.lossyScale;
+            heldWorldSize = new Vector2(size.x * Mathf.Abs(scale.x), size.y * Mathf.Abs(scale.y));
+        }
+
         if (heldData == null || heldData.Prefab == null || heldData.Placement != ItemPlacement.Drop) return;
         for (int index = 0; index < heldData.Count; index++)
         {
@@ -250,6 +315,9 @@ public sealed class PlayerHeldItem : NetworkBehaviour
         {
             conveyor.HeldIcon.enabled = heldData != null;
             conveyor.HeldIcon.rectTransform.position = screenPosition;
+
+            if (heldData != null && conveyor.OutputCamera != null)
+                UpdateHeldIconSize();
         }
         bool show = heldData != null && !requestPending && !IsPointerOverUI(screenPosition) &&
             conveyor.OutputCamera != null && itemNetwork != null;
@@ -266,6 +334,23 @@ public sealed class PlayerHeldItem : NetworkBehaviour
             marker.enabled = hit;
             if (hit) marker.transform.position = new Vector3(x, hit.point.y, 0f);
         }
+    }
+
+    /// <summary>카메라 확대율과 Canvas 배율을 반영해 손 이미지와 실제 함정의 화면 크기를 맞춘다.</summary>
+    private void UpdateHeldIconSize()
+    {
+        Camera camera = conveyor.OutputCamera;
+        Vector3 screenSize = camera.WorldToScreenPoint(new Vector3(heldWorldSize.x, heldWorldSize.y, 0f)) -
+            camera.WorldToScreenPoint(Vector3.zero);
+
+        RectTransform icon = conveyor.HeldIcon.rectTransform;
+        Vector3 parentScale = icon.parent.lossyScale;
+        Vector2 size = new Vector2(
+            Mathf.Abs(screenSize.x) / Mathf.Max(0.0001f, Mathf.Abs(parentScale.x)),
+            Mathf.Abs(screenSize.y) / Mathf.Max(0.0001f, Mathf.Abs(parentScale.y)));
+
+        if (icon.sizeDelta != size)
+            icon.sizeDelta = size;
     }
 
     /// <summary>포커스 전환 중의 잘못된 값과 게임 화면 밖 좌표를 입력 단계에서 차단한다.</summary>
