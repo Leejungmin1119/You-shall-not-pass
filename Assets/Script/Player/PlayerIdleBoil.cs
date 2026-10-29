@@ -4,7 +4,8 @@ using UnityEngine;
 /// <summary>
 /// 충돌과 이동은 그대로 두고 플레이어 그림만 바꾼다.
 /// 지면에서 멈춰 있으면 손그림 3장을 반복(보일링), 지면에서 걸으면 걷기 6장을 반복하고,
-/// 공중에서는 세로 속도에 따라 도약·정점·낙하 그림을 보여 주며, 진행 방향으로 좌우를 뒤집는다.
+/// 공중에서는 세로 속도에 따라 도약·정점·낙하 그림을 보여 주며, 벽에 닿아 내려가면 벽 슬라이드 프레임을 반복한다.
+/// 진행 방향으로 좌우를 뒤집고, 벽 슬라이드 중에는 벽을 향하도록 표시한다.
 /// 대기와 걷기가 같은 스프라이트를 바꾸므로 한 컴포넌트에서 처리한다(나눠 두면 서로 덮어쓴다).
 /// </summary>
 [DisallowMultipleComponent]
@@ -38,7 +39,13 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     // 2면 올라갈 때 약 0.08초, 내려갈 때(중력 2.5배) 약 0.03초 동안 정점이 보인다.
     [SerializeField, Min(0f)] private float apexSpeedBand = 2f;
 
+    [Header("Wall Slide")]
+    [SerializeField] private Sprite[] dollWallSlideFrames = new Sprite[0];
+    [SerializeField] private Sprite[] knightWallSlideFrames = new Sprite[0];
+    [SerializeField, Min(1f)] private float wallSlideFramesPerSecond = 6f;
+
     private float walkPhase;
+    private float wallSlidePhase;
 
     private SpriteRenderer visual;
     private CapsuleCollider2D capsule;
@@ -52,6 +59,7 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     public bool IsBoiling { get; private set; }
     public bool IsWalking { get; private set; }
     public bool IsAirborne { get; private set; }
+    public bool IsWallSliding { get; private set; }
     public int CurrentFrame { get; private set; }
 
     private void Awake()
@@ -68,6 +76,7 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     {
         previousPosition = transform.position;
         stationaryTime = 0f;
+        wallSlidePhase = 0f;
     }
 
     private void LateUpdate()
@@ -101,6 +110,30 @@ public sealed class PlayerIdleBoil : MonoBehaviour
         }
 
         UpdateFacing(controlledHere, horizontalSpeed);
+
+        Sprite[] wallFrames = character == CharacterStyle.Knight ? knightWallSlideFrames : dollWallSlideFrames;
+        int wallDirection = 0;
+        if (alive && !grounded && verticalSpeed < -0.05f)
+            wallDirection = controlledHere && movement.Controller != null
+                ? (movement.Controller.IsTouchingWall() ? movement.Controller.GetWallDirection() : 0)
+                : FindWallDirection();
+
+        IsWallSliding = wallDirection != 0 && wallFrames != null && wallFrames.Length >= 2;
+        if (IsWallSliding)
+        {
+            IsAirborne = true;
+            IsWalking = false;
+            IsBoiling = false;
+            stationaryTime = 0f;
+            walkPhase = 0f;
+            visual.flipX = wallDirection < 0;
+            CurrentFrame = (int)wallSlidePhase % wallFrames.Length;
+            wallSlidePhase += delta * wallSlideFramesPerSecond;
+            if (wallFrames[CurrentFrame] != null)
+                visual.sprite = wallFrames[CurrentFrame];
+            return;
+        }
+        wallSlidePhase = 0f;
 
         Sprite[] airFrames = character == CharacterStyle.Knight ? knightAirFrames : dollAirFrames;
         IsAirborne = alive && !grounded && airFrames != null && airFrames.Length >= 3;
@@ -183,5 +216,31 @@ public sealed class PlayerIdleBoil : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    /// <summary>물리 센서가 꺼진 원격 캐릭터도 동기화된 위치에서 벽의 방향을 확인한다.</summary>
+    private int FindWallDirection()
+    {
+        if (movement == null || movement.moveStats == null || capsule == null)
+            return 0;
+
+        Vector3 center = transform.TransformPoint(capsule.offset);
+        Vector3 scale = transform.lossyScale;
+        float halfWidth = capsule.size.x * Mathf.Abs(scale.x) * 0.5f;
+        float halfHeight = capsule.size.y * Mathf.Abs(scale.y) * 0.5f;
+        for (int direction = -1; direction <= 1; direction += 2)
+        {
+            for (int row = -1; row <= 1; row++)
+            {
+                Vector2 origin = new Vector2(center.x + direction * (halfWidth - 0.015f),
+                    center.y + row * halfHeight * 0.8f);
+                RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.right * direction, 0.13f,
+                    movement.moveStats.GroundLayer);
+                if (hit.collider != null && !hit.collider.isTrigger &&
+                    movement.IsWallSlideable(Vector2.Angle(hit.normal, Vector2.up)))
+                    return direction;
+            }
+        }
+        return 0;
     }
 }

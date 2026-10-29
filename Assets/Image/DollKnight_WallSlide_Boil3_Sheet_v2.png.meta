@@ -1,0 +1,279 @@
+fileFormatVersion: 2
+guid: 38382ccc26b318f46bc60f1e36f40bd0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2200812699547612545
+    second: DollKnight_WallSlide_Boil3_Sheet_v2_0
+  - first:
+      213: 6690882166320370073
+    second: DollKnight_WallSlide_Boil3_Sheet_v2_1
+  - first:
+      213: 5654002038823233600
+    second: DollKnight_WallSlide_Boil3_Sheet_v2_2
+  - first:
+      213: 7752918508699253030
+    second: DollKnight_WallSlide_Boil3_Sheet_v2_3
+  - first:
+      213: -7073256074505886086
+    second: DollKnight_WallSlide_Boil3_Sheet_v2_4
+  - first:
+      213: -7755930161819138410
+    second: DollKnight_WallSlide_Boil3_Sheet_v2_5
+  - first:
+      213: -8660864733871095566
+    second: DollKnight_WallSlide_Boil3_Sheet_v2_6
+  - first:
+      213: -6597355041431195806
+    second: DollKnight_WallSlide_Boil3_Sheet_v2_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 230.87231
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Doll_WallBoil_1
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 544
+        width: 322
+        height: 450
+      alignment: 9
+      pivot: {x: 0.49528256, y: 0.4876812}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fff5285e18d77d4abe4b10b5c1b1097
+      internalID: -699588028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_WallBoil_2
+      rect:
+        serializedVersion: 2
+        x: 612
+        y: 545
+        width: 315
+        height: 450
+      alignment: 9
+      pivot: {x: 0.50152683, y: 0.48990342}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1b1243555fd49446a7ab392b36db4a2
+      internalID: -731280589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_WallBoil_3
+      rect:
+        serializedVersion: 2
+        x: 1125
+        y: 545
+        width: 315
+        height: 450
+      alignment: 9
+      pivot: {x: 0.49200302, y: 0.4876812}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d127b6da78b100478ba1a79cd987aec
+      internalID: -1649212891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_WallBoil_1
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 41
+        width: 336
+        height: 459
+      alignment: 9
+      pivot: {x: 0.49713698, y: 0.51868457}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84eea14ca960a9e44a3ccc4c69dd2bd0
+      internalID: 1614467008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_WallBoil_2
+      rect:
+        serializedVersion: 2
+        x: 610
+        y: 42
+        width: 327
+        height: 458
+      alignment: 9
+      pivot: {x: 0.5001163, y: 0.51981705}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c9241709b0b0744ab5e3372d43734c0
+      internalID: 711010315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_WallBoil_3
+      rect:
+        serializedVersion: 2
+        x: 1119
+        y: 42
+        width: 329
+        height: 458
+      alignment: 9
+      pivot: {x: 0.5016355, y: 0.51981705}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a43a5b3e68ff5be448cd63d523188953
+      internalID: 289808898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: aad40fbcb11aaa74c8f7f0a6d2350922
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Doll_WallBoil_1: -699588028
+      Doll_WallBoil_2: -731280589
+      Doll_WallBoil_3: -1649212891
+      Knight_WallBoil_1: 1614467008
+      Knight_WallBoil_2: 711010315
+      Knight_WallBoil_3: 289808898
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
