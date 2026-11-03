@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1e987e3017470cc458c3182ab1d4736d
+guid: 573293ed28df1904eba4f4d0ec016626
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1980666578750925049
-    second: Trap_RollingBoulder_64_0
+      213: -1758651376915582439
+    second: Trap_RocketFlight_Reference_Flat_64_v1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,9 +46,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 64
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Trap_RollingBoulder_64_0
+      name: Trap_RocketFlight_Reference_Flat_64_v1_0
       rect:
         serializedVersion: 2
-        x: 8
-        y: 8
-        width: 48
-        height: 47
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 707101b9d324384e0800000000000000
-      internalID: -1980666578750925049
+      spriteID: 912f133f3e30897e0800000000000000
+      internalID: -1758651376915582439
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: eacf7d3b236d08046b31f3058e9c4c8b
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Trap_RollingBoulder_64_0: -1980666578750925049
+      Trap_RocketFlight_Reference_Flat_64_v1_0: -1758651376915582439
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

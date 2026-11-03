@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c5cc72111d5df9d44991e37540700e1a
+guid: a3fb2dbc9fcd82146b847164e343051f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6099354819041631855
-    second: Trap_Spear_1_64_0
+      213: 6188581469044965460
+    second: Trap_RocketDown_DollKnight_Flat_64_v1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,11 +46,11 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 0
-  alignment: 9
-  spritePivot: {x: 0.5, y: 0.0625}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 64
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Trap_Spear_1_64_0
+      name: Trap_RocketDown_DollKnight_Flat_64_v1_0
       rect:
         serializedVersion: 2
-        x: 23
-        y: 3
-        width: 19
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f6e1b0464e245a450800000000000000
-      internalID: 6099354819041631855
+      spriteID: 4508dfdbe0242e550800000000000000
+      internalID: 6188581469044965460
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 7b35b07bde585b24faa05f96614f3f4c
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Trap_Spear_1_64_0: 6099354819041631855
+      Trap_RocketDown_DollKnight_Flat_64_v1_0: 6188581469044965460
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
