@@ -8,8 +8,8 @@ using UnityEngine;
 public struct ConveyorEntry
 {
     public uint Id;
+    public int ItemId;
     public int Price;
-    public int ItemType;
     public double SpawnTime;
     public float Lifetime;
     public bool Purchased;
@@ -28,7 +28,9 @@ public class ConveyorController : NetworkBehaviour
     [Header("Settings")]
     [SerializeField, Min(0.01f)] private float spawnInterval = 2f;
     [SerializeField, Min(0.01f)] private float moveSpeed = 80f;
-    [SerializeField, Min(1)] private int itemPrice = 10;
+    [SerializeField] private ItemData[] itemCatalog;
+    [SerializeField] private Camera outputCamera;
+    [SerializeField] private UnityEngine.UI.Image heldIcon;
     [Tooltip("모든 화면에서 동일하게 사용하는 아이템 이동 시간입니다.")]
     [SerializeField, Min(0.01f)] private float travelDuration = 8f;
 
@@ -37,10 +39,24 @@ public class ConveyorController : NetworkBehaviour
     private readonly Dictionary<uint, ConveyorItem> views = new Dictionary<uint, ConveyorItem>();
     private float _spawnTimer;
     private uint nextItemId;
-    private bool raceInitialItemsSpawned;
+    private RaceManager race;
+    private RectTransform uiTransform;
+    private Vector2 initialAnchoredPosition;
+    public IReadOnlyList<ConveyorEntry> Items => items;
+    public Camera OutputCamera => outputCamera;
+    public UnityEngine.UI.Image HeldIcon => heldIcon;
+
+    /// <summary>네트워크 생성 위치가 적용되기 전에 씬의 앵커 기준 UI 위치를 보관한다.</summary>
+    private void Awake()
+    {
+        uiTransform = transform as RectTransform;
+
+        if (uiTransform != null)
+            initialAnchoredPosition = uiTransform.anchoredPosition;
+    }
 
     /// <summary>
-    /// 역할과 코스트가 연결된 자기 수비자만 컨베이어를 클릭할 수 있다.
+    /// 살아 있고 빈손이며 요청 대기 중이 아닌 자기 플레이어만 구매할 수 있다.
     /// </summary>
     public bool CanLocalPlayerCollect
     {
@@ -48,12 +64,7 @@ public class ConveyorController : NetworkBehaviour
         {
             if (!isClient || NetworkClient.localPlayer == null)
                 return false;
-            if (RaceSession.Instance != null)
-                return RaceSession.Instance.IsRacing &&
-                    NetworkClient.localPlayer.GetComponent<NetworkRaceInventory>()?.HeldSlot < 0;
-            PlayerState player = NetworkClient.localPlayer.GetComponent<PlayerState>();
-            return player != null && player.IsRoleManaged && !player.IsAttacker &&
-                player.GetComponent<PlayerCost>() != null;
+            return NetworkClient.localPlayer.TryGetComponent(out PlayerHeldItem player) && player.CanRequestPurchase;
         }
     }
 
@@ -63,8 +74,53 @@ public class ConveyorController : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
+        race = FindFirstObjectByType<RaceManager>(FindObjectsInactive.Include);
         nextItemId = 0;
         _spawnTimer = spawnInterval;
+        if (!ValidateCatalog()) enabled = false;
+    }
+
+    /// <summary>아이템 ID, 가격, 프리팹과 아이콘을 확인해 잘못된 상품 생성을 막는다.</summary>
+    private bool ValidateCatalog()
+    {
+        var ids = new HashSet<int>();
+        if (itemCatalog == null || itemCatalog.Length == 0)
+        {
+            Debug.LogError("컨베이어에 판매할 아이템 데이터를 연결하세요.", this);
+            return false;
+        }
+        int totalWeight = 0;
+        foreach (ItemData data in itemCatalog)
+        {
+            if (data == null || data.Id <= 0 || !ids.Add(data.Id) || data.Price <= 0 ||
+                data.SpawnWeight < 0 || data.Prefab == null || data.Icon == null)
+            {
+                Debug.LogError("상품 ID 중복 또는 아이템 데이터의 누락된 설정을 확인하세요.", this);
+                return false;
+            }
+            totalWeight += data.SpawnWeight;
+        }
+        if (totalWeight <= 0)
+        {
+            Debug.LogError("등장 가중치가 양수인 상품이 하나 이상 필요합니다.", this);
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>판매 UI와 소유자 화면에서 서버와 같은 종류의 데이터를 찾는다.</summary>
+    public ItemData GetItemData(int itemId)
+    {
+        if (itemCatalog == null) return null;
+        foreach (ItemData data in itemCatalog)
+            if (data != null && data.Id == itemId) return data;
+        return null;
+    }
+
+    /// <summary>필드 사용 입력이 판매 영역 위에서 발생했는지 확인한다.</summary>
+    public bool IsPointerOverViewport(Vector2 screenPosition)
+    {
+        return viewport != null && RectTransformUtility.RectangleContainsScreenPoint(viewport, screenPosition, null);
     }
 
     /// <summary>
@@ -73,6 +129,11 @@ public class ConveyorController : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
+
+        // Mirror가 보낸 호스트의 로컬 좌표 대신 각 Canvas의 앵커 기준 배치를 사용한다.
+        if (uiTransform != null)
+            uiTransform.anchoredPosition = initialAnchoredPosition;
+
         if (itemPrefab == null || viewport == null || spawnPoint == null)
         {
             Debug.LogError("컨베이어의 Item Prefab, Viewport, Spawn Point를 연결하세요.", this);
@@ -102,22 +163,12 @@ public class ConveyorController : NetworkBehaviour
     /// </summary>
     private void Update()
     {
-        var race = RaceSession.Instance;
-        if (race != null)
-        {
-            if (!isServer || !race.IsRacing) return;
-            spawnInterval = race.Rules.conveyorSpawnSeconds;
-            travelDuration = race.Rules.conveyorCrossSeconds;
-            if (!raceInitialItemsSpawned)
-            {
-                raceInitialItemsSpawned = true;
-                for (int i = 0; i < 4; i++) SpawnItem(i * travelDuration / 4f);
-                _spawnTimer = 0;
-            }
-        }
         if (!isServer || spawnInterval <= 0f || travelDuration <= 0f)
             return;
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
+            return;
+
+        if (race != null && !race.IsRunning)
             return;
 
         for (int index = items.Count - 1; index >= 0; index--)
@@ -133,51 +184,77 @@ public class ConveyorController : NetworkBehaviour
         }
     }
 
+    /// <summary>이전 라운드 상품을 지우고 새 상품 한 개부터 컨베이어를 다시 시작한다.</summary>
+    [Server]
+    public void ResetForRound()
+    {
+        ClearItems();
+        _spawnTimer = 0;
+        SpawnItem();
+    }
+
+    /// <summary>상품 ID는 재사용하지 않고 목록과 생성 대기시간만 비운다.</summary>
+    [Server]
+    public void ClearItems()
+    {
+        items.Clear();
+        _spawnTimer = 0;
+    }
+
     /// <summary>
     /// 서버에서 고유 ID를 부여해 아이템을 목록에 추가한다. UI는 클라이언트가 만든다.
     /// </summary>
     [Server]
-    private void SpawnItem(float age = 0f)
+    private void SpawnItem()
     {
-        RaceItemDefinition definition = null;
-        var race = RaceSession.Instance;
-        if (race != null)
-        {
-            int totalWeight = 0;
-            foreach (var item in race.Rules.items)
-                if (race.Traps.Supports(item)) totalWeight += Mathf.Max(0, item.weight);
-            if (totalWeight <= 0) return;
-            int pick = Random.Range(0, totalWeight);
-            foreach (var item in race.Rules.items)
-            {
-                if (!race.Traps.Supports(item)) continue;
-                pick -= Mathf.Max(0, item.weight);
-                if (pick < 0) { definition = item; break; }
-            }
-        }
+        ItemData data = ChooseRandomItem();
         items.Add(new ConveyorEntry
         {
             Id = ++nextItemId,
-            Price = definition != null ? definition.price : Mathf.Max(1, itemPrice),
-            ItemType = definition != null ? definition.id : 0,
-            SpawnTime = NetworkTime.time - age,
+            ItemId = data.Id,
+            Price = data.Price,
+            SpawnTime = NetworkTime.time,
             Lifetime = travelDuration
         });
     }
 
+    /// <summary>서버에서 각 상품의 등장 가중치에 따라 하나를 선택한다.</summary>
+    private ItemData ChooseRandomItem()
+    {
+        int total = 0;
+        foreach (ItemData data in itemCatalog) total += data.SpawnWeight;
+        int roll = Random.Range(0, total);
+        foreach (ItemData data in itemCatalog)
+        {
+            roll -= data.SpawnWeight;
+            if (roll < 0) return data;
+        }
+        return itemCatalog[itemCatalog.Length - 1];
+    }
+
     /// <summary>
-    /// 서버에서 수비자 여부, 아이템과 잔액을 확인하고 구매자 코스트만 차감한다.
+    /// 서버에서 생존 여부, 아이템과 잔액을 확인하고 구매자 코스트만 차감한다.
     /// </summary>
     [Server]
-    public bool TryCollect(uint itemId, PlayerCost buyer)
+    public bool TryCollect(uint itemId, PlayerHeldItem buyer,
+        PurchaseDestination destination = PurchaseDestination.Hand)
     {
-        if (RaceSession.Instance != null) return false;
+        if (destination != PurchaseDestination.Inventory && destination != PurchaseDestination.Hand)
+            return false;
+
         if (buyer == null || !buyer.isServer || buyer.connectionToClient == null)
             return false;
-        PlayerState player = buyer.GetComponent<PlayerState>();
-        if (player == null || !player.IsRoleManaged || player.IsAttacker)
+        if (!buyer.CanHoldItem || !buyer.ServerCanPurchase() || !buyer.TryGetComponent(out PlayerCost cost))
             return false;
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
+            return false;
+
+        // 즉시 구매도 취소할 때 돌아갈 빈 슬롯을 먼저 확보한다.
+        if (!buyer.TryGetComponent(out PlayerInventory inventory))
+            return false;
+
+        int emptySlot = inventory.FindEmptySlot();
+        if (emptySlot < 0)
             return false;
 
         for (int index = 0; index < items.Count; index++)
@@ -185,9 +262,17 @@ public class ConveyorController : NetworkBehaviour
             ConveyorEntry item = items[index];
             if (item.Id != itemId)
                 continue;
+            ItemData data = GetItemData(item.ItemId);
             if (NetworkTime.time >= item.SpawnTime + item.Lifetime ||
-                !buyer.TrySpendCost(item.Price))
+                data == null || !cost.TrySpendCost(item.Price))
                 return false;
+
+            // 이 구간은 서버의 한 호출 안에서 실행되므로 구매가 중간에 끼어들지 않는다.
+            inventory.StoreItem(emptySlot, data.Id);
+            buyer.ServerPurchaseAccepted();
+
+            if (destination == PurchaseDestination.Hand)
+                inventory.TrySelectSlot(emptySlot, buyer, data);
 
             // 제거 이유를 함께 보내 구매는 투명화, 만료는 삭제로 표시한다.
             item.Purchased = true;
@@ -198,45 +283,11 @@ public class ConveyorController : NetworkBehaviour
         return false;
     }
 
-    public System.Collections.Generic.IReadOnlyList<ConveyorEntry> Items => items;
-
-    [Server]
-    public void ServerClear()
-    {
-        items.Clear();
-        _spawnTimer = 0;
-    }
-
-    [Server]
-    public RaceRequestResult ServerBuy(uint itemId, NetworkRaceInventory buyer, int round, bool equip)
-    {
-        if (buyer == null || buyer.connectionToClient == null) return RaceRequestResult.Unavailable;
-        var result = buyer.ValidatePurchase(round, out int slot);
-        if (result != RaceRequestResult.Success) return result;
-        for (int i = 0; i < items.Count; i++)
-        {
-            var item = items[i];
-            if (item.Id != itemId) continue;
-            if (NetworkTime.time >= item.SpawnTime + item.Lifetime) return RaceRequestResult.Unavailable;
-            var definition = RaceSession.Instance.Rules.FindItem(item.ItemType);
-            if (definition == null || !RaceSession.Instance.Traps.Supports(definition))
-                return RaceRequestResult.UnsupportedItem;
-            if (!buyer.GetComponent<PlayerCost>().TrySpendCost(item.Price)) return RaceRequestResult.NotEnoughCost;
-            buyer.ServerStore(slot, item.ItemType, equip);
-            item.Purchased = true;
-            items[i] = item;
-            items.RemoveAt(i);
-            return RaceRequestResult.Success;
-        }
-        return RaceRequestResult.Unavailable;
-    }
-
     /// <summary>
     /// 공용 목록에 추가된 아이템을 지정 위치에 UI로 생성한다.
     /// </summary>
     private void ShowItem(int index)
     {
-        if (itemPrefab == null || viewport == null || spawnPoint == null) return;
         ConveyorEntry entry = items[index];
         if (views.ContainsKey(entry.Id))
             return;
@@ -281,19 +332,13 @@ public class ConveyorController : NetworkBehaviour
     }
 
     /// <summary>
-    /// 자기 플레이어의 코스트 컴포넌트를 통해 서버에 구매를 요청한다.
+    /// 자기 플레이어의 보유 담당을 통해 서버에 구매를 요청한다.
     /// </summary>
-    public bool RequestCollect(uint itemId)
+    public bool RequestCollect(uint itemId, PurchaseDestination destination = PurchaseDestination.Hand)
     {
         if (!CanLocalPlayerCollect)
             return false;
-        PlayerCost cost = NetworkClient.localPlayer.GetComponent<PlayerCost>();
-        if (cost == null)
-        {
-            Debug.LogError("네트워크 플레이어 프리팹에 PlayerCost가 필요합니다.", this);
-            return false;
-        }
-        return cost.RequestCollect(itemId);
+        return NetworkClient.localPlayer.GetComponent<PlayerHeldItem>().RequestPurchase(itemId, destination);
     }
 
     /// <summary>

@@ -18,7 +18,7 @@ public class NetworkPlayerHealth : NetworkBehaviour
 
     private void Update()
     {
-        if (RaceSession.Instance != null) return;
+        if (GetComponent<PlayerState>()?.Race != null) return;
         if (!isLocalPlayer || Keyboard.current == null) return;
         if (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby) return;
         if (NetworkManager.singleton is CapstoneRoomManager roomManager && roomManager.IsLobby) return;
@@ -31,7 +31,7 @@ public class NetworkPlayerHealth : NetworkBehaviour
     [Server]
     public void TakeDamage(int damage)
     {
-        if (RaceSession.Instance != null) return;
+        if (GetComponent<PlayerState>()?.Race != null) return;
         if (IsDead || damage <= 0) return;
         health = Mathf.Max(0, health - damage);
         if (IsDead) Die();

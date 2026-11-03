@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public static class SpearNetworkSetup
 {
-    private const string SourceScenePath = "Assets/MyGame/Scenes/NetworkPlatform.unity";
+    private const string SourceScenePath = "Assets/Scenes/NetworkPlatform.unity";
     private const string TestScenePath = "Assets/Scenes/SpearNetworkTest.unity";
 
     [MenuItem("Tools/프로토타입/창 네트워크 시험 씬 만들기")]
@@ -30,7 +30,17 @@ public static class SpearNetworkSetup
         }
 
         EditorSceneManager.OpenScene(TestScenePath);
+        PlaceInActiveScene();
+    }
 
+    /// <summary>
+    /// 지금 열려 있는 씬(예: 로비에서 넘어가는 게임 씬)에 창 투하기와 창 네트워크를 배치한다.
+    /// 창 투하기만 있고 창 네트워크가 없으면, 접속한 클라이언트의 클릭이 받을 곳 없는 메시지가 되어
+    /// 호스트가 그 클라이언트의 접속을 끊는다(Mirror NetworkServer.UnpackAndInvoke).
+    /// </summary>
+    [MenuItem("Tools/프로토타입/현재 씬에 창 네트워크 배치")]
+    public static void PlaceInActiveScene()
+    {
         SpearDropper dropper = Object.FindFirstObjectByType<SpearDropper>(FindObjectsInactive.Include);
         if (dropper == null)
         {

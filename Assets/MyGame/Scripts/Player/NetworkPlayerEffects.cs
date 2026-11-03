@@ -25,12 +25,8 @@ public class NetworkPlayerEffects : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
-        defaultColor = Color.green;
-
-        if (playerRenderer != null && flashRoutine == null)
-        {
-            playerRenderer.color = defaultColor;
-        }
+        // 단색 사각형 시절에는 내 캐릭터를 초록으로 칠해 구분했지만, 캐릭터 그림에 색이 곱해져 원래 색이 사라진다.
+        // 지금은 다른 플레이어가 반투명으로 보여(NetworkPlayerController) 칠하지 않고 그림 원래 색을 쓴다.
 
         Debug.Log($"내 플레이어입니다: netId = {netId}");
     }

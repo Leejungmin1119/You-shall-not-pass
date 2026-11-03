@@ -1,190 +1,184 @@
 using System;
-using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
-// 클라이언트 → 호스트: 커서 위치에 창을 쓰고 싶다.
-public struct SpearUseRequest : NetworkMessage
+/// <summary>서버가 확정해 전원에게 전달하는 아이템 생성 정보.</summary>
+public struct ItemSpawnMessage : NetworkMessage
 {
-    public Vector2 CursorWorldPosition;
+    public int ItemId;
+    public uint InstanceId;
+    public uint OwnerNetId;
+    public Vector2 Position;
+    public bool HasGround;
+    public float GroundY;
+    public float FallSpeed;
+    public double SpawnTime;
 }
 
-// 호스트 → 전원: 이 창이 생겼다. 움직임은 정해져 있어서 위치는 다시 보내지 않는다.
-public struct SpearSpawnMessage : NetworkMessage
+public struct ItemHitMessage : NetworkMessage
 {
-    public uint SpearId;
-    public int OwnerId;
-    public float X;
-    public float StartY;
-}
-
-// 호스트 → 전원: 이 창이 이 캐릭터를 맞혔다.
-public struct SpearHitMessage : NetworkMessage
-{
-    public uint SpearId;
-    public int OwnerId;
+    public uint InstanceId;
+    public uint OwnerNetId;
     public uint HitNetId;
 }
 
+/// <summary>서버가 확정한 이동 또는 폭발 표시 정보.</summary>
+public struct ItemStateMessage : NetworkMessage
+{
+    public uint InstanceId;
+    public Vector2 Position;
+    public float Angle;
+    public double ServerTime;
+    public bool Exploded;
+    public bool GroundExplosion;
+    public bool Expired;
+}
+
 /// <summary>
-/// 창의 네트워크 흐름. 요청 → 호스트 확인 → 전원에게 생성 → 호스트 판정 → 전원에게 결과.
-/// 창은 NetworkIdentity 없이 메시지만으로 동기화한다(서버 담당의 플레이어 프리팹과 무관하게 동작).
+/// 아이템 프리팹 생성과 서버 적중 결과를 전파한다. 구매와 보유 상태는 플레이어가 관리한다.
+/// 기존 씬 연결을 유지하기 위해 컴포넌트 이름은 SpearNetwork를 유지한다.
 /// </summary>
 public class SpearNetwork : MonoBehaviour
 {
-    // 방어자가 연속으로 쓰지 못하게 하는 대기 시간. 기획서 4장 [제안] 값.
+    [SerializeField] private BoxCollider2D useBounds;
     public float UseCooldown = 0.5f;
-
-    // 왕복 지연 측정값이 비정상적으로 클 때 창을 그만큼 앞당기지 않도록 두는 상한.
     public float MaxCatchUpSeconds = 0.3f;
+    public static event Action<ItemHitMessage, bool> HitReceived;
+    private SpearDropper dropper;
+    private ConveyorController conveyor;
+    private FallZone fallZone;
+    private bool clientRegistered;
+    private uint nextInstanceId;
+    public LayerMask GroundLayer => dropper != null ? dropper.GroundLayer : 0;
 
-    // 이 PC가 맞은 것인지(isMine)와 함께 결과를 알린다. 조작 잠금·점수·연출은 여기에 붙인다.
-    public static event Action<SpearHitMessage, bool> HitReceived;
-
-    private SpearDropper _dropper;
-    private bool _serverHandlersRegistered;
-    private bool _clientHandlersRegistered;
-    private uint _nextSpearId;
-    private readonly Dictionary<int, double> _lastUseTime = new Dictionary<int, double>();
-
-    public static void SendUseRequest(Vector2 cursorWorldPosition)
-    {
-        NetworkClient.Send(new SpearUseRequest { CursorWorldPosition = cursorWorldPosition });
-    }
-
+    /// <summary>씬에 연결된 생성기, 상품 목록과 부활 위치 담당을 보관한다.</summary>
     private void Awake()
     {
-        _dropper = FindFirstObjectByType<SpearDropper>();
-        if (_dropper == null)
-        {
-            Debug.LogWarning("[창] SpearDropper가 씬에 없어 네트워크 창을 만들 수 없습니다.");
-        }
+        dropper = FindFirstObjectByType<SpearDropper>();
+        conveyor = FindFirstObjectByType<ConveyorController>(FindObjectsInactive.Include);
+        fallZone = FindFirstObjectByType<FallZone>(FindObjectsInactive.Include);
     }
 
-    private void OnEnable()
-    {
-        Spear.AttackerHit += OnSpearHit;
-    }
+    /// <summary>아이템 종류와 무관한 서버 적중 처리를 구독한다.</summary>
+    private void OnEnable() { ItemBase.PlayerHit += OnItemHit; ItemBase.StateChanged += OnItemState; }
 
-    private void OnDisable()
-    {
-        Spear.AttackerHit -= OnSpearHit;
-    }
+    /// <summary>비활성화 시 정적 이벤트 구독을 해제한다.</summary>
+    private void OnDisable() { ItemBase.PlayerHit -= OnItemHit; ItemBase.StateChanged -= OnItemState; }
 
+    /// <summary>Mirror가 접속 종료 시 지우는 클라이언트 메시지 처리기를 다시 등록한다.</summary>
     private void Update()
     {
-        // 핸들러는 서버/클라이언트가 멈출 때 Mirror가 비운다. 켜질 때마다 다시 등록하도록 상태를 따라간다.
-        if (NetworkServer.active && !_serverHandlersRegistered)
+        if (NetworkClient.active && !clientRegistered)
         {
-            NetworkServer.RegisterHandler<SpearUseRequest>(OnUseRequest);
-            _serverHandlersRegistered = true;
-            _lastUseTime.Clear();
-            _nextSpearId = 0;
+            NetworkClient.RegisterHandler<ItemSpawnMessage>(OnSpawnMessage);
+            NetworkClient.RegisterHandler<ItemHitMessage>(OnHitMessage);
+            NetworkClient.RegisterHandler<ItemStateMessage>(OnStateMessage);
+            clientRegistered = true;
         }
-        else if (!NetworkServer.active)
-        {
-            _serverHandlersRegistered = false;
-        }
-
-        if (NetworkClient.active && !_clientHandlersRegistered)
-        {
-            NetworkClient.RegisterHandler<SpearSpawnMessage>(OnSpawnMessage);
-            NetworkClient.RegisterHandler<SpearHitMessage>(OnHitMessage);
-            _clientHandlersRegistered = true;
-        }
-        else if (!NetworkClient.active)
-        {
-            _clientHandlersRegistered = false;
-        }
+        else if (!NetworkClient.active) clientRegistered = false;
     }
 
-    // ── 호스트 ────────────────────────────────────────────────
-
-    private void OnUseRequest(NetworkConnectionToClient connection, SpearUseRequest request)
+    /// <summary>
+    /// 서버에서 위치와 프리팹을 확인한 뒤 묶음 전체를 같은 프레임에 생성한다.
+    /// </summary>
+    public bool TryUse(ItemData data, NetworkIdentity owner, Vector2 cursor, float startY)
     {
-        if (RaceSession.Instance != null) return;
-        if (_dropper == null)
+        if (!NetworkServer.active || data == null || data.Prefab == null || owner == null ||
+            dropper == null || conveyor == null || useBounds == null ||
+            !IsFinite(cursor.x) || !IsFinite(cursor.y) || !IsFinite(startY) ||
+            data.Count < 1 || data.Count > 3 || data.FallTime <= 0f || data.Lifetime <= 0f)
+            return false;
+        if (!owner.TryGetComponent(out PlayerState actor) || !actor.CanUseItems || owner.connectionToClient == null)
+            return false;
+        foreach (var identity in NetworkServer.spawned.Values)
+            if (identity != null && identity.TryGetComponent(out PlayerState player) && player.IsInvincible &&
+                Vector2.Distance(cursor, player.transform.position) < 1.5f) return false;
+        Bounds area = useBounds.bounds;
+        if (cursor.x < area.min.x || cursor.x > area.max.x || cursor.y < area.min.y || cursor.y > area.max.y ||
+            (data.Placement == ItemPlacement.Drop && (startY <= cursor.y || startY > area.max.y + area.size.x)))
+            return false;
+        var batch = new ItemSpawnMessage[data.Count];
+        for (int index = 0; index < batch.Length; index++)
         {
-            return;
+            float x = cursor.x + (index - (data.Count - 1) * 0.5f) * data.Spacing;
+            if (x < area.min.x || x > area.max.x) return false;
+            Vector2 position = data.Placement == ItemPlacement.Drop ? new Vector2(x, startY) : new Vector2(x, cursor.y);
+            RaycastHit2D ground = data.Placement == ItemPlacement.Drop
+                ? Physics2D.Raycast(position, Vector2.down, Mathf.Max(1f, position.y - area.min.y + 1f), dropper.GroundLayer)
+                : default;
+            float distance = ground ? position.y - ground.point.y : Mathf.Max(1f, position.y - area.min.y);
+            if (data.Placement == ItemPlacement.Drop && distance <= 0.01f) return false;
+            batch[index] = new ItemSpawnMessage {
+                ItemId = data.Id, OwnerNetId = owner.netId, Position = position,
+                HasGround = ground, GroundY = ground ? ground.point.y : 0f,
+                FallSpeed = distance / data.FallTime, SpawnTime = NetworkTime.localTime
+            };
         }
-
-        Vector2 cursor = request.CursorWorldPosition;
-        if (!IsFinite(cursor.x) || !IsFinite(cursor.y))
+        foreach (ItemSpawnMessage prepared in batch)
         {
-            Debug.LogWarning($"[창] 요청 거부(잘못된 좌표): 연결 {connection.connectionId}");
-            return;
+            ItemSpawnMessage spawn = prepared;
+            spawn.InstanceId = ++nextInstanceId;
+            dropper.Spawn(data, spawn, true, 0f);
+            NetworkServer.SendToAll(spawn);
         }
+        return true;
+    }
 
-        double now = NetworkTime.localTime;
-        if (_lastUseTime.TryGetValue(connection.connectionId, out double lastTime) &&
-            now - lastTime < UseCooldown)
-        {
-            Debug.Log($"[창] 요청 거부(재사용 대기): 연결 {connection.connectionId}");
+    /// <summary>호스트는 이미 생성했으므로 원격 화면에서만 표시용 아이템을 만든다.</summary>
+    private void OnSpawnMessage(ItemSpawnMessage message)
+    {
+        if (NetworkServer.active || dropper == null || conveyor == null) return;
+        ItemData data = conveyor.GetItemData(message.ItemId);
+        if (data == null || data.Prefab == null) return;
+        float age = Mathf.Clamp((float)(NetworkTime.predictedTime - message.SpawnTime), 0f, MaxCatchUpSeconds);
+        dropper.Spawn(data, message, false, age);
+    }
+
+    /// <summary>승인된 적중만 기록하고 맞은 본인을 복귀시키며 소유자의 점수를 갱신한다.</summary>
+    private void OnItemHit(ItemBase item, PlayerState player)
+    {
+        if (!NetworkServer.active || !player.CanReceiveHit || fallZone == null ||
+            !fallZone.TryGetRespawnPosition(player.transform.position, out Vector2 position) || !player.TryDie())
             return;
-        }
-
-        _lastUseTime[connection.connectionId] = now;
-
-        NetworkServer.SendToAll(new SpearSpawnMessage
-        {
-            SpearId = ++_nextSpearId,
-            OwnerId = connection.connectionId,
-            X = cursor.x,
-            StartY = _dropper.SpawnHeight,
+        item.ConfirmHit(player);
+        player.Respawn(position);
+        if (item.OwnerNetId != player.netId &&
+            NetworkServer.spawned.TryGetValue(item.OwnerNetId, out NetworkIdentity owner) &&
+            owner.TryGetComponent(out PlayerScore score)) score.AddHitScore();
+        NetworkServer.SendToAll(new ItemHitMessage {
+            InstanceId = item.InstanceId, OwnerNetId = item.OwnerNetId, HitNetId = player.netId
         });
     }
 
-    private void OnSpearHit(Spear spear, PlayerMovement target)
+    /// <summary>서버가 확정한 적중을 화면 연출에 전달한다.</summary>
+    private void OnHitMessage(ItemHitMessage message)
     {
-        if (!NetworkServer.active)
-        {
-            return;
-        }
-
-        NetworkIdentity identity = target.GetComponent<NetworkIdentity>();
-        if (identity == null)
-        {
-            return;
-        }
-
-        NetworkServer.SendToAll(new SpearHitMessage
-        {
-            SpearId = spear.SpearId,
-            OwnerId = spear.OwnerId,
-            HitNetId = identity.netId,
-        });
+        bool mine = NetworkClient.localPlayer != null && NetworkClient.localPlayer.netId == message.HitNetId;
+        HitReceived?.Invoke(message, mine);
     }
 
-    // ── 모든 PC ───────────────────────────────────────────────
-
-    private void OnSpawnMessage(SpearSpawnMessage message)
+    /// <summary>폭발과 소멸은 순서를 보장하고 연속 이동은 최신 위치를 우선하여 전파한다.</summary>
+    private void OnItemState(ItemStateMessage message)
     {
-        if (_dropper == null)
-        {
-            return;
-        }
-
-        // 호스트 창은 판정 기준이라 그대로 두고, 다른 PC는 도착까지 걸린 시간(왕복의 절반)만큼 앞당긴다.
-        // NetworkTime.time은 클라이언트에서 서버보다 늦은 보간용 시간축이라 시작 시각을 빼는 방식은 쓰지 않는다.
-        bool isHost = NetworkServer.active;
-        float catchUp = isHost ? 0f : Mathf.Min((float)(NetworkTime.rtt * 0.5), MaxCatchUpSeconds);
-
-        _dropper.Spawn(message.X, message.StartY, message.SpearId, message.OwnerId, isHost, catchUp);
+        if (NetworkServer.active)
+            NetworkServer.SendToAll(message, (message.Exploded || message.Expired) ? Channels.Reliable : Channels.Unreliable);
     }
 
-    private void OnHitMessage(SpearHitMessage message)
+    /// <summary>호스트의 서버 판정을 중복 실행하지 않고 원격 표시만 갱신한다.</summary>
+    private void OnStateMessage(ItemStateMessage message)
     {
-        bool isMine = NetworkClient.spawned.TryGetValue(message.HitNetId, out NetworkIdentity identity) &&
-                      identity.isLocalPlayer;
-
-        Debug.Log($"[창] 판정 수신: 창 {message.SpearId} (주인 연결 {message.OwnerId}) → " +
-                  (isMine ? "내가 맞음" : $"플레이어 {message.HitNetId}가 맞음"));
-
-        HitReceived?.Invoke(message, isMine);
+        if (!NetworkServer.active) ItemBase.ReceiveState(message);
     }
 
-    private static bool IsFinite(float value)
+    /// <summary>발사자가 보낸 조준점이 유한한 값이고 사용 가능 영역 안인지 확인한다.</summary>
+    public bool IsValidAim(Vector2 position)
     {
-        return !float.IsNaN(value) && !float.IsInfinity(value);
+        if (useBounds == null || !IsFinite(position.x) || !IsFinite(position.y)) return false;
+        Bounds area = useBounds.bounds;
+        return position.x >= area.min.x && position.x <= area.max.x &&
+            position.y >= area.min.y && position.y <= area.max.y;
     }
+
+    /// <summary>외부 입력 좌표에 NaN이나 무한대가 포함되었는지 확인한다.</summary>
+    private static bool IsFinite(float value) { return !float.IsNaN(value) && !float.IsInfinity(value); }
 }

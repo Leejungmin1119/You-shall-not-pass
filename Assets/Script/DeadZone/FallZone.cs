@@ -7,7 +7,6 @@ using Mirror;
 [RequireComponent(typeof(BoxCollider2D), typeof(NetworkIdentity))]
 public sealed class FallZone : NetworkBehaviour
 {
-    [SerializeField] private rolechangeManager roleManager;
     [Header("부활 영역")]
     [SerializeField] private Transform respawnPoint; // 탐색 실패 시 사용할 예비 위치
     [Tooltip("자식 SafeZone 콜라이더들을 담은 부모입니다.")]
@@ -46,67 +45,68 @@ public sealed class FallZone : NetworkBehaviour
     }
 
     /// <summary>
-    /// 서버에서 요청자의 위치를 읽고 다음 공격자의 등장 위치를 탐색한다.
+    /// 서버에서 요청자의 위치로 부활 지점을 찾고 같은 플레이어를 복귀시킨다.
     /// </summary>
     [Command(requiresAuthority = false)]
     private void CmdRequestFall(NetworkConnectionToClient sender = null)
     {
-        if (NetworkServer.isLoadingScene || !isActiveAndEnabled ||
-            sender?.identity == null || roleManager == null)
-            return;
-
-        if (!sender.identity.TryGetComponent(out Rigidbody2D body)) return;
-        if (RaceSession.Instance != null)
-        {
-            ServerTryContact(sender);
-            return;
-        }
-        if (!roleManager.IsCurrentAttacker(sender.identity))
-            return;
-
-        if (TryFindRespawnPosition(body.position, out Vector2 position))
-            roleManager.TryChangeAfterFall(sender.identity, position);
-        else if (respawnPoint != null)
-            roleManager.TryChangeAfterFall(sender.identity, (Vector2)respawnPoint.position);
-        else if (!_reportedMissingRespawn)
-        {
-            _reportedMissingRespawn = true;
-            Debug.LogError("부활 가능한 SafeZone과 예비 부활 위치가 없습니다.", this);
-        }
-    }
-
-    private void Update()
-    {
-        var race = RaceSession.Instance;
-        if (!isServer || race == null || !race.IsRacing) return;
-        foreach (var player in race.Players)
-            if (player != null) ServerTryContact(player.connectionToClient);
+        ServerTryContact(sender);
     }
 
     [Server]
     public bool ServerTryContact(NetworkConnectionToClient sender)
     {
-        var race = RaceSession.Instance;
-        if (race == null || !race.IsRacing || NetworkServer.isLoadingScene ||
-            !isActiveAndEnabled || sender?.identity == null ||
-            !sender.identity.TryGetComponent(out PlayerState player) || player.Status != PlayerStatus.Alive)
-            return false;
+        if (NetworkServer.isLoadingScene || !isActiveAndEnabled || sender?.identity == null ||
+            !sender.identity.TryGetComponent(out PlayerState player)) return false;
         var zone = GetComponent<BoxCollider2D>();
-        var collider = player.GetComponent<Collider2D>();
-        if (!zone.enabled || collider == null) return false;
+        var body = player.GetComponent<Collider2D>();
+        if (!zone.enabled || body == null) return false;
         Bounds area = zone.bounds;
         area.Expand(0.5f);
-        if (!area.Intersects(collider.bounds)) return false;
-        if (TryFindRespawnPosition(player.transform.position, out var safe)) player.Respawn(safe);
-        else if (respawnPoint != null) player.Respawn(respawnPoint.position);
-        else return false;
-        return true;
+        if (!area.Intersects(body.bounds)) return false;
+        if (TryGetRespawnPosition(player.transform.position, out Vector2 position))
+        {
+            if (!player.TryDie()) return false;
+            player.Respawn(position);
+            return true;
+        }
+        if (!_reportedMissingRespawn)
+        {
+            _reportedMissingRespawn = true;
+            Debug.LogError("부활 가능한 SafeZone과 예비 부활 위치가 없습니다.", this);
+        }
+        return false;
+    }
+
+    private void Update()
+    {
+        if (!isServer) return;
+        foreach (var identity in NetworkServer.spawned.Values)
+            if (identity != null && identity.GetComponent<PlayerState>() != null)
+                ServerTryContact(identity.connectionToClient);
+    }
+
+    /// <summary>
+    /// 지정 위치 뒤쪽의 부활 위치를 찾는다. 함정 적중도 같은 SafeZone 규칙을 사용한다.
+    /// 탐색에 실패하면 예비 부활 위치를 쓰고, 그것도 없으면 false를 반환한다.
+    /// </summary>
+    [Server]
+    public bool TryGetRespawnPosition(Vector2 from, out Vector2 position)
+    {
+        if (TryFindRespawnPosition(from, out position))
+            return true;
+        if (respawnPoint != null)
+        {
+            position = respawnPoint.position;
+            return true;
+        }
+        return false;
     }
 
     /// <summary>
     /// 고정된 Y에서 뒤쪽 후보를 확인하고, SafeZone이 있으면 Ray 시작 위치를 반환한다.
     /// </summary>
-    public bool TryFindRespawnPosition(Vector2 fallPosition, out Vector2 position)
+    private bool TryFindRespawnPosition(Vector2 fallPosition, out Vector2 position)
     {
         position = default;
         if (safeZoneBounds == null)

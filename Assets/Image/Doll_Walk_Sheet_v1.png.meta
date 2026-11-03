@@ -1,0 +1,273 @@
+fileFormatVersion: 2
+guid: 0fde5104f2cdd874db319868319619a4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8584676733531714952
+    second: Doll_Walk_Sheet_v1_0
+  - first:
+      213: -525999172123124406
+    second: Doll_Walk_Sheet_v1_1
+  - first:
+      213: -300547508660811391
+    second: Doll_Walk_Sheet_v1_2
+  - first:
+      213: -3499827081849559893
+    second: Doll_Walk_Sheet_v1_3
+  - first:
+      213: 5334692402346126863
+    second: Doll_Walk_Sheet_v1_4
+  - first:
+      213: -2123794870388218960
+    second: Doll_Walk_Sheet_v1_5
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 215.51515
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Doll_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 535
+        width: 303
+        height: 453
+      alignment: 9
+      pivot: {x: 0.5, y: 0.47543532}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cfd166ebc4f2fe49a6bf1be180f6705
+      internalID: -349958701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 535
+        width: 299
+        height: 446
+      alignment: 9
+      pivot: {x: 0.50167227, y: 0.48065513}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f9f6c01b4dcd9b4294c7568e3d8e8e5
+      internalID: 410542083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 536
+        width: 302
+        height: 456
+      alignment: 9
+      pivot: {x: 0.5, y: 0.47230744}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d79d1dac005f65c4db40af223b859c59
+      internalID: -1045625493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 38
+        width: 300
+        height: 445
+      alignment: 9
+      pivot: {x: 0.5, y: 0.48398253}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41181a8e976627c43a351668e82997e1
+      internalID: -77602884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 628
+        y: 37
+        width: 302
+        height: 443
+      alignment: 9
+      pivot: {x: 0.5, y: 0.48616755}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 946facc18f246fc4db75aa3859adde52
+      internalID: -236894767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 36
+        width: 304
+        height: 448
+      alignment: 9
+      pivot: {x: 0.50164473, y: 0.48074156}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f575abc0677d3bd41b69c00e937f93d1
+      internalID: -595735127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 03bbe8a79c11f7640ac3558033002a70
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Doll_Walk_1: -349958701
+      Doll_Walk_2: 410542083
+      Doll_Walk_3: -1045625493
+      Doll_Walk_4: -77602884
+      Doll_Walk_5: -236894767
+      Doll_Walk_6: -595735127
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

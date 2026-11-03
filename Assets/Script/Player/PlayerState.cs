@@ -8,155 +8,163 @@ public enum PlayerStatus
     Finished
 }
 
-/// <summary>
-/// 서버에서 플레이어의 사망 상태와 지정 위치 배치를 처리한다.
-/// </summary>
-[RequireComponent(typeof(PlayerScore), typeof(PlayerMovement), typeof(Rigidbody2D))]// 3개의 컴포넌트 요구
-[RequireComponent(typeof(NetworkIdentity), typeof(NetworkTransformReliable))]// 2개 +추가요구
+/// <summary>개인 사망·골인 상태와 서버가 지정한 위치 복구를 처리한다.</summary>
+[RequireComponent(typeof(PlayerScore), typeof(PlayerMovement), typeof(Rigidbody2D))]
+[RequireComponent(typeof(NetworkIdentity), typeof(NetworkTransformReliable))]
 public sealed class PlayerState : NetworkBehaviour
 {
-    private PlayerScore _score;
     private PlayerMovement _movement;
     private Rigidbody2D _body;
     private NetworkTransformReliable _networkTransform;
+    private Renderer[] _renderers;
+    private Canvas[] _canvases;
+    private Collider2D[] _colliders;
     private double _lastDeathStep = double.NegativeInfinity;
-    private bool _goalCompleted;
-    [SyncVar] private double invincibleUntil;
+    [SyncVar] private double _invincibleUntil;
     [SyncVar] private int inventoryCount;
     public int InventoryCount => inventoryCount;
-    public bool IsInvincible => NetworkTime.time < invincibleUntil;
-    public bool IsDamageable => status == PlayerStatus.Alive && !IsInvincible &&
-        (RaceSession.Instance == null || RaceSession.Instance.IsRacing);
-    [SyncVar] private PlayerStatus status = PlayerStatus.Alive;
+    public bool IsInvincible => NetworkTime.time < _invincibleUntil;
+    private const double RespawnInvincibleTime = 0.5;
+
+    [SyncVar(hook = nameof(OnStatusChanged))] private PlayerStatus status = PlayerStatus.Alive;
+
     public PlayerStatus Status => status;
-    private rolechangeManager _roleManager;
+    public RaceManager Race { get; private set; }
+    public bool CanAct => status == PlayerStatus.Alive && (Race == null || Race.IsRunning);
+    public bool CanUseItems => status != PlayerStatus.Dead && (Race == null || Race.IsRunning);
+    public bool CanReceiveHit => CanAct && NetworkTime.time >= _invincibleUntil;
 
-    public bool IsRoleManaged => _roleManager != null;
-    public bool IsAttacker => _roleManager != null && _roleManager.IsCurrentAttacker(netIdentity);
+    [Server]
+    public void ServerSetInventoryCount(int count) => inventoryCount = count;
 
+    /// <summary>상태 표시와 위치 복구에 필요한 자기 컴포넌트와 레이스 담당을 보관한다.</summary>
     private void Awake()
     {
-        _score = GetComponent<PlayerScore>();
         _movement = GetComponent<PlayerMovement>();
         _body = GetComponent<Rigidbody2D>();
         _networkTransform = GetComponent<NetworkTransformReliable>();
-        // Mirror가 아직 활성화하지 않은 씬 관리자도 찾아 초기 생성 순서에 영향을 받지 않는다.
-        _roleManager = FindFirstObjectByType<rolechangeManager>(FindObjectsInactive.Include);
+        _renderers = GetComponentsInChildren<Renderer>(true);
+        _canvases = GetComponentsInChildren<Canvas>(true);
+        _colliders = GetComponentsInChildren<Collider2D>(true);
+        // Mirror가 씬 오브젝트를 활성화하기 전에 플레이어가 생성될 수도 있다.
+        Race = FindFirstObjectByType<RaceManager>(FindObjectsInactive.Include);
     }
 
-    /// <summary>
-    /// 서버 시작시 초기화
-    /// </summary>
+    /// <summary>서버의 개인 기록을 초기화하고 레이스 참가자로 등록한다.</summary>
     public override void OnStartServer()
     {
+        base.OnStartServer();
         status = PlayerStatus.Alive;
         _lastDeathStep = double.NegativeInfinity;
-        _goalCompleted = false;
-        if (RaceSession.Instance != null) RaceSession.Instance.Register(this);
-        else _roleManager?.RegisterPlayer(this);
+        _invincibleUntil = 0;
+
+        if (Race != null)
+            Race.RegisterPlayer(this);
     }
 
-    /// <summary>
-    /// 클라이언트에서 역할 관리 대상에 등록하고 현재 공격자 상태를 적용한다.
-    /// </summary>
-    public override void OnStartClient()
-    {
-        if (_roleManager == null)
-            _roleManager = FindFirstObjectByType<rolechangeManager>(FindObjectsInactive.Include);
-        if (RaceSession.Instance != null) RaceSession.Instance.Register(this);
-        else _roleManager?.RegisterPlayer(this);
-    }
-
-    /// <summary>
-    /// 제거된 플레이어를 역할 관리 목록에서 해제한다.
-    /// </summary>
-    public override void OnStopClient()
-    {
-        RaceSession.Instance?.Unregister(this);
-        _roleManager?.UnregisterPlayer(this);
-    }
-
-    /// <summary>
-    /// 서버에서 연결이 종료된 플레이어를 역할 관리 목록에서 해제한다.
-    /// </summary>
+    /// <summary>접속 종료 시 레이스 참가 목록에서 자신을 제거한다.</summary>
     public override void OnStopServer()
     {
-        RaceSession.Instance?.Unregister(this);
-        _roleManager?.UnregisterPlayer(this);
+        if (Race != null && Race.isServer)
+            Race.UnregisterPlayer(this);
+
+        base.OnStopServer();
     }
 
-    /// <summary>
-    /// 골인 되었을시 서버에서 골인 처리,점수 획득 메서드 호출
-    /// </summary>
-    [Server]
-    public bool TryCompleteGoal()
+    /// <summary>처음 수신한 상태가 이미 골인 상태여도 캐릭터 표시를 맞춘다.</summary>
+    public override void OnStartClient()
     {
-        if (status != PlayerStatus.Alive || _goalCompleted ||
-            _lastDeathStep == Time.fixedTimeAsDouble)
+        base.OnStartClient();
+        ApplyStatus();
+    }
+
+    /// <summary>서버에서 같은 물리 프레임의 사망과 중복 골인을 거절한다.</summary>
+    [Server]
+    public bool FinishRace()
+    {
+        if (!CanAct || _lastDeathStep == Time.fixedTimeAsDouble)
             return false;
 
-        if (RaceSession.Instance != null)
-            return RaceSession.Instance.TryFinish(this);
-        _goalCompleted = true;
-        _score.AddGoalScore();
+        status = PlayerStatus.Finished;
+        ApplyStatus();
         return true;
     }
 
-    /// <summary>
-    /// 서버에서 중복 사망을 막고 기존 공격자를 사망 상태로 변경한다.
-    /// </summary>
+    /// <summary>골인 상태가 동기화되면 캐릭터 표시와 개인 조작을 갱신한다.</summary>
+    private void OnStatusChanged(PlayerStatus previous, PlayerStatus current)
+    {
+        ApplyStatus();
+    }
+
+    /// <summary>네트워크 오브젝트는 유지하고 골인 캐릭터의 표시와 충돌만 끈다.</summary>
+    private void ApplyStatus()
+    {
+        bool visible = status != PlayerStatus.Finished;
+
+        foreach (Renderer visual in _renderers)
+            visual.enabled = visible;
+
+        foreach (Canvas canvas in _canvases)
+            canvas.enabled = visible;
+
+        foreach (Collider2D collider in _colliders)
+            collider.enabled = visible;
+
+        if (!isLocalPlayer)
+            return;
+
+        _movement.MovementLocked = !CanAct;
+
+        if (!visible)
+        {
+            _movement.ResetMovement();
+            _body.simulated = false;
+        }
+    }
+
+    /// <summary>서버에서 중복 사망과 골인·판 종료 후의 사망 요청을 막는다.</summary>
     [Server]
     public bool TryDie()
     {
-        if (status == PlayerStatus.Dead || _lastDeathStep == Time.fixedTimeAsDouble)
+        if (!CanAct || _lastDeathStep == Time.fixedTimeAsDouble)
             return false;
 
         _lastDeathStep = Time.fixedTimeAsDouble;
-        status = PlayerStatus.Dead;// 사망으로 변경
-
-        Debug.Log("낙사로 인한 사망");
-
+        status = PlayerStatus.Dead;
+        Debug.Log($"플레이어 사망: netId={netId}");
         return true;
     }
 
-    /// <summary>
-    /// 서버와 모든 관찰자의 위치를 순간 이동시키고 소유자의 이동 상태도 초기화한다.
-    /// </summary>
+    /// <summary>다음 라운드에서 개인 기록과 골인 상태를 비우고 출발 위치로 복구한다.</summary>
+    [Server]
+    public void ResetForRound(Vector2 position)
+    {
+        _lastDeathStep = double.NegativeInfinity;
+        Respawn(position);
+    }
+
+    /// <summary>관찰자와 소유자의 위치를 함께 복구하고 짧은 피격 무적을 적용한다.</summary>
     [Server]
     public void Respawn(Vector2 position)
     {
         Vector3 destination = new Vector3(position.x, position.y, transform.position.z);
         _networkTransform.ServerTeleport(destination, transform.rotation);
         RpcResetMovement(position);
-        _goalCompleted = false;
 
-        // 부활 처리 후 상태 변경
+        _invincibleUntil = NetworkTime.time + RespawnInvincibleTime;
         status = PlayerStatus.Alive;
-        if (RaceSession.Instance != null)
-            invincibleUntil = NetworkTime.time + RaceSession.Instance.Rules.invincibleSeconds;
+        ApplyStatus();
     }
 
-    [Server]
-    public void ServerMarkFinished()
-    {
-        _goalCompleted = true;
-        status = PlayerStatus.Finished;
-    }
-
-    [Server]
-    public void ServerSetInventoryCount(int count) => inventoryCount = count;
-
-    /// <summary>
-    /// 실제 이동을 실행하는 소유자만 물리 위치와 속도, 점프와 입력 상태를 초기화한다.
-    /// </summary>
+    /// <summary>소유자의 물리 위치와 점프·속도·입력 버퍼를 초기화한다.</summary>
     [ClientRpc]
     private void RpcResetMovement(Vector2 position)
     {
         if (!isLocalPlayer)
             return;
+
         _body.position = position;
         _movement.ResetMovement();
         Physics2D.SyncTransforms();
     }
-
 }

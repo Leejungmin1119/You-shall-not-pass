@@ -1,0 +1,242 @@
+fileFormatVersion: 2
+guid: 17ee333d05804804890164be19d280a2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5012981347667130409
+    second: DollKnight_WallSlide_Sheet_v1_0
+  - first:
+      213: 1150909947986243682
+    second: DollKnight_WallSlide_Sheet_v1_1
+  - first:
+      213: 2149861706355716997
+    second: DollKnight_WallSlide_Sheet_v1_2
+  - first:
+      213: -3303697712127814678
+    second: DollKnight_WallSlide_Sheet_v1_3
+  - first:
+      213: 5685229344419212621
+    second: DollKnight_WallSlide_Sheet_v1_4
+  - first:
+      213: -5103898318428490975
+    second: DollKnight_WallSlide_Sheet_v1_5
+  - first:
+      213: -2213539570695327713
+    second: DollKnight_WallSlide_Sheet_v1_6
+  - first:
+      213: 788799189129106664
+    second: DollKnight_WallSlide_Sheet_v1_7
+  - first:
+      213: 2908816468681254002
+    second: DollKnight_WallSlide_Sheet_v1_8
+  - first:
+      213: -666947571580777740
+    second: DollKnight_WallSlide_Sheet_v1_9
+  - first:
+      213: 2784653282079511701
+    second: DollKnight_WallSlide_Sheet_v1_10
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 234.70758
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Doll_WallSlide_1
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 595
+        width: 334
+        height: 480
+      alignment: 9
+      pivot: {x: 0.48499694, y: 0.5118608}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 873d86c10cb9e1a4989ecb7798f6b52f
+      internalID: -387195980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_WallSlide_2
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 579
+        width: 324
+        height: 472
+      alignment: 9
+      pivot: {x: 0.49533626, y: 0.50358725}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34810ba484045db4cbc74b54ba1ce582
+      internalID: 1418894968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_WallSlide_1
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 62
+        width: 336
+        height: 470
+      alignment: 9
+      pivot: {x: 0.489649, y: 0.52228224}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8920ed245935775478a3562b52fdcfc8
+      internalID: 995123923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_WallSlide_2
+      rect:
+        serializedVersion: 2
+        x: 757
+        y: 40
+        width: 331
+        height: 468
+      alignment: 9
+      pivot: {x: 0.49553484, y: 0.5202407}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93004319d5c66a94f81c2226fe516d88
+      internalID: 1775374340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 99170a264dc448f4e9c042d32f56282f
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Doll_WallSlide_1: -387195980
+      Doll_WallSlide_2: 1418894968
+      Knight_WallSlide_1: 995123923
+      Knight_WallSlide_2: 1775374340
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -65,36 +65,37 @@ public sealed class RaceNetworkSmokeProbe : MonoBehaviour
         }
         if (NetworkClient.localPlayer != null && NetworkClient.localPlayer.TryGetComponent(out CapstoneRoomPlayer room) && !room.IsReady)
             room.ToggleReady();
-        var race = RaceSession.Instance;
+        var race = FindFirstObjectByType<RaceManager>();
         if (race == null) return;
-        maxObservedTraps = Mathf.Max(maxObservedTraps, race.Traps.Traps.Count);
-        if (exerciseActions && race.IsRacing && NetworkClient.localPlayer != null)
+        maxObservedTraps = Mathf.Max(maxObservedTraps, ItemBase.ActiveCount);
+        if (exerciseActions && race.IsRunning && NetworkClient.localPlayer != null)
         {
-            var inventory = NetworkClient.localPlayer.GetComponent<NetworkRaceInventory>();
+            var inventory = NetworkClient.localPlayer.GetComponent<PlayerHeldItem>();
             var conveyor = FindFirstObjectByType<ConveyorController>();
             if (actionStep == 0 && conveyor != null && conveyor.Items.Count > 0)
             {
-                inventory.RequestCompleted += (id, result) => results.Add(result.ToString());
+                inventory.RequestCompleted += (operation, success) => results.Add(operation + ":" + success);
                 actionStep = 1;
-                inventory.RequestBuy(conveyor.Items[0].Id, true);
+                inventory.RequestPurchase(conveyor.Items[0].Id, PurchaseDestination.Hand);
             }
-            else if (actionStep == 1 && inventory.HeldSlot >= 0 && results.Count == 1)
+            else if (actionStep == 1 && inventory.HasHeldItem && results.Count == 1)
             {
                 actionStep = 2;
-                inventory.RequestUse(race.FieldBounds.center);
+                var output = conveyor.OutputCamera;
+                inventory.RequestUse(new Vector2(output.pixelWidth * 0.65f, output.pixelHeight * 0.4f));
             }
         }
         var report = new Report
         {
-            phase = race.Phase.ToString(), round = race.Round, deadline = race.PhaseDeadline,
+            phase = race.Phase.ToString(), round = race.RoundNumber, deadline = race.EndsAt,
             localPlayer = NetworkClient.localPlayer != null ? NetworkClient.localPlayer.netId : 0,
             maxObservedTraps = maxObservedTraps, requestResults = results.ToArray(),
-            traps = race.Traps.Traps.Count, winners = race.Winners.ToArray(), endReason = race.EndReason.ToString(),
-            players = race.Players.Where(p => p != null).Select(p => new Player
+            traps = ItemBase.ActiveCount, winners = race.Winners.ToArray(), endReason = race.EndReason.ToString(),
+            players = race.Participants.Where(p => p != null).Select(p => new Player
             {
                 id = p.netId, local = p.isLocalPlayer, inventoryCount = p.InventoryCount,
-                visibleSlots = p.GetComponent<NetworkRaceInventory>().Slots.ToArray(),
-                heldSlot = p.GetComponent<NetworkRaceInventory>().HeldSlot,
+                visibleSlots = p.GetComponent<PlayerInventory>().Items.ToArray(),
+                heldSlot = p.GetComponent<PlayerInventory>().SelectedSlot,
                 cost = p.GetComponent<PlayerCost>().CurrentCost,
                 score = p.GetComponent<PlayerScore>().Score, status = p.Status.ToString()
             }).ToArray()

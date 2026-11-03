@@ -1,174 +1,133 @@
-using System;
-using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 /// <summary>
-/// 수직으로 떨어져 지면에 꽂힌 뒤 일정 시간 남았다가 사라지는 창.
-/// 움직임이 정해져 있어서 모든 PC가 각자 계산하고, 적중 판정은 판정자(호스트) PC에서만 한다.
+/// 확정된 착지점까지 곧게 낙하하고, 꽂힌 뒤 투명해지며 접촉 판정을 유지한다.
 /// </summary>
-public class Spear : MonoBehaviour
+[RequireComponent(typeof(SpriteRenderer))]
+public sealed class Spear : ItemBase
 {
-    // 판정자 PC에서 공격자가 맞은 순간 한 번 알린다. 라운드 흐름이 생기면 여기에 붙어
-    // 적중자 +1점과 라운드 종료를 처리한다.
-    public static event Action<Spear, PlayerMovement> AttackerHit;
+    [Tooltip("투명한 여백을 제외한 창의 로컬 판정 크기입니다. 아래쪽 끝을 기준으로 합니다.")]
+    [SerializeField] private Vector2 hitSize = new Vector2(0.25f, 0.86f);
+    private SpriteRenderer visual;
+    private SpriteRenderer warning;
+    private Vector2 startPosition;
+    private float groundY;
+    private bool hasGround;
+    private float speed;
+    private float age;
+    private float stuckAge;
+    private bool stuck;
+    public bool IsStuck => stuck;
 
-    // 구덩이 위로 떨어뜨리면 닿을 지면이 없어 영원히 남으므로, 이만큼 떨어지면 없앤다.
-    private const float MaxFallDistance = 50f;
-
-    private const float TargetRefreshInterval = 0.25f;
-
-    private static PlayerMovement[] s_targets = Array.Empty<PlayerMovement>();
-    private static float s_targetsRefreshedAt = float.NegativeInfinity;
-
-    private float _fallSpeed;
-    private float _stuckDuration;
-    private LayerMask _groundLayer;
-    private bool _isJudge;
-    private readonly HashSet<int> raceVictims = new HashSet<int>();
-
-    private bool _isStuck;
-    private float _stuckTimer;
-    private float _fallenDistance;
-
-    public uint SpearId { get; private set; }
-    public int OwnerId { get; private set; }
-    public bool IsStuck => _isStuck;
-    public bool HasHit { get; private set; }
-    public PlayerMovement HitAttacker { get; private set; }
-
-    /// <param name="isJudge">이 PC가 적중을 판정하는지. 호스트이거나 네트워크가 없을 때만 true.</param>
-    /// <param name="catchUpSeconds">
-    /// 요청이 호스트를 거쳐 도착하는 동안 호스트 쪽 창은 이미 내려와 있다.
-    /// 그만큼 앞당겨 시작해서 모든 PC의 창 위치를 맞춘다.
-    /// </param>
-    public void Launch(float fallSpeed, float stuckDuration, LayerMask groundLayer,
-        bool isJudge, uint spearId, int ownerId, float catchUpSeconds)
+    /// <summary>
+    /// 이동 설정과 착지 예고를 준비하고 수신 지연만큼 표시를 앞당긴다.
+    /// </summary>
+    public override void Initialize(ItemData data, ItemSpawnMessage spawn, bool isJudge, float initialAge)
     {
-        _fallSpeed = fallSpeed;
-        _stuckDuration = stuckDuration;
-        _groundLayer = groundLayer;
-        _isJudge = isJudge;
-        SpearId = spearId;
-        OwnerId = ownerId;
-
-        if (catchUpSeconds > 0f)
-        {
-            Advance(catchUpSeconds);
-        }
+        base.Initialize(data, spawn, isJudge, initialAge);
+        visual = GetComponent<SpriteRenderer>();
+        startPosition = spawn.Position;
+        groundY = spawn.GroundY;
+        hasGround = spawn.HasGround;
+        speed = spawn.FallSpeed;
+        if (hasGround)
+            warning = CreateWarning(visual, new Vector2(startPosition.x, groundY));
+        Advance(initialAge);
     }
 
+    /// <summary>
+    /// 낙하와 수명 표시를 진행한다. 실제 적중은 서버에서만 확인한다.
+    /// </summary>
     private void Update()
     {
         Advance(Time.deltaTime);
     }
 
+    /// <summary>
+    /// 프레임 사이 이동 구간도 검사하여 빠른 낙하가 캐릭터를 통과하지 않게 한다.
+    /// </summary>
     private void Advance(float deltaTime)
     {
-        if (_isStuck)
-        {
-            // 꽂힌 창은 가시처럼 남아 있어서, 공격자가 걸어와 닿아도 적중이다.
-            CheckAttackerHit(transform.position.y);
-
-            _stuckTimer += deltaTime;
-            if (_stuckTimer >= _stuckDuration)
-            {
-                Destroy(gameObject);
-            }
-
-            return;
-        }
-
-        float step = _fallSpeed * deltaTime;
+        if (visual == null) return;
         float previousY = transform.position.y;
-
-        // 한 프레임 이동 거리가 발판 두께보다 길어질 수 있어, 위치만 옮기면 발판을 뚫고 지나간다.
-        // 이번 프레임에 지나갈 경로를 선으로 검사해 그 사이의 지면을 잡는다.
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, step, _groundLayer);
-        if (hit)
+        age += deltaTime;
+        float nextY = startPosition.y - speed * age;
+        if (hasGround && nextY <= groundY)
         {
-            transform.position = hit.point;
-            _isStuck = true;
-            CheckAttackerHit(previousY);
-            return;
+            nextY = groundY;
+            stuck = true;
+            stuckAge = Mathf.Max(0f, age - (startPosition.y - groundY) / speed);
+            if (warning != null) Destroy(warning.gameObject);
         }
-
-        transform.position += Vector3.down * step;
-        CheckAttackerHit(previousY);
-
-        _fallenDistance += step;
-        if (_fallenDistance >= MaxFallDistance)
+        transform.position = new Vector3(startPosition.x, nextY, transform.position.z);
+        if (stuck)
+        {
+            Color color = visual.color;
+            color.a = 1f - Mathf.Clamp01(stuckAge / Data.Lifetime);
+            visual.color = color;
+            if (stuckAge >= Data.Lifetime) { Destroy(gameObject); return; }
+        }
+        else if (age > Data.FallTime + 5f)
         {
             Destroy(gameObject);
+            return;
         }
+        CheckPlayerHits(previousY);
     }
 
     /// <summary>
-    /// 이번 프레임에 창이 지나간 범위 전체를 공격자와 겹치는지 검사한다.
-    /// 낙하 속도가 빨라 현재 위치만 검사하면 얇은 구간을 건너뛰고 지나칠 수 있어서,
-    /// 이전 위치의 창 윗끝부터 현재 창끝까지를 하나의 상자로 잡는다.
+    /// 원격 캐릭터는 물리가 꺼져 있으므로 콜라이더 Bounds를 직접 비교한다.
     /// </summary>
-    private void CheckAttackerHit(float previousY)
+    private void CheckPlayerHits(float previousY)
     {
-        bool raceMode = RaceSession.Instance != null;
-        if (!_isJudge || (!raceMode && HasHit))
-        {
-            return;
-        }
-
-        RefreshTargets();
-
+        if (!IsJudge || !NetworkServer.active) return;
+        // 64픽셀 이미지 전체에는 투명 여백이 있으므로 SpriteRenderer.bounds를 판정 폭으로 쓰지 않는다.
+        Vector3 scale = transform.lossyScale;
+        float halfWidth = hitSize.x * Mathf.Abs(scale.x) * 0.5f;
         float bottom = transform.position.y;
-        float top = previousY + transform.localScale.y;
-        float minX = transform.position.x - transform.localScale.x * 0.5f;
-        float maxX = transform.position.x + transform.localScale.x * 0.5f;
-
-        foreach (PlayerMovement target in s_targets)
+        float top = Mathf.Max(previousY, bottom) + hitSize.y * Mathf.Abs(scale.y);
+        foreach (NetworkIdentity identity in NetworkServer.spawned.Values)
         {
-            if (target == null)
-            {
+            if (identity == null || !identity.TryGetComponent(out PlayerState player) || !CanHit(player))
                 continue;
-            }
-
-            if (raceMode && (raceVictims.Contains(target.GetInstanceID()) ||
-                !target.TryGetComponent(out PlayerState state) || !state.IsDamageable)) continue;
-
-            // 다른 PC의 캐릭터는 Rigidbody2D.simulated가 꺼져 있어 Physics2D.OverlapBox에 잡히지 않는다.
-            // (실험으로 확인: simulated=false면 overlap=False, bounds는 정상)
-            // 그래서 콜라이더의 bounds를 직접 비교한다.
-            Collider2D targetCollider = target.GetComponent<Collider2D>();
-            if (targetCollider == null)
-            {
-                continue;
-            }
-
-            Bounds bounds = targetCollider.bounds;
-            bool overlaps = bounds.min.x < maxX && bounds.max.x > minX &&
-                            bounds.min.y < top && bounds.max.y > bottom;
-            if (!overlaps)
-            {
-                continue;
-            }
-
-            if (raceMode) raceVictims.Add(target.GetInstanceID());
-            HasHit = true;
-            HitAttacker = target;
-
-            Debug.Log($"[창] 공격자 적중: {target.name}, 창 위치 {transform.position}, " +
-                      $"{(_isStuck ? "꽂힌 창에 닿음" : "떨어지는 창에 맞음")}");
-
-            AttackerHit?.Invoke(this, target);
-            if (!raceMode) return;
+            Collider2D collider = player.GetComponent<Collider2D>();
+            if (collider == null) continue;
+            Bounds body = collider.bounds;
+            if (body.min.x < transform.position.x + halfWidth && body.max.x > transform.position.x - halfWidth &&
+                body.min.y < top && body.max.y > bottom)
+                ReportHit(player);
         }
     }
 
-    private static void RefreshTargets()
+    /// <summary>보유 중에도 실제 창과 동일한 착지 예고를 만든다.</summary>
+    public override SpriteRenderer CreatePlacementPreview(Vector2 position)
     {
-        if (Time.unscaledTime - s_targetsRefreshedAt < TargetRefreshInterval)
-        {
-            return;
-        }
+        return CreateWarning(GetComponent<SpriteRenderer>(), position);
+    }
 
-        s_targets = FindObjectsByType<PlayerMovement>(FindObjectsSortMode.None);
-        s_targetsRefreshedAt = Time.unscaledTime;
+    /// <summary>
+    /// 착지할 위치에 창 모양의 붉은 반투명 예고를 만든다.
+    /// </summary>
+    public static SpriteRenderer CreateWarning(SpriteRenderer source, Vector2 position)
+    {
+        var marker = new GameObject("SpearWarning");
+        marker.transform.position = position;
+        marker.transform.localScale = source.transform.lossyScale;
+        var renderer = marker.AddComponent<SpriteRenderer>();
+        renderer.sprite = source.sprite;
+        renderer.color = new Color(1f, 0.2f, 0.2f, 0.4f);
+        renderer.sortingLayerID = source.sortingLayerID;
+        renderer.sortingOrder = source.sortingOrder - 1;
+        return renderer;
+    }
+
+    /// <summary>
+    /// 씬 종료나 수명 만료 시 남아 있는 예고 표시도 정리한다.
+    /// </summary>
+    protected override void OnDestroy()
+    {
+        if (warning != null) Destroy(warning.gameObject);
+        base.OnDestroy();
     }
 }
