@@ -1,0 +1,377 @@
+fileFormatVersion: 2
+guid: 12d7347005c21054780384e66e0f3b5b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8391296318418855719
+    second: Trap_Cannon_Doodle_v1_0
+  - first:
+      213: -2067412129936755494
+    second: Trap_Cannon_Doodle_v1_1
+  - first:
+      213: 8935824388415148691
+    second: Trap_Cannon_Doodle_v1_2
+  - first:
+      213: 1659406139795855473
+    second: Trap_Cannon_Doodle_v1_3
+  - first:
+      213: 7336049889085388780
+    second: Trap_Cannon_Doodle_v1_4
+  - first:
+      213: -8553453967632570179
+    second: Trap_Cannon_Doodle_v1_5
+  - first:
+      213: -8365746368110018961
+    second: Trap_Cannon_Doodle_v1_6
+  - first:
+      213: -5177096726627918604
+    second: Trap_Cannon_Doodle_v1_7
+  - first:
+      213: 6218804453580566066
+    second: Trap_Cannon_Doodle_v1_8
+  - first:
+      213: -2248168356023532066
+    second: Trap_Cannon_Doodle_v1_9
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Trap_Cannon_Doodle_v1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 23
+        width: 1297
+        height: 1142
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7272668ea8fd37470800000000000000
+      internalID: 8391296318418855719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Trap_Cannon_Doodle_v1_1
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 1139
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad439c61f931f43e0800000000000000
+      internalID: -2067412129936755494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Trap_Cannon_Doodle_v1_2
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 1103
+        width: 23
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 392d1ceefec620c70800000000000000
+      internalID: 8935824388415148691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Trap_Cannon_Doodle_v1_3
+      rect:
+        serializedVersion: 2
+        x: 1030
+        y: 1109
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17852ac9715670710800000000000000
+      internalID: 1659406139795855473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Trap_Cannon_Doodle_v1_4
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 1025
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce77a7d8182eec560800000000000000
+      internalID: 7336049889085388780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Trap_Cannon_Doodle_v1_5
+      rect:
+        serializedVersion: 2
+        x: 912
+        y: 1018
+        width: 11
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db8ea904fe60c4980800000000000000
+      internalID: -8553453967632570179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Trap_Cannon_Doodle_v1_6
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 45
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6eb9c77006e6eb80800000000000000
+      internalID: -8365746368110018961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Trap_Cannon_Doodle_v1_7
+      rect:
+        serializedVersion: 2
+        x: 974
+        y: 39
+        width: 19
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fc5181e4f14728b0800000000000000
+      internalID: -5177096726627918604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Trap_Cannon_Doodle_v1_8
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 0
+        width: 26
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23e694fa3b1ad4650800000000000000
+      internalID: 6218804453580566066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Trap_Cannon_Doodle_v1_9
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 0
+        width: 56
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed581ff9ac6ecc0e0800000000000000
+      internalID: -2248168356023532066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Trap_Cannon_Doodle_v1_0: 8391296318418855719
+      Trap_Cannon_Doodle_v1_1: -2067412129936755494
+      Trap_Cannon_Doodle_v1_2: 8935824388415148691
+      Trap_Cannon_Doodle_v1_3: 1659406139795855473
+      Trap_Cannon_Doodle_v1_4: 7336049889085388780
+      Trap_Cannon_Doodle_v1_5: -8553453967632570179
+      Trap_Cannon_Doodle_v1_6: -8365746368110018961
+      Trap_Cannon_Doodle_v1_7: -5177096726627918604
+      Trap_Cannon_Doodle_v1_8: 6218804453580566066
+      Trap_Cannon_Doodle_v1_9: -2248168356023532066
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
