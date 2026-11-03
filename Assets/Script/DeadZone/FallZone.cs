@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Mirror;
 
 /// <summary>
@@ -41,14 +41,18 @@ public sealed class FallZone : NetworkBehaviour
     {
         NetworkIdentity player = other.GetComponentInParent<NetworkIdentity>();
         if (player != null && player.isLocalPlayer)
-            CmdRequestFall();
+        {
+            var state = player.GetComponent<PlayerState>();
+            if (state != null && state.CanMove && state.Race != null)
+                CmdRequestFall(state.Race.RoundNumber);
+        }
     }
 
     /// <summary>
-    /// 서버에서 요청자의 위치로 부활 지점을 찾고 같은 플레이어를 복귀시킨다.
+    /// 서버에서 현재 공격자의 사망을 접수한다. 공수 교대가 없을 때만 부활 위치를 탐색한다.
     /// </summary>
     [Command(requiresAuthority = false)]
-    private void CmdRequestFall(NetworkConnectionToClient sender = null)
+    private void CmdRequestFall(int turnNumber, NetworkConnectionToClient sender = null)
     {
         if (NetworkServer.isLoadingScene || !isActiveAndEnabled ||
             sender?.identity == null)
@@ -57,6 +61,15 @@ public sealed class FallZone : NetworkBehaviour
         if (!sender.identity.TryGetComponent(out PlayerState player) ||
             !sender.identity.TryGetComponent(out Rigidbody2D body))
             return;
+
+        if (player.Race == null || player.Race.RoundNumber != turnNumber)
+            return;
+
+        if (player.Race.Roles != null)
+        {
+            player.TryDie();
+            return;
+        }
 
         if (TryGetRespawnPosition(body.position, out Vector2 position))
         {

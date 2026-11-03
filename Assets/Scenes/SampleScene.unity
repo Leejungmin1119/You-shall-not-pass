@@ -2938,6 +2938,7 @@ GameObject:
   - component: {fileID: 492835078}
   - component: {fileID: 492835077}
   - component: {fileID: 492835076}
+  - component: {fileID: 492835079}
   m_Layer: 0
   m_Name: PlayerInventoryUI
   m_TagString: Untagged
@@ -3023,6 +3024,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 492835074}
   m_CullTransparentMesh: 1
+--- !u!225 &492835079
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492835074}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &511188419
 GameObject:
   m_ObjectHideFlags: 0
@@ -4293,6 +4306,7 @@ GameObject:
   - component: {fileID: 614726119}
   - component: {fileID: 614726118}
   - component: {fileID: 614726117}
+  - component: {fileID: 614726122}
   m_Layer: 5
   m_Name: ConveyorViewport
   m_TagString: Untagged
@@ -4420,6 +4434,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 614726115}
   m_CullTransparentMesh: 1
+--- !u!225 &614726122
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614726115}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -5333,6 +5359,7 @@ GameObject:
   - component: {fileID: 765794628}
   - component: {fileID: 765794630}
   - component: {fileID: 765794629}
+  - component: {fileID: 765794631}
   m_Layer: 0
   m_Name: LocalCostDisplay
   m_TagString: Untagged
@@ -5399,6 +5426,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 765794627}
   m_CullTransparentMesh: 1
+--- !u!225 &765794631
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765794627}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &815878463
 GameObject:
   m_ObjectHideFlags: 0
@@ -6697,6 +6736,8 @@ GameObject:
   - component: {fileID: 1106115875}
   - component: {fileID: 1106115874}
   - component: {fileID: 1106115873}
+  - component: {fileID: 1106115877}
+  - component: {fileID: 1106115876}
   m_Layer: 0
   m_Name: RaceManager
   m_TagString: Untagged
@@ -6720,7 +6761,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   roundDuration: 900
-  finishDuration: 20
   conveyor: {fileID: 614726117}
   mapPreviewDuration: 6
   cameraReturnDuration: 1.5
@@ -6759,6 +6799,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1106115876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106115872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d02cb25ec2e462c4fb7b84a4704cd11d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RoleUIVisibility
+  defenderPanels:
+  - {fileID: 614726122}
+  - {fileID: 492835079}
+  - {fileID: 765794631}
+--- !u!114 &1106115877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1106115872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8948b7534e9296f4b9a62b1f3f1dbfc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::rolechangeManager
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
 --- !u!1 &1111865752
 GameObject:
   m_ObjectHideFlags: 0

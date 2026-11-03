@@ -47,7 +47,7 @@ public class NetworkPlayerController : NetworkBehaviour
     }
 
     /// <summary>
-    /// 모든 캐릭터를 표시하며 다른 플레이어는 반투명하게 보여준다.
+    /// 공수 경기에서는 공격자만 불투명하게 표시한다.
     /// 원격 캐릭터의 물리는 끈 상태로 두고 NetworkTransform이 위치를 적용한다.
     /// </summary>
     public override void OnStartClient()
@@ -56,9 +56,11 @@ public class NetworkPlayerController : NetworkBehaviour
         var sprite = GetComponent<SpriteRenderer>();
         if (sprite != null)
         {
-            sprite.enabled = playerState == null || playerState.Status != PlayerStatus.Finished;
+            sprite.enabled = playerState == null || playerState.IsVisible;
             Color color = sprite.color;
-            color.a = isLocalPlayer ? 1f : 0.5f;
+            bool roleGame = playerState != null && playerState.Race != null &&
+                playerState.Race.Roles != null;
+            color.a = roleGame || isLocalPlayer ? 1f : 0.5f;
             sprite.color = color;
         }
     }
@@ -106,7 +108,7 @@ public class NetworkPlayerController : NetworkBehaviour
             return;
         }
         // 골인·대기·판 종료 상태는 소유자의 물리와 이동도 함께 멈춘다.
-        bool canMove = playerState == null || playerState.CanAct;
+        bool canMove = playerState == null || playerState.CanMove;
         body.simulated = canMove;
 
         if (platformMovement != null)

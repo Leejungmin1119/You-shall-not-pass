@@ -19,6 +19,7 @@ public sealed class PlayerState : NetworkBehaviour
     private Renderer[] _renderers;
     private Canvas[] _canvases;
     private Collider2D[] _colliders;
+    private bool? _previousVisible;
     private double _lastDeathStep = double.NegativeInfinity;
     private double _invincibleUntil;
     private const double RespawnInvincibleTime = 0.5;
@@ -28,7 +29,12 @@ public sealed class PlayerState : NetworkBehaviour
     public PlayerStatus Status => status;
     public RaceManager Race { get; private set; }
     public bool CanAct => status == PlayerStatus.Alive && (Race == null || Race.IsRunning);
-    public bool CanReceiveHit => CanAct && NetworkTime.time >= _invincibleUntil;
+    public bool IsAttacker => Race != null && Race.Roles != null && Race.Roles.IsAttacker(this);
+    public bool IsVisible => status != PlayerStatus.Finished &&
+        (Race == null || Race.Roles == null || IsAttacker);
+    public bool CanMove => CanAct && (Race == null || Race.Roles == null || IsAttacker);
+    public bool CanUseTraps => CanAct && !IsAttacker;
+    public bool CanReceiveHit => CanMove && NetworkTime.time >= _invincibleUntil;
 
     /// <summary>상태 표시와 위치 복구에 필요한 자기 컴포넌트와 레이스 담당을 보관한다.</summary>
     private void Awake()
@@ -75,7 +81,7 @@ public sealed class PlayerState : NetworkBehaviour
     [Server]
     public bool FinishRace()
     {
-        if (!CanAct || _lastDeathStep == Time.fixedTimeAsDouble)
+        if (!CanMove || _lastDeathStep == Time.fixedTimeAsDouble)
             return false;
 
         status = PlayerStatus.Finished;
@@ -89,10 +95,18 @@ public sealed class PlayerState : NetworkBehaviour
         ApplyStatus();
     }
 
-    /// <summary>네트워크 오브젝트는 유지하고 골인 캐릭터의 표시와 충돌만 끈다.</summary>
+    /// <summary>생존 상태가 같아도 공수 교대가 동기화되면 캐릭터 표시를 한 번 갱신한다.</summary>
+    private void LateUpdate()
+    {
+        if (_previousVisible != IsVisible)
+            ApplyStatus();
+    }
+
+    /// <summary>네트워크와 개인 UI는 유지하고 수비자·골인 캐릭터의 월드 표시와 충돌을 끈다.</summary>
     private void ApplyStatus()
     {
-        bool visible = status != PlayerStatus.Finished;
+        bool visible = IsVisible;
+        _previousVisible = visible;
 
         foreach (Renderer visual in _renderers)
             visual.enabled = visible;
@@ -106,7 +120,7 @@ public sealed class PlayerState : NetworkBehaviour
         if (!isLocalPlayer)
             return;
 
-        _movement.MovementLocked = !CanAct;
+        _movement.MovementLocked = !CanMove;
 
         if (!visible)
         {
@@ -119,11 +133,12 @@ public sealed class PlayerState : NetworkBehaviour
     [Server]
     public bool TryDie()
     {
-        if (!CanAct || _lastDeathStep == Time.fixedTimeAsDouble)
+        if (!CanMove || _lastDeathStep == Time.fixedTimeAsDouble)
             return false;
 
         _lastDeathStep = Time.fixedTimeAsDouble;
         status = PlayerStatus.Dead;
+        Race?.NotifyDeath(this);
         Debug.Log($"플레이어 사망: netId={netId}");
         return true;
     }
@@ -133,6 +148,7 @@ public sealed class PlayerState : NetworkBehaviour
     public void ResetForRound(Vector2 position)
     {
         _lastDeathStep = double.NegativeInfinity;
+        status = PlayerStatus.Alive;
         Respawn(position);
     }
 
@@ -140,6 +156,10 @@ public sealed class PlayerState : NetworkBehaviour
     [Server]
     public void Respawn(Vector2 position)
     {
+        // 공수 경기의 사망 복귀는 교대 담당이 출발점에서 처리한다.
+        if (status == PlayerStatus.Dead && Race != null && Race.Roles != null)
+            return;
+
         Vector3 destination = new Vector3(position.x, position.y, transform.position.z);
         _networkTransform.ServerTeleport(destination, transform.rotation);
         RpcResetMovement(position);

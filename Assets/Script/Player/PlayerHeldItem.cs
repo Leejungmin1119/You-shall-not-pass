@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 /// <summary>
 /// 서버에서 손에 든 아이템 하나를 관리하고 소유자의 구매·사용 입력과 커서 표시를 연결한다.
-/// 구매 방식에 따라 인벤토리에 저장하거나 즉시 손에 든다. 부활해도 보유 상태는 유지한다.
+/// 구매 방식에 따라 인벤토리에 저장하거나 즉시 손에 든다. 공수 교대 시 보유 상태는 초기화한다.
 /// </summary>
 [RequireComponent(typeof(PlayerCost), typeof(PlayerState))]
 public sealed class PlayerHeldItem : NetworkBehaviour
@@ -30,7 +30,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     private PointerEventData pointerData;
     public int HeldItemId => heldItemId;
     public bool HasHeldItem => heldItemId != 0;
-    public bool CanHoldItem => state != null && state.CanAct && !HasHeldItem;
+    public bool CanHoldItem => state != null && state.CanUseTraps && !HasHeldItem;
     public bool CanRequestPurchase => isLocalPlayer && isClient && !requestPending && CanHoldItem;
 
     /// <summary>자기 상태와 게임 씬의 구매·생성 담당을 보관한다.</summary>
@@ -68,7 +68,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
             foreach (SpriteRenderer marker in previews) if (marker != null) marker.enabled = false;
             return;
         }
-        if (!state.CanAct)
+        if (!state.CanUseTraps)
         {
             if (conveyor.HeldIcon != null)
                 conveyor.HeldIcon.enabled = false;
@@ -123,7 +123,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     [Command(channel = Channels.Unreliable)]
     private void CmdUpdateMissileAim(Vector2 position)
     {
-        if (!state.CanAct || !hasActiveMissiles || NetworkServer.isLoadingScene || itemNetwork == null ||
+        if (!state.CanUseTraps || !hasActiveMissiles || NetworkServer.isLoadingScene || itemNetwork == null ||
             NetworkTime.time < nextServerAimTime || !itemNetwork.IsValidAim(position)) return;
         nextServerAimTime = NetworkTime.time + AimInterval * 0.8f;
         foreach (Missile missile in activeMissiles)
@@ -133,7 +133,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     /// <summary>소유자가 유효한 슬롯 선택 또는 같은 슬롯의 취소를 서버에 요청한다.</summary>
     public bool RequestSelectSlot(int slot)
     {
-        if (!isLocalPlayer || !isClient || requestPending || !state.CanAct ||
+        if (!isLocalPlayer || !isClient || requestPending || !state.CanUseTraps ||
             inventory == null || inventory.GetItem(slot) == 0 ||
             (HasHeldItem && inventory.SelectedSlot != slot))
             return false;
@@ -147,7 +147,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     [Command]
     private void CmdSelectSlot(int slot)
     {
-        if (!NetworkServer.isLoadingScene && state.CanAct && inventory != null && conveyor != null)
+        if (!NetworkServer.isLoadingScene && state.CanUseTraps && inventory != null && conveyor != null)
             inventory.TrySelectSlot(slot, this, conveyor.GetItemData(inventory.GetItem(slot)));
 
         TargetSelectionComplete();
@@ -217,7 +217,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     public bool RequestUse(Vector2 screenPosition)
     {
         if (!isLocalPlayer || !isClient || requestPending || !HasHeldItem ||
-            !state.CanAct || conveyor == null || conveyor.OutputCamera == null ||
+            !state.CanUseTraps || conveyor == null || conveyor.OutputCamera == null ||
             !IsValidScreenPosition(screenPosition) || IsPointerOverUI(screenPosition))
             return false;
         Camera camera = conveyor.OutputCamera;
@@ -234,7 +234,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     private void CmdRequestUse(Vector2 cursor, float startY)
     {
         ItemData data = conveyor != null ? conveyor.GetItemData(heldItemId) : null;
-        bool success = !NetworkServer.isLoadingScene && state.CanAct &&
+        bool success = !NetworkServer.isLoadingScene && state.CanUseTraps &&
             NetworkTime.time >= nextUseTime && data != null && itemNetwork != null &&
             itemNetwork.TryUse(data, netIdentity, cursor, startY);
         if (success)
