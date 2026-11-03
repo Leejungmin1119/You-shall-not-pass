@@ -33,7 +33,10 @@ public sealed class PlayerState : NetworkBehaviour
     public bool IsVisible => status != PlayerStatus.Finished &&
         (Race == null || Race.Roles == null || IsAttacker);
     public bool CanMove => CanAct && (Race == null || Race.Roles == null || IsAttacker);
-    public bool CanUseTraps => CanAct && !IsAttacker;
+    // 개발자 1인 시험에서는 혼자 공격자로 달리면서 함정도 써서 맵과 함정을 함께 시험한다.
+    public bool UsesTraps => !IsAttacker || IsSoloTest;
+    public bool CanUseTraps => CanAct && UsesTraps;
+    private static bool IsSoloTest => NetworkManager.singleton is CapstoneRoomManager room && room.IsSoloTest;
     public bool CanReceiveHit => CanMove && NetworkTime.time >= _invincibleUntil;
 
     /// <summary>상태 표시와 위치 복구에 필요한 자기 컴포넌트와 레이스 담당을 보관한다.</summary>

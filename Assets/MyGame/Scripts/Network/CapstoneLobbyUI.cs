@@ -260,6 +260,9 @@ public class CapstoneLobbyUI : MonoBehaviour
         bool connected = NetworkClient.isConnected;
         bool searching = manager.Lan != null && manager.Lan.Searching;
         bool active = NetworkClient.active || NetworkServer.active || searching;
+        // 개발자 시험용이라 에디터와 Development Build에서만 보인다.
+        if (Debug.isDebugBuild && Action(new Rect(948, 100, 275, 40), "SOLO TEST (DEV)", !active))
+            manager.BeginSoloTest();
         Rounded(new Rect(948, 155, 275, 528), Panel, 18);
         GUI.Label(new Rect(972, 179, 232, 36), "BOARDING", heading);
         GUI.Label(new Rect(972, 226, 232, 48), connected

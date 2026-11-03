@@ -14,7 +14,7 @@ public sealed class RoleUIVisibility : MonoBehaviour
         if (localPlayer == null && NetworkClient.localPlayer != null)
             localPlayer = NetworkClient.localPlayer.GetComponent<PlayerState>();
 
-        bool visible = localPlayer != null && !localPlayer.IsAttacker;
+        bool visible = localPlayer != null && localPlayer.UsesTraps;
 
         if (previousVisible == visible)
             return;

@@ -46,7 +46,8 @@ public class PlayerCost : NetworkBehaviour
     [Server]
     public void ResetCost(bool isAttacker = false)
     {
-        currentCost = isAttacker ? 0 : Mathf.Clamp(startingCost, 0, Mathf.Max(0, maxCost));
+        bool usesTraps = !isAttacker || (state != null && state.UsesTraps);
+        currentCost = usesTraps ? Mathf.Clamp(startingCost, 0, Mathf.Max(0, maxCost)) : 0;
         autoGainTimer = 0f;
     }
 
@@ -64,7 +65,7 @@ public class PlayerCost : NetworkBehaviour
         if (state != null && state.Race != null && !state.Race.IsRunning)
             return;
 
-        if (state != null && state.IsAttacker)
+        if (state != null && !state.UsesTraps)
             return;
 
         autoGainTimer += Time.deltaTime;
@@ -92,7 +93,7 @@ public class PlayerCost : NetworkBehaviour
     [Server]
     public bool TrySpendCost(int amount)
     {
-        if ((state != null && state.IsAttacker) || amount <= 0 || currentCost < amount)
+        if ((state != null && !state.UsesTraps) || amount <= 0 || currentCost < amount)
             return false;
         currentCost -= amount;
         return true;

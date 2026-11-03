@@ -69,7 +69,36 @@ public class CapstoneRoomManager : NetworkRoomManager
         else Lan.Search();
     }
 
-    public override void OnRoomStopHost() => Lan?.Cancel();
+    /// <summary>개발자 1인 시험 중인지. 접속을 받지 않는 호스트 혼자 게임 씬을 돌린다.</summary>
+    public bool IsSoloTest { get; private set; }
+    private bool soloLaunchPending;
+
+    /// <summary>
+    /// 개발자 시험용. 인원·준비 조건 없이 혼자 게임 씬으로 넘어간다.
+    /// 포트를 열지 않아 다른 기기가 들어올 수 없고, 시험 뒤 에디터에 포트가 잡혀 남지도 않는다.
+    /// </summary>
+    public void BeginSoloTest()
+    {
+        if (NetworkClient.active || NetworkServer.active || Lan.Searching) return;
+        if (lanTransport != null) SelectTransport(lanTransport);
+        NetworkServer.listen = false;
+        IsSoloTest = true;
+        StartHost();
+        soloLaunchPending = NetworkServer.active;
+        if (!soloLaunchPending)
+        {
+            IsSoloTest = false;
+            NetworkServer.listen = true;
+        }
+    }
+
+    public override void OnRoomStopHost()
+    {
+        Lan?.Cancel();
+        IsSoloTest = false;
+        soloLaunchPending = false;
+    }
+
     public override void OnRoomStopClient() => Lan?.Cancel();
 
     public bool IsLobby => Utils.IsSceneActive(RoomScene);
@@ -114,6 +143,13 @@ public class CapstoneRoomManager : NetworkRoomManager
         if (IsLobby || NetworkServer.isLoadingScene)
             return;
 
+        // 1인 시험은 돌아갈 방이 없으므로 호스트를 끄고 첫 로비 화면으로 돌아간다.
+        if (IsSoloTest)
+        {
+            StopHost();
+            return;
+        }
+
         // NetworkRoomManager가 기존 로비 플레이어를 복구하고 준비 상태를 해제한다.
         ServerChangeScene(RoomScene);
     }
@@ -137,7 +173,8 @@ public class CapstoneRoomManager : NetworkRoomManager
     public override void OnRoomClientSceneChanged()
     {
         if (Utils.IsSceneActive(GameplayScene))
-            GetComponent<CapstoneLobbyUI>()?.ShowNotice("GAME START!", "You shall not pass. Good luck!", true);
+            GetComponent<CapstoneLobbyUI>()?.ShowNotice(IsSoloTest ? "SOLO TEST" : "GAME START!",
+                IsSoloTest ? "Developer mode. No one else can join." : "You shall not pass. Good luck!", true);
     }
 
     public override void Update()
@@ -152,6 +189,14 @@ public class CapstoneRoomManager : NetworkRoomManager
             else if (NetworkClient.active) StopClient();
             else if (NetworkServer.active) StopServer();
             GetComponent<CapstoneLobbyUI>()?.ShowNotice("ROOM CONNECTION", message, false);
+            return;
+        }
+        // 호스트의 로비 플레이어가 생긴 뒤에 넘어가야 게임 씬에서 게임 플레이어로 교체된다.
+        if (soloLaunchPending && IsLobby && !NetworkServer.isLoadingScene &&
+            NetworkServer.localConnection?.identity != null)
+        {
+            soloLaunchPending = false;
+            ServerChangeScene(GameplayScene);
             return;
         }
         if (!NetworkServer.active || !NetworkClient.active || IsEditingText || Keyboard.current == null) return;
