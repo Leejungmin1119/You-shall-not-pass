@@ -33,8 +33,21 @@
 - 충돌 마커·공백 오류 검사.
 - 위 컴파일은 실제 Unity 가져오기, Mirror Weaver 후처리나 Play 실행을 대신하지 않는다.
 
-## 실행 검증의 제한
+## Hub 실행 재확인 및 라이선스 안내 정정
 
-Unity CLI로 실제 Editor 검사를 시도했으나 `No valid Unity Editor license found`로 Editor가 exit 198을 반환했다. 따라서 Host/Client 접속, 새 함정 적중, 공수 교대, 1인 시험의 실제 실행 통과를 주장하지 않는다.
+최초 CLI batch 검사에서는 `No valid Unity Editor license found`와 Editor exit 198이 발생했다. 이 결과로 사용자의 라이선스가 미활성화됐다고 판단한 것은 잘못이었다.
 
-라이선스 복구 후 `RaceNetworkSetup.Validate()` → 로비 Host + 별도 Client → 준비·경기 시작 → 별도 시험 Play에서 `RaceNetworkChecks.Run()`을 실행한다. 이후 공격자 사망·골인·이탈 교대, 수비자 구매·사용, 새 함정 적중, 로비 복귀와 재입장을 확인한다. 1인 시험은 이 멀티플레이 검사를 대체하지 않는다.
+후속 확인 결과:
+
+- Unity Hub의 Personal 라이선스가 활성 상태이며, Hub를 통해 연 Editor 로그도 `Product: Unity Personal`, `Type: Assigned`로 라이선스를 인식했다.
+- 해당 Editor에서 최신 소스 컴파일과 Mirror Weaver 후처리가 수행됐다.
+- Tools → Network Practice → Validate Merged Race Networking이 `MERGED_RACE_SETUP_VALIDATED`를 반환했다.
+- 로비 Play와 SOLO TEST (DEV) 버튼을 통해 로컬 Host의 SampleScene 진입·플레이어 생성을 확인했다.
+- 준비 연출 이후 타이머 진행, 코스트 증가, 컨베이어 상품 표시와 D 입력에 따른 이동을 확인했다.
+- Leave game으로 로비 복귀를 확인하고 Play를 종료했다.
+
+CLI 검사 로그에는 인증 토큰을 받지 못했다는 오류가 있었으며 Hub 실행과 인증 경로가 달랐다. CLI 실패를 Hub 라이선스 미활성화와 동일하게 해석하지 않는다. 자동 제어 도구의 연결 실패 원인은 별도 확인 대상이다.
+
+## 남은 검증
+
+별도 프로세스 Host/Client 접속, 수비자 구매·사용, 새 함정 적중, 사망·골인·퇴장 교대, 재입장을 포함한 전체 멀티플레이 회귀는 아직 수행하지 않았다. `RaceNetworkChecks.Run()`의 2인 이상 검사도 아직 실행하지 않았다. 1인 시험은 원격 네트워크 검증을 대체하지 않는다.
