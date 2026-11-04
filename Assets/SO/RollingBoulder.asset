@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   Id: 7
   DisplayName: "\uBC14\uC704"
-  Icon: {fileID: 21300000, guid: 1e987e3017470cc458c3182ab1d4736d, type: 3}
+  Icon: {fileID: 5544071034427639558, guid: 650f992c1c5bc0a41b649c9fc8a5c4b6, type: 3}
   HeldIconScale: 3
   Prefab: {fileID: 2066962729240063693, guid: 8939604c6d5751140aa4c7995296e2c7, type: 3}
   Price: 40

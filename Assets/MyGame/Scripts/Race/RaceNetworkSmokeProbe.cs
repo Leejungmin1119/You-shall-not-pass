@@ -72,7 +72,7 @@ public sealed class RaceNetworkSmokeProbe : MonoBehaviour
         {
             var inventory = NetworkClient.localPlayer.GetComponent<PlayerHeldItem>();
             var conveyor = FindFirstObjectByType<ConveyorController>();
-            if (actionStep == 0 && conveyor != null && conveyor.Items.Count > 0)
+            if (actionStep == 0 && inventory.CanRequestPurchase && conveyor != null && conveyor.Items.Count > 0)
             {
                 inventory.RequestCompleted += (operation, success) => results.Add(operation + ":" + success);
                 actionStep = 1;

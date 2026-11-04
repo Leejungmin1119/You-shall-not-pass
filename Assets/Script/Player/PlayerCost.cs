@@ -44,9 +44,10 @@ public class PlayerCost : NetworkBehaviour
 
     /// <summary>서버에서 시작 코스트와 자동 획득 대기시간을 함께 초기화한다.</summary>
     [Server]
-    public void ResetCost()
+    public void ResetCost(bool isAttacker = false)
     {
-        currentCost = Mathf.Clamp(startingCost, 0, Mathf.Max(0, maxCost));
+        bool usesTraps = !isAttacker || (state != null && state.UsesTraps);
+        currentCost = usesTraps ? Mathf.Clamp(startingCost, 0, Mathf.Max(0, maxCost)) : 0;
         autoGainTimer = 0f;
     }
 
@@ -62,6 +63,9 @@ public class PlayerCost : NetworkBehaviour
 
         // 맵 소개와 시작 카운트다운은 자동 지급 대기시간에도 포함하지 않는다.
         if (state != null && state.Race != null && !state.Race.IsRunning)
+            return;
+
+        if (state != null && !state.UsesTraps)
             return;
 
         autoGainTimer += Time.deltaTime;
@@ -89,7 +93,7 @@ public class PlayerCost : NetworkBehaviour
     [Server]
     public bool TrySpendCost(int amount)
     {
-        if (amount <= 0 || currentCost < amount)
+        if ((state != null && !state.UsesTraps) || amount <= 0 || currentCost < amount)
             return false;
         currentCost -= amount;
         return true;

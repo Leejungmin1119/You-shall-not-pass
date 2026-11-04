@@ -11,7 +11,7 @@ public sealed class RaceTimerUI : MonoBehaviour
 
     private int lastSeconds = -1;
 
-    /// <summary>일반 진행과 골인 마감에 같은 시간 표시를 사용하며 초가 바뀔 때만 갱신한다.</summary>
+    /// <summary>교대와 무관한 경기 전체 남은 시간을 초가 바뀔 때만 갱신한다.</summary>
     private void Update()
     {
         if (race == null)
@@ -62,7 +62,7 @@ public sealed class RaceTimerUI : MonoBehaviour
             countdownText.text = text;
     }
 
-    /// <summary>서버 시각과의 차이를 올림하여 시작 직후 20초부터 표시한다.</summary>
+    /// <summary>서버의 종료 시각까지 남은 초를 올림해 표시한다.</summary>
     private static int RemainingSeconds(double endsAt)
     {
         return Mathf.Max(0, Mathf.CeilToInt((float)(endsAt - NetworkTime.time)));

@@ -16,13 +16,12 @@ public enum RacePhase
     StartCountdown = 5
 }
 
-/// <summary>서버에서 레이스 순위, 현재 제한시간과 다음 라운드 시작을 관리한다.</summary>
-[RequireComponent(typeof(NetworkIdentity))]
+/// <summary>서버에서 공수 경기의 제한시간, 교대 초기화와 경기 종료를 관리한다.</summary>
+[RequireComponent(typeof(NetworkIdentity), typeof(rolechangeManager))]
 public sealed class RaceManager : NetworkBehaviour
 {
     [FormerlySerializedAs("matchDuration")]
     [SerializeField, Min(1f)] private float roundDuration = 900f;
-    [SerializeField, Min(1f)] private float finishDuration = 20f;
     [SerializeField] private ConveyorController conveyor;
 
     [Header("라운드 시작 연출")]
@@ -48,7 +47,15 @@ public sealed class RaceManager : NetworkBehaviour
 
     private readonly List<PlayerState> participants = new List<PlayerState>(4);
     private readonly Dictionary<PlayerState, Vector2> startPositions = new Dictionary<PlayerState, Vector2>();
-    private int finishedCount;
+    private PlayerState pendingDeath;
+
+    public rolechangeManager Roles { get; private set; }
+
+    /// <summary>동일한 네트워크 오브젝트의 역할 관리자를 보관한다.</summary>
+    private void Awake()
+    {
+        Roles = GetComponent<rolechangeManager>();
+    }
 
     public RacePhase Phase => phase;
     public double PhaseStartedAt => phaseStartedAt;
@@ -61,7 +68,7 @@ public sealed class RaceManager : NetworkBehaviour
     public double EndsAt => endsAt;
     public float RoundDuration => roundDuration;
     public int RoundNumber => roundNumber;
-    public bool IsRunning => (phase == RacePhase.Racing || phase == RacePhase.FinishCountdown) &&
+    public bool IsRunning => phase == RacePhase.Racing &&
         NetworkTime.time < endsAt && (matchEndsAt <= 0 || NetworkTime.time < matchEndsAt);
 
     /// <summary>게임 씬에 생성된 참가자와 처음 배치된 출발 위치를 보관한다.</summary>
@@ -72,22 +79,39 @@ public sealed class RaceManager : NetworkBehaviour
             return;
 
         participants.Add(player);
+        participants.Sort((left, right) => left.netId.CompareTo(right.netId));
         startPositions.Add(player, player.transform.position);
     }
 
-    /// <summary>접속이 종료된 참가자를 제거하고 완료 인원도 함께 정리한다.</summary>
+    /// <summary>퇴장한 참가자를 제거하고 공격자였다면 다음 참가자에게 기회를 넘긴다.</summary>
     [Server]
     public void UnregisterPlayer(PlayerState player)
     {
-        if (!participants.Contains(player)) return;
-        if (phase != RacePhase.Waiting && phase != RacePhase.Ended)
-            EndMatch(RaceEndReason.PlayerDisconnected);
-        participants.Remove(player);
+        int removedIndex = participants.IndexOf(player);
 
+        if (removedIndex < 0)
+            return;
+
+        bool wasAttacker = Roles.IsAttacker(player);
+        participants.RemoveAt(removedIndex);
         startPositions.Remove(player);
 
-        if (player.Status == PlayerStatus.Finished)
-            finishedCount--;
+        if (pendingDeath == player)
+            pendingDeath = null;
+
+        if (wasAttacker && phase != RacePhase.Ended)
+        {
+            Roles.SelectAt(participants, removedIndex);
+
+            if (IsRunning && participants.Count > 0)
+                ResetTurn();
+            else if (IsPreparing)
+            {
+                // 시작 연출 중 퇴장해도 새 공격자에게 수비자 골드가 남지 않게 한다.
+                foreach (PlayerState participant in participants)
+                    participant.GetComponent<PlayerCost>().ResetCost(Roles.IsAttacker(participant));
+            }
+        }
     }
 
     /// <summary>참가자 생성 완료를 기다리고, 진행 중에는 서버 시각으로 종료를 판정한다.</summary>
@@ -141,9 +165,14 @@ public sealed class RaceManager : NetworkBehaviour
             return;
         }
 
-        if (phase == RacePhase.FinishCountdown &&
-            (NetworkTime.time >= endsAt || finishedCount >= participants.Count))
-            EndRound();
+        if (pendingDeath != null)
+        {
+            PlayerState player = pendingDeath;
+            pendingDeath = null;
+
+            if (Roles.IsAttacker(player))
+                CompleteTurn();
+        }
     }
 
     /// <summary>접속 중인 모든 클라이언트의 게임 플레이어 생성과 준비 완료를 확인한다.</summary>
@@ -167,7 +196,8 @@ public sealed class RaceManager : NetworkBehaviour
     [Server]
     private void PrepareRound()
     {
-        finishedCount = 0;
+        pendingDeath = null;
+        Roles.ChooseFirst(participants);
         endsAt = 0;
         roundNumber++;
         phaseStartedAt = NetworkTime.time;
@@ -176,7 +206,7 @@ public sealed class RaceManager : NetworkBehaviour
         foreach (PlayerState player in participants)
         {
             player.ResetForRound(startPositions[player]);
-            player.GetComponent<PlayerCost>().ResetCost();
+            player.GetComponent<PlayerCost>().ResetCost(Roles.IsAttacker(player));
         }
 
         conveyor.ClearItems();
@@ -202,38 +232,52 @@ public sealed class RaceManager : NetworkBehaviour
         conveyor.ResetForRound();
     }
 
-    /// <summary>유효한 골인만 순서대로 접수하고 첫 도착에서만 20초 마감을 시작한다.</summary>
+    /// <summary>현재 공격자의 골인에만 1점을 지급하고 다음 공격자로 교대한다.</summary>
     [Server]
     public bool TryFinish(PlayerState player)
     {
-        if (!IsRunning || player == null || !startPositions.ContainsKey(player) || !player.FinishRace())
+        if (!IsRunning || !Roles.IsAttacker(player) || !player.FinishRace())
             return false;
 
-        finishedCount++;
+        player.GetComponent<PlayerScore>().AddGoalScore(1);
 
-        if (phase == RacePhase.Racing)
-        {
-            // 기존 남은 시간 대신 골인 마감 시간 하나만 사용한다.
-            endsAt = System.Math.Min(matchEndsAt, NetworkTime.time + finishDuration);
-            phase = RacePhase.FinishCountdown;
-        }
-
-        int points = Mathf.Max(0, 5 - finishedCount);
-        player.GetComponent<PlayerScore>().AddGoalScore(points);
-
-        // 점수 지급으로 판이 종료되었다면 다음 라운드를 열지 않는다.
-        if (phase != RacePhase.Ended && finishedCount >= participants.Count)
-            EndRound();
+        if (phase != RacePhase.Ended)
+            CompleteTurn();
 
         return true;
     }
 
-    /// <summary>미도착자에게 골인 점수를 지급하지 않고 함정과 보유 상태를 정리한다.</summary>
+    /// <summary>함정의 적중·점수 처리가 끝난 다음 Update에서 사망 교대를 수행한다.</summary>
     [Server]
-    private void EndRound()
+    public void NotifyDeath(PlayerState player)
     {
+        if (IsRunning && Roles.IsAttacker(player))
+            pendingDeath = player;
+    }
+
+    /// <summary>다음 공격자를 선택한다. 경기 제한시간은 변경하지 않는다.</summary>
+    [Server]
+    private void CompleteTurn()
+    {
+        Roles.Advance(participants);
+        ResetTurn();
+    }
+
+    /// <summary>모든 함정·보유 아이템·골드를 초기화하고 출발 위치에서 새 차례를 시작한다.</summary>
+    [Server]
+    private void ResetTurn()
+    {
+        pendingDeath = null;
+        roundNumber++;
         ClearRoundItems();
-        PrepareRound();
+
+        foreach (PlayerState player in participants)
+        {
+            player.ResetForRound(startPositions[player]);
+            player.GetComponent<PlayerCost>().ResetCost(Roles.IsAttacker(player));
+        }
+
+        conveyor.ResetForRound();
     }
 
     /// <summary>판을 종료하고 함정을 정리한 뒤 기존 방의 로비로 복귀한다.</summary>

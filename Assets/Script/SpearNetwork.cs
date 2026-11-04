@@ -88,7 +88,7 @@ public class SpearNetwork : MonoBehaviour
             !IsFinite(cursor.x) || !IsFinite(cursor.y) || !IsFinite(startY) ||
             data.Count < 1 || data.Count > 3 || data.FallTime <= 0f || data.Lifetime <= 0f)
             return false;
-        if (!owner.TryGetComponent(out PlayerState actor) || !actor.CanUseItems || owner.connectionToClient == null)
+        if (!owner.TryGetComponent(out PlayerState actor) || !actor.CanUseTraps || owner.connectionToClient == null)
             return false;
         foreach (var identity in NetworkServer.spawned.Values)
             if (identity != null && identity.TryGetComponent(out PlayerState player) && player.IsInvincible &&
@@ -134,14 +134,25 @@ public class SpearNetwork : MonoBehaviour
         dropper.Spawn(data, message, false, age);
     }
 
-    /// <summary>승인된 적중만 기록하고 맞은 본인을 복귀시키며 소유자의 점수를 갱신한다.</summary>
+    /// <summary>승인된 적중을 기록하고 사망·교대를 요청하며 기존 소유자 적중 점수를 지급한다.</summary>
     private void OnItemHit(ItemBase item, PlayerState player)
     {
-        if (!NetworkServer.active || !player.CanReceiveHit || fallZone == null ||
-            !fallZone.TryGetRespawnPosition(player.transform.position, out Vector2 position) || !player.TryDie())
+        if (!NetworkServer.active || !player.CanReceiveHit)
             return;
+
+        Vector2 position = player.transform.position;
+        bool roleGame = player.Race != null && player.Race.Roles != null;
+
+        if (!roleGame && (fallZone == null || !fallZone.TryGetRespawnPosition(position, out position)))
+            return;
+
+        if (!player.TryDie())
+            return;
+
         item.ConfirmHit(player);
-        player.Respawn(position);
+
+        if (!roleGame)
+            player.Respawn(position);
         if (item.OwnerNetId != player.netId &&
             NetworkServer.spawned.TryGetValue(item.OwnerNetId, out NetworkIdentity owner) &&
             owner.TryGetComponent(out PlayerScore score)) score.AddHitScore();

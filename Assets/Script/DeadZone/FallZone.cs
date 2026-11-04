@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Mirror;
 
 /// <summary>
@@ -41,29 +41,37 @@ public sealed class FallZone : NetworkBehaviour
     {
         NetworkIdentity player = other.GetComponentInParent<NetworkIdentity>();
         if (player != null && player.isLocalPlayer)
-            CmdRequestFall();
+        {
+            var state = player.GetComponent<PlayerState>();
+            if (state != null && state.CanMove && state.Race != null)
+                CmdRequestFall(state.Race.RoundNumber);
+        }
     }
 
     /// <summary>
-    /// 서버에서 요청자의 위치로 부활 지점을 찾고 같은 플레이어를 복귀시킨다.
+    /// 서버에서 현재 공격자의 사망을 접수한다. 공수 교대가 없을 때만 부활 위치를 탐색한다.
     /// </summary>
     [Command(requiresAuthority = false)]
-    private void CmdRequestFall(NetworkConnectionToClient sender = null)
-    {
-        ServerTryContact(sender);
-    }
+    private void CmdRequestFall(int turnNumber, NetworkConnectionToClient sender = null)
+        => ServerTryContact(sender, turnNumber);
 
     [Server]
-    public bool ServerTryContact(NetworkConnectionToClient sender)
+    public bool ServerTryContact(NetworkConnectionToClient sender, int turnNumber)
     {
         if (NetworkServer.isLoadingScene || !isActiveAndEnabled || sender?.identity == null ||
-            !sender.identity.TryGetComponent(out PlayerState player)) return false;
+            !sender.identity.TryGetComponent(out PlayerState player) || !player.CanMove ||
+            player.Race == null || player.Race.RoundNumber != turnNumber) return false;
         var zone = GetComponent<BoxCollider2D>();
         var body = player.GetComponent<Collider2D>();
-        if (!zone.enabled || body == null) return false;
+        if (!zone.enabled || body == null || !body.enabled) return false;
         Bounds area = zone.bounds;
         area.Expand(0.5f);
         if (!area.Intersects(body.bounds)) return false;
+
+        // 공수 경기에서는 부활 위치를 탐색하지 않고 최신 main의 공격자 교대를 따른다.
+        if (player.Race.Roles != null)
+            return player.TryDie();
+
         if (TryGetRespawnPosition(player.transform.position, out Vector2 position))
         {
             if (!player.TryDie()) return false;
@@ -82,8 +90,8 @@ public sealed class FallZone : NetworkBehaviour
     {
         if (!isServer) return;
         foreach (var identity in NetworkServer.spawned.Values)
-            if (identity != null && identity.GetComponent<PlayerState>() != null)
-                ServerTryContact(identity.connectionToClient);
+            if (identity != null && identity.TryGetComponent(out PlayerState player) && player.Race != null)
+                ServerTryContact(identity.connectionToClient, player.Race.RoundNumber);
     }
 
     /// <summary>

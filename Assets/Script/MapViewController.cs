@@ -89,6 +89,21 @@ public class MapViewController : MonoBehaviour
         if (localPlayer == null)
             return;
 
+        if (race != null && race.Roles != null)
+        {
+            uint attackerId = race.Roles.AttackerNetId;
+
+            if (NetworkClient.spawned.TryGetValue(attackerId, out NetworkIdentity attacker) &&
+                (observedPlayer == null || observedPlayer.netId != attackerId))
+            {
+                observedPlayer = attacker.GetComponent<PlayerState>();
+                trackingCamera.Follow = attacker.transform;
+            }
+
+            wasSpectating = !localPlayer.IsAttacker;
+            return;
+        }
+
         bool spectating = localPlayer.Status == PlayerStatus.Finished;
 
         if (!spectating)
@@ -143,7 +158,7 @@ public class MapViewController : MonoBehaviour
         UpdateSpectatorTarget();
 
         // 관전 중 방향키 입력은 Tab 전체 보기를 닫지 않는다.
-        if ((localPlayer == null || localPlayer.CanAct) &&
+        if ((localPlayer == null || localPlayer.CanMove) &&
             (InputManager.Movement.x != 0f || InputManager.Movement.y != 0f))
         {
             if (IsMapView)

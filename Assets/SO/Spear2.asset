@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   Id: 2
   DisplayName: "\uCC3D 2\uAC1C"
-  Icon: {fileID: 21300000, guid: fb7d900b0ce89d54ab68807b2fc1ee3d, type: 3}
+  Icon: {fileID: -382922240248080783, guid: 2354583d596a60a4ba12df265dbbf3ae, type: 3}
+  HeldIconScale: 1
   Prefab: {fileID: 5019875716226688465, guid: bf7cffdac3bc1e9449442a13c4c8d342, type: 3}
   Price: 35
   SpawnWeight: 10
