@@ -12,6 +12,7 @@ public class NetworkPlayerController : NetworkBehaviour
     private PlayerMovement platformMovement;
     private NetworkPlayerHealth playerHealth;
     private PlayerState playerState;
+    private CapstoneRoomPlayer fixedRoomPlayer;
 
     /// <summary>
     /// 이동에 필요한 컴포넌트를 보관하고 소유권이 확인되기 전에는 물리를 끈다.
@@ -21,6 +22,7 @@ public class NetworkPlayerController : NetworkBehaviour
         body = GetComponent<Rigidbody2D>();
         playerHealth = GetComponent<NetworkPlayerHealth>();
         playerState = GetComponent<PlayerState>();
+        fixedRoomPlayer = GetComponent<CapstoneRoomPlayer>();
         body.simulated = false;
         platformMovement = GetComponent<PlayerMovement>();
         if (platformMovement != null) platformMovement.enabled = false;
@@ -41,7 +43,9 @@ public class NetworkPlayerController : NetworkBehaviour
             platformMovement.enabled = !inLobby;
         }
         if (inLobby)
-            transform.position = new Vector3(((int)(netId % 4) - 1.5f) * 1.8f, 0f, 0f);
+            transform.position = fixedRoomPlayer != null
+                ? CapstoneRoomManager.GetLobbySeatPosition(fixedRoomPlayer.SeatIndex)
+                : new Vector3(((int)(netId % 4) - 1.5f) * 1.8f, 0f, 0f);
         else
             BindLocalCamera();
     }
@@ -104,7 +108,12 @@ public class NetworkPlayerController : NetworkBehaviour
         if ((NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
             || (NetworkManager.singleton is CapstoneRoomManager roomManager && roomManager.IsLobby))
         {
-            MoveInLobby();
+            if (fixedRoomPlayer != null && NetworkManager.singleton is CapstoneRoomManager)
+            {
+                body.simulated = false;
+                transform.position = CapstoneRoomManager.GetLobbySeatPosition(fixedRoomPlayer.SeatIndex);
+            }
+            else MoveInLobby();
             return;
         }
         // 골인·대기·판 종료 상태는 소유자의 물리와 이동도 함께 멈춘다.

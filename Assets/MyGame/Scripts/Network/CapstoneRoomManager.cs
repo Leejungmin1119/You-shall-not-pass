@@ -1,10 +1,31 @@
 using System.Linq;
 using Mirror;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CapstoneRoomManager : NetworkRoomManager
 {
+    public const int LobbySeatCount = 4;
+    public const double LobbyCountdownDuration = 5d;
+    [SerializeField, Range(2, LobbySeatCount)] private int minimumLobbyPlayers = 2;
+    private readonly System.Collections.Generic.Dictionary<int, int> seatsByConnection =
+        new System.Collections.Generic.Dictionary<int, int>();
+    private double serverCountdownEndsAt;
+    public int RequiredLobbyPlayers => Mathf.Clamp(minimumLobbyPlayers, 2, LobbySeatCount);
+    public double LobbyCountdownEndsAt
+    {
+        get
+        {
+            if (NetworkServer.active) return serverCountdownEndsAt;
+            var player = NetworkClient.localPlayer != null
+                ? NetworkClient.localPlayer.GetComponent<CapstoneRoomPlayer>() : null;
+            return player != null ? player.CountdownEndsAt : 0d;
+        }
+    }
+    public bool IsLobbyCountdownActive => IsLobby && LobbyCountdownEndsAt > 0d;
+
+    public static Vector3 GetLobbySeatPosition(int seat)
+        => new Vector3((Mathf.Clamp(seat, 0, LobbySeatCount - 1) - 1.5f) * 2.8f, 0f, 0f);
+
     private string pendingConnectionError;
     private PasswordRelayTransport relayTransport;
     private kcp2k.KcpTransport lanTransport;
@@ -21,6 +42,8 @@ public class CapstoneRoomManager : NetworkRoomManager
             return;
 
         showRoomGUI = false;
+        maxConnections = LobbySeatCount;
+        minPlayers = RequiredLobbyPlayers;
         relayTransport = GetComponent<PasswordRelayTransport>();
         lanTransport = GetComponent<kcp2k.KcpTransport>();
         if (relayTransport != null)
@@ -95,6 +118,8 @@ public class CapstoneRoomManager : NetworkRoomManager
     public override void OnRoomStopHost()
     {
         Lan?.Cancel();
+        serverCountdownEndsAt = 0d;
+        seatsByConnection.Clear();
         IsSoloTest = false;
         soloLaunchPending = false;
     }
@@ -107,30 +132,89 @@ public class CapstoneRoomManager : NetworkRoomManager
     public bool CanStartGame()
     {
         if (transport is PasswordRelayTransport relay && !relay.RoomOpen) return false;
-        if (!NetworkServer.active || !IsLobby || NetworkServer.isLoadingScene ||
-            NetworkServer.connections.Count < minPlayers) return false;
+        if (!NetworkServer.active || !IsLobby || IsSoloTest || NetworkServer.isLoadingScene ||
+            NetworkServer.connections.Count < RequiredLobbyPlayers ||
+            NetworkServer.connections.Count > LobbySeatCount) return false;
         foreach (var connection in NetworkServer.connections.Values)
         {
             var player = connection.identity != null
                 ? connection.identity.GetComponent<CapstoneRoomPlayer>() : null;
-            if (player == null || !player.readyToBegin) return false;
+            if (!connection.isReady || player == null || !player.readyToBegin || player.SeatIndex < 0)
+                return false;
         }
         return true;
     }
 
-    // 준비 완료 시 자동 전환 대신 Host의 시작 버튼을 기다린다.
-    public override void OnRoomServerPlayersReady() { }
+    /// <summary>좌석 번호는 Mirror의 진단 index와 별개로 유지하여 퇴장해도 다른 자리가 바뀌지 않는다.</summary>
+    public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnectionToClient connection)
+    {
+        CancelLobbyCountdown();
+        if (!seatsByConnection.TryGetValue(connection.connectionId, out int seat))
+        {
+            seat = 0;
+            while (seat < LobbySeatCount && seatsByConnection.ContainsValue(seat)) seat++;
+            if (seat == LobbySeatCount)
+                throw new System.InvalidOperationException("No free lobby seat for an accepted connection.");
+            seatsByConnection[connection.connectionId] = seat;
+        }
+        GameObject instance = Instantiate(roomPlayerPrefab.gameObject, GetLobbySeatPosition(seat), Quaternion.identity);
+        instance.GetComponent<CapstoneRoomPlayer>().ServerAssignSeat(seat);
+        return instance;
+    }
 
+    public override void OnRoomServerConnect(NetworkConnectionToClient connection)
+    {
+        // 참가자 구성이 바뀌면 기존 마감 시각을 재사용하지 않는다.
+        CancelLobbyCountdown();
+    }
+
+    public override void OnRoomServerSceneChanged(string sceneName) => CancelLobbyCountdown();
+
+    public override void OnRoomStopServer()
+    {
+        serverCountdownEndsAt = 0d;
+        seatsByConnection.Clear();
+    }
+
+    public override void ReadyStatusChanged()
+    {
+        base.ReadyStatusChanged();
+        if (!CanStartGame()) CancelLobbyCountdown();
+        else BeginLobbyCountdown();
+    }
+
+    public override void OnRoomServerPlayersReady() => BeginLobbyCountdown();
+    public override void OnRoomServerPlayersNotReady() => CancelLobbyCountdown();
+
+    private void BeginLobbyCountdown()
+    {
+        if (!CanStartGame() || serverCountdownEndsAt > 0d) return;
+        SetLobbyCountdown(NetworkTime.time + LobbyCountdownDuration);
+    }
+
+    private void CancelLobbyCountdown()
+    {
+        if (serverCountdownEndsAt > 0d) SetLobbyCountdown(0d);
+    }
+
+    private void SetLobbyCountdown(double deadline)
+    {
+        serverCountdownEndsAt = deadline;
+        foreach (NetworkRoomPlayer item in roomSlots)
+            if (item is CapstoneRoomPlayer player) player.ServerSetCountdown(deadline);
+    }
+
+    /// <summary>시작 버튼이나 Enter로 5초를 생략할 수 없도록 서버에서 마감과 전원 준비를 다시 검사한다.</summary>
     [Server]
     public void TryStartGame()
     {
-        if (!IsLobby || NetworkServer.isLoadingScene) return;
+        if (serverCountdownEndsAt <= 0d || NetworkTime.time < serverCountdownEndsAt) return;
         if (!CanStartGame())
         {
-            GetComponent<CapstoneLobbyUI>()?.ShowNotice("READY UP!",
-                $"At least {minPlayers} players must connect and everyone must be ready.", false);
+            CancelLobbyCountdown();
             return;
         }
+        CancelLobbyCountdown();
         Lan.Cancel();
         (transport as PasswordRelayTransport)?.LockRoom();
         ServerChangeScene(GameplayScene);
@@ -172,6 +256,8 @@ public class CapstoneRoomManager : NetworkRoomManager
 
     public override void OnRoomServerDisconnect(NetworkConnectionToClient connection)
     {
+        CancelLobbyCountdown();
+        seatsByConnection.Remove(connection.connectionId);
         var race = FindFirstObjectByType<RaceManager>();
         if (race != null && race.Phase != RacePhase.Waiting)
             race.EndMatch(RaceEndReason.PlayerDisconnected);
@@ -206,7 +292,13 @@ public class CapstoneRoomManager : NetworkRoomManager
             ServerChangeScene(GameplayScene);
             return;
         }
-        if (!NetworkServer.active || !NetworkClient.active || IsEditingText || Keyboard.current == null) return;
-        if (Keyboard.current.enterKey.wasPressedThisFrame) TryStartGame();
+        if (!NetworkServer.active) return;
+        if (!CanStartGame())
+            CancelLobbyCountdown();
+        else
+        {
+            BeginLobbyCountdown();
+            if (NetworkTime.time >= serverCountdownEndsAt) TryStartGame();
+        }
     }
 }

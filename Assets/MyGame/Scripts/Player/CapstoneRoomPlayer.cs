@@ -6,6 +6,34 @@ using UnityEngine.InputSystem;
 public class CapstoneRoomPlayer : NetworkRoomPlayer
 {
     [SyncVar] private string playerName;
+    [SyncVar] private int seatIndex = -1;
+    [SyncVar] private double countdownEndsAt;
+    public int SeatIndex => seatIndex;
+    public double CountdownEndsAt => countdownEndsAt;
+
+    // 고정 좌석은 SyncVar 하나로 모든 화면에서 동일하게 배치한다. 위치 입력은 전송하지 않는다.
+    private void Awake()
+    {
+        var movementSync = GetComponent<NetworkTransformBase>();
+        if (movementSync != null) movementSync.enabled = false;
+    }
+
+    internal void ServerAssignSeat(int seat)
+    {
+        seatIndex = seat;
+        countdownEndsAt = 0d;
+        transform.position = CapstoneRoomManager.GetLobbySeatPosition(seat);
+    }
+
+    [Server]
+    internal void ServerSetCountdown(double deadline) => countdownEndsAt = deadline;
+
+    private void LateUpdate()
+    {
+        if (seatIndex >= 0 && NetworkManager.singleton is CapstoneRoomManager room && room.IsLobby)
+            transform.position = CapstoneRoomManager.GetLobbySeatPosition(seatIndex);
+    }
+
     public string PlayerName => playerName;
     public bool IsReady => readyToBegin;
 
