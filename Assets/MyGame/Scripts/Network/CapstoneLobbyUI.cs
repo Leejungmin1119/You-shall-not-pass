@@ -328,7 +328,7 @@ public class CapstoneLobbyUI : MonoBehaviour
             badge.alignment = TextAnchor.MiddleCenter;
         }
         DrawLandscape();
-        Label(new Rect(76, 40, 900, 58), "YOU SHALL NOT PASS", title);
+        Label(new Rect(76, 40, 900, 58), "세상에서 가장 더러운 게임", title);
         Label(new Rect(78, 108, 780, 32), "구름 아래 출발점  ·  네 자리에 모여 함께 준비해요", small);
 
         var players = NetworkClient.spawned.Values.Where(n => n != null)
