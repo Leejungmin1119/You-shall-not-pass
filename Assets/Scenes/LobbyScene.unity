@@ -327,6 +327,7 @@ MonoBehaviour:
   GameplayScene: Assets/Scenes/SampleScene.unity
   _allPlayersReady: 0
   clientIndex: 0
+  minimumLobbyPlayers: 2
 --- !u!114 &424522517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -339,6 +340,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66883b296e534401b6eb9f8be9260654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CapstoneLobbyUI
+  skySprite: {fileID: 21300000, guid: 2ae692a79c0912e4aad904e22b611a39, type: 3}
+  grassSprite: {fileID: 21300000, guid: db310e82ec565b34398a699c88812088, type: 3}
+  idleFrames:
+  - {fileID: -1192596476, guid: 2b9f527c83ff903489649f97427f2ba6, type: 3}
+  - {fileID: -1044001469, guid: 2b9f527c83ff903489649f97427f2ba6, type: 3}
+  - {fileID: -166920344, guid: 2b9f527c83ff903489649f97427f2ba6, type: 3}
+  idleFramesPerSecond: 6
   noticeDuration: 2.4
 --- !u!114 &424522518
 MonoBehaviour:

@@ -44,3 +44,11 @@
 `<id>.command.json`의 `sequence`를 증가시키며 `ready`, `rename`, `nudge`, `tryStart`, `return`, `leave`를 시험할 수 있다. `ready`에는 bool `ready`, `rename`에는 `name`을 추가한다. 상태는 `<id>.json`, 씬/카운트다운 이벤트는 `<id>.events.jsonl`에 기록된다.
 
 출시용 로비와 일괄 교체하기 전 팀 검토를 위한 예비 구현이다.
+
+## 인게임 분위기 적용
+
+로비 배경은 인게임의 `PastelSky_ExpandedWorld_v2`, 네 자리의 발판은 `GrassSoil_GrassTile_v1` 스프라이트를 공유한다. 임의의 로봇 도형 대신 게임 플레이어 프리팹 `PlayerIdleBoil.dollFrames`와 동일한 인형 대기 스프라이트 3장을 6fps로 재생한다. 그림만 바뀌며 좌석의 위치는 고정된다.
+
+로비 씬에 스프라이트 참조를 직렬화하여 빌드에도 포함되게 했다. 프레임의 원본 비율과 개별 스프라이트 UV를 사용하며, 잔디·흙·구름에 맞춰 버튼과 안내창은 따뜻한 종이색, 글자는 짙은 갈색, READY는 초록색으로 표시한다. 방 생성·참가·이름 저장·준비·취소 문구도 한국어로 맞췄다.
+
+자리 배정과 서버 카운트다운 코드는 이 외형 변경에서 수정하지 않았다.

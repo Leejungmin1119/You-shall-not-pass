@@ -15,6 +15,11 @@ public class CapstoneLobbyUI : MonoBehaviour
     private GUIStyle title, heading, text, small, button, input;
     private GUIStyle statusTitle, statusDetail, countdownNumber;
     private Font lobbyFont;
+    [Header("인게임과 공유하는 로비 그림")]
+    [SerializeField] private Sprite skySprite;
+    [SerializeField] private Sprite grassSprite;
+    [SerializeField] private Sprite[] idleFrames = new Sprite[0];
+    [SerializeField, Min(1f)] private float idleFramesPerSecond = 6f;
     [Header("중앙 알림")]
     [SerializeField] private float noticeDuration = 2.4f;
     private string noticeTitle, noticeDetail;
@@ -45,7 +50,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         Color oldColor = GUI.color;
         GUIUtility.ScaleAroundPivot(new Vector2(scale, scale), new Vector2(640, 360));
         GUI.color = new Color(1, 1, 1, opacity);
-        Box(new Rect(280, 260, 720, 200), new Color(.025f, .035f, .065f, .96f));
+        Box(new Rect(280, 260, 720, 200), Panel);
         Box(new Rect(280, 260, 720, 4), noticeColor);
         noticeHeading.normal.textColor = new Color(noticeColor.r, noticeColor.g, noticeColor.b, pulse);
         Label(new Rect(300, 287, 680, 90), noticeTitle, noticeHeading);
@@ -53,9 +58,12 @@ public class CapstoneLobbyUI : MonoBehaviour
         GUI.color = oldColor;
         GUI.matrix = oldMatrix;
     }
-    private static readonly Color Background = new Color(.035f, .05f, .09f);
-    private static readonly Color Panel = new Color(.07f, .09f, .15f);
-    private static readonly Color Accent = new Color(.34f, .91f, .73f);
+    private static readonly Color Background = new Color(.76f, .88f, .96f);
+    private static readonly Color Ink = new Color(.28f, .23f, .19f);
+    private static readonly Color Muted = new Color(.43f, .42f, .34f);
+    private static readonly Color Paper = new Color(1f, .97f, .87f);
+    private static readonly Color Panel = new Color(1f, .97f, .87f, .96f);
+    private static readonly Color Accent = new Color(.30f, .48f, .27f);
 
     private void Awake()
     {
@@ -85,18 +93,22 @@ public class CapstoneLobbyUI : MonoBehaviour
                 string.Equals(fontName, name, System.StringComparison.OrdinalIgnoreCase)));
             if (available != null) lobbyFont = Font.CreateDynamicFontFromOSFont(available, 24);
         }
-        title = Style(42, Color.white, FontStyle.Bold);
+        title = Style(42, Ink, FontStyle.Bold);
         noticeHeading = Style(64, Accent, FontStyle.Bold);
         noticeHeading.alignment = TextAnchor.MiddleCenter;
-        noticeCaption = Style(20, new Color(.83f, .88f, .95f));
+        noticeCaption = Style(20, Muted);
         noticeCaption.alignment = TextAnchor.MiddleCenter;
-        heading = Style(24, Color.white, FontStyle.Bold);
-        text = Style(18, new Color(.78f, .83f, .9f));
-        small = Style(14, new Color(.52f, .61f, .73f));
-        button = new GUIStyle(GUI.skin.button) { font = lobbyFont, fontSize = 18, fontStyle = FontStyle.Bold };
-        input = new GUIStyle(GUI.skin.textField) { font = lobbyFont, fontSize = 20, padding = new RectOffset(12, 12, 10, 10) };
-        statusTitle = Style(22, Color.white, FontStyle.Bold);
-        statusDetail = Style(14, new Color(.68f, .78f, .86f));
+        heading = Style(24, Ink, FontStyle.Bold);
+        text = Style(18, Ink);
+        small = Style(14, Muted);
+        button = Style(18, Ink, FontStyle.Bold);
+        button.alignment = TextAnchor.MiddleCenter;
+        input = new GUIStyle(GUI.skin.textField) { font = lobbyFont, fontSize = 20,
+            padding = new RectOffset(12, 12, 7, 7), normal = { background = Texture2D.whiteTexture, textColor = Ink },
+            focused = { background = Texture2D.whiteTexture, textColor = Ink },
+            hover = { background = Texture2D.whiteTexture, textColor = Ink } };
+        statusTitle = Style(22, Ink, FontStyle.Bold);
+        statusDetail = Style(14, Muted);
         countdownNumber = Style(48, Accent, FontStyle.Bold);
         countdownNumber.alignment = TextAnchor.MiddleCenter;
     }
@@ -127,8 +139,15 @@ public class CapstoneLobbyUI : MonoBehaviour
 
     private bool Action(Rect rect, string label, bool enabled = true)
     {
+        bool hover = enabled && rect.Contains(Event.current.mousePosition);
+        Rounded(new Rect(rect.x, rect.y + 3, rect.width, rect.height), new Color(.38f, .31f, .22f, .23f), 9);
+        Rounded(rect, enabled ? new Color(.48f, .48f, .34f) : new Color(.66f, .65f, .56f), 9);
+        Rounded(new Rect(rect.x + 2, rect.y + 2, rect.width - 4, rect.height - 4),
+            hover ? new Color(.86f, .92f, .73f) : enabled ? Paper : new Color(.89f, .88f, .79f), 7);
         GUI.enabled = enabled;
-        bool clicked = GUI.Button(rect, Content(label), button);
+        bool clicked = GUI.Button(rect, GUIContent.none, GUIStyle.none);
+        button.normal.textColor = enabled ? Ink : new Color(.58f, .57f, .49f);
+        Label(rect, label, button);
         GUI.enabled = true;
         if (clicked) { GUI.FocusControl(null); IsEditingText = false; }
         return clicked;
@@ -178,56 +197,57 @@ public class CapstoneLobbyUI : MonoBehaviour
         GUI.color = old;
     }
 
-    private void DrawCrew(float x, float y, uint id, bool ready, bool local, bool preview = false, string playerName = null)
+    /// <summary>인게임과 동일한 스프라이트의 UV를 사용하며 원본 비율을 유지한다.</summary>
+    private static void DrawSprite(Rect rect, Sprite sprite, bool fit = false)
     {
-        Color color = GetCrewColor(id);
-        // 작은 정비 로봇: 넓은 어깨, 두 눈의 바이저, 안테나.
-        Rounded(new Rect(x - 25, y + 27, 50, 12), new Color(0, 0, 0, .3f), 5);
-        const float step = 0f; // 고정 좌석에서는 걷기 애니메이션을 재생하지 않는다.
-        Rounded(new Rect(x - 20, y - 5, 15, 40 + step), color * .7f, 6);
-        Rounded(new Rect(x + 5, y - 5, 15, 40 - step), color * .7f, 6);
-        Rounded(new Rect(x - 30, y - 38, 60, 58), new Color(.03f, .055f, .09f), 12);
-        Rounded(new Rect(x - 26, y - 34, 52, 48), color, 10);
-        Rounded(new Rect(x - 21, y - 26, 42, 22), new Color(.08f, .14f, .22f), 7);
-        Box(new Rect(x - 14, y - 20, 8, 6), new Color(.75f, 1f, 1f));
-        Box(new Rect(x + 6, y - 20, 8, 6), new Color(.75f, 1f, 1f));
-        Box(new Rect(x - 2, y - 45, 4, 10), color);
-        Rounded(new Rect(x - 5, y - 51, 10, 10), ready ? Accent : color, 5);
-        if (preview) return;
-        string displayName = (string.IsNullOrEmpty(playerName) ? "P" + id : playerName) + (local ? " / YOU" : "");
-        centered.fontSize = 17;
-        float nameWidth = centered.CalcSize(new GUIContent(displayName)).x;
-        if (nameWidth > 164) centered.fontSize = Mathf.Clamp((int)(17 * 164 / nameWidth), 8, 17);
-        centered.wordWrap = false;
-        Label(new Rect(x - 85, y + 46, 170, 28), displayName, centered);
-        centered.fontSize = 17;
-        badge.normal.textColor = ready ? Accent : new Color(1f, .75f, .4f);
-        Rounded(new Rect(x - 58, y - 90, 116, 28),
-            ready ? new Color(.08f, .29f, .25f) : new Color(.21f, .20f, .18f), 8);
-        Label(new Rect(x - 58, y - 90, 116, 28), ready ? "READY" : "WAITING", badge);
+        if (sprite == null) return;
+        Rect source = sprite.textureRect;
+        if (fit)
+        {
+            float scale = Mathf.Min(rect.width / source.width, rect.height / source.height);
+            float width = source.width * scale, height = source.height * scale;
+            rect = new Rect(rect.center.x - width * .5f, rect.yMax - height, width, height);
+        }
+        GUI.DrawTextureWithTexCoords(rect, sprite.texture,
+            new Rect(source.x / sprite.texture.width, source.y / sprite.texture.height,
+                source.width / sprite.texture.width, source.height / sprite.texture.height), true);
     }
 
-    private void DrawShip()
+    private void DrawCrew(float x, uint id, bool ready, bool local, string playerName)
     {
-        // 창밖 별, 금속 벽, 타일 바닥과 화물 상자.
-        for (int i = 0; i < 80; i++)
+        Rounded(new Rect(x - 42, 450, 84, 10), new Color(.27f, .25f, .16f, .16f), 5);
+        if (idleFrames != null && idleFrames.Length > 0)
         {
-            float x = (i * 173 + 41) % 1280, y = (i * 97 + 13) % 720;
-            float alpha = .25f + .2f * Mathf.Sin(Time.unscaledTime * .7f + i);
-            Box(new Rect(x, y, i % 5 == 0 ? 3 : 2, 2), new Color(.7f, .85f, 1f, alpha));
+            int frame = (Mathf.FloorToInt(Time.unscaledTime * idleFramesPerSecond) + (int)(id % 3)) % idleFrames.Length;
+            DrawSprite(new Rect(x - 63, 310, 126, 150), idleFrames[frame], true);
         }
-        Rounded(new Rect(62, 167, 858, 398), new Color(.025f, .045f, .07f), 36);
-        Rounded(new Rect(72, 157, 838, 388), new Color(.23f, .3f, .37f), 32);
-        Rounded(new Rect(87, 178, 808, 360), new Color(.12f, .18f, .23f), 24);
-        Rounded(new Rect(100, 226, 780, 305), new Color(.27f, .34f, .38f), 16);
-        for (int x = 110; x < 880; x += 64)
-            Box(new Rect(x, 239, 1, 281), new Color(.34f, .42f, .46f));
-        for (int y = 244; y < 520; y += 46)
-            Box(new Rect(110, y, 760, 1), new Color(.34f, .42f, .46f));
-        Rounded(new Rect(335, 183, 310, 34), new Color(.035f, .07f, .12f), 10);
-        Label(new Rect(335, 187, 310, 28), "DECK 01 / CREW ASSEMBLY", badge);
-        for (int i = 0; i < 4; i++)
-            Rounded(new Rect(i < 2 ? 120 + i * 100 : 700 + (i - 2) * 100, 191, 54, 10), new Color(.4f, .85f, .92f), 5);
+        string displayName = string.IsNullOrEmpty(playerName) ? "P" + id : playerName;
+        centered.fontSize = 17;
+        float nameWidth = centered.CalcSize(Content(displayName)).x;
+        if (nameWidth > 160) centered.fontSize = Mathf.Clamp((int)(17 * 160 / nameWidth), 8, 17);
+        centered.normal.textColor = Ink;
+        centered.wordWrap = false;
+        Label(new Rect(x - 85, 507, 170, 28), displayName, centered);
+        centered.fontSize = 17;
+        badge.normal.textColor = ready ? Color.white : Ink;
+        Rounded(new Rect(x - 58, 274, 116, 28), ready ? Accent : new Color(.97f, .88f, .64f), 8);
+        Label(new Rect(x - 58, 274, 116, 28), ready ? "READY" : "준비 중", badge);
+        if (local)
+        {
+            badge.normal.textColor = Accent;
+            Label(new Rect(x - 30, 535, 60, 22), "나", badge);
+        }
+    }
+
+    private void DrawLandscape()
+    {
+        Box(new Rect(0, 0, 1280, 720), Background);
+        DrawSprite(new Rect(0, 0, 1280, 720), skySprite);
+        Box(new Rect(0, 0, 1280, 720), new Color(1f, .99f, .94f, .10f));
+        Rounded(new Rect(62, 174, 858, 390), new Color(1f, .98f, .90f, .55f), 24);
+        badge.normal.textColor = Muted;
+        Label(new Rect(90, 194, 220, 28), "모험의 출발점", badge);
+        Label(new Rect(676, 194, 220, 28), "READY로 함께 출발해요", badge);
     }
 
     /// <summary>빈 자리도 고정 위치에 그리며 서버가 배정한 좌석 번호로 참가자를 연결한다.</summary>
@@ -238,25 +258,19 @@ public class CapstoneLobbyUI : MonoBehaviour
             float x = 200 + seat * 194;
             var player = players.FirstOrDefault(p => p.SeatIndex == seat);
             bool occupied = player != null;
-            Color edge = occupied && player.IsReady ? Accent : new Color(.34f, .45f, .53f);
-            Rounded(new Rect(x - 88, 270, 176, 238), edge * .6f, 16);
-            Rounded(new Rect(x - 85, 273, 170, 232), new Color(.09f, .15f, .20f), 14);
-            badge.normal.textColor = new Color(.62f, .77f, .83f);
-            Label(new Rect(x - 80, 474, 160, 24), $"SEAT {seat + 1:00}", badge);
-            if (occupied)
-            {
-                DrawCrew(x, 384, player.netId, player.IsReady, player.isLocalPlayer,
-                    false, player.PlayerName);
-                if (player.isLocalPlayer)
-                    Box(new Rect(x - 59, 466, 118, 2), Accent);
-            }
+            // 그림과 캐릭터 모두 인게임의 발판·대기 애니메이션 에셋을 공유한다.
+            DrawSprite(new Rect(x - 88, 460, 176, 88), grassSprite);
+            if (grassSprite == null) Rounded(new Rect(x - 88, 460, 176, 72), new Color(.62f, .72f, .44f), 8);
+            badge.normal.textColor = Muted;
+            Label(new Rect(x - 80, 239, 160, 24), $"{seat + 1:00} 번 자리", badge);
+            if (occupied) DrawCrew(x, player.netId, player.IsReady, player.isLocalPlayer, player.PlayerName);
             else
             {
-                Rounded(new Rect(x - 31, 352, 62, 62), new Color(.15f, .24f, .30f), 16);
-                Box(new Rect(x - 12, 381, 24, 3), new Color(.36f, .49f, .56f));
-                Box(new Rect(x - 1.5f, 370, 3, 25), new Color(.36f, .49f, .56f));
-                badge.normal.textColor = new Color(.48f, .61f, .68f);
-                Label(new Rect(x - 80, 423, 160, 26), connected ? "WAITING FOR PLAYER" : "OPEN SLOT", badge);
+                Rounded(new Rect(x - 31, 373, 62, 62), new Color(1f, .98f, .89f, .75f), 20);
+                Box(new Rect(x - 12, 402, 24, 3), new Color(.56f, .64f, .46f));
+                Box(new Rect(x - 1.5f, 391, 3, 25), new Color(.56f, .64f, .46f));
+                badge.normal.textColor = Muted;
+                Label(new Rect(x - 80, 507, 160, 26), connected ? "친구를 기다려요" : "빈 자리", badge);
             }
         }
     }
@@ -265,7 +279,7 @@ public class CapstoneLobbyUI : MonoBehaviour
     private void DrawStartStatus(int playerCount, int readyCount, bool connected)
     {
         bool counting = connected && manager.IsLobbyCountdownActive;
-        Rounded(new Rect(500, 579, 397, 76), counting ? new Color(.055f, .20f, .19f) : Panel, 14);
+        Rounded(new Rect(500, 579, 397, 76), counting ? new Color(.90f, .96f, .79f) : Panel, 14);
         if (counting)
         {
             int seconds = Mathf.Clamp(Mathf.CeilToInt((float)(manager.LobbyCountdownEndsAt - NetworkTime.time)), 1, 5);
@@ -308,14 +322,14 @@ public class CapstoneLobbyUI : MonoBehaviour
         Box(new Rect(0, 0, 1280, 720), Background);
         if (centered == null)
         {
-            centered = Style(17, Color.white, FontStyle.Bold);
+            centered = Style(17, Ink, FontStyle.Bold);
             centered.alignment = TextAnchor.MiddleCenter;
-            badge = Style(13, new Color(.62f, .77f, .83f), FontStyle.Bold);
+            badge = Style(13, Muted, FontStyle.Bold);
             badge.alignment = TextAnchor.MiddleCenter;
         }
-        DrawShip();
+        DrawLandscape();
         Label(new Rect(76, 40, 900, 58), "YOU SHALL NOT PASS", title);
-        Label(new Rect(78, 108, 780, 32), "CREW QUARTERS     /     FOUR FIXED SEATS. READY TOGETHER.", small);
+        Label(new Rect(78, 108, 780, 32), "구름 아래 출발점  ·  네 자리에 모여 함께 준비해요", small);
 
         var players = NetworkClient.spawned.Values.Where(n => n != null)
             .Select(n => n.GetComponent<CapstoneRoomPlayer>()).Where(n => n != null)
@@ -325,18 +339,18 @@ public class CapstoneLobbyUI : MonoBehaviour
         bool searching = manager.Lan != null && manager.Lan.Searching;
         bool active = NetworkClient.active || NetworkServer.active || searching;
         // 개발자 시험용이라 에디터와 Development Build에서만 보인다.
-        if (Debug.isDebugBuild && Action(new Rect(948, 100, 275, 40), "SOLO TEST (DEV)", !active))
+        if (Debug.isDebugBuild && Action(new Rect(948, 100, 275, 40), "혼자 시험하기 (DEV)", !active))
             manager.BeginSoloTest();
         Rounded(new Rect(948, 155, 275, 528), Panel, 18);
-        Label(new Rect(972, 179, 232, 36), connected ? "ROOM LOBBY" : "BOARDING", heading);
+        Label(new Rect(972, 179, 232, 36), connected ? "우리들의 로비" : "모험 준비", heading);
         Label(new Rect(972, 226, 232, 48), connected
-            ? (NetworkServer.active ? (!(manager.transport is PasswordRelayTransport) || ((PasswordRelayTransport)manager.transport).RoomOpen ? "HOST / ROOM OPEN" : "Opening room...") : "CONNECTED")
-            : searching ? "Searching Wi-Fi rooms..." : active ? "Connecting..." : "Your crew is waiting.", text);
-        if (Action(new Rect(972, 286, 107, 34), localWifi ? "Wi-Fi *" : "Wi-Fi", !active)) localWifi = true;
-        if (Action(new Rect(1091, 286, 107, 34), localWifi ? "Internet" : "Internet *", !active)) localWifi = false;
+            ? (NetworkServer.active ? (!(manager.transport is PasswordRelayTransport) || ((PasswordRelayTransport)manager.transport).RoomOpen ? "방장 · 참가를 기다리는 중" : "방을 여는 중...") : "방에 참가했어요")
+            : searching ? "가까운 방을 찾는 중..." : active ? "연결하는 중..." : "친구들과 함께 모험을 준비해요.", text);
+        if (Action(new Rect(972, 286, 107, 34), localWifi ? "Wi-Fi ✓" : "Wi-Fi", !active)) localWifi = true;
+        if (Action(new Rect(1091, 286, 107, 34), localWifi ? "인터넷" : "인터넷 ✓", !active)) localWifi = false;
         if (localWifi)
         {
-            Label(new Rect(972, 330, 226, 55), "Same Wi-Fi.\nNo IP address needed.", small);
+            Label(new Rect(972, 330, 226, 55), "같은 Wi-Fi에서 만나세요.\n주소 입력 없이 참가할 수 있어요.", small);
         }
         else
         {
@@ -345,15 +359,15 @@ public class CapstoneLobbyUI : MonoBehaviour
             roomPassword = GUI.PasswordField(new Rect(972, 331, 226, 43), roomPassword, '*', 64, input);
             GUI.enabled = true;
         }
-        if (Action(new Rect(972, 387, 226, 43), "Create room", !active))
+        if (Action(new Rect(972, 387, 226, 43), "방 만들기", !active))
         {
             if (localWifi) manager.BeginLanRoom(true); else manager.BeginRoom(true, roomPassword);
         }
-        if (Action(new Rect(972, 441, 226, 43), localWifi ? "Find & join room" : "Join room", !active && (localWifi || roomPassword.Length >= 8)))
+        if (Action(new Rect(972, 441, 226, 43), localWifi ? "방 찾아 참가" : "방 참가", !active && (localWifi || roomPassword.Length >= 8)))
         {
             if (localWifi) manager.BeginLanRoom(false); else manager.BeginRoom(false, roomPassword);
         }
-        if (Action(new Rect(972, 502, 226, 40), "Leave / Cancel", active)) Leave();
+        if (Action(new Rect(972, 502, 226, 40), "나가기 / 취소", active)) Leave();
         int ready = players.Count(n => n.IsReady);
         var local = players.FirstOrDefault(n => n.isLocalPlayer);
         if (local != null && editingPlayerId != local.netId)
@@ -362,12 +376,12 @@ public class CapstoneLobbyUI : MonoBehaviour
             requestedName = local.PlayerName;
         }
         if (local == null) editingPlayerId = 0;
-        Label(new Rect(972, 564, 226, 22), "PLAYER NAME / 1-16 CHARACTERS", small);
+        Label(new Rect(972, 564, 226, 22), "플레이어 이름 · 최대 16자", small);
         GUI.enabled = local != null;
         GUI.SetNextControlName("PlayerName");
         requestedName = GUI.TextField(new Rect(972, 591, 226, 38), requestedName, 16, input);
         GUI.enabled = true;
-        if (Action(new Rect(972, 640, 226, 30), "Save name", local != null))
+        if (Action(new Rect(972, 640, 226, 30), "이름 저장", local != null))
             local.RequestName(requestedName);
         string focused = GUI.GetNameOfFocusedControl();
         IsEditingText = focused == "PlayerName" || focused == "RoomPassword";
@@ -376,17 +390,17 @@ public class CapstoneLobbyUI : MonoBehaviour
             GUI.FocusControl(null);
             IsEditingText = false;
         }
-        if (Action(new Rect(78, 586, 393, 57), local != null && local.IsReady ? "Cancel ready  [ F ]" : "Ready up  [ F ]", connected && local != null)) local.ToggleReady();
+        if (Action(new Rect(78, 586, 393, 57), local != null && local.IsReady ? "준비 취소  [ F ]" : "준비 완료  [ F ]", connected && local != null)) local.ToggleReady();
         DrawStartStatus(players.Length, ready, connected);
-        Label(new Rect(78, 668, 820, 29), $"{players.Length} / {CapstoneRoomManager.LobbySeatCount} SEATS OCCUPIED     |     {ready} READY     |     F : READY / CANCEL", small);
+        Label(new Rect(78, 668, 820, 29), $"참가 {players.Length} / {CapstoneRoomManager.LobbySeatCount}명     ·     준비 완료 {ready}명     ·     F : 준비 / 취소", small);
 
         if (searching && manager.Lan.Rooms.Length > 1)
         {
             var available = manager.Lan.Rooms;
             Rounded(new Rect(280, 225, 620, 335), Panel, 16);
-            Label(new Rect(315, 245, 550, 38), "CHOOSE A WI-FI ROOM", heading);
+            Label(new Rect(315, 245, 550, 38), "참가할 방을 선택하세요", heading);
             for (int i = 0; i < Mathf.Min(available.Length, 5); i++)
-                if (Action(new Rect(315, 290 + i * 46, 550, 38), "Join Wi-Fi room " + (i + 1)))
+                if (Action(new Rect(315, 290 + i * 46, 550, 38), "Wi-Fi 방 참가 " + (i + 1)))
                     manager.Lan.Join(available[i]);
         }
         DrawNotice();
