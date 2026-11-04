@@ -9,7 +9,7 @@ public sealed class RotatingFirebarTrap : NetworkBehaviour
     [SerializeField] private RaceManager race;
     [SerializeField] private FallZone fallZone;
     [SerializeField] private bool clockwise = false;
-    [SerializeField, Min(0.1f)] private float degreesPerSecond = 6f;
+    [SerializeField, Min(0.1f)] private float degreesPerSecond = 24f;
     [SerializeField] private float startingAngle = 45f;
     [SyncVar] private double rotationEpoch;
     private CircleCollider2D[] fireballs;
