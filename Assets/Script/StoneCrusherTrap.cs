@@ -6,7 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(NetworkIdentity), typeof(BoxCollider2D), typeof(Rigidbody2D))]
 public sealed class StoneCrusherTrap : NetworkBehaviour
 {
-    public enum CrusherPhase : byte { Waiting, Falling, Grounded, Returning }
+    // 기존 상태 번호를 유지하도록 새 상태는 마지막에 추가한다.
+    public enum CrusherPhase : byte { Waiting, Falling, Grounded, Returning, Preparing }
 
     // 상태 전환 정보만 보내고 각 화면은 같은 서버 시각으로 이동 위치를 계산한다.
     public struct Motion
@@ -25,6 +26,8 @@ public sealed class StoneCrusherTrap : NetworkBehaviour
     [Header("공격자 감지")]
     [SerializeField, Min(0.1f)] private float detectionWidth = 4f;
     [SerializeField, Min(0.1f)] private float detectionDistance = 10f;
+    [Tooltip("공격자를 감지한 뒤 내려찍기 전까지 기다리는 시간입니다. 0이면 즉시 내려찍습니다.")]
+    [SerializeField, Min(0f)] private float preparationDuration = 0.5f;
     [SerializeField, Min(0f)] private float rearmDelay = 0.35f;
 
     [Header("내려찍기와 복귀")]
@@ -94,6 +97,18 @@ public sealed class StoneCrusherTrap : NetworkBehaviour
         if (motion.Phase == CrusherPhase.Waiting)
         {
             if (now >= canDetectAt && IsBelow(attacker))
+            {
+                if (preparationDuration > 0f)
+                    SetMotion(CrusherPhase.Preparing, home.y, home.y, preparationDuration, now);
+                else
+                    BeginDrop(now);
+            }
+        }
+        else if (motion.Phase == CrusherPhase.Preparing)
+        {
+            // 한 번 감지하면 공격자가 벗어나도 준비시간이 끝난 뒤 내려찍는다.
+            // 준비 중에는 같은 높이를 유지하며 시작 시각과 지속시간을 함께 동기화한다.
+            if (now >= motion.StartedAt + motion.Duration)
                 BeginDrop(now);
         }
         else if (motion.Phase == CrusherPhase.Falling)
