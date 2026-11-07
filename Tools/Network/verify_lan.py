@@ -27,10 +27,16 @@ def start(ident):
  seq[ident]=0
  executable=EXE
  args=[str(executable),'-batchmode','-nographics','-lobbyProbeDirectory',str(REPORT),'-lobbyProbeId',ident,'-logFile',str(REPORT/(ident+'-player.log'))]
- if ident=='host':args+=['-lobbyProbeHost']
+ if ident=='host':args+=['-lobbyProbeManual']
  logs[ident]=(REPORT/(ident+'.log')).open('w')
  procs[ident]=subprocess.Popen(args,stdout=logs[ident],stderr=subprocess.STDOUT)
+ if ident=='host':
+  wait(lambda:read(ident).get('screen')=='Main','initial main menu',45)
+  check(not read(ident)['connected'] and not read(ident)['advertising'],'offline opens main menu without room or ready controls')
+  command(ident,'host')
  wait(lambda:read(ident).get('connected') and read(ident).get('localPlayerId',0)>0,ident+' connected',45)
+ wait(lambda:read(ident).get('screen')=='Room',ident+' waiting room view')
+ check(True,'connected player enters waiting room '+ident)
  print('CONNECTED '+ident,flush=True)
 def command(ident,action,**kwargs):
  seq[ident]+=1;c={'sequence':seq[ident],'action':action,**kwargs}
@@ -50,10 +56,12 @@ def game(ids,deadline):
  events={i:[json.loads(line) for line in (REPORT/(i+'.events.jsonl')).read_text().splitlines()] for i in ids}
  entries={i:max(e['now'] for e in events[i] if e['type']=='scene' and e['scene']=='Stage1') for i in ids}
  check(all(t>=deadline-.08 for t in entries.values()),'game starts after full server deadline '+str(len(ids))+' players')
+ check(all(read(i)['screen']=='Game' for i in ids),'gameplay uses game view on every peer')
 def returned(ids):
  command('host','return');wait(lambda:all(read(i).get('scene')=='LobbyScene' for i in ids),'return to lobby',30);settle(len(ids),ids)
  wait(lambda:all(not p['ready'] for p in read('host')['players']),'readiness reset')
  no_countdown(ids);check(True,'return to lobby clears ready and countdown')
+ check(all(read(i)['screen']=='Room' for i in ids),'return restores waiting room, not main menu')
  wait(lambda:read('host').get('advertising'),'LAN advertisement restored');check(True,'LAN advertisement restored after game')
 def stop(ident):
  process=procs.pop(ident,None)
@@ -141,6 +149,7 @@ try:
  command('host','leave')
  wait(lambda:all(not read(i)['connected'] and read(i)['scene']=='LobbyScene' for i in ['c1','c2','c3']),'host loss cleanup',25)
  check(all(read(i)['connectionError'] for i in ['c1','c2','c3']),'host loss shown to each remote client')
+ check(all(read(i)['screen']=='Main' for i in ids),'host loss and voluntary leave restore main menu')
  check(not read('host')['connectionError'],'voluntary host leave is not an error')
  command('c1','direct',name='not-an-ip')
  wait(lambda:read('c1')['connectionError'] and not read('c1')['connected'],'invalid direct address rejected')
@@ -163,6 +172,15 @@ try:
  wait(lambda:all(read(i)['scene']=='LobbyScene' for i in ['host','c1','c2']),'pre-start departure returns lobby',30)
  wait(lambda:read('host')['advertising'],'pre-start departure restores advertising')
  check(True,'departure during game preparation aborts and restores LAN lobby')
+ command('c3','solo')
+ wait(lambda:read('c3')['scene']=='Stage1' and read('c3')['screen']=='Game','solo test launches directly',30)
+ check(not read('c3')['advertising'],'solo test bypasses waiting room and does not advertise')
+ events=[json.loads(line) for line in (REPORT/'c3.events.jsonl').read_text().splitlines()]
+ solo_index=max(i for i,e in enumerate(events) if e['type']=='command-solo')
+ check(all(e.get('screen')!='Room' for e in events[solo_index:]),'solo transition never exposes waiting room')
+ command('c3','return')
+ wait(lambda:read('c3')['screen']=='Main' and not read('c3')['connected'],'solo test returns to main menu',30)
+ check(True,'solo exit returns to offline main menu')
  print('ALL '+str(len(passed))+' CHECKS PASSED',flush=True)
  details['success']=True
 except Exception as exc:

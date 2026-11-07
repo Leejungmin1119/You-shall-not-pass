@@ -2,20 +2,24 @@ using System.Linq;
 using Mirror;
 using UnityEngine;
 
-// 고정된 네 자리와 서버가 동기화한 준비 상태·시작 시각을 표시하는 시험 로비.
+// IP 접속용 메인 로비와 고정 네 자리 방 대기실을 연결한다.
 public class CapstoneLobbyUI : MonoBehaviour
 {
     private CapstoneRoomManager manager;
-    private string roomPassword = "";
     private string directAddress = "";
     private bool showLocalAddresses;
     private string copiedAddress;
-    private bool localWifi = true;
     public static string PendingConnectionError;
     private string requestedName = "";
     private uint editingPlayerId;
     public bool IsEditingText { get; private set; }
     private GUIStyle title, heading, text, small, button, input;
+    private GUIStyle menuTitle, menuSubtitle;
+    private string previousScreen;
+    [SerializeField] private Texture2D mainMenuBackground;
+    public string CurrentScreen => manager != null && !manager.IsLobby ? "Game" :
+        manager != null && !manager.IsSoloTest && NetworkClient.isConnected && NetworkClient.localPlayer != null &&
+        NetworkClient.localPlayer.GetComponent<CapstoneRoomPlayer>() != null ? "Room" : "Main";
     private GUIStyle statusTitle, statusDetail, countdownNumber;
     private Font lobbyFont;
     [Header("인게임과 공유하는 로비 그림")]
@@ -97,6 +101,8 @@ public class CapstoneLobbyUI : MonoBehaviour
             if (available != null) lobbyFont = Font.CreateDynamicFontFromOSFont(available, 24);
         }
         title = Style(42, Ink, FontStyle.Bold);
+        menuTitle = Style(66, Ink, FontStyle.Bold);
+        menuSubtitle = Style(20, Ink);
         noticeHeading = Style(64, Accent, FontStyle.Bold);
         noticeHeading.alignment = TextAnchor.MiddleCenter;
         noticeCaption = Style(20, Muted);
@@ -140,13 +146,13 @@ public class CapstoneLobbyUI : MonoBehaviour
 
     private void Label(Rect rect, string value, GUIStyle style) => GUI.Label(rect, Content(value), style);
 
-    private bool Action(Rect rect, string label, bool enabled = true)
+    private bool Action(Rect rect, string label, bool enabled = true, Color? fillColor = null)
     {
         bool hover = enabled && rect.Contains(Event.current.mousePosition);
         Rounded(new Rect(rect.x, rect.y + 3, rect.width, rect.height), new Color(.38f, .31f, .22f, .23f), 9);
         Rounded(rect, enabled ? new Color(.48f, .48f, .34f) : new Color(.66f, .65f, .56f), 9);
         Rounded(new Rect(rect.x + 2, rect.y + 2, rect.width - 4, rect.height - 4),
-            hover ? new Color(.86f, .92f, .73f) : enabled ? Paper : new Color(.89f, .88f, .79f), 7);
+            hover ? Color.Lerp(fillColor ?? Paper, Color.white, .18f) : enabled ? fillColor ?? Paper : new Color(.89f, .88f, .79f), 7);
         GUI.enabled = enabled;
         bool clicked = GUI.Button(rect, GUIContent.none, GUIStyle.none);
         button.normal.textColor = enabled ? Ink : new Color(.58f, .57f, .49f);
@@ -305,18 +311,29 @@ public class CapstoneLobbyUI : MonoBehaviour
     {
         if (manager == null) return;
         InitStyles();
+        string screen = CurrentScreen;
+        if (screen != previousScreen)
+        {
+            previousScreen = screen;
+            showLocalAddresses = false;
+            copiedAddress = null;
+            GUI.FocusControl(null);
+            IsEditingText = false;
+        }
         Matrix4x4 oldMatrix = GUI.matrix;
-        GUI.matrix = Matrix4x4.Scale(new Vector3(Screen.width / 1280f, Screen.height / 720f, 1));
-        if (!manager.IsLobby)
+        // Keep the same 16:9 composition on windowed, ultrawide and 4:3 screens.
+        if (screen != "Game") Box(new Rect(0, 0, Screen.width, Screen.height), Background);
+        float scale = Mathf.Min(Screen.width / 1280f, Screen.height / 720f);
+        GUI.matrix = Matrix4x4.TRS(new Vector3((Screen.width - 1280 * scale) * .5f,
+            (Screen.height - 720 * scale) * .5f, 0), Quaternion.identity, new Vector3(scale, scale, 1));
+        if (screen == "Game")
         {
             IsEditingText = false;
-            if (Action(new Rect(1100, 20, 160, 40), "Leave game")) Leave();
+            if (Action(new Rect(1100, 20, 160, 40), "로비로 나가기")) Leave();
             DrawNotice();
             GUI.matrix = oldMatrix;
             return;
         }
-
-        Box(new Rect(0, 0, 1280, 720), Background);
         if (centered == null)
         {
             centered = Style(17, Ink, FontStyle.Bold);
@@ -324,110 +341,114 @@ public class CapstoneLobbyUI : MonoBehaviour
             badge = Style(13, Muted, FontStyle.Bold);
             badge.alignment = TextAnchor.MiddleCenter;
         }
+        if (screen == "Main") DrawMainMenu();
+        else DrawRoomLobby();
+        if (showLocalAddresses) DrawLocalAddresses();
+        DrawNotice();
+        string focused = GUI.GetNameOfFocusedControl();
+        IsEditingText = focused == "PlayerName" || focused == "DirectAddress";
+        if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Escape)
+        {
+            showLocalAddresses = false;
+            GUI.FocusControl(null);
+            IsEditingText = false;
+        }
+        GUI.matrix = oldMatrix;
+    }
+
+    public void ToggleLocalAddressPanel()
+    {
+        showLocalAddresses = !showLocalAddresses;
+        if (showLocalAddresses) { manager.Lan.RefreshLocalAddresses(); copiedAddress = null; }
+    }
+
+    private void DrawMenuTitle(Rect rect, string label)
+    {
+        menuTitle.normal.textColor = Paper;
+        Label(new Rect(rect.x - 3, rect.y, rect.width, rect.height), label, menuTitle);
+        Label(new Rect(rect.x + 3, rect.y, rect.width, rect.height), label, menuTitle);
+        Label(new Rect(rect.x, rect.y - 3, rect.width, rect.height), label, menuTitle);
+        Label(new Rect(rect.x, rect.y + 3, rect.width, rect.height), label, menuTitle);
+        menuTitle.normal.textColor = Ink;
+        Label(rect, label, menuTitle);
+    }
+
+    private void DrawMainMenu()
+    {
+        if (mainMenuBackground != null)
+            GUI.DrawTexture(new Rect(0, 0, 1280, 720), mainMenuBackground, ScaleMode.StretchToFill);
+        else
+            DrawSprite(new Rect(0, 0, 1280, 720), skySprite);
+        DrawMenuTitle(new Rect(72, 40, 690, 88), "세상에서 가장");
+        DrawMenuTitle(new Rect(72, 120, 690, 88), "더러운 게임");
+        Label(new Rect(78, 220, 630, 40), "친구들과 함께, 과연 끝까지 지나갈 수 있을까?", menuSubtitle);
+        if (idleFrames != null && idleFrames.Length > 0)
+        {
+            int frame = Mathf.FloorToInt(Time.unscaledTime * idleFramesPerSecond) % idleFrames.Length;
+            DrawSprite(new Rect(302, 308, 118, 151), idleFrames[frame], true);
+        }
+        if (Action(new Rect(1045, 34, 165, 38), showLocalAddresses ? "내 IP 닫기" : "내 IP 보기"))
+            ToggleLocalAddressPanel();
+        bool busy = NetworkClient.active || NetworkServer.active || (manager.Lan != null && manager.Lan.Searching);
+        Rounded(new Rect(68, 552, 1148, 112), new Color(.30f, .23f, .15f, .25f), 20);
+        Rounded(new Rect(62, 546, 1156, 112), Ink, 18);
+        Rounded(new Rect(65, 549, 1150, 106), Paper, 16);
+        if (Action(new Rect(87, 582, 159, 50), "방 만들기", !busy, new Color(.75f, .82f, .47f)))
+            manager.BeginLanRoom(true);
+        Label(new Rect(267, 558, 310, 23), "호스트 IP", small);
+        GUI.enabled = !busy;
+        GUI.SetNextControlName("DirectAddress");
+        directAddress = GUI.TextField(new Rect(267, 587, 310, 45), directAddress, 15, input);
+        GUI.enabled = true;
+        if (Action(new Rect(594, 582, 128, 50), "참가", !busy, new Color(.75f, .82f, .47f)))
+            manager.BeginDirectRoom(directAddress);
+        Box(new Rect(747, 572, 2, 66), new Color(.60f, .49f, .34f, .45f));
+        if (Action(new Rect(775, 582, 415, 50), "테스트 게임 실행", !busy, new Color(1f, .76f, .41f)))
+            manager.BeginSoloTest();
+        string status = manager.Lan != null && manager.Lan.Searching ? "방을 찾고 있어요…" :
+            manager.IsSoloTest ? "테스트 게임을 준비하는 중…" : NetworkServer.active ? "방을 만들고 있어요…" : NetworkClient.active ? "호스트에 연결하는 중…" :
+            string.IsNullOrEmpty(manager.LastConnectionError) ? "방을 만들거나, 친구의 호스트 IP로 참가해 주세요." : manager.LastConnectionError;
+        Label(new Rect(78, 673, 925, 36), status, small);
+        if (busy && Action(new Rect(1045, 672, 165, 32), "연결 취소")) Leave();
+    }
+
+    private void DrawRoomLobby()
+    {
         DrawLandscape();
         Label(new Rect(76, 40, 900, 58), "세상에서 가장 더러운 게임", title);
-        Label(new Rect(78, 108, 600, 32), "구름 아래 출발점  ·  네 자리에 모여 함께 준비해요", small);
-
-        if (Action(new Rect(704, 100, 193, 40), showLocalAddresses ? "내 IP 닫기" : "내 IP 보기"))
-        {
-            showLocalAddresses = !showLocalAddresses;
-            if (showLocalAddresses) { manager.Lan.RefreshLocalAddresses(); copiedAddress = null; }
-        }
+        Label(new Rect(78, 108, 790, 32), "방 대기실 · 이름을 정하고 READY로 함께 출발해요", small);
+        if (Action(new Rect(948, 100, 275, 40), showLocalAddresses ? "내 IP 닫기" : "내 IP 보기"))
+            ToggleLocalAddressPanel();
         var players = NetworkClient.spawned.Values.Where(n => n != null)
             .Select(n => n.GetComponent<CapstoneRoomPlayer>()).Where(n => n != null)
             .OrderBy(n => n.netId).ToArray();
-        bool connected = NetworkClient.isConnected;
-        DrawSeats(players, connected);
-        bool searching = manager.Lan != null && manager.Lan.Searching;
-        bool active = NetworkClient.active || NetworkServer.active || searching;
-        // 개발자 시험용이라 에디터와 Development Build에서만 보인다.
-        if (Debug.isDebugBuild && Action(new Rect(948, 100, 275, 40), "혼자 시험하기 (DEV)", !active))
-            manager.BeginSoloTest();
-        Rounded(new Rect(948, 155, 275, 528), Panel, 18);
-        Label(new Rect(972, 179, 232, 36), connected ? "우리들의 로비" : "모험 준비", heading);
-        Label(new Rect(972, 226, 232, 48), connected
-            ? (NetworkServer.active ? (!(manager.transport is PasswordRelayTransport) || ((PasswordRelayTransport)manager.transport).RoomOpen ? "방장 · 참가를 기다리는 중" : "방을 여는 중...") : "방에 참가했어요")
-            : searching ? "가까운 방을 찾는 중..." : active ? "연결하는 중..." : "친구들과 함께 모험을 준비해요.", text);
-        if (Action(new Rect(972, 286, 107, 34), localWifi ? "LAN ✓" : "LAN", !active)) localWifi = true;
-        if (Action(new Rect(1091, 286, 107, 34), localWifi ? "인터넷" : "인터넷 ✓", !active)) localWifi = false;
-        if (localWifi)
-        {
-            Label(new Rect(972, 330, 226, 55), "같은 내부망에서 자동 검색합니다.\n유선·Wi-Fi 모두 사용할 수 있어요.", small);
-        }
-        else
-        {
-            GUI.enabled = !active;
-            GUI.SetNextControlName("RoomPassword");
-            roomPassword = GUI.PasswordField(new Rect(972, 331, 226, 43), roomPassword, '*', 64, input);
-            GUI.enabled = true;
-        }
-        if (Action(new Rect(972, 387, 226, 43), "방 만들기", !active))
-        {
-            if (localWifi) manager.BeginLanRoom(true); else manager.BeginRoom(true, roomPassword);
-        }
-        if (Action(new Rect(972, 441, 226, 43), localWifi ? "방 찾아 참가" : "방 참가", !active && (localWifi || roomPassword.Length >= 8)))
-        {
-            if (localWifi) manager.BeginLanRoom(false); else manager.BeginRoom(false, roomPassword);
-        }
-        if (Action(new Rect(972, 502, 226, 40), "나가기 / 취소", active)) Leave();
+        DrawSeats(players, true);
         int ready = players.Count(n => n.IsReady);
         var local = players.FirstOrDefault(n => n.isLocalPlayer);
+        Rounded(new Rect(948, 155, 275, 528), Panel, 18);
+        Label(new Rect(972, 179, 226, 36), "우리들의 대기실", heading);
+        Label(new Rect(972, 231, 226, 34), (NetworkServer.active ? "방장" : "참가자") + $" · {players.Length} / 4명", text);
+        Label(new Rect(972, 276, 226, 42), "네 자리에서 친구들과 함께 준비해요.", small);
         if (local != null && editingPlayerId != local.netId)
         {
             editingPlayerId = local.netId;
             requestedName = local.PlayerName;
         }
-        if (local == null) editingPlayerId = 0;
-        Label(new Rect(972, 564, 226, 22), "플레이어 이름 · 최대 16자", small);
+        Label(new Rect(972, 335, 226, 23), "플레이어 이름 · 최대 16자", small);
         GUI.enabled = local != null;
         GUI.SetNextControlName("PlayerName");
-        requestedName = GUI.TextField(new Rect(972, 591, 226, 38), requestedName, 16, input);
+        requestedName = GUI.TextField(new Rect(972, 366, 226, 43), requestedName, 16, input);
         GUI.enabled = true;
-        if (Action(new Rect(972, 640, 226, 30), "이름 저장", local != null))
-            local.RequestName(requestedName);
-        if (localWifi)
-        {
-            Rounded(new Rect(78, 661, 819, 47), Panel, 10);
-            if (NetworkServer.active)
-                Label(new Rect(92, 666, 790, 37), "방장 IP: " + manager.Lan.LocalAddresses, small);
-            else if (!connected)
-            {
-                Label(new Rect(92, 668, 105, 32), "IP 직접 참가", small);
-                GUI.enabled = !active;
-                GUI.SetNextControlName("DirectAddress");
-                directAddress = GUI.TextField(new Rect(199, 668, 180, 32), directAddress, 15, input);
-                GUI.enabled = true;
-                if (Action(new Rect(388, 668, 105, 32), "IP로 참가", !active)) manager.BeginDirectRoom(directAddress);
-                Label(new Rect(507, 664, 375, 42), string.IsNullOrEmpty(manager.LastConnectionError)
-                    ? "검색되지 않으면 방장의 IPv4를 입력하세요."
-                    : manager.LastConnectionError, small);
-            }
-            else Label(new Rect(92, 666, 790, 37), "방에 연결되었습니다.", small);
-        }
-        string focused = GUI.GetNameOfFocusedControl();
-        IsEditingText = focused == "PlayerName" || focused == "RoomPassword" || focused == "DirectAddress";
-        if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Escape)
-        {
-            GUI.FocusControl(null);
-            IsEditingText = false;
-        }
-        if (Action(new Rect(78, 586, 393, 57), local != null && local.IsReady ? "준비 취소  [ F ]" : "준비 완료  [ F ]", connected && local != null)) local.ToggleReady();
-        DrawStartStatus(players.Length, ready, connected);
-        if (!localWifi) Label(new Rect(78, 668, 820, 29), $"참가 {players.Length} / {CapstoneRoomManager.LobbySeatCount}명     ·     준비 완료 {ready}명     ·     F : 준비 / 취소", small);
-
-        if (searching && manager.Lan.Rooms.Length > 1)
-        {
-            var available = manager.Lan.Rooms;
-            Rounded(new Rect(280, 225, 620, 335), Panel, 16);
-            Label(new Rect(315, 245, 550, 38), "참가할 방을 선택하세요", heading);
-            for (int i = 0; i < Mathf.Min(available.Length, 5); i++)
-                if (Action(new Rect(315, 290 + i * 46, 550, 38), "Wi-Fi 방 참가 " + (i + 1)))
-                    manager.Lan.Join(available[i]);
-        }
-        if (showLocalAddresses) DrawLocalAddresses();
-        DrawNotice();
-        GUI.matrix = oldMatrix;
+        if (Action(new Rect(972, 424, 226, 39), "이름 저장", local != null)) local.RequestName(requestedName);
+        Label(new Rect(972, 490, 226, 76), "2~4명 전원 READY 시\n5초 뒤 게임을 시작해요.\n준비 해제 시 시작이 취소돼요.", small);
+        if (Action(new Rect(972, 600, 226, 43), "방 나가기")) Leave();
+        if (Action(new Rect(78, 586, 393, 57), local != null && local.IsReady ? "준비 취소  [ F ]" : "준비 완료  [ F ]", local != null))
+            local.ToggleReady();
+        DrawStartStatus(players.Length, ready, true);
+        Label(new Rect(78, 668, 820, 35), NetworkServer.active ? "방장 IP: " + manager.Lan.LocalAddresses :
+            $"참가 {players.Length} / 4명 · 준비 완료 {ready}명 · F : 준비 / 취소", small);
     }
+
     private void DrawLocalAddresses()
     {
         Rounded(new Rect(506, 148, 391, 235), Panel, 14);

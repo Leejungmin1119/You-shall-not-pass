@@ -26,7 +26,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
     }
     [Serializable] private sealed class Snapshot
     {
-        public string id, scene;
+        public string id, scene, screen;
         public bool connected, server, countdown, advertising, searching;
         public string connectionError, racePhase;
         public int turn;
@@ -49,12 +49,12 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
     }
     [Serializable] private sealed class EventReport
     {
-        public string type, scene;
+        public string type, scene, screen;
         public double now, deadline;
         public int command, players;
     }
 
-    private string directory, id, previousScene;
+    private string directory, id, previousScene, previousScreen;
     private bool host, connectionStarted, useDiscovery;
     private string directAddress;
     private PlayerHeldItem observedHolder;
@@ -80,6 +80,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         probe.id = id;
         probe.host = args.Contains("-lobbyProbeHost");
         probe.useDiscovery = args.Contains("-lobbyProbeDiscovery");
+        probe.connectionStarted = args.Contains("-lobbyProbeManual");
         probe.directAddress = Argument(args, "-lobbyProbeDirectAddress") ?? "127.0.0.1";
         Application.runInBackground = true;
         Application.logMessageReceived += probe.RecordLog;
@@ -128,6 +129,12 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         var players = manager.roomSlots.OfType<CapstoneRoomPlayer>().Where(player => player != null)
             .OrderBy(player => player.SeatIndex).ToArray();
         double deadline = manager.LobbyCountdownEndsAt;
+        string screen = manager.GetComponent<CapstoneLobbyUI>()?.CurrentScreen;
+        if (screen != previousScreen)
+        {
+            WriteEvent("screen", scene, deadline, players.Length);
+            previousScreen = screen;
+        }
         if (scene != previousScene)
         {
             if (!manager.IsLobby && gameSceneEnteredTime == 0) gameSceneEnteredTime = NetworkTime.time;
@@ -141,7 +148,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         }
         var snapshot = new Snapshot
         {
-            id = id, scene = scene, connected = NetworkClient.isConnected, server = NetworkServer.active,
+            id = id, scene = scene, screen = manager.GetComponent<CapstoneLobbyUI>()?.CurrentScreen, connected = NetworkClient.isConnected, server = NetworkServer.active,
             now = NetworkTime.time, deadline = deadline, countdown = manager.IsLobbyCountdownActive,
             advertising = manager.Lan.Advertising, searching = manager.Lan.Searching,
             connectionError = manager.LastConnectionError,
@@ -163,6 +170,12 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
             }).ToArray()
         };
         Write(Path.Combine(directory, id + ".json"), JsonUtility.ToJson(snapshot, true), false);
+    }
+
+    private System.Collections.IEnumerator CaptureFrame(CapstoneRoomManager manager)
+    {
+        yield return new WaitForEndOfFrame();
+        ScreenCapture.CaptureScreenshot(Path.Combine(directory, id + "-" + manager.GetComponent<CapstoneLobbyUI>().CurrentScreen + "-screen.png"));
     }
 
     private void RecordRequest(string operation, bool success) => requestResults.Add(operation + ":" + success);
@@ -201,6 +214,15 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                 break;
             case "leave":
                 manager.LeaveRoom();
+                break;
+            case "capture":
+                StartCoroutine(CaptureFrame(manager));
+                break;
+            case "showIp":
+                manager.GetComponent<CapstoneLobbyUI>().ToggleLocalAddressPanel();
+                break;
+            case "solo":
+                manager.BeginSoloTest();
                 break;
             case "direct":
                 manager.BeginDirectRoom(command.name);
@@ -263,7 +285,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
 
     private void WriteEvent(string type, string scene, double deadline, int playerCount)
     {
-        var value = new EventReport { type = type, scene = scene, now = NetworkTime.time,
+        var value = new EventReport { type = type, scene = scene, screen = (NetworkManager.singleton as CapstoneRoomManager)?.GetComponent<CapstoneLobbyUI>()?.CurrentScreen, now = NetworkTime.time,
             deadline = deadline, command = lastCommand, players = playerCount };
         Write(Path.Combine(directory, id + ".events.jsonl"), JsonUtility.ToJson(value) + "\n", true);
     }
