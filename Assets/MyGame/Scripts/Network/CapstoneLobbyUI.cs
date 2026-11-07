@@ -8,6 +8,8 @@ public class CapstoneLobbyUI : MonoBehaviour
     private CapstoneRoomManager manager;
     private string roomPassword = "";
     private string directAddress = "";
+    private bool showLocalAddresses;
+    private string copiedAddress;
     private bool localWifi = true;
     public static string PendingConnectionError;
     private string requestedName = "";
@@ -324,8 +326,13 @@ public class CapstoneLobbyUI : MonoBehaviour
         }
         DrawLandscape();
         Label(new Rect(76, 40, 900, 58), "세상에서 가장 더러운 게임", title);
-        Label(new Rect(78, 108, 780, 32), "구름 아래 출발점  ·  네 자리에 모여 함께 준비해요", small);
+        Label(new Rect(78, 108, 600, 32), "구름 아래 출발점  ·  네 자리에 모여 함께 준비해요", small);
 
+        if (Action(new Rect(704, 100, 193, 40), showLocalAddresses ? "내 IP 닫기" : "내 IP 보기"))
+        {
+            showLocalAddresses = !showLocalAddresses;
+            if (showLocalAddresses) { manager.Lan.RefreshLocalAddresses(); copiedAddress = null; }
+        }
         var players = NetworkClient.spawned.Values.Where(n => n != null)
             .Select(n => n.GetComponent<CapstoneRoomPlayer>()).Where(n => n != null)
             .OrderBy(n => n.netId).ToArray();
@@ -417,7 +424,34 @@ public class CapstoneLobbyUI : MonoBehaviour
                 if (Action(new Rect(315, 290 + i * 46, 550, 38), "Wi-Fi 방 참가 " + (i + 1)))
                     manager.Lan.Join(available[i]);
         }
+        if (showLocalAddresses) DrawLocalAddresses();
         DrawNotice();
         GUI.matrix = oldMatrix;
     }
+    private void DrawLocalAddresses()
+    {
+        Rounded(new Rect(506, 148, 391, 235), Panel, 14);
+        Label(new Rect(522, 158, 358, 32), "내 IPv4 주소 · 내부망", heading);
+        Label(new Rect(522, 194, 358, 38), "방장이 이 주소를 알려주면 상대가 IP로 참가할 수 있어요.", small);
+        var addresses = manager.Lan.LocalIPv4Addresses;
+        if (addresses.Count == 0)
+            Label(new Rect(522, 241, 358, 68), "연결된 IPv4를 찾지 못했습니다.\nWi-Fi 또는 랜선 연결을 확인해 주세요.", small);
+        for (int i = 0; i < addresses.Count; i++)
+        {
+            string address = addresses[i];
+            Label(new Rect(522, 236 + i * 34, 245, 30), address, text);
+            if (Action(new Rect(779, 236 + i * 34, 101, 29), copiedAddress == address ? "복사됨" : "복사"))
+            {
+                GUIUtility.systemCopyBuffer = address;
+                copiedAddress = address;
+            }
+        }
+        if (Action(new Rect(522, 344, 169, 28), "새로고침"))
+        {
+            manager.Lan.RefreshLocalAddresses();
+            copiedAddress = null;
+        }
+        if (Action(new Rect(703, 344, 177, 28), "닫기")) showLocalAddresses = false;
+    }
+
 }

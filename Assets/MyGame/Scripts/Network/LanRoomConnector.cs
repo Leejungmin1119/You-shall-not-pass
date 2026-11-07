@@ -16,7 +16,10 @@ public class LanRoomConnector : MonoBehaviour
     private readonly Dictionary<long, ServerResponse> rooms = new Dictionary<long, ServerResponse>();
     private readonly Dictionary<long, float> seen = new Dictionary<long, float>();
     private float searchStarted, firstFound, nextProbe;
-    public string LocalAddresses { get; private set; } = "";
+    private string[] localIPv4Addresses = new string[0];
+    public IReadOnlyList<string> LocalIPv4Addresses => localIPv4Addresses;
+    public string LocalAddresses => localIPv4Addresses.Length > 0
+        ? string.Join(" / ", localIPv4Addresses) : "IPv4 주소를 찾지 못했습니다.";
     public bool Advertising { get; private set; }
     public bool Searching { get; private set; }
     public ServerResponse[] Rooms => rooms.Values.OrderBy(r => r.serverId).ToArray();
@@ -32,18 +35,29 @@ public class LanRoomConnector : MonoBehaviour
         discovery.OnServerFound.AddListener(OnFound);
     }
 
+    /// <summary>접속이나 방 생성 없이 현재 유선/Wi-Fi IPv4를 읽는다.</summary>
+    public void RefreshLocalAddresses()
+    {
+        try
+        {
+            localIPv4Addresses = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(n => n.OperationalStatus == OperationalStatus.Up && n.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                .OrderBy(n => n.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 ||
+                    n.NetworkInterfaceType == NetworkInterfaceType.Ethernet ? 0 : 1)
+                .SelectMany(n => n.GetIPProperties().UnicastAddresses)
+                .Where(a => a.Address.AddressFamily == AddressFamily.InterNetwork && !IPAddress.IsLoopback(a.Address))
+                .Select(a => a.Address.ToString()).Distinct().Take(3).ToArray();
+        }
+        catch (Exception exception) when (exception is NetworkInformationException || exception is NotSupportedException)
+        {
+            localIPv4Addresses = new string[0];
+        }
+    }
+
     public void Advertise()
     {
         if (Advertising) return;
-        try
-        {
-            LocalAddresses = string.Join(" / ", NetworkInterface.GetAllNetworkInterfaces()
-                .Where(n => n.OperationalStatus == OperationalStatus.Up && n.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-                .SelectMany(n => n.GetIPProperties().UnicastAddresses)
-                .Where(a => a.Address.AddressFamily == AddressFamily.InterNetwork)
-                .Select(a => a.Address.ToString()).Distinct().Take(3));
-        }
-        catch (NetworkInformationException) { LocalAddresses = "네트워크 설정에서 IPv4를 확인하세요"; }
+        RefreshLocalAddresses();
         try
         {
             discovery.AdvertiseServer(); Advertising = true;
