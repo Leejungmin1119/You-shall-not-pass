@@ -99,6 +99,9 @@ public sealed class RaceManager : NetworkBehaviour
         if (pendingDeath == player)
             pendingDeath = null;
 
+        // 방 기반 경기는 CapstoneRoomManager의 이탈 종료 정책만 따른다.
+        // 독립 시험 씬에서만 아래의 공격자 교대 예비 경로를 사용한다.
+        if (NetworkManager.singleton is CapstoneRoomManager) return;
         if (wasAttacker && phase != RacePhase.Ended)
         {
             Roles.SelectAt(participants, removedIndex);

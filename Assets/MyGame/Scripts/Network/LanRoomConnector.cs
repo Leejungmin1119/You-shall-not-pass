@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using Mirror;
 using Mirror.Discovery;
 using UnityEngine;
@@ -13,6 +16,7 @@ public class LanRoomConnector : MonoBehaviour
     private readonly Dictionary<long, ServerResponse> rooms = new Dictionary<long, ServerResponse>();
     private readonly Dictionary<long, float> seen = new Dictionary<long, float>();
     private float searchStarted, firstFound, nextProbe;
+    public string LocalAddresses { get; private set; } = "";
     public bool Advertising { get; private set; }
     public bool Searching { get; private set; }
     public ServerResponse[] Rooms => rooms.Values.OrderBy(r => r.serverId).ToArray();
@@ -30,6 +34,16 @@ public class LanRoomConnector : MonoBehaviour
 
     public void Advertise()
     {
+        if (Advertising) return;
+        try
+        {
+            LocalAddresses = string.Join(" / ", NetworkInterface.GetAllNetworkInterfaces()
+                .Where(n => n.OperationalStatus == OperationalStatus.Up && n.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                .SelectMany(n => n.GetIPProperties().UnicastAddresses)
+                .Where(a => a.Address.AddressFamily == AddressFamily.InterNetwork)
+                .Select(a => a.Address.ToString()).Distinct().Take(3));
+        }
+        catch (NetworkInformationException) { LocalAddresses = "네트워크 설정에서 IPv4를 확인하세요"; }
         try
         {
             discovery.AdvertiseServer(); Advertising = true;
@@ -39,9 +53,7 @@ public class LanRoomConnector : MonoBehaviour
         {
             Advertising = false;
             Debug.LogError("[LAN] Could not advertise room: " + exception);
-            manager.StopHost();
-            CapstoneLobbyUI.PendingConnectionError = "Could not advertise the Wi-Fi room. Close another host and check network permissions.";
-            Show(CapstoneLobbyUI.PendingConnectionError);
+            manager.ReportConnectionFailure("LAN 방을 열지 못했습니다. 다른 게임 방과 포트 사용·로컬 네트워크 권한을 확인해 주세요.");
         }
     }
 
@@ -58,7 +70,7 @@ public class LanRoomConnector : MonoBehaviour
         catch (Exception exception)
         {
             Debug.LogError("[LAN] Search startup failed: " + exception);
-            Cancel(); Show("Wi-Fi room search is unavailable. Check network permissions.");
+            Cancel(); manager.ReportConnectionFailure("방 검색을 시작하지 못했습니다. 로컬 네트워크 권한을 확인해 주세요.");
         }
     }
 
@@ -89,7 +101,7 @@ public class LanRoomConnector : MonoBehaviour
         if (rooms.Count == 0 && now - searchStarted > 15)
         {
             Cancel();
-            Show("No room found. Ask the host to create one on the same Wi-Fi.");
+            manager.ReportConnectionFailure("방을 찾지 못했습니다. 같은 내부망인지 확인하거나 방장 IP로 직접 참가해 주세요.");
         }
     }
 
@@ -99,6 +111,35 @@ public class LanRoomConnector : MonoBehaviour
         Cancel();
         Debug.Log("[LAN] Connecting to " + response.uri);
         manager.StartClient(response.uri);
+    }
+
+    /// <summary>자동 검색이 통과하지 않는 망에서도 도달 가능한 방장 IPv4로 접속한다.</summary>
+    public void ConnectDirect(string address)
+    {
+        if (NetworkClient.active || NetworkServer.active || Searching) return;
+        if (!TryNormalizeAddress(address, out string normalized))
+        {
+            manager.ReportConnectionFailure("올바른 방장 IPv4를 입력해 주세요. 예: 192.168.55.80");
+            return;
+        }
+        Cancel();
+        manager.networkAddress = normalized;
+        manager.StartClient();
+    }
+
+    public static bool TryNormalizeAddress(string input, out string normalized)
+    {
+        normalized = null;
+        string[] parts = (input ?? "").Trim().Split('.');
+        if (parts.Length != 4) return false;
+        var bytes = new byte[4];
+        for (int i = 0; i < parts.Length; i++)
+            if (parts[i].Length == 0 || parts[i].Length > 3 || parts[i].Any(c => c < '0' || c > '9') ||
+                !byte.TryParse(parts[i], out bytes[i])) return false;
+        // DNS/URL/포트와 멀티캐스트·브로드캐스트·미지정 주소는 직접 접속 대상으로 받지 않는다.
+        if (bytes[0] == 0 || bytes[0] >= 224) return false;
+        normalized = new IPAddress(bytes).ToString();
+        return true;
     }
 
     public void Cancel()

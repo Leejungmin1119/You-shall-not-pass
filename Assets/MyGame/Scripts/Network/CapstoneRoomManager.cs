@@ -27,6 +27,50 @@ public class CapstoneRoomManager : NetworkRoomManager
         => new Vector3((Mathf.Clamp(seat, 0, LobbySeatCount - 1) - 1.5f) * 2.8f, 0f, 0f);
 
     private string pendingConnectionError;
+    public string LastConnectionError { get; private set; } = "";
+    private bool leavingIntentionally;
+    private double connectionDeadline;
+    private void BeginConnectionAttempt()
+    {
+        leavingIntentionally = false;
+        connectionDeadline = 0;
+        LastConnectionError = "";
+        pendingConnectionError = null;
+        CapstoneLobbyUI.PendingConnectionError = null;
+    }
+
+    public void ReportConnectionFailure(string message)
+    {
+        LastConnectionError = message;
+        pendingConnectionError = message;
+    }
+
+    public void LeaveRoom()
+    {
+        leavingIntentionally = true;
+        connectionDeadline = 0;
+        Lan?.Cancel();
+        if (NetworkServer.active && NetworkClient.active) StopHost();
+        else if (NetworkClient.active) StopClient();
+        else if (NetworkServer.active) StopServer();
+    }
+
+    public override void OnRoomStartClient()
+    {
+        if (!NetworkServer.active) connectionDeadline = Time.unscaledTimeAsDouble + 12d;
+    }
+    public override void OnRoomClientConnect() => connectionDeadline = 0;
+    public override void OnRoomClientDisconnect()
+    {
+        connectionDeadline = 0;
+        if (!leavingIntentionally && !NetworkServer.active && string.IsNullOrEmpty(LastConnectionError))
+            ReportConnectionFailure("방장과 연결이 끊겼거나 방에 참가할 수 없습니다. 방 상태와 IP를 확인해 주세요.");
+    }
+    public override void OnClientError(TransportError error, string reason)
+    {
+        if (!leavingIntentionally)
+            ReportConnectionFailure("연결 실패: 방장 IP, 같은 내부망 여부와 게임 방화벽 허용을 확인해 주세요.");
+    }
     private PasswordRelayTransport relayTransport;
     private kcp2k.KcpTransport lanTransport;
     public LanRoomConnector Lan { get; private set; }
@@ -47,7 +91,7 @@ public class CapstoneRoomManager : NetworkRoomManager
         relayTransport = GetComponent<PasswordRelayTransport>();
         lanTransport = GetComponent<kcp2k.KcpTransport>();
         if (relayTransport != null)
-            relayTransport.Failed += message => pendingConnectionError = message;
+            relayTransport.Failed += ReportConnectionFailure;
         Lan = GetComponent<LanRoomConnector>() ?? gameObject.AddComponent<LanRoomConnector>();
         Lan.Initialize(this, lanTransport);
         SelectTransport(lanTransport);
@@ -55,6 +99,8 @@ public class CapstoneRoomManager : NetworkRoomManager
 
     public void BeginRoom(bool host, string password)
     {
+        if (NetworkClient.active || NetworkServer.active || Lan.Searching) return;
+        BeginConnectionAttempt();
         var relay = relayTransport;
         if (relay == null || !relay.ValidateSettings(password, out _))
         {
@@ -83,13 +129,23 @@ public class CapstoneRoomManager : NetworkRoomManager
             GetComponent<CapstoneLobbyUI>()?.ShowNotice("WI-FI ROOM", "Local connection is not configured.", false);
             return;
         }
+        BeginConnectionAttempt();
         SelectTransport(lanTransport);
         if (host)
         {
             StartHost();
-            if (NetworkServer.active) Lan.Advertise();
+            if (NetworkServer.active && !Lan.Advertising) Lan.Advertise();
         }
         else Lan.Search();
+    }
+
+    public void BeginDirectRoom(string address)
+    {
+        if (NetworkClient.active || NetworkServer.active || Lan.Searching) return;
+        BeginConnectionAttempt();
+        if (lanTransport == null) { ReportConnectionFailure("로컬 통신 설정이 없습니다."); return; }
+        SelectTransport(lanTransport);
+        Lan.ConnectDirect(address);
     }
 
     /// <summary>개발자 1인 시험 중인지. 접속을 받지 않는 호스트 혼자 게임 씬을 돌린다.</summary>
@@ -103,6 +159,7 @@ public class CapstoneRoomManager : NetworkRoomManager
     public void BeginSoloTest()
     {
         if (NetworkClient.active || NetworkServer.active || Lan.Searching) return;
+        BeginConnectionAttempt();
         if (lanTransport != null) SelectTransport(lanTransport);
         NetworkServer.listen = false;
         IsSoloTest = true;
@@ -168,7 +225,15 @@ public class CapstoneRoomManager : NetworkRoomManager
         CancelLobbyCountdown();
     }
 
-    public override void OnRoomServerSceneChanged(string sceneName) => CancelLobbyCountdown();
+    public override void OnRoomServerSceneChanged(string sceneName)
+    {
+        CancelLobbyCountdown();
+        if (IsLobby && !IsSoloTest && transport == lanTransport && NetworkServer.listen)
+        {
+            if (!Lan.Advertising) Lan.Advertise();
+        }
+        else Lan?.Cancel();
+    }
 
     public override void OnRoomStopServer()
     {
@@ -259,7 +324,8 @@ public class CapstoneRoomManager : NetworkRoomManager
         CancelLobbyCountdown();
         seatsByConnection.Remove(connection.connectionId);
         var race = FindFirstObjectByType<RaceManager>();
-        if (race != null && race.Phase != RacePhase.Waiting)
+        // 현재 정책: 준비 연출을 포함해 경기 도중 이탈하면 판을 중단하고 남은 인원은 로비로 복귀한다.
+        if (race != null && !IsLobby)
             race.EndMatch(RaceEndReason.PlayerDisconnected);
     }
 
@@ -273,10 +339,18 @@ public class CapstoneRoomManager : NetworkRoomManager
     public override void Update()
     {
         base.Update();
+        if (connectionDeadline > 0 && !NetworkClient.isConnected && Time.unscaledTimeAsDouble >= connectionDeadline)
+        {
+            connectionDeadline = 0;
+            ReportConnectionFailure("12초 안에 방에 연결하지 못했습니다. 방장 IP와 공유기·방화벽 설정을 확인해 주세요.");
+        }
         if (pendingConnectionError != null)
         {
             string message = pendingConnectionError;
             pendingConnectionError = null;
+            // 정리 과정의 disconnect 콜백이 원래 실패 이유를 덮어쓰지 않게 한다.
+            leavingIntentionally = true;
+            connectionDeadline = 0;
             CapstoneLobbyUI.PendingConnectionError = message;
             if (NetworkServer.active && NetworkClient.active) StopHost();
             else if (NetworkClient.active) StopClient();

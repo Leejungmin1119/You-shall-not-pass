@@ -27,12 +27,25 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
     [Serializable] private sealed class Snapshot
     {
         public string id, scene;
-        public bool connected, server, countdown;
+        public bool connected, server, countdown, advertising, searching;
+        public string connectionError, racePhase;
+        public int turn;
+        public uint attacker;
+        public GamePlayerReport[] gamePlayers;
+        public string[] requestResults, serverChecks;
+        public int maxTraps;
         public double now, deadline, gameSceneEnteredTime;
         public int required, lastCommand;
         public uint localPlayerId;
         public string[] errors;
         public PlayerReport[] players;
+    }
+    [Serializable] private sealed class GamePlayerReport
+    {
+        public uint id;
+        public bool local;
+        public int score, cost, count;
+        public int[] slots;
     }
     [Serializable] private sealed class EventReport
     {
@@ -42,7 +55,12 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
     }
 
     private string directory, id, previousScene;
-    private bool host, connectionStarted;
+    private bool host, connectionStarted, useDiscovery;
+    private string directAddress;
+    private PlayerHeldItem observedHolder;
+    private readonly List<string> requestResults = new List<string>();
+    private readonly List<string> serverChecks = new List<string>();
+    private int maxTraps;
     private float nextUpdate;
     private int lastCommand;
     private double previousDeadline, gameSceneEnteredTime;
@@ -61,6 +79,8 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         probe.directory = directory;
         probe.id = id;
         probe.host = args.Contains("-lobbyProbeHost");
+        probe.useDiscovery = args.Contains("-lobbyProbeDiscovery");
+        probe.directAddress = Argument(args, "-lobbyProbeDirectAddress") ?? "127.0.0.1";
         Application.runInBackground = true;
         Application.logMessageReceived += probe.RecordLog;
     }
@@ -89,10 +109,21 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         {
             connectionStarted = true;
             manager.networkAddress = "127.0.0.1";
-            if (host) manager.BeginLanRoom(true); else manager.StartClient();
+            if (host) manager.BeginLanRoom(true);
+            else if (useDiscovery) manager.BeginLanRoom(false);
+            else manager.BeginDirectRoom(directAddress);
         }
         var local = NetworkClient.localPlayer != null ? NetworkClient.localPlayer.GetComponent<CapstoneRoomPlayer>() : null;
+        var holder = NetworkClient.localPlayer != null ? NetworkClient.localPlayer.GetComponent<PlayerHeldItem>() : null;
+        if (holder != observedHolder)
+        {
+            if (observedHolder != null) observedHolder.RequestCompleted -= RecordRequest;
+            observedHolder = holder;
+            if (observedHolder != null) observedHolder.RequestCompleted += RecordRequest;
+        }
         TryCommand(manager, local);
+        var race = FindFirstObjectByType<RaceManager>();
+        maxTraps = Mathf.Max(maxTraps, ItemBase.ActiveCount);
         string scene = SceneManager.GetActiveScene().name;
         var players = manager.roomSlots.OfType<CapstoneRoomPlayer>().Where(player => player != null)
             .OrderBy(player => player.SeatIndex).ToArray();
@@ -112,6 +143,16 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         {
             id = id, scene = scene, connected = NetworkClient.isConnected, server = NetworkServer.active,
             now = NetworkTime.time, deadline = deadline, countdown = manager.IsLobbyCountdownActive,
+            advertising = manager.Lan.Advertising, searching = manager.Lan.Searching,
+            connectionError = manager.LastConnectionError,
+            racePhase = race != null ? race.Phase.ToString() : "", turn = race != null ? race.RoundNumber : 0,
+            attacker = race != null && race.Roles != null ? race.Roles.AttackerNetId : 0,
+            requestResults = requestResults.ToArray(), serverChecks = serverChecks.ToArray(), maxTraps = maxTraps,
+            gamePlayers = race == null ? new GamePlayerReport[0] : race.Participants.Select(p => new GamePlayerReport {
+                id = p.netId, local = p.isLocalPlayer, score = p.GetComponent<PlayerScore>().Score,
+                cost = p.GetComponent<PlayerCost>().CurrentCost, count = p.InventoryCount,
+                slots = p.GetComponent<PlayerInventory>().Items.ToArray()
+            }).ToArray(),
             required = manager.RequiredLobbyPlayers, localPlayerId = local != null ? local.netId : 0,
             lastCommand = lastCommand, gameSceneEnteredTime = gameSceneEnteredTime, errors = errors.ToArray(),
             players = players.Select(player => new PlayerReport
@@ -123,6 +164,8 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         };
         Write(Path.Combine(directory, id + ".json"), JsonUtility.ToJson(snapshot, true), false);
     }
+
+    private void RecordRequest(string operation, bool success) => requestResults.Add(operation + ":" + success);
 
     private void TryCommand(CapstoneRoomManager manager, CapstoneRoomPlayer local)
     {
@@ -157,7 +200,59 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                 manager.ReturnToLobby();
                 break;
             case "leave":
-                if (NetworkServer.active) manager.StopHost(); else manager.StopClient();
+                manager.LeaveRoom();
+                break;
+            case "direct":
+                manager.BeginDirectRoom(command.name);
+                break;
+            case "search":
+                manager.BeginLanRoom(false);
+                break;
+            case "host":
+                manager.BeginLanRoom(true);
+                break;
+            case "buy":
+                var conveyor = FindFirstObjectByType<ConveyorController>();
+                if (observedHolder == null || conveyor == null || conveyor.Items.Count == 0 || !observedHolder.CanRequestPurchase) return;
+                observedHolder.RequestPurchase(conveyor.Items[0].Id, PurchaseDestination.Hand);
+                break;
+            case "use":
+                var offers = FindFirstObjectByType<ConveyorController>();
+                var traps = FindFirstObjectByType<SpearNetwork>();
+                if (observedHolder == null || !observedHolder.HasHeldItem || offers == null || traps == null) return;
+                var camera = offers.OutputCamera;
+                // 보이는 필드의 유효한 지점으로 실제 소유자 사용 요청을 보낸다.
+                bool sent = false;
+                for (int x = 4; x <= 8 && !sent; x++)
+                    for (int y = 4; y <= 7 && !sent; y++)
+                    {
+                        Vector3 screen = camera.ViewportToScreenPoint(new Vector3(x / 10f, y / 10f));
+                        var world = camera.ScreenToWorldPoint(new Vector3(screen.x, screen.y, -camera.transform.position.z));
+                        if (traps.IsValidAim(world)) sent = observedHolder.RequestUse(screen);
+                    }
+                if (!sent) return;
+                break;
+            case "staleUse":
+                if (observedHolder == null) return;
+                var currentRace = FindFirstObjectByType<RaceManager>();
+                if (currentRace == null) return;
+                typeof(PlayerHeldItem).GetMethod("CmdRequestUse", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                    .Invoke(observedHolder, new object[] { new Vector2(float.NaN, 0f), 0f, currentRace.RoundNumber - 1 });
+                break;
+            case "goalFixture":
+                if (!NetworkServer.active) return;
+                var race = FindFirstObjectByType<RaceManager>();
+                var goal = FindFirstObjectByType<GoalZone>();
+                if (race == null || !race.IsRunning || goal == null) return;
+                var attacker = race.Participants.First(p => race.Roles.IsAttacker(p));
+                if (goal.ServerTryContact(attacker.connectionToClient, race.RoundNumber - 1)) throw new Exception("Stale goal accepted");
+                serverChecks.Add("stale goal rejected");
+                if (goal.ServerTryContact(attacker.connectionToClient, race.RoundNumber)) throw new Exception("Remote goal accepted away from zone");
+                serverChecks.Add("goal away from zone rejected");
+                attacker.Respawn(goal.GetComponent<BoxCollider2D>().bounds.center);
+                Physics2D.SyncTransforms();
+                if (!goal.ServerTryContact(attacker.connectionToClient, race.RoundNumber)) throw new Exception("Fixture goal rejected");
+                serverChecks.Add("goal contact accepted and turn advanced");
                 break;
             default: return;
         }

@@ -7,6 +7,7 @@ public class CapstoneLobbyUI : MonoBehaviour
 {
     private CapstoneRoomManager manager;
     private string roomPassword = "";
+    private string directAddress = "";
     private bool localWifi = true;
     public static string PendingConnectionError;
     private string requestedName = "";
@@ -153,13 +154,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         return clicked;
     }
 
-    private void Leave()
-    {
-        if (manager.Lan != null && manager.Lan.Searching) manager.Lan.Cancel();
-        else if (NetworkServer.active && NetworkClient.active) manager.StopHost();
-        else if (NetworkClient.active) manager.StopClient();
-        else if (NetworkServer.active) manager.StopServer();
-    }
+    private void Leave() => manager.LeaveRoom();
 
     private Texture2D circle;
     private GUIStyle centered, badge;
@@ -346,11 +341,11 @@ public class CapstoneLobbyUI : MonoBehaviour
         Label(new Rect(972, 226, 232, 48), connected
             ? (NetworkServer.active ? (!(manager.transport is PasswordRelayTransport) || ((PasswordRelayTransport)manager.transport).RoomOpen ? "방장 · 참가를 기다리는 중" : "방을 여는 중...") : "방에 참가했어요")
             : searching ? "가까운 방을 찾는 중..." : active ? "연결하는 중..." : "친구들과 함께 모험을 준비해요.", text);
-        if (Action(new Rect(972, 286, 107, 34), localWifi ? "Wi-Fi ✓" : "Wi-Fi", !active)) localWifi = true;
+        if (Action(new Rect(972, 286, 107, 34), localWifi ? "LAN ✓" : "LAN", !active)) localWifi = true;
         if (Action(new Rect(1091, 286, 107, 34), localWifi ? "인터넷" : "인터넷 ✓", !active)) localWifi = false;
         if (localWifi)
         {
-            Label(new Rect(972, 330, 226, 55), "같은 Wi-Fi에서 만나세요.\n주소 입력 없이 참가할 수 있어요.", small);
+            Label(new Rect(972, 330, 226, 55), "같은 내부망에서 자동 검색합니다.\n유선·Wi-Fi 모두 사용할 수 있어요.", small);
         }
         else
         {
@@ -383,8 +378,27 @@ public class CapstoneLobbyUI : MonoBehaviour
         GUI.enabled = true;
         if (Action(new Rect(972, 640, 226, 30), "이름 저장", local != null))
             local.RequestName(requestedName);
+        if (localWifi)
+        {
+            Rounded(new Rect(78, 661, 819, 47), Panel, 10);
+            if (NetworkServer.active)
+                Label(new Rect(92, 666, 790, 37), "방장 IP: " + manager.Lan.LocalAddresses, small);
+            else if (!connected)
+            {
+                Label(new Rect(92, 668, 105, 32), "IP 직접 참가", small);
+                GUI.enabled = !active;
+                GUI.SetNextControlName("DirectAddress");
+                directAddress = GUI.TextField(new Rect(199, 668, 180, 32), directAddress, 15, input);
+                GUI.enabled = true;
+                if (Action(new Rect(388, 668, 105, 32), "IP로 참가", !active)) manager.BeginDirectRoom(directAddress);
+                Label(new Rect(507, 664, 375, 42), string.IsNullOrEmpty(manager.LastConnectionError)
+                    ? "검색되지 않으면 방장의 IPv4를 입력하세요."
+                    : manager.LastConnectionError, small);
+            }
+            else Label(new Rect(92, 666, 790, 37), "방에 연결되었습니다.", small);
+        }
         string focused = GUI.GetNameOfFocusedControl();
-        IsEditingText = focused == "PlayerName" || focused == "RoomPassword";
+        IsEditingText = focused == "PlayerName" || focused == "RoomPassword" || focused == "DirectAddress";
         if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Escape)
         {
             GUI.FocusControl(null);
@@ -392,7 +406,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         }
         if (Action(new Rect(78, 586, 393, 57), local != null && local.IsReady ? "준비 취소  [ F ]" : "준비 완료  [ F ]", connected && local != null)) local.ToggleReady();
         DrawStartStatus(players.Length, ready, connected);
-        Label(new Rect(78, 668, 820, 29), $"참가 {players.Length} / {CapstoneRoomManager.LobbySeatCount}명     ·     준비 완료 {ready}명     ·     F : 준비 / 취소", small);
+        if (!localWifi) Label(new Rect(78, 668, 820, 29), $"참가 {players.Length} / {CapstoneRoomManager.LobbySeatCount}명     ·     준비 완료 {ready}명     ·     F : 준비 / 취소", small);
 
         if (searching && manager.Lan.Rooms.Length > 1)
         {
