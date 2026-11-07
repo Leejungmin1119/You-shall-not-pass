@@ -230,9 +230,9 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (nameWidth > 160) centered.fontSize = Mathf.Clamp((int)(17 * 160 / nameWidth), 8, 17);
         centered.normal.textColor = Ink;
         centered.wordWrap = false;
-        // 이름은 발판 아래 대신 캐릭터 몸통 높이에 배치한다.
-        Rounded(new Rect(x - 88, 413, 176, 31), new Color(1f, .97f, .87f, .94f), 9);
-        Label(new Rect(x - 85, 414, 170, 28), displayName, centered);
+        // 이름은 캐릭터를 가리지 않도록 발판 흙 부분의 중상단에 배치한다.
+        Rounded(new Rect(x - 88, 476, 176, 31), new Color(1f, .97f, .87f, .94f), 9);
+        Label(new Rect(x - 85, 477, 170, 28), displayName, centered);
         centered.fontSize = 17;
         badge.normal.textColor = ready ? Color.white : Ink;
         Rounded(new Rect(x - 58, 274, 116, 28), ready ? Accent : new Color(.97f, .88f, .64f), 8);
@@ -240,7 +240,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (local)
         {
             badge.normal.textColor = Accent;
-            Label(new Rect(x - 30, 447, 60, 22), "나", badge);
+            Label(new Rect(x - 30, 512, 60, 22), "나", badge);
         }
     }
 
