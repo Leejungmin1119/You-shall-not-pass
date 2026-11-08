@@ -3,6 +3,9 @@ using UnityEngine;
 [SelectionBase]
 public class PlayerMovement : MonoBehaviour
 {
+    // 입력이 아니라 실제 도약이 확정된 순간에만 발생한다. 착지에서는 호출하지 않는다.
+    public event System.Action JumpStarted;
+
     [Header("References")]
     public PlayerMovementStats moveStats;
 
@@ -292,6 +295,8 @@ public class PlayerMovement : MonoBehaviour
         _isPastApexThreshold = false;
         _jumpBufferTimer = 0f;
         Velocity.y = moveStats.InitialJumpVelocity;
+
+        JumpStarted?.Invoke();
     }
 
     private void Jump(float timeStep)
@@ -401,6 +406,8 @@ public class PlayerMovement : MonoBehaviour
         Velocity.y = moveStats.InitialWallJumpVelocity;
         Velocity.x = Mathf.Abs(moveStats.WallJumpDirection.x) * -_lastWallDir;
         WallJumpCancleTime = moveStats.WallJumpCancleTime;
+
+        JumpStarted?.Invoke();
     }
 
     private void WallJump(float timeStep)

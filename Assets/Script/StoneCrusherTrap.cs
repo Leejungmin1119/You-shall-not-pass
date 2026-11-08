@@ -116,7 +116,13 @@ public sealed class StoneCrusherTrap : NetworkBehaviour
             CheckCrush(attacker, previousY, nextY);
 
             if (now >= motion.StartedAt + motion.Duration)
+            {
                 SetMotion(CrusherPhase.Grounded, motion.ToY, motion.ToY, groundWait, now);
+
+                // 하강 완료 시 한 번만 전달한다. 바닥 대기·복귀 중에는 재생하지 않는다.
+                Vector2 impact = new Vector2(home.x, motion.ToY) + centerOffset - Vector2.up * halfSize.y;
+                RpcPlayImpactSound(impact);
+            }
         }
         else if (motion.Phase == CrusherPhase.Grounded)
         {
@@ -132,6 +138,13 @@ public sealed class StoneCrusherTrap : NetworkBehaviour
 
         previousY = PositionAt(now);
         body.position = new Vector2(home.x, previousY);
+    }
+
+    /// <summary>서버가 확정한 지면 도착 순간에 모든 클라이언트에서 충격음을 한 번 재생한다.</summary>
+    [ClientRpc]
+    private void RpcPlayImpactSound(Vector2 position)
+    {
+        SoundPlayer.Play(SoundType.StoneCrusherImpact, position);
     }
 
     /// <summary>호스트와 클라이언트가 같은 서버 시각으로 위치를 계산해 연속 이동을 표시한다.</summary>
