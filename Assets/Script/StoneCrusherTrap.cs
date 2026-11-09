@@ -82,7 +82,7 @@ public sealed class StoneCrusherTrap : NetworkBehaviour
         if (observedTurn != race.RoundNumber)
             ResetForTurn();
 
-        if (!race.IsRunning)
+        if (!race.IsSimulating)
         {
             if (motion.Phase != CrusherPhase.Waiting)
                 ResetForTurn();
@@ -90,7 +90,7 @@ public sealed class StoneCrusherTrap : NetworkBehaviour
             return;
         }
 
-        double now = NetworkTime.time;
+        double now = (race != null ? race.SimulationTime : NetworkTime.time);
         float nextY = PositionAt(now);
         PlayerState attacker = FindAttacker();
 
@@ -151,7 +151,7 @@ public sealed class StoneCrusherTrap : NetworkBehaviour
     private void Update()
     {
         if (isServer || isClient)
-            transform.position = new Vector3(home.x, PositionAt(NetworkTime.time), home.z);
+            transform.position = new Vector3(home.x, PositionAt((race != null ? race.SimulationTime : NetworkTime.time)), home.z);
     }
 
     /// <summary>동기화된 구간을 보간해 NetworkTransform 없이 현재 높이를 계산한다.</summary>
@@ -167,8 +167,8 @@ public sealed class StoneCrusherTrap : NetworkBehaviour
     {
         observedTurn = race != null ? race.RoundNumber : -1;
         previousY = home.y;
-        canDetectAt = NetworkTime.time + rearmDelay;
-        SetMotion(CrusherPhase.Waiting, home.y, home.y, 0f, NetworkTime.time);
+        canDetectAt = (race != null ? race.SimulationTime : NetworkTime.time) + rearmDelay;
+        SetMotion(CrusherPhase.Waiting, home.y, home.y, 0f, (race != null ? race.SimulationTime : NetworkTime.time));
         body.position = home;
         transform.position = home;
     }
@@ -241,7 +241,7 @@ public sealed class StoneCrusherTrap : NetworkBehaviour
         float maxY = Mathf.Max(fromY, toY) + centerOffset.y + halfSize.y + reachY;
 
         if (center.y >= minY && center.y <= maxY)
-            player.TryDie();
+            player.TryDie(transform.position);
     }
 
     /// <summary>서버에서 물리가 꺼진 원격 플레이어도 실제 캡슐 크기로 검사한다.</summary>

@@ -1,0 +1,1937 @@
+fileFormatVersion: 2
+guid: abafc8f5fd4dd5a4db64073f4222d806
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3078710045163456330
+    second: Knight_Death_Forward_Sheet_v1_0
+  - first:
+      213: -6412982905348356409
+    second: Knight_Death_Forward_Sheet_v1_1
+  - first:
+      213: -1815533175368901847
+    second: Knight_Death_Forward_Sheet_v1_2
+  - first:
+      213: 5296327948013524845
+    second: Knight_Death_Forward_Sheet_v1_3
+  - first:
+      213: -901870368711725017
+    second: Knight_Death_Forward_Sheet_v1_4
+  - first:
+      213: 1520294171545103357
+    second: Knight_Death_Forward_Sheet_v1_5
+  - first:
+      213: -8038183370687644799
+    second: Knight_Death_Forward_Sheet_v1_6
+  - first:
+      213: -8862790761986612960
+    second: Knight_Death_Forward_Sheet_v1_7
+  - first:
+      213: 6853049351217918673
+    second: Knight_Death_Forward_Sheet_v1_8
+  - first:
+      213: -9180019673513291569
+    second: Knight_Death_Forward_Sheet_v1_9
+  - first:
+      213: -4689599698911828440
+    second: Knight_Death_Forward_Sheet_v1_10
+  - first:
+      213: 3255512007692694174
+    second: Knight_Death_Forward_Sheet_v1_11
+  - first:
+      213: 2203404648850235128
+    second: Knight_Death_Forward_Sheet_v1_12
+  - first:
+      213: -584890306402822112
+    second: Knight_Death_Forward_Sheet_v1_13
+  - first:
+      213: 7419473684519023853
+    second: Knight_Death_Forward_Sheet_v1_14
+  - first:
+      213: 1887021751254651457
+    second: Knight_Death_Forward_Sheet_v1_15
+  - first:
+      213: 4162155691008965976
+    second: Knight_Death_Forward_Sheet_v1_16
+  - first:
+      213: -7588660682815862822
+    second: Knight_Death_Forward_Sheet_v1_17
+  - first:
+      213: 6208649061339782900
+    second: Knight_Death_Forward_Sheet_v1_18
+  - first:
+      213: 8625023787184716227
+    second: Knight_Death_Forward_Sheet_v1_19
+  - first:
+      213: 880965418083283544
+    second: Knight_Death_Forward_Sheet_v1_20
+  - first:
+      213: 1774967561243803671
+    second: Knight_Death_Forward_Sheet_v1_21
+  - first:
+      213: -5588300161033194930
+    second: Knight_Death_Forward_Sheet_v1_22
+  - first:
+      213: -1665982097959766408
+    second: Knight_Death_Forward_Sheet_v1_23
+  - first:
+      213: -1420330049395143066
+    second: Knight_Death_Forward_Sheet_v1_24
+  - first:
+      213: -3174183124648695699
+    second: Knight_Death_Forward_Sheet_v1_25
+  - first:
+      213: 5447202645974510917
+    second: Knight_Death_Forward_Sheet_v1_26
+  - first:
+      213: 1965185114251882929
+    second: Knight_Death_Forward_Sheet_v1_27
+  - first:
+      213: 7736497522166573695
+    second: Knight_Death_Forward_Sheet_v1_28
+  - first:
+      213: -1990066171305464273
+    second: Knight_Death_Forward_Sheet_v1_29
+  - first:
+      213: 7001003072481385475
+    second: Knight_Death_Forward_Sheet_v1_30
+  - first:
+      213: -4383735050530189161
+    second: Knight_Death_Forward_Sheet_v1_31
+  - first:
+      213: 7179812717201868523
+    second: Knight_Death_Forward_Sheet_v1_32
+  - first:
+      213: -5315394855458274118
+    second: Knight_Death_Forward_Sheet_v1_33
+  - first:
+      213: 1102801841612496334
+    second: Knight_Death_Forward_Sheet_v1_34
+  - first:
+      213: 2427245981644452436
+    second: Knight_Death_Forward_Sheet_v1_35
+  - first:
+      213: 2625209309928473056
+    second: Knight_Death_Forward_Sheet_v1_36
+  - first:
+      213: 6566146955539911101
+    second: Knight_Death_Forward_Sheet_v1_37
+  - first:
+      213: -4833647916340820089
+    second: Knight_Death_Forward_Sheet_v1_38
+  - first:
+      213: 890296278261166033
+    second: Knight_Death_Forward_Sheet_v1_39
+  - first:
+      213: 12770924970425682
+    second: Knight_Death_Forward_Sheet_v1_40
+  - first:
+      213: 3000948220162703227
+    second: Knight_Death_Forward_Sheet_v1_41
+  - first:
+      213: -2339237146421318177
+    second: Knight_Death_Forward_Sheet_v1_42
+  - first:
+      213: 8894402578773726113
+    second: Knight_Death_Forward_Sheet_v1_43
+  - first:
+      213: -2199324112992102449
+    second: Knight_Death_Forward_Sheet_v1_44
+  - first:
+      213: 7977697108112858719
+    second: Knight_Death_Forward_Sheet_v1_45
+  - first:
+      213: 6911520460449257631
+    second: Knight_Death_Forward_Sheet_v1_46
+  - first:
+      213: 5255912928271990105
+    second: Knight_Death_Forward_Sheet_v1_47
+  - first:
+      213: -2508892196853180047
+    second: Knight_Death_Forward_Sheet_v1_48
+  - first:
+      213: -5016472988522297197
+    second: Knight_Death_Forward_Sheet_v1_49
+  - first:
+      213: 2465371699155949719
+    second: Knight_Death_Forward_Sheet_v1_50
+  - first:
+      213: 2420196267379789756
+    second: Knight_Death_Forward_Sheet_v1_51
+  - first:
+      213: -2189792478335928010
+    second: Knight_Death_Forward_Sheet_v1_52
+  - first:
+      213: -8972803265704773434
+    second: Knight_Death_Forward_Sheet_v1_53
+  - first:
+      213: -6499195200161377123
+    second: Knight_Death_Forward_Sheet_v1_54
+  - first:
+      213: 5962692808596096578
+    second: Knight_Death_Forward_Sheet_v1_55
+  - first:
+      213: 6976554229698209032
+    second: Knight_Death_Forward_Sheet_v1_56
+  - first:
+      213: -3137294957241725464
+    second: Knight_Death_Forward_Sheet_v1_57
+  - first:
+      213: 5717151292237787329
+    second: Knight_Death_Forward_Sheet_v1_58
+  - first:
+      213: 8811150303243532736
+    second: Knight_Death_Forward_Sheet_v1_59
+  - first:
+      213: -5949031152840850010
+    second: Knight_Death_Forward_Sheet_v1_60
+  - first:
+      213: 2746464156291106878
+    second: Knight_Death_Forward_Sheet_v1_61
+  - first:
+      213: -3973245289002349466
+    second: Knight_Death_Forward_Sheet_v1_62
+  - first:
+      213: -5069530292383306010
+    second: Knight_Death_Forward_Sheet_v1_63
+  - first:
+      213: 7271102219848412034
+    second: Knight_Death_Forward_Sheet_v1_64
+  - first:
+      213: 2776949140918322170
+    second: Knight_Death_Forward_Sheet_v1_65
+  - first:
+      213: 8640677714828589411
+    second: Knight_Death_Forward_Sheet_v1_66
+  - first:
+      213: -6430259059998947038
+    second: Knight_Death_Forward_Sheet_v1_67
+  - first:
+      213: 4302462444717385323
+    second: Knight_Death_Forward_Sheet_v1_68
+  - first:
+      213: -2968960336158240451
+    second: Knight_Death_Forward_Sheet_v1_69
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_0
+      rect:
+        serializedVersion: 2
+        x: 470
+        y: 876
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b8fa9f86893645d0800000000000000
+      internalID: -3078710045163456330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 813
+        width: 62
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c60f0866028007a0800000000000000
+      internalID: -6412982905348356409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 442
+        width: 364
+        height: 411
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92b1334323eedc6e0800000000000000
+      internalID: -1815533175368901847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_3
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 338
+        width: 473
+        height: 527
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d67d1532536508940800000000000000
+      internalID: 5296327948013524845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_4
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 811
+        width: 30
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 720bc7f8da9eb73f0800000000000000
+      internalID: -901870368711725017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_5
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 757
+        width: 40
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfbea018e7b291510800000000000000
+      internalID: 1520294171545103357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_6
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 811
+        width: 12
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18bf5beffc2a27090800000000000000
+      internalID: -8038183370687644799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_7
+      rect:
+        serializedVersion: 2
+        x: 881
+        y: 317
+        width: 443
+        height: 552
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 021ac2152ca010580800000000000000
+      internalID: -8862790761986612960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_8
+      rect:
+        serializedVersion: 2
+        x: 1054
+        y: 827
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d2b09f631cea1f50800000000000000
+      internalID: 6853049351217918673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_9
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 787
+        width: 67
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc09429aeb40a9080800000000000000
+      internalID: -9180019673513291569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_10
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 803
+        width: 21
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 826e49f9be13beeb0800000000000000
+      internalID: -4689599698911828440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_11
+      rect:
+        serializedVersion: 2
+        x: 1266
+        y: 803
+        width: 27
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e92ba8c2ce6ed2d20800000000000000
+      internalID: 3255512007692694174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_12
+      rect:
+        serializedVersion: 2
+        x: 1306
+        y: 739
+        width: 173
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fe992f9ad0149e10800000000000000
+      internalID: 2203404648850235128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_13
+      rect:
+        serializedVersion: 2
+        x: 1328
+        y: 323
+        width: 437
+        height: 503
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0285a4e7d5d02e7f0800000000000000
+      internalID: -584890306402822112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_14
+      rect:
+        serializedVersion: 2
+        x: 1554
+        y: 821
+        width: 44
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de47d1a810447f660800000000000000
+      internalID: 7419473684519023853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_15
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 821
+        width: 51
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14218fee84c003a10800000000000000
+      internalID: 1887021751254651457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_16
+      rect:
+        serializedVersion: 2
+        x: 1685
+        y: 822
+        width: 28
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85db5768c82f2c930800000000000000
+      internalID: 4162155691008965976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_17
+      rect:
+        serializedVersion: 2
+        x: 1691
+        y: 828
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad789cfb059afa690800000000000000
+      internalID: -7588660682815862822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_18
+      rect:
+        serializedVersion: 2
+        x: 1707
+        y: 818
+        width: 24
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fe583c2d6d892650800000000000000
+      internalID: 6208649061339782900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_19
+      rect:
+        serializedVersion: 2
+        x: 1730
+        y: 805
+        width: 44
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c97076ef6d32b770800000000000000
+      internalID: 8625023787184716227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_20
+      rect:
+        serializedVersion: 2
+        x: 1740
+        y: 815
+        width: 7
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 852f1445161d93c00800000000000000
+      internalID: 880965418083283544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_21
+      rect:
+        serializedVersion: 2
+        x: 1433
+        y: 796
+        width: 17
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71047cfb793f1a810800000000000000
+      internalID: 1774967561243803671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_22
+      rect:
+        serializedVersion: 2
+        x: 1709
+        y: 749
+        width: 46
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e42bb539c9e5272b0800000000000000
+      internalID: -5588300161033194930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_23
+      rect:
+        serializedVersion: 2
+        x: 1739
+        y: 779
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 876b2f0db1e31e8e0800000000000000
+      internalID: -1665982097959766408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_24
+      rect:
+        serializedVersion: 2
+        x: 1734
+        y: 749
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66e4df56859f94ce0800000000000000
+      internalID: -1420330049395143066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_25
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 578
+        width: 18
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d686643044903f3d0800000000000000
+      internalID: -3174183124648695699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_26
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 521
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54de0ec22f9589b40800000000000000
+      internalID: 5447202645974510917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_27
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 523
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b17edc037db54b10800000000000000
+      internalID: 1965185114251882929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_28
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 408
+        width: 27
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7aad66b18f8d5b60800000000000000
+      internalID: 7736497522166573695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_29
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 409
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2ee0db6c5dd164e0800000000000000
+      internalID: -1990066171305464273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_30
+      rect:
+        serializedVersion: 2
+        x: 1258
+        y: 418
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30cdba6933f882160800000000000000
+      internalID: 7001003072481385475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_31
+      rect:
+        serializedVersion: 2
+        x: 1279
+        y: 418
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79018b39238d923c0800000000000000
+      internalID: -4383735050530189161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_32
+      rect:
+        serializedVersion: 2
+        x: 1548
+        y: 426
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be646a240a1d3a360800000000000000
+      internalID: 7179812717201868523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_33
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 400
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab488778a8ceb36b0800000000000000
+      internalID: -5315394855458274118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_34
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 404
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecd95fa9e60fd4f00800000000000000
+      internalID: 1102801841612496334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_35
+      rect:
+        serializedVersion: 2
+        x: 1159
+        y: 404
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45279663c5f4fa120800000000000000
+      internalID: 2427245981644452436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_36
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 408
+        width: 28
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e1c55b55fd9e6420800000000000000
+      internalID: 2625209309928473056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_37
+      rect:
+        serializedVersion: 2
+        x: 796
+        y: 350
+        width: 50
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db118fbfdd3af1b50800000000000000
+      internalID: 6566146955539911101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_38
+      rect:
+        serializedVersion: 2
+        x: 877
+        y: 386
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 787c23174de6becb0800000000000000
+      internalID: -4833647916340820089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_39
+      rect:
+        serializedVersion: 2
+        x: 1667
+        y: 390
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1dfeb928fb7fa5c00800000000000000
+      internalID: 890296278261166033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 17
+        width: 455
+        height: 356
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25db05ea61f5d2000800000000000000
+      internalID: 12770924970425682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_41
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 355
+        width: 20
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7f732ca18285a920800000000000000
+      internalID: 3000948220162703227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_42
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 366
+        width: 33
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdda82a853c598fd0800000000000000
+      internalID: -2339237146421318177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_43
+      rect:
+        serializedVersion: 2
+        x: 1238
+        y: 350
+        width: 39
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a3502555044f6b70800000000000000
+      internalID: 8894402578773726113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_44
+      rect:
+        serializedVersion: 2
+        x: 1327
+        y: 360
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc7972b2f5e6a71e0800000000000000
+      internalID: -2199324112992102449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_45
+      rect:
+        serializedVersion: 2
+        x: 1701
+        y: 353
+        width: 24
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5e5abe804976be60800000000000000
+      internalID: 7977697108112858719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_46
+      rect:
+        serializedVersion: 2
+        x: 1723
+        y: 354
+        width: 22
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f981cee6d37aaef50800000000000000
+      internalID: 6911520460449257631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_47
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 348
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95df80416f0c0f840800000000000000
+      internalID: 5255912928271990105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_48
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 355
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17911d2f6df9e2dd0800000000000000
+      internalID: -2508892196853180047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_49
+      rect:
+        serializedVersion: 2
+        x: 1276
+        y: 350
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39849c53568e16ab0800000000000000
+      internalID: -5016472988522297197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_50
+      rect:
+        serializedVersion: 2
+        x: 1699
+        y: 356
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 798dd7f8f72c63220800000000000000
+      internalID: 2465371699155949719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_51
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 283
+        width: 59
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbf06e3bea3469120800000000000000
+      internalID: 2420196267379789756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_52
+      rect:
+        serializedVersion: 2
+        x: 828
+        y: 341
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 639f6fcc75b4c91e0800000000000000
+      internalID: -2189792478335928010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_53
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 340
+        width: 13
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c8b33448f23a7380800000000000000
+      internalID: -8972803265704773434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_54
+      rect:
+        serializedVersion: 2
+        x: 1336
+        y: 336
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d94157056683ec5a0800000000000000
+      internalID: -6499195200161377123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_55
+      rect:
+        serializedVersion: 2
+        x: 1343
+        y: 338
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2468529848dbfb250800000000000000
+      internalID: 5962692808596096578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_56
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 312
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8052969cb13b1d060800000000000000
+      internalID: 6976554229698209032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_57
+      rect:
+        serializedVersion: 2
+        x: 1070
+        y: 271
+        width: 58
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ed8bf5cbd61674d0800000000000000
+      internalID: -3137294957241725464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_58
+      rect:
+        serializedVersion: 2
+        x: 1266
+        y: 295
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c0bffc3fc6675f40800000000000000
+      internalID: 5717151292237787329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_59
+      rect:
+        serializedVersion: 2
+        x: 1320
+        y: 330
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c9f76f648e774a70800000000000000
+      internalID: 8811150303243532736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_60
+      rect:
+        serializedVersion: 2
+        x: 1379
+        y: 322
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a540319fabc07da0800000000000000
+      internalID: -5949031152840850010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_61
+      rect:
+        serializedVersion: 2
+        x: 1740
+        y: 321
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e38031849966d1620800000000000000
+      internalID: 2746464156291106878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_62
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 31
+        width: 419
+        height: 298
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66c4587f5723cd8c0800000000000000
+      internalID: -3973245289002349466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_63
+      rect:
+        serializedVersion: 2
+        x: 848
+        y: 305
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ee29600f0965a9b0800000000000000
+      internalID: -5069530292383306010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_64
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 257
+        width: 35
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28b6e9be1f428e460800000000000000
+      internalID: 7271102219848412034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_65
+      rect:
+        serializedVersion: 2
+        x: 1163
+        y: 261
+        width: 56
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af343cfd784b98620800000000000000
+      internalID: 2776949140918322170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_66
+      rect:
+        serializedVersion: 2
+        x: 1302
+        y: 291
+        width: 11
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 369fdf2f99ad9e770800000000000000
+      internalID: 8640677714828589411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_67
+      rect:
+        serializedVersion: 2
+        x: 1312
+        y: 273
+        width: 26
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2298603347123c6a0800000000000000
+      internalID: -6430259059998947038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_68
+      rect:
+        serializedVersion: 2
+        x: 1343
+        y: 35
+        width: 424
+        height: 294
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b66a6dc4cca65bb30800000000000000
+      internalID: 4302462444717385323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Death_Forward_Sheet_v1_69
+      rect:
+        serializedVersion: 2
+        x: 893
+        y: 59
+        width: 439
+        height: 225
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d315013fd422cc6d0800000000000000
+      internalID: -2968960336158240451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Knight_Death_Forward_Sheet_v1_0: -3078710045163456330
+      Knight_Death_Forward_Sheet_v1_1: -6412982905348356409
+      Knight_Death_Forward_Sheet_v1_10: -4689599698911828440
+      Knight_Death_Forward_Sheet_v1_11: 3255512007692694174
+      Knight_Death_Forward_Sheet_v1_12: 2203404648850235128
+      Knight_Death_Forward_Sheet_v1_13: -584890306402822112
+      Knight_Death_Forward_Sheet_v1_14: 7419473684519023853
+      Knight_Death_Forward_Sheet_v1_15: 1887021751254651457
+      Knight_Death_Forward_Sheet_v1_16: 4162155691008965976
+      Knight_Death_Forward_Sheet_v1_17: -7588660682815862822
+      Knight_Death_Forward_Sheet_v1_18: 6208649061339782900
+      Knight_Death_Forward_Sheet_v1_19: 8625023787184716227
+      Knight_Death_Forward_Sheet_v1_2: -1815533175368901847
+      Knight_Death_Forward_Sheet_v1_20: 880965418083283544
+      Knight_Death_Forward_Sheet_v1_21: 1774967561243803671
+      Knight_Death_Forward_Sheet_v1_22: -5588300161033194930
+      Knight_Death_Forward_Sheet_v1_23: -1665982097959766408
+      Knight_Death_Forward_Sheet_v1_24: -1420330049395143066
+      Knight_Death_Forward_Sheet_v1_25: -3174183124648695699
+      Knight_Death_Forward_Sheet_v1_26: 5447202645974510917
+      Knight_Death_Forward_Sheet_v1_27: 1965185114251882929
+      Knight_Death_Forward_Sheet_v1_28: 7736497522166573695
+      Knight_Death_Forward_Sheet_v1_29: -1990066171305464273
+      Knight_Death_Forward_Sheet_v1_3: 5296327948013524845
+      Knight_Death_Forward_Sheet_v1_30: 7001003072481385475
+      Knight_Death_Forward_Sheet_v1_31: -4383735050530189161
+      Knight_Death_Forward_Sheet_v1_32: 7179812717201868523
+      Knight_Death_Forward_Sheet_v1_33: -5315394855458274118
+      Knight_Death_Forward_Sheet_v1_34: 1102801841612496334
+      Knight_Death_Forward_Sheet_v1_35: 2427245981644452436
+      Knight_Death_Forward_Sheet_v1_36: 2625209309928473056
+      Knight_Death_Forward_Sheet_v1_37: 6566146955539911101
+      Knight_Death_Forward_Sheet_v1_38: -4833647916340820089
+      Knight_Death_Forward_Sheet_v1_39: 890296278261166033
+      Knight_Death_Forward_Sheet_v1_4: -901870368711725017
+      Knight_Death_Forward_Sheet_v1_40: 12770924970425682
+      Knight_Death_Forward_Sheet_v1_41: 3000948220162703227
+      Knight_Death_Forward_Sheet_v1_42: -2339237146421318177
+      Knight_Death_Forward_Sheet_v1_43: 8894402578773726113
+      Knight_Death_Forward_Sheet_v1_44: -2199324112992102449
+      Knight_Death_Forward_Sheet_v1_45: 7977697108112858719
+      Knight_Death_Forward_Sheet_v1_46: 6911520460449257631
+      Knight_Death_Forward_Sheet_v1_47: 5255912928271990105
+      Knight_Death_Forward_Sheet_v1_48: -2508892196853180047
+      Knight_Death_Forward_Sheet_v1_49: -5016472988522297197
+      Knight_Death_Forward_Sheet_v1_5: 1520294171545103357
+      Knight_Death_Forward_Sheet_v1_50: 2465371699155949719
+      Knight_Death_Forward_Sheet_v1_51: 2420196267379789756
+      Knight_Death_Forward_Sheet_v1_52: -2189792478335928010
+      Knight_Death_Forward_Sheet_v1_53: -8972803265704773434
+      Knight_Death_Forward_Sheet_v1_54: -6499195200161377123
+      Knight_Death_Forward_Sheet_v1_55: 5962692808596096578
+      Knight_Death_Forward_Sheet_v1_56: 6976554229698209032
+      Knight_Death_Forward_Sheet_v1_57: -3137294957241725464
+      Knight_Death_Forward_Sheet_v1_58: 5717151292237787329
+      Knight_Death_Forward_Sheet_v1_59: 8811150303243532736
+      Knight_Death_Forward_Sheet_v1_6: -8038183370687644799
+      Knight_Death_Forward_Sheet_v1_60: -5949031152840850010
+      Knight_Death_Forward_Sheet_v1_61: 2746464156291106878
+      Knight_Death_Forward_Sheet_v1_62: -3973245289002349466
+      Knight_Death_Forward_Sheet_v1_63: -5069530292383306010
+      Knight_Death_Forward_Sheet_v1_64: 7271102219848412034
+      Knight_Death_Forward_Sheet_v1_65: 2776949140918322170
+      Knight_Death_Forward_Sheet_v1_66: 8640677714828589411
+      Knight_Death_Forward_Sheet_v1_67: -6430259059998947038
+      Knight_Death_Forward_Sheet_v1_68: 4302462444717385323
+      Knight_Death_Forward_Sheet_v1_69: -2968960336158240451
+      Knight_Death_Forward_Sheet_v1_7: -8862790761986612960
+      Knight_Death_Forward_Sheet_v1_8: 6853049351217918673
+      Knight_Death_Forward_Sheet_v1_9: -9180019673513291569
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

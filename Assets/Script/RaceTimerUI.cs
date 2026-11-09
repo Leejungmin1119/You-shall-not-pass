@@ -26,7 +26,7 @@ public sealed class RaceTimerUI : MonoBehaviour
         else if (race.Phase == RacePhase.Ended)
             seconds = 0;
         else
-            seconds = RemainingSeconds(race.EndsAt);
+            seconds = Mathf.Max(0, Mathf.CeilToInt((float)race.RemainingTime));
 
         if (lastSeconds == seconds)
             return;

@@ -18,6 +18,9 @@ public sealed class CannonballProjectile : NetworkBehaviour
     private ContactFilter2D groundFilter;
     private readonly RaycastHit2D[] groundHits = new RaycastHit2D[16];
 
+    /// <summary>원격 화면도 같은 레이스의 느려진 이동 시계를 사용한다.</summary>
+    private void Awake() => race = FindFirstObjectByType<RaceManager>(FindObjectsInactive.Include);
+
     public void Initialize(FixedCannonTrap cannon, RaceManager currentRace, Vector2 position,
         Vector2 flightDirection, float flightSpeed, float seconds, LayerMask groundLayer)
     {
@@ -28,7 +31,7 @@ public sealed class CannonballProjectile : NetworkBehaviour
         direction = flightDirection;
         speed = flightSpeed;
         lifetime = seconds;
-        firedAt = NetworkTime.time;
+        firedAt = (race != null ? race.SimulationTime : NetworkTime.time);
         groundFilter.SetLayerMask(groundLayer);
         groundFilter.useTriggers = false;
     }
@@ -41,15 +44,15 @@ public sealed class CannonballProjectile : NetworkBehaviour
 
     private Vector2 FlightPosition()
     {
-        float age = Mathf.Max(0f, (float)(NetworkTime.time - firedAt));
+        float age = Mathf.Max(0f, (float)((race != null ? race.SimulationTime : NetworkTime.time) - firedAt));
         return origin + direction * (speed * age);
     }
 
     private void FixedUpdate()
     {
         if (!isServer) return;
-        if (source == null || race == null || !race.IsRunning || race.RoundNumber != roundNumber ||
-            NetworkTime.time - firedAt >= lifetime)
+        if (source == null || race == null || !race.IsSimulating || race.RoundNumber != roundNumber ||
+            (race != null ? race.SimulationTime : NetworkTime.time) - firedAt >= lifetime)
         {
             NetworkServer.Destroy(gameObject);
             return;
@@ -75,7 +78,7 @@ public sealed class CannonballProjectile : NetworkBehaviour
                 target = player;
             }
         }
-        if (target != null && source.TryKill(target))
+        if (target != null && source.TryKill(target, previousPosition))
         {
             NetworkServer.Destroy(gameObject);
             return;

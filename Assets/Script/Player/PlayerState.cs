@@ -23,6 +23,9 @@ public sealed class PlayerState : NetworkBehaviour
     private double _lastDeathStep = double.NegativeInfinity;
     [SyncVar] private double _invincibleUntil;
     [SyncVar] private int inventoryCount;
+    [SyncVar] private bool facingRight = true;
+    private bool? lastSentFacing;
+    public bool FacingRight => isLocalPlayer ? _movement.IsFacingRight : facingRight;
     public int InventoryCount => inventoryCount;
     public bool IsInvincible => NetworkTime.time < _invincibleUntil;
     private const double RespawnInvincibleTime = 0.5;
@@ -111,6 +114,24 @@ public sealed class PlayerState : NetworkBehaviour
             ApplyStatus();
     }
 
+    /// <summary>바라보는 방향이 바뀔 때만 서버에 알려 뒤에서 맞는 경우도 동일하게 판정한다.</summary>
+    private void Update()
+    {
+        if (isLocalPlayer && CanMove && lastSentFacing != _movement.IsFacingRight)
+        {
+            lastSentFacing = _movement.IsFacingRight;
+            CmdSetFacing(_movement.IsFacingRight);
+        }
+    }
+
+    /// <summary>소유자가 보낸 현재 방향만 수락한다. 연출 중에는 이미 확정한 방향을 유지한다.</summary>
+    [Command]
+    private void CmdSetFacing(bool right)
+    {
+        if (CanMove)
+            facingRight = right;
+    }
+
     /// <summary>네트워크와 개인 UI는 유지하고 수비자·골인 캐릭터의 월드 표시와 충돌을 끈다.</summary>
     private void ApplyStatus()
     {
@@ -121,17 +142,17 @@ public sealed class PlayerState : NetworkBehaviour
             visual.enabled = visible;
 
         foreach (Canvas canvas in _canvases)
-            canvas.enabled = visible;
+            canvas.enabled = visible && status == PlayerStatus.Alive;
 
         foreach (Collider2D collider in _colliders)
-            collider.enabled = visible;
+            collider.enabled = visible && status == PlayerStatus.Alive;
 
         if (!isLocalPlayer)
             return;
 
         _movement.MovementLocked = !CanMove;
 
-        if (!visible)
+        if (!visible || status == PlayerStatus.Dead)
         {
             _movement.ResetMovement();
             _body.simulated = false;
@@ -140,14 +161,23 @@ public sealed class PlayerState : NetworkBehaviour
 
     /// <summary>서버에서 중복 사망과 골인·판 종료 후의 사망 요청을 막는다.</summary>
     [Server]
-    public bool TryDie()
+    public bool TryDie(Vector2? hitOrigin = null)
+        => TryDeath(true, hitOrigin ?? (Vector2)transform.position);
+
+    /// <summary>낙사는 피격 연출을 생략하고 기존처럼 다음 공격자로 즉시 교대한다.</summary>
+    [Server]
+    public bool TryFall() => TryDeath(false, transform.position);
+
+    /// <summary>한 번의 사망만 승인하고 원인에 맞는 교대 방식을 레이스에 전달한다.</summary>
+    [Server]
+    private bool TryDeath(bool present, Vector2 hitOrigin)
     {
         if (!CanMove || _lastDeathStep == Time.fixedTimeAsDouble)
             return false;
 
         _lastDeathStep = Time.fixedTimeAsDouble;
         status = PlayerStatus.Dead;
-        Race?.NotifyDeath(this);
+        Race?.NotifyDeath(this, present, hitOrigin);
         Debug.Log($"플레이어 사망: netId={netId}");
         return true;
     }

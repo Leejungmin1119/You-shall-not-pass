@@ -146,7 +146,7 @@ public class SpearNetwork : MonoBehaviour
         if (!roleGame && (fallZone == null || !fallZone.TryGetRespawnPosition(position, out position)))
             return;
 
-        if (!player.TryDie())
+        if (!player.TryDie(item.transform.position))
             return;
 
         item.ConfirmHit(player);

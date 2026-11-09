@@ -32,9 +32,9 @@ public sealed class FixedCannonTrap : NetworkBehaviour
     private void FixedUpdate()
     {
         if (!isServer) return;
-        bool running = race != null && race.IsRunning && !NetworkServer.isLoadingScene;
+        bool running = race != null && race.IsSimulating && !NetworkServer.isLoadingScene;
         if (!running) { wasRunning = false; return; }
-        double now = NetworkTime.time;
+        double now = (race != null ? race.SimulationTime : NetworkTime.time);
         if (!wasRunning || observedRound != race.RoundNumber)
         {
             nextShotAt = now + fireInterval;
@@ -63,11 +63,11 @@ public sealed class FixedCannonTrap : NetworkBehaviour
 
     /// <summary>고정 함정의 적중으로 사망과 위치 복구를 처리한다.</summary>
     [Server]
-    public bool TryKill(PlayerState player)
+    public bool TryKill(PlayerState player, Vector2 hitOrigin)
     {
         if (player == null || !player.CanReceiveHit || fallZone == null ||
             !fallZone.TryGetRespawnPosition(player.transform.position, out Vector2 position) ||
-            !player.TryDie()) return false;
+            !player.TryDie(hitOrigin)) return false;
         player.Respawn(position);
         return true;
     }

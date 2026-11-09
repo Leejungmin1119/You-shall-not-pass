@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
-public enum SoundType { Jump, CannonFire, StoneCrusherImpact }
+public enum SoundType { Jump, CannonFire, StoneCrusherImpact, PlayerHit }
 
 /// <summary>타입에 등록된 음원을 재생한다. 네트워크 전파와 동작 판정은 호출한 쪽이 담당한다.</summary>
 [DisallowMultipleComponent]
@@ -107,6 +107,9 @@ public sealed class SoundPlayer : MonoBehaviour
     /// <summary>비어 있는 재생기를 사용한다. 상한에 도달하면 재생 중인 소리를 끊지 않고 새 소리를 생략한다.</summary>
     private bool PlayLocal(SoundType type, Vector2 position)
     {
+        if (AudioListener.pause && type != SoundType.PlayerHit)
+            return false;
+
         if (!lookup.TryGetValue(type, out SoundSetting setting) || setting.Clip == null)
             return false;
 
@@ -118,6 +121,7 @@ public sealed class SoundPlayer : MonoBehaviour
             voice.Setting = setting;
             voice.Position = position;
             voice.Source.clip = setting.Clip;
+            voice.Source.ignoreListenerPause = type == SoundType.PlayerHit;
             voice.Source.volume = VolumeAt(voice, ListenerPosition());
             voice.Source.Play();
             return true;

@@ -1,0 +1,4823 @@
+fileFormatVersion: 2
+guid: 2937d2c8976f2d347bc661943ad79175
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6692078684028493724
+    second: Doll_Death_Backward_Sheet_v1_0
+  - first:
+      213: 250545915788672613
+    second: Doll_Death_Backward_Sheet_v1_1
+  - first:
+      213: 9105319152643487630
+    second: Doll_Death_Backward_Sheet_v1_2
+  - first:
+      213: 6701285647524806182
+    second: Doll_Death_Backward_Sheet_v1_3
+  - first:
+      213: 4478919767816703446
+    second: Doll_Death_Backward_Sheet_v1_4
+  - first:
+      213: 987844513218247188
+    second: Doll_Death_Backward_Sheet_v1_5
+  - first:
+      213: -6185906197762378061
+    second: Doll_Death_Backward_Sheet_v1_6
+  - first:
+      213: 3544172398975254523
+    second: Doll_Death_Backward_Sheet_v1_7
+  - first:
+      213: -4512819731985967060
+    second: Doll_Death_Backward_Sheet_v1_8
+  - first:
+      213: 1752557902833321927
+    second: Doll_Death_Backward_Sheet_v1_9
+  - first:
+      213: 2469226804387265110
+    second: Doll_Death_Backward_Sheet_v1_10
+  - first:
+      213: 3720084821659504492
+    second: Doll_Death_Backward_Sheet_v1_11
+  - first:
+      213: -7237821309178002610
+    second: Doll_Death_Backward_Sheet_v1_12
+  - first:
+      213: -7223997109761250
+    second: Doll_Death_Backward_Sheet_v1_13
+  - first:
+      213: 5970903949856231239
+    second: Doll_Death_Backward_Sheet_v1_14
+  - first:
+      213: -1501953171533019084
+    second: Doll_Death_Backward_Sheet_v1_15
+  - first:
+      213: -7933045352032936883
+    second: Doll_Death_Backward_Sheet_v1_16
+  - first:
+      213: 4458925262932778743
+    second: Doll_Death_Backward_Sheet_v1_17
+  - first:
+      213: -3718462687668693206
+    second: Doll_Death_Backward_Sheet_v1_18
+  - first:
+      213: -2170780392939773585
+    second: Doll_Death_Backward_Sheet_v1_19
+  - first:
+      213: 6193302777627936940
+    second: Doll_Death_Backward_Sheet_v1_20
+  - first:
+      213: -1082570129715012388
+    second: Doll_Death_Backward_Sheet_v1_21
+  - first:
+      213: -8584378993828012497
+    second: Doll_Death_Backward_Sheet_v1_22
+  - first:
+      213: -3405465472226528494
+    second: Doll_Death_Backward_Sheet_v1_23
+  - first:
+      213: -3567245797957339542
+    second: Doll_Death_Backward_Sheet_v1_24
+  - first:
+      213: 5740922272668678292
+    second: Doll_Death_Backward_Sheet_v1_25
+  - first:
+      213: 2092980453990169843
+    second: Doll_Death_Backward_Sheet_v1_26
+  - first:
+      213: 571920260898338999
+    second: Doll_Death_Backward_Sheet_v1_27
+  - first:
+      213: -2484197287518438744
+    second: Doll_Death_Backward_Sheet_v1_28
+  - first:
+      213: 6069463518720428861
+    second: Doll_Death_Backward_Sheet_v1_29
+  - first:
+      213: 9020877994128515252
+    second: Doll_Death_Backward_Sheet_v1_30
+  - first:
+      213: 5395512062845811674
+    second: Doll_Death_Backward_Sheet_v1_31
+  - first:
+      213: -1079849945650929047
+    second: Doll_Death_Backward_Sheet_v1_32
+  - first:
+      213: -3377469984647722822
+    second: Doll_Death_Backward_Sheet_v1_33
+  - first:
+      213: 5448459224356061998
+    second: Doll_Death_Backward_Sheet_v1_34
+  - first:
+      213: 3273856224510687387
+    second: Doll_Death_Backward_Sheet_v1_35
+  - first:
+      213: -4681762012148552092
+    second: Doll_Death_Backward_Sheet_v1_36
+  - first:
+      213: -3047874987812830292
+    second: Doll_Death_Backward_Sheet_v1_37
+  - first:
+      213: -4550491573405713345
+    second: Doll_Death_Backward_Sheet_v1_38
+  - first:
+      213: -6541021916692124577
+    second: Doll_Death_Backward_Sheet_v1_39
+  - first:
+      213: 3099290697880375380
+    second: Doll_Death_Backward_Sheet_v1_40
+  - first:
+      213: -7665373099834432888
+    second: Doll_Death_Backward_Sheet_v1_41
+  - first:
+      213: -800290208246839950
+    second: Doll_Death_Backward_Sheet_v1_42
+  - first:
+      213: -7184278150590101556
+    second: Doll_Death_Backward_Sheet_v1_43
+  - first:
+      213: -6920326321719679634
+    second: Doll_Death_Backward_Sheet_v1_44
+  - first:
+      213: 1326158393020812642
+    second: Doll_Death_Backward_Sheet_v1_45
+  - first:
+      213: 8073839736223810455
+    second: Doll_Death_Backward_Sheet_v1_46
+  - first:
+      213: -3213253470548792568
+    second: Doll_Death_Backward_Sheet_v1_47
+  - first:
+      213: 360748505927464009
+    second: Doll_Death_Backward_Sheet_v1_48
+  - first:
+      213: -4888838880446561251
+    second: Doll_Death_Backward_Sheet_v1_49
+  - first:
+      213: 1583075514079622817
+    second: Doll_Death_Backward_Sheet_v1_50
+  - first:
+      213: -1761454433246508259
+    second: Doll_Death_Backward_Sheet_v1_51
+  - first:
+      213: -649136123352019541
+    second: Doll_Death_Backward_Sheet_v1_52
+  - first:
+      213: 3579227934132719456
+    second: Doll_Death_Backward_Sheet_v1_53
+  - first:
+      213: -6410477250552401983
+    second: Doll_Death_Backward_Sheet_v1_54
+  - first:
+      213: 6791009188372130721
+    second: Doll_Death_Backward_Sheet_v1_55
+  - first:
+      213: 7084561100178016456
+    second: Doll_Death_Backward_Sheet_v1_56
+  - first:
+      213: 4187156961053811619
+    second: Doll_Death_Backward_Sheet_v1_57
+  - first:
+      213: 6506413478575893378
+    second: Doll_Death_Backward_Sheet_v1_58
+  - first:
+      213: 6959427626128049775
+    second: Doll_Death_Backward_Sheet_v1_59
+  - first:
+      213: 813613925943538577
+    second: Doll_Death_Backward_Sheet_v1_60
+  - first:
+      213: 3799274552210982595
+    second: Doll_Death_Backward_Sheet_v1_61
+  - first:
+      213: -8786908808184187847
+    second: Doll_Death_Backward_Sheet_v1_62
+  - first:
+      213: 589711424064187562
+    second: Doll_Death_Backward_Sheet_v1_63
+  - first:
+      213: -4405924779370612353
+    second: Doll_Death_Backward_Sheet_v1_64
+  - first:
+      213: 2067838950419494819
+    second: Doll_Death_Backward_Sheet_v1_65
+  - first:
+      213: -2700960776822965869
+    second: Doll_Death_Backward_Sheet_v1_66
+  - first:
+      213: -1728351306552115072
+    second: Doll_Death_Backward_Sheet_v1_67
+  - first:
+      213: -983579675582348320
+    second: Doll_Death_Backward_Sheet_v1_68
+  - first:
+      213: -7220792569262631321
+    second: Doll_Death_Backward_Sheet_v1_69
+  - first:
+      213: 3550889018453320986
+    second: Doll_Death_Backward_Sheet_v1_70
+  - first:
+      213: 3092182505018872851
+    second: Doll_Death_Backward_Sheet_v1_71
+  - first:
+      213: 224296297745488875
+    second: Doll_Death_Backward_Sheet_v1_72
+  - first:
+      213: 2226769720566217402
+    second: Doll_Death_Backward_Sheet_v1_73
+  - first:
+      213: -2782810555597872410
+    second: Doll_Death_Backward_Sheet_v1_74
+  - first:
+      213: 8385521580093279130
+    second: Doll_Death_Backward_Sheet_v1_75
+  - first:
+      213: -5299550897544988746
+    second: Doll_Death_Backward_Sheet_v1_76
+  - first:
+      213: -8189617020910505408
+    second: Doll_Death_Backward_Sheet_v1_77
+  - first:
+      213: 3888655225884250321
+    second: Doll_Death_Backward_Sheet_v1_78
+  - first:
+      213: 1175900500974838648
+    second: Doll_Death_Backward_Sheet_v1_79
+  - first:
+      213: -3941053522475952033
+    second: Doll_Death_Backward_Sheet_v1_80
+  - first:
+      213: -700149446319994644
+    second: Doll_Death_Backward_Sheet_v1_81
+  - first:
+      213: -4763318767061304976
+    second: Doll_Death_Backward_Sheet_v1_82
+  - first:
+      213: -2739203825308849965
+    second: Doll_Death_Backward_Sheet_v1_83
+  - first:
+      213: 1223574235946293326
+    second: Doll_Death_Backward_Sheet_v1_84
+  - first:
+      213: -1627239888510074849
+    second: Doll_Death_Backward_Sheet_v1_85
+  - first:
+      213: 2100801301229082372
+    second: Doll_Death_Backward_Sheet_v1_86
+  - first:
+      213: -4979678730268714763
+    second: Doll_Death_Backward_Sheet_v1_87
+  - first:
+      213: -8513174345888611358
+    second: Doll_Death_Backward_Sheet_v1_88
+  - first:
+      213: 1823761096901145967
+    second: Doll_Death_Backward_Sheet_v1_89
+  - first:
+      213: 3003409252727972707
+    second: Doll_Death_Backward_Sheet_v1_90
+  - first:
+      213: 5489468068728478451
+    second: Doll_Death_Backward_Sheet_v1_91
+  - first:
+      213: -2878867230011356578
+    second: Doll_Death_Backward_Sheet_v1_92
+  - first:
+      213: -3134419182249903715
+    second: Doll_Death_Backward_Sheet_v1_93
+  - first:
+      213: 3886174014667272556
+    second: Doll_Death_Backward_Sheet_v1_94
+  - first:
+      213: -4497891868652672770
+    second: Doll_Death_Backward_Sheet_v1_95
+  - first:
+      213: -6514204343609397323
+    second: Doll_Death_Backward_Sheet_v1_96
+  - first:
+      213: 2217145111083763654
+    second: Doll_Death_Backward_Sheet_v1_97
+  - first:
+      213: -8616499069707097021
+    second: Doll_Death_Backward_Sheet_v1_98
+  - first:
+      213: -5291769363327816912
+    second: Doll_Death_Backward_Sheet_v1_99
+  - first:
+      213: -7792867664051141924
+    second: Doll_Death_Backward_Sheet_v1_100
+  - first:
+      213: -120299662375669355
+    second: Doll_Death_Backward_Sheet_v1_101
+  - first:
+      213: -7711740194583634806
+    second: Doll_Death_Backward_Sheet_v1_102
+  - first:
+      213: -910919571472720248
+    second: Doll_Death_Backward_Sheet_v1_103
+  - first:
+      213: -7494524275151536179
+    second: Doll_Death_Backward_Sheet_v1_104
+  - first:
+      213: -5702486672371800925
+    second: Doll_Death_Backward_Sheet_v1_105
+  - first:
+      213: 7011701298390956361
+    second: Doll_Death_Backward_Sheet_v1_106
+  - first:
+      213: -9064472001669225776
+    second: Doll_Death_Backward_Sheet_v1_107
+  - first:
+      213: 2461771416412417744
+    second: Doll_Death_Backward_Sheet_v1_108
+  - first:
+      213: -4585574379161738369
+    second: Doll_Death_Backward_Sheet_v1_109
+  - first:
+      213: 4167701147619749830
+    second: Doll_Death_Backward_Sheet_v1_110
+  - first:
+      213: -6030998173441520177
+    second: Doll_Death_Backward_Sheet_v1_111
+  - first:
+      213: -3804459438262701098
+    second: Doll_Death_Backward_Sheet_v1_112
+  - first:
+      213: -8945475429485943555
+    second: Doll_Death_Backward_Sheet_v1_113
+  - first:
+      213: 4138851640729748594
+    second: Doll_Death_Backward_Sheet_v1_114
+  - first:
+      213: -2044355448451098580
+    second: Doll_Death_Backward_Sheet_v1_115
+  - first:
+      213: -5751235982822217545
+    second: Doll_Death_Backward_Sheet_v1_116
+  - first:
+      213: -5492742856663979275
+    second: Doll_Death_Backward_Sheet_v1_117
+  - first:
+      213: 6826693173213054048
+    second: Doll_Death_Backward_Sheet_v1_118
+  - first:
+      213: 347295640814509242
+    second: Doll_Death_Backward_Sheet_v1_119
+  - first:
+      213: 7300349259531612343
+    second: Doll_Death_Backward_Sheet_v1_120
+  - first:
+      213: 4172598947397896777
+    second: Doll_Death_Backward_Sheet_v1_121
+  - first:
+      213: 6833879004751692484
+    second: Doll_Death_Backward_Sheet_v1_122
+  - first:
+      213: 6656025099432841097
+    second: Doll_Death_Backward_Sheet_v1_123
+  - first:
+      213: 8125820599893047405
+    second: Doll_Death_Backward_Sheet_v1_124
+  - first:
+      213: 6633638746908191226
+    second: Doll_Death_Backward_Sheet_v1_125
+  - first:
+      213: -1352375725350135177
+    second: Doll_Death_Backward_Sheet_v1_126
+  - first:
+      213: -7730982699849955418
+    second: Doll_Death_Backward_Sheet_v1_127
+  - first:
+      213: -4951371672850007913
+    second: Doll_Death_Backward_Sheet_v1_128
+  - first:
+      213: 2765613046909594870
+    second: Doll_Death_Backward_Sheet_v1_129
+  - first:
+      213: -7379284143616323
+    second: Doll_Death_Backward_Sheet_v1_130
+  - first:
+      213: -4771741172487556955
+    second: Doll_Death_Backward_Sheet_v1_131
+  - first:
+      213: 2426462558333054549
+    second: Doll_Death_Backward_Sheet_v1_132
+  - first:
+      213: -149963086886607681
+    second: Doll_Death_Backward_Sheet_v1_133
+  - first:
+      213: -3372760684736666820
+    second: Doll_Death_Backward_Sheet_v1_134
+  - first:
+      213: 9103953745245415504
+    second: Doll_Death_Backward_Sheet_v1_135
+  - first:
+      213: 7112983625928341619
+    second: Doll_Death_Backward_Sheet_v1_136
+  - first:
+      213: -4724420682339653963
+    second: Doll_Death_Backward_Sheet_v1_137
+  - first:
+      213: 4253001550642950671
+    second: Doll_Death_Backward_Sheet_v1_138
+  - first:
+      213: 4834262175558688113
+    second: Doll_Death_Backward_Sheet_v1_139
+  - first:
+      213: -8683397655104766224
+    second: Doll_Death_Backward_Sheet_v1_140
+  - first:
+      213: 5118137875145742946
+    second: Doll_Death_Backward_Sheet_v1_141
+  - first:
+      213: -7598238556857477672
+    second: Doll_Death_Backward_Sheet_v1_142
+  - first:
+      213: 6209064033782172925
+    second: Doll_Death_Backward_Sheet_v1_143
+  - first:
+      213: 4338232985616672074
+    second: Doll_Death_Backward_Sheet_v1_144
+  - first:
+      213: 4733205933040083113
+    second: Doll_Death_Backward_Sheet_v1_145
+  - first:
+      213: 6217616719458993521
+    second: Doll_Death_Backward_Sheet_v1_146
+  - first:
+      213: 3994185013251279972
+    second: Doll_Death_Backward_Sheet_v1_147
+  - first:
+      213: 7621560800725692646
+    second: Doll_Death_Backward_Sheet_v1_148
+  - first:
+      213: -6757847798052427933
+    second: Doll_Death_Backward_Sheet_v1_149
+  - first:
+      213: -1565525356149518736
+    second: Doll_Death_Backward_Sheet_v1_150
+  - first:
+      213: 3850475895750202211
+    second: Doll_Death_Backward_Sheet_v1_151
+  - first:
+      213: 5892392614920732990
+    second: Doll_Death_Backward_Sheet_v1_152
+  - first:
+      213: -2500208492960590808
+    second: Doll_Death_Backward_Sheet_v1_153
+  - first:
+      213: 4475561265790792405
+    second: Doll_Death_Backward_Sheet_v1_154
+  - first:
+      213: 3814300698946419329
+    second: Doll_Death_Backward_Sheet_v1_155
+  - first:
+      213: -3943653076772463048
+    second: Doll_Death_Backward_Sheet_v1_156
+  - first:
+      213: -1333347882235081179
+    second: Doll_Death_Backward_Sheet_v1_157
+  - first:
+      213: -995183301765956402
+    second: Doll_Death_Backward_Sheet_v1_158
+  - first:
+      213: -5037706438265140375
+    second: Doll_Death_Backward_Sheet_v1_159
+  - first:
+      213: -1201664895592669794
+    second: Doll_Death_Backward_Sheet_v1_160
+  - first:
+      213: -146916269574385261
+    second: Doll_Death_Backward_Sheet_v1_161
+  - first:
+      213: -7168046157681912258
+    second: Doll_Death_Backward_Sheet_v1_162
+  - first:
+      213: 8178839799693134931
+    second: Doll_Death_Backward_Sheet_v1_163
+  - first:
+      213: 2079571761486874792
+    second: Doll_Death_Backward_Sheet_v1_164
+  - first:
+      213: 8596329581947123490
+    second: Doll_Death_Backward_Sheet_v1_165
+  - first:
+      213: 6435828086357987876
+    second: Doll_Death_Backward_Sheet_v1_166
+  - first:
+      213: -7200827591241466435
+    second: Doll_Death_Backward_Sheet_v1_167
+  - first:
+      213: 7286701925546083622
+    second: Doll_Death_Backward_Sheet_v1_168
+  - first:
+      213: -742087785199225453
+    second: Doll_Death_Backward_Sheet_v1_169
+  - first:
+      213: 2674889043761997127
+    second: Doll_Death_Backward_Sheet_v1_170
+  - first:
+      213: -8127342648591713341
+    second: Doll_Death_Backward_Sheet_v1_171
+  - first:
+      213: -2835281748143439846
+    second: Doll_Death_Backward_Sheet_v1_172
+  - first:
+      213: -5841091270900011173
+    second: Doll_Death_Backward_Sheet_v1_173
+  - first:
+      213: 194501417498769534
+    second: Doll_Death_Backward_Sheet_v1_174
+  - first:
+      213: 3104314748663394436
+    second: Doll_Death_Backward_Sheet_v1_175
+  - first:
+      213: 2817622403455524891
+    second: Doll_Death_Backward_Sheet_v1_176
+  - first:
+      213: 6468533369119128212
+    second: Doll_Death_Backward_Sheet_v1_177
+  - first:
+      213: 5202934537639794587
+    second: Doll_Death_Backward_Sheet_v1_178
+  - first:
+      213: -617363237318764214
+    second: Doll_Death_Backward_Sheet_v1_179
+  - first:
+      213: -6293689572173043505
+    second: Doll_Death_Backward_Sheet_v1_180
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 321
+        width: 437
+        height: 548
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9f5b726b1a0fdc50800000000000000
+      internalID: 6692078684028493724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_1
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 850
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56e3286de2e1a7300800000000000000
+      internalID: 250545915788672613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_2
+      rect:
+        serializedVersion: 2
+        x: 437
+        y: 309
+        width: 483
+        height: 556
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8730ebf6879c5e70800000000000000
+      internalID: 9105319152643487630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_3
+      rect:
+        serializedVersion: 2
+        x: 1062
+        y: 844
+        width: 83
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62eb32f9acfbffc50800000000000000
+      internalID: 6701285647524806182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_4
+      rect:
+        serializedVersion: 2
+        x: 1143
+        y: 844
+        width: 19
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6dd803a6cc1582e30800000000000000
+      internalID: 4478919767816703446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_5
+      rect:
+        serializedVersion: 2
+        x: 1236
+        y: 829
+        width: 55
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41a31b7d95785bd00800000000000000
+      internalID: 987844513218247188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_6
+      rect:
+        serializedVersion: 2
+        x: 1433
+        y: 773
+        width: 120
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b67c74661f372aa0800000000000000
+      internalID: -6185906197762378061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_7
+      rect:
+        serializedVersion: 2
+        x: 1568
+        y: 857
+        width: 22
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfff9afd40e6f2130800000000000000
+      internalID: 3544172398975254523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_8
+      rect:
+        serializedVersion: 2
+        x: 1578
+        y: 825
+        width: 40
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c285a9b1d5e3f51c0800000000000000
+      internalID: -4512819731985967060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_9
+      rect:
+        serializedVersion: 2
+        x: 1660
+        y: 829
+        width: 28
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c70fae8026525810800000000000000
+      internalID: 1752557902833321927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_10
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 809
+        width: 14
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65a306132b4744220800000000000000
+      internalID: 2469226804387265110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_11
+      rect:
+        serializedVersion: 2
+        x: 919
+        y: 340
+        width: 390
+        height: 507
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6f46597f6560a330800000000000000
+      internalID: 3720084821659504492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_12
+      rect:
+        serializedVersion: 2
+        x: 1169
+        y: 804
+        width: 45
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4341beedd71e8b90800000000000000
+      internalID: -7237821309178002610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_13
+      rect:
+        serializedVersion: 2
+        x: 1395
+        y: 829
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1b0a6a10d556eff0800000000000000
+      internalID: -7223997109761250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_14
+      rect:
+        serializedVersion: 2
+        x: 1234
+        y: 791
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74f4827d189ecd250800000000000000
+      internalID: 5970903949856231239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_15
+      rect:
+        serializedVersion: 2
+        x: 1308
+        y: 289
+        width: 463
+        height: 528
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 438c0855c8df72be0800000000000000
+      internalID: -1501953171533019084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_16
+      rect:
+        serializedVersion: 2
+        x: 1619
+        y: 805
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4c530d884928e190800000000000000
+      internalID: -7933045352032936883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_17
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 775
+        width: 22
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fe9f19f6e841ed30800000000000000
+      internalID: 4458925262932778743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_18
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 725
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2796f603ed556cc0800000000000000
+      internalID: -3718462687668693206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_19
+      rect:
+        serializedVersion: 2
+        x: 1734
+        y: 731
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f612171ebb6dfd1e0800000000000000
+      internalID: -2170780392939773585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_20
+      rect:
+        serializedVersion: 2
+        x: 1740
+        y: 731
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca804fe001803f550800000000000000
+      internalID: 6193302777627936940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_21
+      rect:
+        serializedVersion: 2
+        x: 1734
+        y: 709
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdc53e5e330f9f0f0800000000000000
+      internalID: -1082570129715012388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_22
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 642
+        width: 20
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2e5e8f79c82ed880800000000000000
+      internalID: -8584378993828012497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_23
+      rect:
+        serializedVersion: 2
+        x: 822
+        y: 676
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2137419223b5db0d0800000000000000
+      internalID: -3405465472226528494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_24
+      rect:
+        serializedVersion: 2
+        x: 1331
+        y: 684
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a667f3ac8d89e7ec0800000000000000
+      internalID: -3567245797957339542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_25
+      rect:
+        serializedVersion: 2
+        x: 827
+        y: 674
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4987b89e36adbaf40800000000000000
+      internalID: 5740922272668678292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_26
+      rect:
+        serializedVersion: 2
+        x: 830
+        y: 663
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fc7be142a2cb0d10800000000000000
+      internalID: 2092980453990169843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_27
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 636
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b8b1b6727edfe700800000000000000
+      internalID: 571920260898338999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_28
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 644
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8aa79759abb568dd0800000000000000
+      internalID: -2484197287518438744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_29
+      rect:
+        serializedVersion: 2
+        x: 1709
+        y: 643
+        width: 15
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3b0682b9e01b3450800000000000000
+      internalID: 6069463518720428861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_30
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 630
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b02b22bdb8903d70800000000000000
+      internalID: 9020877994128515252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_31
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 604
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adb724f62a5b0ea40800000000000000
+      internalID: 5395512062845811674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_32
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 619
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96260ca123a9301f0800000000000000
+      internalID: -1079849945650929047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_33
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 602
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab8478d81f0d021d0800000000000000
+      internalID: -3377469984647722822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_34
+      rect:
+        serializedVersion: 2
+        x: 484
+        y: 604
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2381f02cc0dc9b40800000000000000
+      internalID: 5448459224356061998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_35
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 606
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9839abf3e21f6d20800000000000000
+      internalID: 3273856224510687387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_36
+      rect:
+        serializedVersion: 2
+        x: 1734
+        y: 596
+        width: 7
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46ea7f6414a070fb0800000000000000
+      internalID: -4681762012148552092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_37
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 587
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca34e9fc8d5c3b5d0800000000000000
+      internalID: -3047874987812830292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_38
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 537
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3c7eb5060869d0c0800000000000000
+      internalID: -4550491573405713345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_39
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 523
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5c658bf83f9935a0800000000000000
+      internalID: -6541021916692124577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_40
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 510
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45015de0874e20b20800000000000000
+      internalID: 3099290697880375380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_41
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 507
+        width: 33
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 882a88157cf1f9590800000000000000
+      internalID: -7665373099834432888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_42
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 499
+        width: 5
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2754934bb4cc4e4f0800000000000000
+      internalID: -800290208246839950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_43
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 483
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc70a7206115c4c90800000000000000
+      internalID: -7184278150590101556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_44
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 488
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e65ec1830ef06ff90800000000000000
+      internalID: -6920326321719679634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_45
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 424
+        width: 5
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26d88eb3806776210800000000000000
+      internalID: 1326158393020812642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_46
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 440
+        width: 62
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 793cd0b867a0c0070800000000000000
+      internalID: 8073839736223810455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_47
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 446
+        width: 9
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80be5aa3efa3863d0800000000000000
+      internalID: -3213253470548792568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_48
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 432
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9443f05dad2a10500800000000000000
+      internalID: 360748505927464009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_49
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 450
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d144ddeb0fa572cb0800000000000000
+      internalID: -4888838880446561251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_50
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 450
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a6b555eac638f510800000000000000
+      internalID: 1583075514079622817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_51
+      rect:
+        serializedVersion: 2
+        x: 933
+        y: 441
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1b0e4a868e0e87e0800000000000000
+      internalID: -1761454433246508259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_52
+      rect:
+        serializedVersion: 2
+        x: 1361
+        y: 461
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bad8ab4922ecdf6f0800000000000000
+      internalID: -649136123352019541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_53
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 448
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06fc220b7d8fba130800000000000000
+      internalID: 3579227934132719456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_54
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 443
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1cfe910a7e86907a0800000000000000
+      internalID: -6410477250552401983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_55
+      rect:
+        serializedVersion: 2
+        x: 446
+        y: 442
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1aba55360e28e3e50800000000000000
+      internalID: 6791009188372130721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_56
+      rect:
+        serializedVersion: 2
+        x: 916
+        y: 438
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c849a5f8ca615260800000000000000
+      internalID: 7084561100178016456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_57
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 440
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a3aa625215cb1a30800000000000000
+      internalID: 4187156961053811619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_58
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 430
+        width: 32
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28b6458169c6b4a50800000000000000
+      internalID: 6506413478575893378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_59
+      rect:
+        serializedVersion: 2
+        x: 1332
+        y: 438
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f660767ad8ad49060800000000000000
+      internalID: 6959427626128049775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_60
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 418
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 193fc201e898a4b00800000000000000
+      internalID: 813613925943538577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_61
+      rect:
+        serializedVersion: 2
+        x: 637
+        y: 412
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c687b8631cb9b430800000000000000
+      internalID: 3799274552210982595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_62
+      rect:
+        serializedVersion: 2
+        x: 867
+        y: 416
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9343e667ef0ae0680800000000000000
+      internalID: -8786908808184187847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_63
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 408
+        width: 27
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aace55f6a631f2800800000000000000
+      internalID: 589711424064187562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_64
+      rect:
+        serializedVersion: 2
+        x: 909
+        y: 418
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f79f58ab1c20bd2c0800000000000000
+      internalID: -4405924779370612353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_65
+      rect:
+        serializedVersion: 2
+        x: 1008
+        y: 420
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a7787cc19072bc10800000000000000
+      internalID: 2067838950419494819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_66
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 421
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3993439db72448ad0800000000000000
+      internalID: -2700960776822965869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_67
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 418
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08001e5d4a9a308e0800000000000000
+      internalID: -1728351306552115072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_68
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 410
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e3ce9c0f7f9952f0800000000000000
+      internalID: -983579675582348320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_69
+      rect:
+        serializedVersion: 2
+        x: 1078
+        y: 416
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76612586a679acb90800000000000000
+      internalID: -7220792569262631321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_70
+      rect:
+        serializedVersion: 2
+        x: 1086
+        y: 416
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a15eeb5bfba474130800000000000000
+      internalID: 3550889018453320986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_71
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 388
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 314d350fa93a9ea20800000000000000
+      internalID: 3092182505018872851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_72
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 384
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: beb1e8f5b4cdc1300800000000000000
+      internalID: 224296297745488875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_73
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 384
+        width: 11
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abaf1fe434317ee10800000000000000
+      internalID: 2226769720566217402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_74
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 378
+        width: 34
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e2a16c2b887169d0800000000000000
+      internalID: -2782810555597872410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_75
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 381
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9b05ddd27b5f5470800000000000000
+      internalID: 8385521580093279130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_76
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 400
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b77ab279863476b0800000000000000
+      internalID: -5299550897544988746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_77
+      rect:
+        serializedVersion: 2
+        x: 855
+        y: 275
+        width: 98
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 042f22eb5b2a85e80800000000000000
+      internalID: -8189617020910505408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_78
+      rect:
+        serializedVersion: 2
+        x: 933
+        y: 391
+        width: 16
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d01cc0335747f530800000000000000
+      internalID: 3888655225884250321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_79
+      rect:
+        serializedVersion: 2
+        x: 1026
+        y: 388
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8732fc38643a15010800000000000000
+      internalID: 1175900500974838648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_80
+      rect:
+        serializedVersion: 2
+        x: 1062
+        y: 400
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f58d400b3b09e49c0800000000000000
+      internalID: -3941053522475952033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_81
+      rect:
+        serializedVersion: 2
+        x: 1137
+        y: 386
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce80962c9c19846f0800000000000000
+      internalID: -700149446319994644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_82
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 392
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 079fb5981da45edb0800000000000000
+      internalID: -4763318767061304976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_83
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 376
+        width: 9
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d8231142a46cf9d0800000000000000
+      internalID: -2739203825308849965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_84
+      rect:
+        serializedVersion: 2
+        x: 472
+        y: 385
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4816e9e8420bf010800000000000000
+      internalID: 1223574235946293326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_85
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 368
+        width: 29
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f10c20161f1ea69e0800000000000000
+      internalID: -1627239888510074849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_86
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 378
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 407107727ab872d10800000000000000
+      internalID: 2100801301229082372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_87
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 370
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f8d3ca0490a4eab0800000000000000
+      internalID: -4979678730268714763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_88
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 368
+        width: 28
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e3475289012bd980800000000000000
+      internalID: -8513174345888611358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_89
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 373
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6538ff0e0d4f4910800000000000000
+      internalID: 1823761096901145967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_90
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 352
+        width: 39
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 363e8f77dc04ea920800000000000000
+      internalID: 3003409252727972707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_91
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 368
+        width: 16
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fa1962cf128e2c40800000000000000
+      internalID: 5489468068728478451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_92
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 370
+        width: 16
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5a09a7d1853c08d0800000000000000
+      internalID: -2878867230011356578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_93
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 336
+        width: 30
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d99f2d05c5e4084d0800000000000000
+      internalID: -3134419182249903715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_94
+      rect:
+        serializedVersion: 2
+        x: 810
+        y: 293
+        width: 42
+        height: 86
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c61b89f2da67ee530800000000000000
+      internalID: 3886174014667272556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_95
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 373
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef8e6d22d274491c0800000000000000
+      internalID: -4497891868652672770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_96
+      rect:
+        serializedVersion: 2
+        x: 1562
+        y: 356
+        width: 26
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bfead8c9a5e895a0800000000000000
+      internalID: -6514204343609397323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_97
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 368
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c744a94bb1e4ce10800000000000000
+      internalID: 2217145111083763654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_98
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 313
+        width: 49
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34cef9e8fbb0c6880800000000000000
+      internalID: -8616499069707097021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_99
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 364
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03bec811dcbdf86b0800000000000000
+      internalID: -5291769363327816912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_100
+      rect:
+        serializedVersion: 2
+        x: 699
+        y: 360
+        width: 12
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd28a9ed52c2ad390800000000000000
+      internalID: -7792867664051141924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_101
+      rect:
+        serializedVersion: 2
+        x: 949
+        y: 352
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 591bf7d281c945ef0800000000000000
+      internalID: -120299662375669355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_102
+      rect:
+        serializedVersion: 2
+        x: 1121
+        y: 311
+        width: 63
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8c9dbdc6256af490800000000000000
+      internalID: -7711740194583634806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_103
+      rect:
+        serializedVersion: 2
+        x: 1248
+        y: 320
+        width: 27
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88eda6bd973cb53f0800000000000000
+      internalID: -910919571472720248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_104
+      rect:
+        serializedVersion: 2
+        x: 1546
+        y: 336
+        width: 17
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcffc0321e91ef790800000000000000
+      internalID: -7494524275151536179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_105
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 350
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a421e4a592bcd0b0800000000000000
+      internalID: -5702486672371800925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_106
+      rect:
+        serializedVersion: 2
+        x: 175
+        y: 338
+        width: 32
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 949fcb96e219e4160800000000000000
+      internalID: 7011701298390956361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_107
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 344
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d228087db6843280800000000000000
+      internalID: -9064472001669225776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_108
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 340
+        width: 9
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0dee8796f08f92220800000000000000
+      internalID: 2461771416412417744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_109
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 342
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f73aee6c564cc50c0800000000000000
+      internalID: -4585574379161738369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_110
+      rect:
+        serializedVersion: 2
+        x: 377
+        y: 338
+        width: 9
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cfecd1cc16a6d930800000000000000
+      internalID: 4167701147619749830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_111
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 340
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcd0df66d179d4ca0800000000000000
+      internalID: -6030998173441520177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_112
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 346
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d338fb3c48d33bc0800000000000000
+      internalID: -3804459438262701098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_113
+      rect:
+        serializedVersion: 2
+        x: 685
+        y: 354
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df46186fd794bd380800000000000000
+      internalID: -8945475429485943555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_114
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 330
+        width: 29
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2744dbf73a7207930800000000000000
+      internalID: 4138851640729748594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_115
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 356
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2810741d8df0a3e0800000000000000
+      internalID: -2044355448451098580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_116
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 340
+        width: 38
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b8ef6058518f20b0800000000000000
+      internalID: -5751235982822217545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_117
+      rect:
+        serializedVersion: 2
+        x: 1101
+        y: 340
+        width: 23
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5faaaf1497bd5c3b0800000000000000
+      internalID: -5492742856663979275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_118
+      rect:
+        serializedVersion: 2
+        x: 1316
+        y: 354
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 064c2fb85494dbe50800000000000000
+      internalID: 6826693173213054048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_119
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 339
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abc5ac69b87d1d400800000000000000
+      internalID: 347295640814509242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_120
+      rect:
+        serializedVersion: 2
+        x: 1423
+        y: 356
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b0faaef8fc005560800000000000000
+      internalID: 7300349259531612343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_121
+      rect:
+        serializedVersion: 2
+        x: 1435
+        y: 356
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94a02d1a2ac08e930800000000000000
+      internalID: 4172598947397896777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_122
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 342
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c289345fb0d6de50800000000000000
+      internalID: 6833879004751692484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_123
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 332
+        width: 14
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98f47c31093fe5c50800000000000000
+      internalID: 6656025099432841097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_124
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 346
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d683d2d78c6b4c070800000000000000
+      internalID: 8125820599893047405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_125
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 338
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af9eab53b4b6f0c50800000000000000
+      internalID: 6633638746908191226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_126
+      rect:
+        serializedVersion: 2
+        x: 699
+        y: 342
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77ad4a761756b3de0800000000000000
+      internalID: -1352375725350135177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_127
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 194
+        width: 115
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a7c0cae13806b490800000000000000
+      internalID: -7730982699849955418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_128
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 327
+        width: 18
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 798f7d072b1394bb0800000000000000
+      internalID: -4951371672850007913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_129
+      rect:
+        serializedVersion: 2
+        x: 953
+        y: 343
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fc6b3fc96e616620800000000000000
+      internalID: 2765613046909594870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_130
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 283
+        width: 59
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbe4ce58498c5eff0800000000000000
+      internalID: -7379284143616323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_131
+      rect:
+        serializedVersion: 2
+        x: 1635
+        y: 340
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a0f5c57fae57cdb0800000000000000
+      internalID: -4771741172487556955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_132
+      rect:
+        serializedVersion: 2
+        x: 1661
+        y: 346
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55e2a3247d68ca120800000000000000
+      internalID: 2426462558333054549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_133
+      rect:
+        serializedVersion: 2
+        x: 1699
+        y: 338
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb4e3b4fd593bedf0800000000000000
+      internalID: -149963086886607681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_134
+      rect:
+        serializedVersion: 2
+        x: 1703
+        y: 340
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c332ed1e60c8131d0800000000000000
+      internalID: -3372760684736666820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_135
+      rect:
+        serializedVersion: 2
+        x: 1726
+        y: 335
+        width: 7
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 058a0fc42bdb75e70800000000000000
+      internalID: 9103953745245415504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_136
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 287
+        width: 66
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 378f0acebe466b260800000000000000
+      internalID: 7112983625928341619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_137
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 273
+        width: 49
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b6e2a3ab6c7f6eb0800000000000000
+      internalID: -4724420682339653963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_138
+      rect:
+        serializedVersion: 2
+        x: 1274
+        y: 317
+        width: 33
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f02324f7062b50b30800000000000000
+      internalID: 4253001550642950671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_139
+      rect:
+        serializedVersion: 2
+        x: 1574
+        y: 332
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17d584de5dfb61340800000000000000
+      internalID: 4834262175558688113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_140
+      rect:
+        serializedVersion: 2
+        x: 1578
+        y: 336
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fe350cd6df5e7780800000000000000
+      internalID: -8683397655104766224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_141
+      rect:
+        serializedVersion: 2
+        x: 1730
+        y: 319
+        width: 11
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26ad887c747470740800000000000000
+      internalID: 5118137875145742946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_142
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 311
+        width: 26
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d555db2a42ad8690800000000000000
+      internalID: -7598238556857477672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_143
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 323
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfc8d3977d60b2650800000000000000
+      internalID: 6209064033782172925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_144
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 278
+        width: 65
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a45609c5aef743c30800000000000000
+      internalID: 4338232985616672074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_145
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 274
+        width: 57
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a020afe7b9bfa140800000000000000
+      internalID: 4733205933040083113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_146
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 317
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17502e8c679694650800000000000000
+      internalID: 6217616719458993521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_147
+      rect:
+        serializedVersion: 2
+        x: 845
+        y: 321
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46c08028b123e6730800000000000000
+      internalID: 3994185013251279972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_148
+      rect:
+        serializedVersion: 2
+        x: 879
+        y: 0
+        width: 428
+        height: 331
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e0fb41ea2935c960800000000000000
+      internalID: 7621560800725692646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_149
+      rect:
+        serializedVersion: 2
+        x: 1409
+        y: 273
+        width: 60
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 367ede67b3d4732a0800000000000000
+      internalID: -6757847798052427933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_150
+      rect:
+        serializedVersion: 2
+        x: 1586
+        y: 322
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07e47dbabf2264ae0800000000000000
+      internalID: -1565525356149518736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_151
+      rect:
+        serializedVersion: 2
+        x: 1586
+        y: 311
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 363156e2d63af6530800000000000000
+      internalID: 3850475895750202211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_152
+      rect:
+        serializedVersion: 2
+        x: 1631
+        y: 311
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e314c713ddbf5c150800000000000000
+      internalID: 5892392614920732990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_153
+      rect:
+        serializedVersion: 2
+        x: 1699
+        y: 321
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8245ba05f997d4dd0800000000000000
+      internalID: -2500208492960590808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_154
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 425
+        height: 315
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d235f932436c1e30800000000000000
+      internalID: 4475561265790792405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_155
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 293
+        width: 27
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18ab933d64e1fe430800000000000000
+      internalID: 3814300698946419329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_156
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 309
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83ed999cb645549c0800000000000000
+      internalID: -3943653076772463048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_157
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 305
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52ecb5d5a2ffe7de0800000000000000
+      internalID: -1333347882235081179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_158
+      rect:
+        serializedVersion: 2
+        x: 1171
+        y: 311
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eccf6db4f066032f0800000000000000
+      internalID: -995183301765956402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_159
+      rect:
+        serializedVersion: 2
+        x: 1193
+        y: 305
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96b02807fa8761ab0800000000000000
+      internalID: -5037706438265140375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_160
+      rect:
+        serializedVersion: 2
+        x: 1250
+        y: 291
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9d5427e424d25fe0800000000000000
+      internalID: -1201664895592669794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_161
+      rect:
+        serializedVersion: 2
+        x: 1327
+        y: 303
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3911b446e6c06fdf0800000000000000
+      internalID: -146916269574385261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_162
+      rect:
+        serializedVersion: 2
+        x: 1339
+        y: 305
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3614cd5ffbf58c90800000000000000
+      internalID: -7168046157681912258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_163
+      rect:
+        serializedVersion: 2
+        x: 1498
+        y: 265
+        width: 56
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35c4987e673118170800000000000000
+      internalID: 8178839799693134931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_164
+      rect:
+        serializedVersion: 2
+        x: 1591
+        y: 309
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a8cb50cf7f1cdc10800000000000000
+      internalID: 2079571761486874792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_165
+      rect:
+        serializedVersion: 2
+        x: 1599
+        y: 205
+        width: 118
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 227f320a53c4c4770800000000000000
+      internalID: 8596329581947123490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_166
+      rect:
+        serializedVersion: 2
+        x: 1701
+        y: 313
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42299dacb87a05950800000000000000
+      internalID: 6435828086357987876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_167
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 200
+        width: 18
+        height: 94
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbd78371575811c90800000000000000
+      internalID: -7200827591241466435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_168
+      rect:
+        serializedVersion: 2
+        x: 441
+        y: 0
+        width: 457
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62544507bc09f1560800000000000000
+      internalID: 7286701925546083622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_169
+      rect:
+        serializedVersion: 2
+        x: 798
+        y: 269
+        width: 30
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3953b03571393b5f0800000000000000
+      internalID: -742087785199225453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_170
+      rect:
+        serializedVersion: 2
+        x: 828
+        y: 273
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 745a403c96d1f1520800000000000000
+      internalID: 2674889043761997127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_171
+      rect:
+        serializedVersion: 2
+        x: 1316
+        y: 0
+        width: 430
+        height: 288
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cbfeceebe0e53f80800000000000000
+      internalID: -8127342648591713341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_172
+      rect:
+        serializedVersion: 2
+        x: 1572
+        y: 266
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1003c3a54e07a8d0800000000000000
+      internalID: -2835281748143439846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_173
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 5
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5fae51cf6640fea0800000000000000
+      internalID: -5841091270900011173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_174
+      rect:
+        serializedVersion: 2
+        x: 1328
+        y: 104
+        width: 20
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e78f25a320203b200800000000000000
+      internalID: 194501417498769534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_175
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 109
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 480761901ddb41b20800000000000000
+      internalID: 3104314748663394436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_176
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 33
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b102625c5a43a1720800000000000000
+      internalID: 2817622403455524891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_177
+      rect:
+        serializedVersion: 2
+        x: 1290
+        y: 41
+        width: 15
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49a3b14d3d8d4c950800000000000000
+      internalID: 6468533369119128212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_178
+      rect:
+        serializedVersion: 2
+        x: 1340
+        y: 33
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9791a94569843840800000000000000
+      internalID: 5202934537639794587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_179
+      rect:
+        serializedVersion: 2
+        x: 595
+        y: 23
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a49da36186fae67f0800000000000000
+      internalID: -617363237318764214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Death_Backward_Sheet_v1_180
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 15
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc8ab04fda258a8a0800000000000000
+      internalID: -6293689572173043505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Doll_Death_Backward_Sheet_v1_0: 6692078684028493724
+      Doll_Death_Backward_Sheet_v1_1: 250545915788672613
+      Doll_Death_Backward_Sheet_v1_10: 2469226804387265110
+      Doll_Death_Backward_Sheet_v1_100: -7792867664051141924
+      Doll_Death_Backward_Sheet_v1_101: -120299662375669355
+      Doll_Death_Backward_Sheet_v1_102: -7711740194583634806
+      Doll_Death_Backward_Sheet_v1_103: -910919571472720248
+      Doll_Death_Backward_Sheet_v1_104: -7494524275151536179
+      Doll_Death_Backward_Sheet_v1_105: -5702486672371800925
+      Doll_Death_Backward_Sheet_v1_106: 7011701298390956361
+      Doll_Death_Backward_Sheet_v1_107: -9064472001669225776
+      Doll_Death_Backward_Sheet_v1_108: 2461771416412417744
+      Doll_Death_Backward_Sheet_v1_109: -4585574379161738369
+      Doll_Death_Backward_Sheet_v1_11: 3720084821659504492
+      Doll_Death_Backward_Sheet_v1_110: 4167701147619749830
+      Doll_Death_Backward_Sheet_v1_111: -6030998173441520177
+      Doll_Death_Backward_Sheet_v1_112: -3804459438262701098
+      Doll_Death_Backward_Sheet_v1_113: -8945475429485943555
+      Doll_Death_Backward_Sheet_v1_114: 4138851640729748594
+      Doll_Death_Backward_Sheet_v1_115: -2044355448451098580
+      Doll_Death_Backward_Sheet_v1_116: -5751235982822217545
+      Doll_Death_Backward_Sheet_v1_117: -5492742856663979275
+      Doll_Death_Backward_Sheet_v1_118: 6826693173213054048
+      Doll_Death_Backward_Sheet_v1_119: 347295640814509242
+      Doll_Death_Backward_Sheet_v1_12: -7237821309178002610
+      Doll_Death_Backward_Sheet_v1_120: 7300349259531612343
+      Doll_Death_Backward_Sheet_v1_121: 4172598947397896777
+      Doll_Death_Backward_Sheet_v1_122: 6833879004751692484
+      Doll_Death_Backward_Sheet_v1_123: 6656025099432841097
+      Doll_Death_Backward_Sheet_v1_124: 8125820599893047405
+      Doll_Death_Backward_Sheet_v1_125: 6633638746908191226
+      Doll_Death_Backward_Sheet_v1_126: -1352375725350135177
+      Doll_Death_Backward_Sheet_v1_127: -7730982699849955418
+      Doll_Death_Backward_Sheet_v1_128: -4951371672850007913
+      Doll_Death_Backward_Sheet_v1_129: 2765613046909594870
+      Doll_Death_Backward_Sheet_v1_13: -7223997109761250
+      Doll_Death_Backward_Sheet_v1_130: -7379284143616323
+      Doll_Death_Backward_Sheet_v1_131: -4771741172487556955
+      Doll_Death_Backward_Sheet_v1_132: 2426462558333054549
+      Doll_Death_Backward_Sheet_v1_133: -149963086886607681
+      Doll_Death_Backward_Sheet_v1_134: -3372760684736666820
+      Doll_Death_Backward_Sheet_v1_135: 9103953745245415504
+      Doll_Death_Backward_Sheet_v1_136: 7112983625928341619
+      Doll_Death_Backward_Sheet_v1_137: -4724420682339653963
+      Doll_Death_Backward_Sheet_v1_138: 4253001550642950671
+      Doll_Death_Backward_Sheet_v1_139: 4834262175558688113
+      Doll_Death_Backward_Sheet_v1_14: 5970903949856231239
+      Doll_Death_Backward_Sheet_v1_140: -8683397655104766224
+      Doll_Death_Backward_Sheet_v1_141: 5118137875145742946
+      Doll_Death_Backward_Sheet_v1_142: -7598238556857477672
+      Doll_Death_Backward_Sheet_v1_143: 6209064033782172925
+      Doll_Death_Backward_Sheet_v1_144: 4338232985616672074
+      Doll_Death_Backward_Sheet_v1_145: 4733205933040083113
+      Doll_Death_Backward_Sheet_v1_146: 6217616719458993521
+      Doll_Death_Backward_Sheet_v1_147: 3994185013251279972
+      Doll_Death_Backward_Sheet_v1_148: 7621560800725692646
+      Doll_Death_Backward_Sheet_v1_149: -6757847798052427933
+      Doll_Death_Backward_Sheet_v1_15: -1501953171533019084
+      Doll_Death_Backward_Sheet_v1_150: -1565525356149518736
+      Doll_Death_Backward_Sheet_v1_151: 3850475895750202211
+      Doll_Death_Backward_Sheet_v1_152: 5892392614920732990
+      Doll_Death_Backward_Sheet_v1_153: -2500208492960590808
+      Doll_Death_Backward_Sheet_v1_154: 4475561265790792405
+      Doll_Death_Backward_Sheet_v1_155: 3814300698946419329
+      Doll_Death_Backward_Sheet_v1_156: -3943653076772463048
+      Doll_Death_Backward_Sheet_v1_157: -1333347882235081179
+      Doll_Death_Backward_Sheet_v1_158: -995183301765956402
+      Doll_Death_Backward_Sheet_v1_159: -5037706438265140375
+      Doll_Death_Backward_Sheet_v1_16: -7933045352032936883
+      Doll_Death_Backward_Sheet_v1_160: -1201664895592669794
+      Doll_Death_Backward_Sheet_v1_161: -146916269574385261
+      Doll_Death_Backward_Sheet_v1_162: -7168046157681912258
+      Doll_Death_Backward_Sheet_v1_163: 8178839799693134931
+      Doll_Death_Backward_Sheet_v1_164: 2079571761486874792
+      Doll_Death_Backward_Sheet_v1_165: 8596329581947123490
+      Doll_Death_Backward_Sheet_v1_166: 6435828086357987876
+      Doll_Death_Backward_Sheet_v1_167: -7200827591241466435
+      Doll_Death_Backward_Sheet_v1_168: 7286701925546083622
+      Doll_Death_Backward_Sheet_v1_169: -742087785199225453
+      Doll_Death_Backward_Sheet_v1_17: 4458925262932778743
+      Doll_Death_Backward_Sheet_v1_170: 2674889043761997127
+      Doll_Death_Backward_Sheet_v1_171: -8127342648591713341
+      Doll_Death_Backward_Sheet_v1_172: -2835281748143439846
+      Doll_Death_Backward_Sheet_v1_173: -5841091270900011173
+      Doll_Death_Backward_Sheet_v1_174: 194501417498769534
+      Doll_Death_Backward_Sheet_v1_175: 3104314748663394436
+      Doll_Death_Backward_Sheet_v1_176: 2817622403455524891
+      Doll_Death_Backward_Sheet_v1_177: 6468533369119128212
+      Doll_Death_Backward_Sheet_v1_178: 5202934537639794587
+      Doll_Death_Backward_Sheet_v1_179: -617363237318764214
+      Doll_Death_Backward_Sheet_v1_18: -3718462687668693206
+      Doll_Death_Backward_Sheet_v1_180: -6293689572173043505
+      Doll_Death_Backward_Sheet_v1_19: -2170780392939773585
+      Doll_Death_Backward_Sheet_v1_2: 9105319152643487630
+      Doll_Death_Backward_Sheet_v1_20: 6193302777627936940
+      Doll_Death_Backward_Sheet_v1_21: -1082570129715012388
+      Doll_Death_Backward_Sheet_v1_22: -8584378993828012497
+      Doll_Death_Backward_Sheet_v1_23: -3405465472226528494
+      Doll_Death_Backward_Sheet_v1_24: -3567245797957339542
+      Doll_Death_Backward_Sheet_v1_25: 5740922272668678292
+      Doll_Death_Backward_Sheet_v1_26: 2092980453990169843
+      Doll_Death_Backward_Sheet_v1_27: 571920260898338999
+      Doll_Death_Backward_Sheet_v1_28: -2484197287518438744
+      Doll_Death_Backward_Sheet_v1_29: 6069463518720428861
+      Doll_Death_Backward_Sheet_v1_3: 6701285647524806182
+      Doll_Death_Backward_Sheet_v1_30: 9020877994128515252
+      Doll_Death_Backward_Sheet_v1_31: 5395512062845811674
+      Doll_Death_Backward_Sheet_v1_32: -1079849945650929047
+      Doll_Death_Backward_Sheet_v1_33: -3377469984647722822
+      Doll_Death_Backward_Sheet_v1_34: 5448459224356061998
+      Doll_Death_Backward_Sheet_v1_35: 3273856224510687387
+      Doll_Death_Backward_Sheet_v1_36: -4681762012148552092
+      Doll_Death_Backward_Sheet_v1_37: -3047874987812830292
+      Doll_Death_Backward_Sheet_v1_38: -4550491573405713345
+      Doll_Death_Backward_Sheet_v1_39: -6541021916692124577
+      Doll_Death_Backward_Sheet_v1_4: 4478919767816703446
+      Doll_Death_Backward_Sheet_v1_40: 3099290697880375380
+      Doll_Death_Backward_Sheet_v1_41: -7665373099834432888
+      Doll_Death_Backward_Sheet_v1_42: -800290208246839950
+      Doll_Death_Backward_Sheet_v1_43: -7184278150590101556
+      Doll_Death_Backward_Sheet_v1_44: -6920326321719679634
+      Doll_Death_Backward_Sheet_v1_45: 1326158393020812642
+      Doll_Death_Backward_Sheet_v1_46: 8073839736223810455
+      Doll_Death_Backward_Sheet_v1_47: -3213253470548792568
+      Doll_Death_Backward_Sheet_v1_48: 360748505927464009
+      Doll_Death_Backward_Sheet_v1_49: -4888838880446561251
+      Doll_Death_Backward_Sheet_v1_5: 987844513218247188
+      Doll_Death_Backward_Sheet_v1_50: 1583075514079622817
+      Doll_Death_Backward_Sheet_v1_51: -1761454433246508259
+      Doll_Death_Backward_Sheet_v1_52: -649136123352019541
+      Doll_Death_Backward_Sheet_v1_53: 3579227934132719456
+      Doll_Death_Backward_Sheet_v1_54: -6410477250552401983
+      Doll_Death_Backward_Sheet_v1_55: 6791009188372130721
+      Doll_Death_Backward_Sheet_v1_56: 7084561100178016456
+      Doll_Death_Backward_Sheet_v1_57: 4187156961053811619
+      Doll_Death_Backward_Sheet_v1_58: 6506413478575893378
+      Doll_Death_Backward_Sheet_v1_59: 6959427626128049775
+      Doll_Death_Backward_Sheet_v1_6: -6185906197762378061
+      Doll_Death_Backward_Sheet_v1_60: 813613925943538577
+      Doll_Death_Backward_Sheet_v1_61: 3799274552210982595
+      Doll_Death_Backward_Sheet_v1_62: -8786908808184187847
+      Doll_Death_Backward_Sheet_v1_63: 589711424064187562
+      Doll_Death_Backward_Sheet_v1_64: -4405924779370612353
+      Doll_Death_Backward_Sheet_v1_65: 2067838950419494819
+      Doll_Death_Backward_Sheet_v1_66: -2700960776822965869
+      Doll_Death_Backward_Sheet_v1_67: -1728351306552115072
+      Doll_Death_Backward_Sheet_v1_68: -983579675582348320
+      Doll_Death_Backward_Sheet_v1_69: -7220792569262631321
+      Doll_Death_Backward_Sheet_v1_7: 3544172398975254523
+      Doll_Death_Backward_Sheet_v1_70: 3550889018453320986
+      Doll_Death_Backward_Sheet_v1_71: 3092182505018872851
+      Doll_Death_Backward_Sheet_v1_72: 224296297745488875
+      Doll_Death_Backward_Sheet_v1_73: 2226769720566217402
+      Doll_Death_Backward_Sheet_v1_74: -2782810555597872410
+      Doll_Death_Backward_Sheet_v1_75: 8385521580093279130
+      Doll_Death_Backward_Sheet_v1_76: -5299550897544988746
+      Doll_Death_Backward_Sheet_v1_77: -8189617020910505408
+      Doll_Death_Backward_Sheet_v1_78: 3888655225884250321
+      Doll_Death_Backward_Sheet_v1_79: 1175900500974838648
+      Doll_Death_Backward_Sheet_v1_8: -4512819731985967060
+      Doll_Death_Backward_Sheet_v1_80: -3941053522475952033
+      Doll_Death_Backward_Sheet_v1_81: -700149446319994644
+      Doll_Death_Backward_Sheet_v1_82: -4763318767061304976
+      Doll_Death_Backward_Sheet_v1_83: -2739203825308849965
+      Doll_Death_Backward_Sheet_v1_84: 1223574235946293326
+      Doll_Death_Backward_Sheet_v1_85: -1627239888510074849
+      Doll_Death_Backward_Sheet_v1_86: 2100801301229082372
+      Doll_Death_Backward_Sheet_v1_87: -4979678730268714763
+      Doll_Death_Backward_Sheet_v1_88: -8513174345888611358
+      Doll_Death_Backward_Sheet_v1_89: 1823761096901145967
+      Doll_Death_Backward_Sheet_v1_9: 1752557902833321927
+      Doll_Death_Backward_Sheet_v1_90: 3003409252727972707
+      Doll_Death_Backward_Sheet_v1_91: 5489468068728478451
+      Doll_Death_Backward_Sheet_v1_92: -2878867230011356578
+      Doll_Death_Backward_Sheet_v1_93: -3134419182249903715
+      Doll_Death_Backward_Sheet_v1_94: 3886174014667272556
+      Doll_Death_Backward_Sheet_v1_95: -4497891868652672770
+      Doll_Death_Backward_Sheet_v1_96: -6514204343609397323
+      Doll_Death_Backward_Sheet_v1_97: 2217145111083763654
+      Doll_Death_Backward_Sheet_v1_98: -8616499069707097021
+      Doll_Death_Backward_Sheet_v1_99: -5291769363327816912
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

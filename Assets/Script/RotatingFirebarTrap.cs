@@ -40,14 +40,14 @@ public sealed class RotatingFirebarTrap : NetworkBehaviour
         base.OnStartServer();
         if (race == null) race = FindFirstObjectByType<RaceManager>(FindObjectsInactive.Include);
         if (fallZone == null) fallZone = FindFirstObjectByType<FallZone>(FindObjectsInactive.Include);
-        rotationEpoch = previousCheckTime = NetworkTime.time;
+        rotationEpoch = previousCheckTime = (race != null ? race.SimulationTime : NetworkTime.time);
         observedRound = race != null ? race.RoundNumber : -1;
     }
 
     private void LateUpdate()
     {
         if (rotor != null && (isServer || isClient))
-            rotor.localRotation = Quaternion.Euler(0f, 0f, AngleAt(NetworkTime.time));
+            rotor.localRotation = Quaternion.Euler(0f, 0f, AngleAt((race != null ? race.SimulationTime : NetworkTime.time)));
     }
 
     private float AngleAt(double serverTime)
@@ -66,7 +66,7 @@ public sealed class RotatingFirebarTrap : NetworkBehaviour
     private void FixedUpdate()
     {
         if (!isServer || rotor == null || fireballs == null) return;
-        double now = NetworkTime.time;
+        double now = (race != null ? race.SimulationTime : NetworkTime.time);
         if (race == null || fallZone == null || NetworkServer.isLoadingScene)
         {
             previousCheckTime = now;
@@ -77,7 +77,7 @@ public sealed class RotatingFirebarTrap : NetworkBehaviour
             observedRound = race.RoundNumber;
             rotationEpoch = previousCheckTime = now;
         }
-        if (!race.IsRunning)
+        if (!race.IsSimulating)
         {
             previousCheckTime = now;
             return;
@@ -91,6 +91,7 @@ public sealed class RotatingFirebarTrap : NetworkBehaviour
                 !capsule.enabled) continue;
             CapsuleSegment(capsule, out Vector2 a, out Vector2 b, out float playerRadius);
             bool hit = false;
+            Vector2 hitOrigin = transform.position;
             for (int i = 0; i < fireballs.Length && !hit; i++)
             {
                 if (!fireballs[i].enabled) continue;
@@ -103,12 +104,13 @@ public sealed class RotatingFirebarTrap : NetworkBehaviour
                     if (SegmentDistanceSquared(from, to, a, b) <= radius * radius)
                     {
                         hit = true;
+                        hitOrigin = to;
                         break;
                     }
                     from = to;
                 }
             }
-            if (hit && fallZone.TryGetRespawnPosition(player.transform.position, out Vector2 position) && player.TryDie())
+            if (hit && fallZone.TryGetRespawnPosition(player.transform.position, out Vector2 position) && player.TryDie(hitOrigin))
                 player.Respawn(position);
         }
         previousCheckTime = now;
