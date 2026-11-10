@@ -19,6 +19,23 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsJumping { get; private set; }
 
+    /// <summary>기본 이동 입력 방향으로 실제 달리는지 확인한다. 일반 점프 중에도 유지한다.</summary>
+    public bool IsRunningWithInput
+    {
+        get
+        {
+            if (!isActiveAndEnabled || MovementLocked || moveStats == null ||
+                _rb == null || !_rb.simulated || _isWallJumping || _useWallJumpmoveStats ||
+                WallJumpCancleTime >= 0f || Controller.IsTouchingWall() ||
+                Mathf.Abs(_input.Move.x) < moveStats.MoveThreshold || moveStats.MaxRunSpeed <= 0f)
+                return false;
+
+            float speed = _rb.linearVelocity.x * Mathf.Sign(_input.Move.x);
+
+            return speed > 0.01f;
+        }
+    }
+
     private bool _isFastFalling;
     private bool _isFalling;
     private float _fastFallTime;

@@ -3,7 +3,12 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
-public enum SoundType { Jump, CannonFire, StoneCrusherImpact, PlayerHit }
+public enum SoundType
+{
+    Jump, CannonFire, StoneCrusherImpact, PlayerHit, Run,
+    DeathScream, BasketballHigh, BasketballMiddle, BasketballLow, GoalFireworks,
+    ArrowStart, ArrowHit, BombExplosion
+}
 
 /// <summary>타입에 등록된 음원을 재생한다. 네트워크 전파와 동작 판정은 호출한 쪽이 담당한다.</summary>
 [DisallowMultipleComponent]
@@ -25,6 +30,8 @@ public sealed class SoundPlayer : MonoBehaviour
         public AudioSource Source;
         public SoundSetting Setting;
         public Vector2 Position;
+        public bool Reserved;
+        public bool InUse;
     }
 
     [Header("타입별 사운드")]
@@ -107,27 +114,83 @@ public sealed class SoundPlayer : MonoBehaviour
     /// <summary>비어 있는 재생기를 사용한다. 상한에 도달하면 재생 중인 소리를 끊지 않고 새 소리를 생략한다.</summary>
     private bool PlayLocal(SoundType type, Vector2 position)
     {
-        if (AudioListener.pause && type != SoundType.PlayerHit)
-            return false;
+        return PlayLocal(type, position, false) != null;
+    }
+
+    /// <summary>공용 풀의 한 채널을 반복 재생용으로 빌린다. 호출자는 조건이 끝나면 StopLoop로 반납한다.</summary>
+    public static AudioSource StartLoop(SoundType type, Vector2 position)
+    {
+        if (current == null || (NetworkServer.active && !NetworkClient.active))
+            return null;
+
+        return current.PlayLocal(type, position, true, true);
+    }
+
+    /// <summary>속도 조절이 필요한 단발음을 한 번 시작한다. 종료 시 Stop으로 채널을 반납한다.</summary>
+    public static AudioSource PlayTrackedOnce(SoundType type, Vector2 position, float pitch = 1f)
+    {
+        if (current == null || (NetworkServer.active && !NetworkClient.active))
+            return null;
+
+        return current.PlayLocal(type, position, false, true, pitch);
+    }
+
+    /// <summary>반복음을 즉시 끊고 채널을 다시 사용할 수 있게 한다.</summary>
+    public static void StopLoop(AudioSource source) => Stop(source);
+
+    /// <summary>추적 중인 단발음과 반복음을 끝내고 공용 풀의 예약을 해제한다.</summary>
+    public static void Stop(AudioSource source)
+    {
+        if (source == null)
+            return;
+
+        source.Stop();
+        source.loop = false;
+        source.clip = null;
+        source.pitch = 1f;
+
+        if (current != null && current.voices != null)
+            foreach (Voice voice in current.voices)
+                if (voice.Source == source)
+                {
+                    voice.Reserved = false;
+                    voice.InUse = false;
+                    break;
+                }
+    }
+
+    /// <summary>반복 채널은 일시 정지 중에도 다른 효과음이 빼앗지 못하게 예약한다.</summary>
+    private AudioSource PlayLocal(SoundType type, Vector2 position, bool loop, bool reserve = false, float pitch = 1f)
+    {
+        bool impactSound = type == SoundType.PlayerHit || type == SoundType.ArrowHit ||
+            type == SoundType.BombExplosion;
+
+        if (AudioListener.pause && !impactSound)
+            return null;
 
         if (!lookup.TryGetValue(type, out SoundSetting setting) || setting.Clip == null)
-            return false;
+            return null;
 
         foreach (Voice voice in voices)
         {
-            if (voice.Source.isPlaying)
+            if (voice.Source.isPlaying || voice.Source.loop || voice.Reserved ||
+                (AudioListener.pause && voice.InUse))
                 continue;
 
             voice.Setting = setting;
             voice.Position = position;
+            voice.Reserved = reserve;
+            voice.InUse = true;
             voice.Source.clip = setting.Clip;
-            voice.Source.ignoreListenerPause = type == SoundType.PlayerHit;
+            voice.Source.loop = loop;
+            voice.Source.pitch = Mathf.Clamp(pitch, 0.01f, 3f);
+            voice.Source.ignoreListenerPause = impactSound;
             voice.Source.volume = VolumeAt(voice, ListenerPosition());
             voice.Source.Play();
-            return true;
+            return voice.Source;
         }
 
-        return false;
+        return null;
     }
 
     /// <summary>재생 중인 소리만 거리 음량을 갱신한다. 새 오브젝트나 네트워크 메시지는 만들지 않는다.</summary>
@@ -136,8 +199,12 @@ public sealed class SoundPlayer : MonoBehaviour
         Vector2 listener = ListenerPosition();
 
         foreach (Voice voice in voices)
+        {
             if (voice.Source.isPlaying)
                 voice.Source.volume = VolumeAt(voice, listener);
+            else if (!AudioListener.pause && !voice.Reserved)
+                voice.InUse = false;
+        }
     }
 
     /// <summary>수비자도 관전 중인 공격자의 위치에서 듣는다. Tab 전체 보기는 청취 위치를 바꾸지 않는다.</summary>
@@ -170,12 +237,16 @@ public sealed class SoundPlayer : MonoBehaviour
     /// <summary>씬 전환과 비활성화 시 재생을 끝내고 공용 참조를 정리한다.</summary>
     private void OnDisable()
     {
-        if (current == this)
-            current = null;
-
         if (voices != null)
             foreach (Voice voice in voices)
                 if (voice.Source != null)
-                    voice.Source.Stop();
+                {
+                    StopLoop(voice.Source);
+                    voice.Reserved = false;
+                    voice.InUse = false;
+                }
+
+        if (current == this)
+            current = null;
     }
 }

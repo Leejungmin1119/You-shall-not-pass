@@ -299,12 +299,20 @@ public sealed class RaceManager : NetworkBehaviour
         if (!IsRunning || !Roles.IsAttacker(player) || !player.FinishRace())
             return false;
 
+        RpcPlayGoalSound(player.transform.position);
         player.GetComponent<PlayerScore>().AddGoalScore(1);
 
         if (phase != RacePhase.Ended)
             CompleteTurn();
 
         return true;
+    }
+
+    /// <summary>서버가 승인한 골인에서만 모든 참가자에게 폭죽 소리를 한 번 재생한다.</summary>
+    [ClientRpc]
+    private void RpcPlayGoalSound(Vector2 position)
+    {
+        SoundPlayer.Play(SoundType.GoalFireworks, position);
     }
 
     /// <summary>함정의 적중·점수 처리가 끝난 다음 Update에서 사망 교대를 수행한다.</summary>

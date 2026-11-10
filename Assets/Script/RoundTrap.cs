@@ -13,6 +13,11 @@ public sealed class RoundTrap : ItemBase
     [SerializeField, Range(0f, 1f)] private float restitution = 0.65f;
     [SerializeField, Min(0f)] private float groundFriction = 3f;
     [SerializeField, Min(0.1f)] private float minBounceSpeed = 1.2f;
+
+    [Header("바운스 사운드")]
+    [SerializeField] private bool playBounceSound;
+    [SerializeField, Min(0f)] private float minSoundBounceHeight = 0.1f;
+
     [Header("피격")]
     [Tooltip("함정 자체의 이동 속도가 이 값 이상일 때만 옆면과 아래쪽에 피해를 줍니다.")]
     [SerializeField, Min(0.1f)] private float minHitSpeed = 0.5f;
@@ -29,6 +34,8 @@ public sealed class RoundTrap : ItemBase
     private float nextSnapshot;
     private bool expired;
     private bool grounded;
+    private float firstBounceHeight;
+    private double lastBounceSoundStep = double.NegativeInfinity;
     private Vector2 remoteFrom;
     private Vector2 remoteTo;
     private float remoteFromAngle;
@@ -42,6 +49,8 @@ public sealed class RoundTrap : ItemBase
     public override void Initialize(ItemData data, ItemSpawnMessage spawn, bool isJudge, float initialAge)
     {
         base.Initialize(data, spawn, isJudge, initialAge);
+        firstBounceHeight = 0f;
+        lastBounceSoundStep = double.NegativeInfinity;
         body = GetComponent<Rigidbody2D>();
         circle = GetComponent<CircleCollider2D>();
         body.bodyType = RigidbodyType2D.Kinematic;
@@ -102,6 +111,10 @@ public sealed class RoundTrap : ItemBase
             float inward = Vector2.Dot(velocity, hit.normal);
             bool bounce = restitution > 0f && -inward >= minBounceSpeed;
             velocity -= hit.normal * inward * (bounce ? 1f + restitution : 1f);
+
+            if (bounce && hit.normal.y > 0.1f)
+                RequestBounceSound(hit.point);
+
             if (hit.normal.y > 0.1f && !bounce)
             {
                 grounded = true;
@@ -116,6 +129,41 @@ public sealed class RoundTrap : ItemBase
             velocity = tangent * speed;
         }
         return position;
+    }
+
+    /// <summary>반사 후 위쪽 속도로 다음 꼭대기까지 올라갈 높이를 구한다.</summary>
+    private float EstimateBounceHeight()
+    {
+        float upwardSpeed = Mathf.Max(0f, velocity.y);
+        return upwardSpeed * upwardSpeed / (2f * gravity);
+    }
+
+    /// <summary>첫 바운스 높이로 상·중·하 음원을 선택하고 아주 작은 바운스는 무음으로 만든다.</summary>
+    private bool TrySelectBounceSound(float height, out SoundType type)
+    {
+        type = SoundType.BasketballHigh;
+
+        if (firstBounceHeight <= 0f)
+            firstBounceHeight = height;
+
+        if (height <= 0f || height < minSoundBounceHeight)
+            return false;
+
+        float ratio = height / firstBounceHeight;
+        type = ratio <= 1f / 3f ? SoundType.BasketballLow :
+            ratio <= 0.5f ? SoundType.BasketballMiddle : SoundType.BasketballHigh;
+        return true;
+    }
+
+    /// <summary>서버의 실제 바닥 반사에서만 요청하며 같은 물리 단계의 중복 충돌음을 막는다.</summary>
+    private void RequestBounceSound(Vector2 position)
+    {
+        if (!IsJudge || !playBounceSound || lastBounceSoundStep == Time.fixedTimeAsDouble ||
+            !TrySelectBounceSound(EstimateBounceHeight(), out SoundType type))
+            return;
+
+        lastBounceSoundStep = Time.fixedTimeAsDouble;
+        RequestSound(type, position);
     }
 
     /// <summary>자기 콜라이더와 진행을 막지 않는 접촉을 제외하고 가장 가까운 지형을 고른다.</summary>

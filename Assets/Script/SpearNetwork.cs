@@ -34,6 +34,13 @@ public struct ItemStateMessage : NetworkMessage
     public bool Expired;
 }
 
+/// <summary>서버에서 승인한 함정 효과음 한 번을 모든 화면에 전달한다.</summary>
+public struct ItemSoundMessage : NetworkMessage
+{
+    public SoundType Type;
+    public Vector2 Position;
+}
+
 /// <summary>
 /// 아이템 프리팹 생성과 서버 적중 결과를 전파한다. 구매와 보유 상태는 플레이어가 관리한다.
 /// 기존 씬 연결을 유지하기 위해 컴포넌트 이름은 SpearNetwork를 유지한다.
@@ -60,10 +67,20 @@ public class SpearNetwork : MonoBehaviour
     }
 
     /// <summary>아이템 종류와 무관한 서버 적중 처리를 구독한다.</summary>
-    private void OnEnable() { ItemBase.PlayerHit += OnItemHit; ItemBase.StateChanged += OnItemState; }
+    private void OnEnable()
+    {
+        ItemBase.PlayerHit += OnItemHit;
+        ItemBase.StateChanged += OnItemState;
+        ItemBase.SoundRequested += OnItemSound;
+    }
 
     /// <summary>비활성화 시 정적 이벤트 구독을 해제한다.</summary>
-    private void OnDisable() { ItemBase.PlayerHit -= OnItemHit; ItemBase.StateChanged -= OnItemState; }
+    private void OnDisable()
+    {
+        ItemBase.PlayerHit -= OnItemHit;
+        ItemBase.StateChanged -= OnItemState;
+        ItemBase.SoundRequested -= OnItemSound;
+    }
 
     /// <summary>Mirror가 접속 종료 시 지우는 클라이언트 메시지 처리기를 다시 등록한다.</summary>
     private void Update()
@@ -73,6 +90,7 @@ public class SpearNetwork : MonoBehaviour
             NetworkClient.RegisterHandler<ItemSpawnMessage>(OnSpawnMessage);
             NetworkClient.RegisterHandler<ItemHitMessage>(OnHitMessage);
             NetworkClient.RegisterHandler<ItemStateMessage>(OnStateMessage);
+            NetworkClient.RegisterHandler<ItemSoundMessage>(OnSoundMessage);
             clientRegistered = true;
         }
         else if (!NetworkClient.active) clientRegistered = false;
@@ -179,6 +197,19 @@ public class SpearNetwork : MonoBehaviour
     private void OnStateMessage(ItemStateMessage message)
     {
         if (!NetworkServer.active) ItemBase.ReceiveState(message);
+    }
+
+    /// <summary>서버의 발사·충돌·폭발·바운스 효과음을 이동 스냅샷과 분리해 한 번씩 전달한다.</summary>
+    private void OnItemSound(SoundType type, Vector2 position)
+    {
+        if (NetworkServer.active)
+            NetworkServer.SendToAll(new ItemSoundMessage { Type = type, Position = position });
+    }
+
+    /// <summary>호스트도 같은 수신 경로에서 한 번만 재생한다.</summary>
+    private void OnSoundMessage(ItemSoundMessage message)
+    {
+        SoundPlayer.Play(message.Type, message.Position);
     }
 
     /// <summary>발사자가 보낸 조준점이 유한한 값이고 사용 가능 영역 안인지 확인한다.</summary>

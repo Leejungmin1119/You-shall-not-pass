@@ -31,6 +31,8 @@ public sealed class DeathSequence : MonoBehaviour
     private double sequenceStartedAt = double.NegativeInfinity;
     private float visualScale;
     private MapViewController mapView;
+    private AudioSource scream;
+    private bool screamStarted;
     private readonly List<(CanvasGroup group, float alpha, bool interactable, bool blocksRaycasts)> hiddenUI = new();
 
     public int CurrentFrame { get; private set; }
@@ -68,7 +70,20 @@ public sealed class DeathSequence : MonoBehaviour
             AudioListener.pause = previousAudioPause || elapsed < HitStopDuration;
             if (sequenceStartedAt != race.DeathStartedAt)
                 BeginVisual();
+
+            UpdateScream(elapsed);
         }
+    }
+
+    /// <summary>히트스톱 직후 비명을 한 번 시작하며 화면의 슬로모션과 무관하게 기본 속도로 재생한다.</summary>
+    private void UpdateScream(double elapsed)
+    {
+        if (!screamStarted && elapsed >= HitStopDuration)
+        {
+            screamStarted = true;
+            scream = SoundPlayer.PlayTrackedOnce(SoundType.DeathScream, race.DeathFeet);
+        }
+
     }
 
     /// <summary>초기화 지연에도 플레이어 생성이 끝난 뒤 같은 연출을 현재 시점부터 표시한다.</summary>
@@ -225,6 +240,10 @@ public sealed class DeathSequence : MonoBehaviour
     /// <summary>교대·경기 종료·접속 해제 시 시간, 소리와 원래 그림을 반드시 복구한다.</summary>
     private void Restore()
     {
+        SoundPlayer.Stop(scream);
+        scream = null;
+        screamStarted = false;
+
         RestoreUI();
 
         if (mapView != null)
