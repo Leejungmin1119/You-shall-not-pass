@@ -116,7 +116,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1192596476, guid: 2b9f527c83ff903489649f97427f2ba6, type: 3}
+  m_Sprite: {fileID: -4163084636731588811, guid: 88c80e663d6036e4281bbd5bbb065cc0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d39f1915f6a8d4d831d018cd1acef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerIdleBoil
-  character: 0
+  character: 2
   dollFrames:
   - {fileID: -1192596476, guid: 2b9f527c83ff903489649f97427f2ba6, type: 3}
   - {fileID: -1044001469, guid: 2b9f527c83ff903489649f97427f2ba6, type: 3}
@@ -460,6 +460,58 @@ MonoBehaviour:
   - {fileID: 711010315, guid: 38382ccc26b318f46bc60f1e36f40bd0, type: 3}
   - {fileID: 289808898, guid: 38382ccc26b318f46bc60f1e36f40bd0, type: 3}
   wallSlideFramesPerSecond: 6
+  jackIdleFrames:
+  - {fileID: -4163084636731588811, guid: 88c80e663d6036e4281bbd5bbb065cc0, type: 3}
+  - {fileID: 5349812834263042993, guid: 88c80e663d6036e4281bbd5bbb065cc0, type: 3}
+  - {fileID: -3137296793038025210, guid: 88c80e663d6036e4281bbd5bbb065cc0, type: 3}
+  - {fileID: 7734311354681129613, guid: 88c80e663d6036e4281bbd5bbb065cc0, type: 3}
+  - {fileID: -8770770697667739295, guid: cdd5e6142d33ac74a9e02057ee0eaa7f, type: 3}
+  - {fileID: -4174479123102376263, guid: cdd5e6142d33ac74a9e02057ee0eaa7f, type: 3}
+  - {fileID: -8949469997276753844, guid: cdd5e6142d33ac74a9e02057ee0eaa7f, type: 3}
+  - {fileID: 490682651, guid: cdd5e6142d33ac74a9e02057ee0eaa7f, type: 3}
+  jackWalkFrames:
+  - {fileID: 4563234415040537501, guid: 8018313ac870b354f83bb7e6a0c073d6, type: 3}
+  - {fileID: -7166567417684033503, guid: 8018313ac870b354f83bb7e6a0c073d6, type: 3}
+  - {fileID: 2221853124116085673, guid: 8018313ac870b354f83bb7e6a0c073d6, type: 3}
+  - {fileID: -1777567649710282429, guid: 8018313ac870b354f83bb7e6a0c073d6, type: 3}
+  jackRunFrames:
+  - {fileID: 3626886397091011353, guid: 25e1ce14ce82e034a99d48bbad874dca, type: 3}
+  - {fileID: 4670626422324877382, guid: 25e1ce14ce82e034a99d48bbad874dca, type: 3}
+  - {fileID: 7658781995040749430, guid: 25e1ce14ce82e034a99d48bbad874dca, type: 3}
+  - {fileID: -5917197992169372556, guid: 25e1ce14ce82e034a99d48bbad874dca, type: 3}
+  - {fileID: -4118049304261627972, guid: 25e1ce14ce82e034a99d48bbad874dca, type: 3}
+  - {fileID: 8890947792385095750, guid: 25e1ce14ce82e034a99d48bbad874dca, type: 3}
+  - {fileID: -1642565178007920567, guid: 25e1ce14ce82e034a99d48bbad874dca, type: 3}
+  - {fileID: -778197785521140348, guid: 25e1ce14ce82e034a99d48bbad874dca, type: 3}
+  jackStandingAirFrames:
+  - {fileID: 7858291963141886177, guid: ff94f8c3f1bd9ef4790adc9187e28ebd, type: 3}
+  - {fileID: -3847482763876193322, guid: ff94f8c3f1bd9ef4790adc9187e28ebd, type: 3}
+  - {fileID: 1637499158158062466, guid: ff94f8c3f1bd9ef4790adc9187e28ebd, type: 3}
+  - {fileID: -632279124431650086, guid: ff94f8c3f1bd9ef4790adc9187e28ebd, type: 3}
+  - {fileID: 7487724078867222405, guid: ff94f8c3f1bd9ef4790adc9187e28ebd, type: 3}
+  - {fileID: -6284521159063813523, guid: ff94f8c3f1bd9ef4790adc9187e28ebd, type: 3}
+  jackMovingAirFrames:
+  - {fileID: -4119481350062083849, guid: df384dc52f31f5147a581b0a70ff7955, type: 3}
+  - {fileID: -2071357895199976512, guid: df384dc52f31f5147a581b0a70ff7955, type: 3}
+  - {fileID: -6482346283280298610, guid: df384dc52f31f5147a581b0a70ff7955, type: 3}
+  - {fileID: 4582352660959686372, guid: df384dc52f31f5147a581b0a70ff7955, type: 3}
+  - {fileID: 4551556810687049613, guid: df384dc52f31f5147a581b0a70ff7955, type: 3}
+  - {fileID: -7561356245965043205, guid: df384dc52f31f5147a581b0a70ff7955, type: 3}
+  jackRunningAirFrames:
+  - {fileID: 5132135405138401325, guid: d972cb2ea1e60f24e91090e56a1029f7, type: 3}
+  - {fileID: -4469228830390829783, guid: d972cb2ea1e60f24e91090e56a1029f7, type: 3}
+  - {fileID: 6375829804187998610, guid: d972cb2ea1e60f24e91090e56a1029f7, type: 3}
+  - {fileID: -278132090982532095, guid: d972cb2ea1e60f24e91090e56a1029f7, type: 3}
+  - {fileID: 2907907350304695522, guid: d972cb2ea1e60f24e91090e56a1029f7, type: 3}
+  - {fileID: -6907325095320532771, guid: d972cb2ea1e60f24e91090e56a1029f7, type: 3}
+  jackWallSlideFrames:
+  - {fileID: -1720765499489631515, guid: 79f31eb9c87d2e646a95e40b82e0abd7, type: 3}
+  - {fileID: -4227641716320135370, guid: 79f31eb9c87d2e646a95e40b82e0abd7, type: 3}
+  - {fileID: -4361241051778281267, guid: 79f31eb9c87d2e646a95e40b82e0abd7, type: 3}
+  - {fileID: 3055248861793989580, guid: 79f31eb9c87d2e646a95e40b82e0abd7, type: 3}
+  jackRunSpeedRatio: 0.75
+  jackRunFramesPerSecond: 25
+  jackFallSecondsPerFrame: 0.12
 --- !u!114 &8312493072428740435
 MonoBehaviour:
   m_ObjectHideFlags: 0

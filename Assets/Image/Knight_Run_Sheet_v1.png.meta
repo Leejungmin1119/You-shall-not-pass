@@ -1,0 +1,975 @@
+fileFormatVersion: 2
+guid: 2cded6c91217dba4eb8a2ab3d9d83fe7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1408809754381052030
+    second: Knight_Run_Sheet_v1_0
+  - first:
+      213: 8645910620160142915
+    second: Knight_Run_Sheet_v1_1
+  - first:
+      213: 3508290229650016031
+    second: Knight_Run_Sheet_v1_2
+  - first:
+      213: 2383666792170302271
+    second: Knight_Run_Sheet_v1_3
+  - first:
+      213: -6630450722879119541
+    second: Knight_Run_Sheet_v1_4
+  - first:
+      213: 6088927942063934556
+    second: Knight_Run_Sheet_v1_5
+  - first:
+      213: -8627522426747732566
+    second: Knight_Run_Sheet_v1_6
+  - first:
+      213: -3912658060786049079
+    second: Knight_Run_Sheet_v1_7
+  - first:
+      213: -6790892826076712138
+    second: Knight_Run_Sheet_v1_8
+  - first:
+      213: -5965474486749627801
+    second: Knight_Run_Sheet_v1_9
+  - first:
+      213: 3780509701209994450
+    second: Knight_Run_Sheet_v1_10
+  - first:
+      213: 6896840465966025652
+    second: Knight_Run_Sheet_v1_11
+  - first:
+      213: 1341860839389637551
+    second: Knight_Run_Sheet_v1_12
+  - first:
+      213: -6520784582718247444
+    second: Knight_Run_Sheet_v1_13
+  - first:
+      213: -5132434544991804030
+    second: Knight_Run_Sheet_v1_14
+  - first:
+      213: 569597999066192470
+    second: Knight_Run_Sheet_v1_15
+  - first:
+      213: -8957100235909479220
+    second: Knight_Run_Sheet_v1_16
+  - first:
+      213: -1008901518475246044
+    second: Knight_Run_Sheet_v1_17
+  - first:
+      213: -2201804045471734593
+    second: Knight_Run_Sheet_v1_18
+  - first:
+      213: 6796549327732727913
+    second: Knight_Run_Sheet_v1_19
+  - first:
+      213: -611703423261232303
+    second: Knight_Run_Sheet_v1_20
+  - first:
+      213: -827412428367303898
+    second: Knight_Run_Sheet_v1_21
+  - first:
+      213: -7757949436908869819
+    second: Knight_Run_Sheet_v1_22
+  - first:
+      213: 6294190495288150531
+    second: Knight_Run_Sheet_v1_23
+  - first:
+      213: 4006868743835386115
+    second: Knight_Run_Sheet_v1_24
+  - first:
+      213: 131165740511590439
+    second: Knight_Run_Sheet_v1_25
+  - first:
+      213: -5485988862493340251
+    second: Knight_Run_Sheet_v1_26
+  - first:
+      213: -170262794770112039
+    second: Knight_Run_Sheet_v1_27
+  - first:
+      213: 4342461092945435971
+    second: Knight_Run_Sheet_v1_28
+  - first:
+      213: 6171877457683083696
+    second: Knight_Run_Sheet_v1_29
+  - first:
+      213: -3175889438502217528
+    second: Knight_Run_Sheet_v1_30
+  - first:
+      213: 7366030071267239768
+    second: Knight_Run_Sheet_v1_31
+  - first:
+      213: 6950804277418226156
+    second: Knight_Run_Sheet_v1_32
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 423
+        width: 513
+        height: 569
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 287130a1ef6e27ce0800000000000000
+      internalID: -1408809754381052030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_1
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 391
+        width: 465
+        height: 615
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34e2c6aa6e17cf770800000000000000
+      internalID: 8645910620160142915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_2
+      rect:
+        serializedVersion: 2
+        x: 1010
+        y: 515
+        width: 395
+        height: 490
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f17434b4063ffa030800000000000000
+      internalID: 3508290229650016031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_3
+      rect:
+        serializedVersion: 2
+        x: 1427
+        y: 901
+        width: 62
+        height: 91
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3ba43a715c741120800000000000000
+      internalID: 2383666792170302271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_4
+      rect:
+        serializedVersion: 2
+        x: 1438
+        y: 981
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4fde0a7238ebf3a0800000000000000
+      internalID: -6630450722879119541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_5
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 943
+        width: 25
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5ccba9e3b7308450800000000000000
+      internalID: 6088927942063934556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_6
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 951
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aad3cfd3012e44880800000000000000
+      internalID: -8627522426747732566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_7
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 950
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cf574f493273b9c0800000000000000
+      internalID: -3912658060786049079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_8
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 927
+        width: 17
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 633f2f154f6e1c1a0800000000000000
+      internalID: -6790892826076712138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_9
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 569
+        width: 25
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76af1ac8f80663da0800000000000000
+      internalID: -5965474486749627801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_10
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 535
+        width: 17
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d43a821b81177430800000000000000
+      internalID: 3780509701209994450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_11
+      rect:
+        serializedVersion: 2
+        x: 1390
+        y: 525
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bbc17edcdf76bf50800000000000000
+      internalID: 6896840465966025652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_12
+      rect:
+        serializedVersion: 2
+        x: 902
+        y: 485
+        width: 13
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faba3dde25f3f9210800000000000000
+      internalID: 1341860839389637551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_13
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 495
+        width: 9
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ced2c3a78f48185a0800000000000000
+      internalID: -6520784582718247444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_14
+      rect:
+        serializedVersion: 2
+        x: 996
+        y: 487
+        width: 25
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 285e1d069fde5c8b0800000000000000
+      internalID: -5132434544991804030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_15
+      rect:
+        serializedVersion: 2
+        x: 1012
+        y: 31
+        width: 469
+        height: 473
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65a1d1fbc5e97e700800000000000000
+      internalID: 569597999066192470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_16
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 503
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc44c0dcaccf1b380800000000000000
+      internalID: -8957100235909479220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_17
+      rect:
+        serializedVersion: 2
+        x: 1078
+        y: 503
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4264ee11a69aff1f0800000000000000
+      internalID: -1008901518475246044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_18
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 451
+        height: 497
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb4a3a4e2ee9171e0800000000000000
+      internalID: -2201804045471734593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_19
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 447
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 960ede99a91325e50800000000000000
+      internalID: 6796549327732727913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_20
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 29
+        width: 379
+        height: 463
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 153bf9c3afac287f0800000000000000
+      internalID: -611703423261232303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_21
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 183
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62b6c6cb7c07484f0800000000000000
+      internalID: -827412428367303898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_22
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 179
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 547ea9b271a365490800000000000000
+      internalID: -7757949436908869819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_23
+      rect:
+        serializedVersion: 2
+        x: 942
+        y: 172
+        width: 13
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30a4a4c48e4795750800000000000000
+      internalID: 6294190495288150531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 36
+        width: 51
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3018ce9a4e14b9730800000000000000
+      internalID: 4006868743835386115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_25
+      rect:
+        serializedVersion: 2
+        x: 942
+        y: 87
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 728f4e9cb8ef1d100800000000000000
+      internalID: 131165740511590439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_26
+      rect:
+        serializedVersion: 2
+        x: 1390
+        y: 83
+        width: 20
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5adc551123addd3b0800000000000000
+      internalID: -5485988862493340251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_27
+      rect:
+        serializedVersion: 2
+        x: 926
+        y: 51
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d12347e3ea13adf0800000000000000
+      internalID: -170262794770112039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_28
+      rect:
+        serializedVersion: 2
+        x: 934
+        y: 49
+        width: 25
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34d97ff4b55834c30800000000000000
+      internalID: 4342461092945435971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_29
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 33
+        width: 29
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b1f07609d9e6a550800000000000000
+      internalID: 6171877457683083696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_30
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 0
+        width: 20
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c8192cd169fce3d0800000000000000
+      internalID: -3175889438502217528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_31
+      rect:
+        serializedVersion: 2
+        x: 878
+        y: 14
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 857aabaa255693660800000000000000
+      internalID: 7366030071267239768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_Run_Sheet_v1_32
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 21
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce177c2d9a7367060800000000000000
+      internalID: 6950804277418226156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Knight_Run_Sheet_v1_0: -1408809754381052030
+      Knight_Run_Sheet_v1_1: 8645910620160142915
+      Knight_Run_Sheet_v1_10: 3780509701209994450
+      Knight_Run_Sheet_v1_11: 6896840465966025652
+      Knight_Run_Sheet_v1_12: 1341860839389637551
+      Knight_Run_Sheet_v1_13: -6520784582718247444
+      Knight_Run_Sheet_v1_14: -5132434544991804030
+      Knight_Run_Sheet_v1_15: 569597999066192470
+      Knight_Run_Sheet_v1_16: -8957100235909479220
+      Knight_Run_Sheet_v1_17: -1008901518475246044
+      Knight_Run_Sheet_v1_18: -2201804045471734593
+      Knight_Run_Sheet_v1_19: 6796549327732727913
+      Knight_Run_Sheet_v1_2: 3508290229650016031
+      Knight_Run_Sheet_v1_20: -611703423261232303
+      Knight_Run_Sheet_v1_21: -827412428367303898
+      Knight_Run_Sheet_v1_22: -7757949436908869819
+      Knight_Run_Sheet_v1_23: 6294190495288150531
+      Knight_Run_Sheet_v1_24: 4006868743835386115
+      Knight_Run_Sheet_v1_25: 131165740511590439
+      Knight_Run_Sheet_v1_26: -5485988862493340251
+      Knight_Run_Sheet_v1_27: -170262794770112039
+      Knight_Run_Sheet_v1_28: 4342461092945435971
+      Knight_Run_Sheet_v1_29: 6171877457683083696
+      Knight_Run_Sheet_v1_3: 2383666792170302271
+      Knight_Run_Sheet_v1_30: -3175889438502217528
+      Knight_Run_Sheet_v1_31: 7366030071267239768
+      Knight_Run_Sheet_v1_32: 6950804277418226156
+      Knight_Run_Sheet_v1_4: -6630450722879119541
+      Knight_Run_Sheet_v1_5: 6088927942063934556
+      Knight_Run_Sheet_v1_6: -8627522426747732566
+      Knight_Run_Sheet_v1_7: -3912658060786049079
+      Knight_Run_Sheet_v1_8: -6790892826076712138
+      Knight_Run_Sheet_v1_9: -5965474486749627801
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

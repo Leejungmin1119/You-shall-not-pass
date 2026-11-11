@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: 00e6dc4f4c7d0884c80f49ac3218aff8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3027475174813252222
+    second: JackOLantern_Death_Backward_0
+  - first:
+      213: -6939379087898754208
+    second: JackOLantern_Death_Backward_1
+  - first:
+      213: 3252906558183366218
+    second: JackOLantern_Death_Backward_2
+  - first:
+      213: -6294021068156589473
+    second: JackOLantern_Death_Backward_3
+  - first:
+      213: 5067409279242479787
+    second: JackOLantern_Death_Backward_4
+  - first:
+      213: -35363196369476817
+    second: JackOLantern_Death_Backward_5
+  - first:
+      213: -2090341125006903317
+    second: JackOLantern_Death_Backward_6
+  - first:
+      213: -3748828611292446952
+    second: JackOLantern_Death_Backward_7
+  - first:
+      213: -5850699485083466165
+    second: JackOLantern_Death_Backward_8
+  - first:
+      213: -925367090399071167
+    second: JackOLantern_Death_Backward_9
+  - first:
+      213: 6430187735967046000
+    second: JackOLantern_Death_Backward_10
+  - first:
+      213: -5105117875440363906
+    second: JackOLantern_Death_Backward_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 244.00836
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: JackOLantern_Death_Backward_10
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 6
+        width: 273
+        height: 141
+      alignment: 9
+      pivot: {x: 0.52747256, y: 0.014184397}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07993616dad9c3950800000000000000
+      internalID: 6430187735967046000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Death_Backward_11
+      rect:
+        serializedVersion: 2
+        x: 652
+        y: 6
+        width: 283
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5229682, y: 0.014705882}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7651e1275af629b0800000000000000
+      internalID: -5105117875440363906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Death_Backward_01
+      rect:
+        serializedVersion: 2
+        x: 98
+        y: 598
+        width: 152
+        height: 273
+      alignment: 9
+      pivot: {x: 0.40789473, y: 0.0073260074}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afd7323583b7e434da49342fae9fb2df
+      internalID: 1163356553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Death_Backward_02
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 598
+        width: 143
+        height: 272
+      alignment: 9
+      pivot: {x: 0.5314685, y: 0.007352941}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9dce9b103d0b67947b3b7a5999412d55
+      internalID: -320866356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Death_Backward_03
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 598
+        width: 150
+        height: 256
+      alignment: 9
+      pivot: {x: 0.64, y: 0.0078125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b58fef0c8c790cb4daffa7f51be924b1
+      internalID: -551213633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Death_Backward_04
+      rect:
+        serializedVersion: 2
+        x: 997
+        y: 598
+        width: 202
+        height: 222
+      alignment: 9
+      pivot: {x: 0.6089109, y: 0.009009009}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c877356e543ab724e85be5d1f017bf25
+      internalID: 633951872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Death_Backward_05
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 302
+        width: 233
+        height: 196
+      alignment: 9
+      pivot: {x: 0.5193133, y: 0.010204081}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e9596ebf125ca841a1e1b3b73bc211f
+      internalID: -1354116511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Death_Backward_06
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 302
+        width: 260
+        height: 165
+      alignment: 9
+      pivot: {x: 0.54615384, y: 0.012121212}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc1d4297931115749a12882fe00a714a
+      internalID: 1593511270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Death_Backward_07
+      rect:
+        serializedVersion: 2
+        x: 654
+        y: 302
+        width: 275
+        height: 150
+      alignment: 9
+      pivot: {x: 0.53090906, y: 0.013333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9347812340da984f9c46265b86ae7d3
+      internalID: 2002799057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Death_Backward_08
+      rect:
+        serializedVersion: 2
+        x: 978
+        y: 302
+        width: 272
+        height: 172
+      alignment: 9
+      pivot: {x: 0.52205884, y: 0.011627907}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23d898eac4a15f345b9b3a44617a382f
+      internalID: 1119885545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Death_Backward_09
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 6
+        width: 271
+        height: 157
+      alignment: 9
+      pivot: {x: 0.51660514, y: 0.012738854}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11aac19f090fede41b81fe89cedee233
+      internalID: -1865680748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Death_Backward_12
+      rect:
+        serializedVersion: 2
+        x: 975
+        y: 6
+        width: 287
+        height: 135
+      alignment: 9
+      pivot: {x: 0.5052265, y: 0.014814815}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 767222b9c91723c479edc8f1afd0247a
+      internalID: -68267258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5a5d65b7735233a418234b0fa8a25526
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      JackOLantern_Death_Backward_01: 1163356553
+      JackOLantern_Death_Backward_02: -320866356
+      JackOLantern_Death_Backward_03: -551213633
+      JackOLantern_Death_Backward_04: 633951872
+      JackOLantern_Death_Backward_05: -1354116511
+      JackOLantern_Death_Backward_06: 1593511270
+      JackOLantern_Death_Backward_07: 2002799057
+      JackOLantern_Death_Backward_08: 1119885545
+      JackOLantern_Death_Backward_09: -1865680748
+      JackOLantern_Death_Backward_10: 6430187735967046000
+      JackOLantern_Death_Backward_11: -5105117875440363906
+      JackOLantern_Death_Backward_12: -68267258
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
