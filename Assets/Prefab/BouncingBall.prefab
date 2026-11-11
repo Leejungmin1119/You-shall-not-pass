@@ -173,4 +173,6 @@ MonoBehaviour:
   restitution: 0.65
   groundFriction: 3
   minBounceSpeed: 1.2
+  playBounceSound: 1
+  minSoundBounceHeight: 0.1
   minHitSpeed: 0.5

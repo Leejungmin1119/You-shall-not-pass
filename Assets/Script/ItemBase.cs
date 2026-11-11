@@ -10,6 +10,7 @@ public abstract class ItemBase : MonoBehaviour
 {
     public static event Action<ItemBase, PlayerState> PlayerHit;
     public static event Action<ItemStateMessage> StateChanged;
+    public static event Action<SoundType, Vector2> SoundRequested;
     private static readonly Dictionary<uint, ItemBase> instances = new Dictionary<uint, ItemBase>();
     private readonly HashSet<uint> hitPlayers = new HashSet<uint>();
     public static int ActiveCount => instances.Count;
@@ -55,6 +56,13 @@ public abstract class ItemBase : MonoBehaviour
 
     /// <summary>아이템별 원격 상태 처리를 정의한다. 창은 별도 상태 메시지가 없다.</summary>
     public virtual void ApplyState(ItemStateMessage message) { }
+
+    /// <summary>서버에서 확정한 효과음만 기존 전송 담당으로 전달한다.</summary>
+    protected void RequestSound(SoundType type, Vector2 position)
+    {
+        if (IsJudge)
+            SoundRequested?.Invoke(type, position);
+    }
 
     /// <summary>서버가 결정한 이동 또는 폭발 상태를 전송 담당에 전달한다.</summary>
     protected void PublishState(bool exploded, bool groundExplosion = false, bool expired = false, Vector2? position = null, float? angle = null)
@@ -120,7 +128,7 @@ public abstract class ItemBase : MonoBehaviour
     /// <summary>
     /// 서버가 적중을 승인한 뒤 기록하여 동일 함정의 중복 득점을 막는다.
     /// </summary>
-    public void ConfirmHit(PlayerState player)
+    public virtual void ConfirmHit(PlayerState player)
     {
         hitPlayers.Add(player.netId);
     }

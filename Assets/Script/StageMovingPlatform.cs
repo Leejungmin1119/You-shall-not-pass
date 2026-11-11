@@ -27,11 +27,11 @@ public sealed class StageMovingPlatform : MonoBehaviour
     /// <summary>모든 화면에서 같은 경로를 계산하고 소유자의 물리 위치만 운반한다.</summary>
     private void FixedUpdate()
     {
-        if (race == null || !race.IsRunning)
+        if (race == null || !race.IsSimulating)
             return;
 
         double duration = Mathf.Max(0.1f, oneWayDuration);
-        double age = System.Math.Max(0d, NetworkTime.time - race.PhaseStartedAt);
+        double age = System.Math.Max(0d, (race != null ? race.SimulationTime : NetworkTime.time) - race.PhaseStartedAt);
         float progress = (float)((age % (duration * 2d)) / duration);
         float t = progress <= 1f ? progress : 2f - progress;
         Vector2 next = home + travelOffset * t;

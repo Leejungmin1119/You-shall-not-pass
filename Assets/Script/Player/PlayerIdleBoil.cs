@@ -61,6 +61,7 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     public bool IsAirborne { get; private set; }
     public bool IsWallSliding { get; private set; }
     public int CurrentFrame { get; private set; }
+    public CharacterStyle Character => character;
 
     private void Awake()
     {
@@ -81,6 +82,9 @@ public sealed class PlayerIdleBoil : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (state != null && state.Status == PlayerStatus.Dead)
+            return;
+
         Sprite[] frames = character == CharacterStyle.Knight ? knightFrames : dollFrames;
         if (frames == null || frames.Length == 0)
             return;

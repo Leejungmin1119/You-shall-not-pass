@@ -18,6 +18,12 @@ public class MapViewController : MonoBehaviour
     [Tooltip("복귀 전환 시간에 더해 전체 보기를 다시 켜기 전에 기다리는 시간입니다.")]
     [SerializeField, Min(0f)] private float reopenCooldown = 1f;
 
+    [Header("사망 연출 줌")]
+    [Tooltip("슬로모션 시작 때 사망한 캐릭터를 확대할 배율입니다.")]
+    [SerializeField, Min(1f)] private float deathZoomMultiplier = 2.5f;
+    [Tooltip("시간 배율과 관계없이 줌인에 걸리는 실제 시간입니다.")]
+    [SerializeField, Min(0.01f)] private float deathZoomDuration = 0.65f;
+
     private CinemachineBrain brain;
     private PrioritySettings originalMapPriority;// 기존 우선순위(변환 후 되돌릴때 사용)
     private Bounds mapViewBounds;// 전체 맵의 크기를 저장할 변수
@@ -28,6 +34,61 @@ public class MapViewController : MonoBehaviour
     private bool wasSpectating;
     [SerializeField] private RaceManager race;
     public bool IsMapView { get; private set; }
+    private Transform deathTarget;
+    private CinemachineConfiner2D deathConfiner;
+    private bool previousConfinerEnabled;
+    private LensSettings previousDeathLens;
+    private bool hasDeathLens;
+
+    /// <summary>사망 중에는 쓰러진 몸을 추적한다. 맵 끝에서도 연출이 잘리지 않도록 경계 제한만 잠시 해제한다.</summary>
+    public void SetDeathTarget(Transform target)
+    {
+        if (trackingCamera == null)
+            return;
+
+        if (target != null && deathTarget == null)
+        {
+            previousDeathLens = trackingCamera.Lens;
+            hasDeathLens = true;
+            deathConfiner = trackingCamera.GetComponent<CinemachineConfiner2D>();
+            if (deathConfiner != null)
+            {
+                previousConfinerEnabled = deathConfiner.enabled;
+                deathConfiner.enabled = false;
+            }
+        }
+
+        deathTarget = target;
+        if (target != null)
+            trackingCamera.Follow = target;
+        else
+        {
+            if (hasDeathLens)
+            {
+                trackingCamera.Lens = previousDeathLens;
+                hasDeathLens = false;
+            }
+            if (deathConfiner != null)
+                deathConfiner.enabled = previousConfinerEnabled;
+            deathConfiner = null;
+            if (observedPlayer != null)
+                trackingCamera.Follow = observedPlayer.transform;
+        }
+    }
+
+    /// <summary>서버의 사망 경과로 줌인한 뒤 교대까지 유지한다. 슬로모션이 풀려도 축소하지 않는다.</summary>
+    private void UpdateDeathZoom()
+    {
+        if (!hasDeathLens || deathTarget == null || race == null || !race.IsDeathPresentation)
+            return;
+
+        float elapsed = (float)(race.DeathElapsed - DeathSequence.HitStopDuration);
+        float progress = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(elapsed / deathZoomDuration));
+        LensSettings lens = previousDeathLens;
+        lens.OrthographicSize = Mathf.Lerp(previousDeathLens.OrthographicSize,
+            previousDeathLens.OrthographicSize / Mathf.Max(1f, deathZoomMultiplier), progress);
+        trackingCamera.Lens = lens;
+    }
 
     /// <summary>
     /// 필수 참조를 확인하고 전체 보기 영역의 월드 좌표와 카메라 우선순위를 보관합니다.
@@ -86,6 +147,12 @@ public class MapViewController : MonoBehaviour
     /// <summary>골인하면 미도착자를 관전하고 다음 라운드에는 자기 캐릭터로 복귀한다.</summary>
     private void UpdateSpectatorTarget()
     {
+        if (deathTarget != null && race != null && race.IsDeathPresentation)
+        {
+            trackingCamera.Follow = deathTarget;
+            return;
+        }
+
         if (localPlayer == null)
             return;
 
@@ -156,6 +223,7 @@ public class MapViewController : MonoBehaviour
         }
 
         UpdateSpectatorTarget();
+        UpdateDeathZoom();
 
         // 관전 중 방향키 입력은 Tab 전체 보기를 닫지 않는다.
         if ((localPlayer == null || localPlayer.CanMove) &&
@@ -226,6 +294,7 @@ public class MapViewController : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
+        SetDeathTarget(null);
         IsMapView = false;
         if (mapCamera != null)
             mapCamera.Priority = originalMapPriority;

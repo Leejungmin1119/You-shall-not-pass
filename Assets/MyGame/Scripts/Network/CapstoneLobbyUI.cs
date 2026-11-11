@@ -311,6 +311,9 @@ public class CapstoneLobbyUI : MonoBehaviour
 
     private void OnGUI()
     {
+        if (DeathSequence.IsUIHidden)
+            return;
+
         if (manager == null) return;
         InitStyles();
         string screen = CurrentScreen;

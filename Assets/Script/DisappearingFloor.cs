@@ -62,9 +62,9 @@ public sealed class DisappearingFloor : MonoBehaviour
         if (race != null)
         {
             // 맵 소개·카운트다운에서는 바닥을 유지하고, 라운드 시작 때마다 같은 주기를 시작한다.
-            if (race.Phase != RacePhase.Racing && race.Phase != RacePhase.FinishCountdown)
+            if (race.Phase != RacePhase.Racing && race.Phase != RacePhase.FinishCountdown && !race.IsDeathPresentation)
                 return;
-            elapsed = System.Math.Max(0d, NetworkTime.time - race.PhaseStartedAt);
+            elapsed = System.Math.Max(0d, race.SimulationTime - race.PhaseStartedAt);
         }
         else
         {

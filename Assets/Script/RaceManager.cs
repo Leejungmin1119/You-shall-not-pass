@@ -13,7 +13,8 @@ public enum RacePhase
     FinishCountdown = 2,
     Ended = 3,
     MapPreview = 4,
-    StartCountdown = 5
+    StartCountdown = 5,
+    DeathPresentation = 6
 }
 
 /// <summary>서버에서 공수 경기의 제한시간, 교대 초기화와 경기 종료를 관리한다.</summary>
@@ -48,6 +49,36 @@ public sealed class RaceManager : NetworkBehaviour
     private readonly List<PlayerState> participants = new List<PlayerState>(4);
     private readonly Dictionary<PlayerState, Vector2> startPositions = new Dictionary<PlayerState, Vector2>();
     private PlayerState pendingDeath;
+    private bool pendingDeathPresentation;
+    private Vector2 pendingHitOrigin;
+    private bool endAfterDeath;
+    private RaceEndReason deferredEndReason;
+    private DeathSequence deathSequence;
+    [SyncVar] private uint dyingPlayerId;
+    [SyncVar] private double deathStartedAt;
+    [SyncVar] private double deathRemaining;
+    [SyncVar] private double simulationDelay;
+    [SyncVar] private bool deathForward;
+    [SyncVar] private bool deathFacingRight;
+    [SyncVar] private Vector2 deathFeet;
+    [SyncVar] private float deathWidth;
+    [SyncVar] private float deathGroundY;
+
+    public bool IsDeathPresentation => phase == RacePhase.DeathPresentation;
+    public bool IsSimulating => IsRunning || IsDeathPresentation;
+    public uint DyingPlayerId => dyingPlayerId;
+    public double DeathStartedAt => deathStartedAt;
+    public bool DeathForward => deathForward;
+    public bool DeathFacingRight => deathFacingRight;
+    public Vector2 DeathFeet => deathFeet;
+    public float DeathWidth => deathWidth;
+    public float DeathGroundY => deathGroundY;
+    public double RemainingTime => IsDeathPresentation ? deathRemaining :
+        System.Math.Max(0d, (matchEndsAt > 0 ? matchEndsAt : endsAt) - NetworkTime.time);
+    // 통신 시계는 건드리지 않고 함정의 이동 시계만 히트스톱·슬로모션에 맞춘다.
+    public double SimulationTime => NetworkTime.time - simulationDelay - (IsDeathPresentation ?
+        DeathElapsed - DeathSequence.WorldElapsed(DeathElapsed) : 0d);
+    public double DeathElapsed => System.Math.Max(0d, NetworkTime.time - deathStartedAt);
 
     public rolechangeManager Roles { get; private set; }
 
@@ -55,6 +86,7 @@ public sealed class RaceManager : NetworkBehaviour
     private void Awake()
     {
         Roles = GetComponent<rolechangeManager>();
+        deathSequence = GetComponent<DeathSequence>();
     }
 
     public RacePhase Phase => phase;
@@ -106,8 +138,13 @@ public sealed class RaceManager : NetworkBehaviour
         {
             Roles.SelectAt(participants, removedIndex);
 
-            if (IsRunning && participants.Count > 0)
+            if ((IsRunning || IsDeathPresentation) && participants.Count > 0)
+            {
+                if (IsDeathPresentation)
+                    FinishDeathClock();
+                phase = RacePhase.Racing;
                 ResetTurn();
+            }
             else if (IsPreparing)
             {
                 // 시작 연출 중 퇴장해도 새 공격자에게 수비자 골드가 남지 않게 한다.
@@ -140,7 +177,25 @@ public sealed class RaceManager : NetworkBehaviour
             }
             return;
         }
-        if (matchEndsAt > 0 && NetworkTime.time >= matchEndsAt)
+        if (IsDeathPresentation)
+        {
+            if (DeathElapsed >= DeathSequence.TotalDuration)
+            {
+                FinishDeathClock();
+                if (endAfterDeath)
+                {
+                    endAfterDeath = false;
+                    EndMatch(deferredEndReason);
+                }
+                else
+                {
+                    phase = RacePhase.Racing;
+                    CompleteTurn();
+                }
+            }
+            return;
+        }
+        if (matchEndsAt > 0 && NetworkTime.time >= matchEndsAt && pendingDeath == null)
         {
             EndMatch(RaceEndReason.TimeLimit);
             return;
@@ -162,7 +217,7 @@ public sealed class RaceManager : NetworkBehaviour
             return;
         }
 
-        if (phase == RacePhase.Racing && NetworkTime.time >= endsAt)
+        if (phase == RacePhase.Racing && NetworkTime.time >= endsAt && pendingDeath == null)
         {
             EndMatch(RaceEndReason.TimeLimit);
             return;
@@ -174,7 +229,12 @@ public sealed class RaceManager : NetworkBehaviour
             pendingDeath = null;
 
             if (Roles.IsAttacker(player))
-                CompleteTurn();
+            {
+                if (pendingDeathPresentation && deathSequence != null)
+                    BeginDeathPresentation(player, pendingHitOrigin);
+                else
+                    CompleteTurn();
+            }
         }
     }
 
@@ -242,6 +302,7 @@ public sealed class RaceManager : NetworkBehaviour
         if (!IsRunning || !Roles.IsAttacker(player) || !player.FinishRace())
             return false;
 
+        RpcPlayGoalSound(player.transform.position);
         player.GetComponent<PlayerScore>().AddGoalScore(1);
 
         if (phase != RacePhase.Ended)
@@ -250,12 +311,57 @@ public sealed class RaceManager : NetworkBehaviour
         return true;
     }
 
+    /// <summary>서버가 승인한 골인에서만 모든 참가자에게 폭죽 소리를 한 번 재생한다.</summary>
+    [ClientRpc]
+    private void RpcPlayGoalSound(Vector2 position)
+    {
+        SoundPlayer.Play(SoundType.GoalFireworks, position);
+    }
+
     /// <summary>함정의 적중·점수 처리가 끝난 다음 Update에서 사망 교대를 수행한다.</summary>
     [Server]
-    public void NotifyDeath(PlayerState player)
+    public void NotifyDeath(PlayerState player, bool present = true, Vector2 hitOrigin = default)
     {
         if (IsRunning && Roles.IsAttacker(player))
+        {
             pendingDeath = player;
+            pendingDeathPresentation = present;
+            pendingHitOrigin = hitOrigin;
+        }
+    }
+
+    /// <summary>정면·후면을 확정하고 서버 시각으로 6초 사망 연출을 시작한다.</summary>
+    [Server]
+    private void BeginDeathPresentation(PlayerState player, Vector2 hitOrigin)
+    {
+        dyingPlayerId = player.netId;
+        deathStartedAt = NetworkTime.time;
+        deathRemaining = RemainingTime;
+        deathFacingRight = player.FacingRight;
+        float side = hitOrigin.x - player.transform.position.x;
+        deathForward = Mathf.Abs(side) > 0.05f && side * (deathFacingRight ? 1f : -1f) < 0f;
+        var renderer = player.GetComponent<SpriteRenderer>();
+        var capsule = player.GetComponent<CapsuleCollider2D>();
+        deathFeet = new Vector2(player.transform.position.x, renderer.bounds.min.y);
+        deathWidth = capsule.size.x * Mathf.Abs(player.transform.lossyScale.x);
+        float direction = (deathFacingRight ? 1f : -1f) * (deathForward ? 1f : -1f);
+        Vector2 destination = deathFeet + Vector2.right * (direction * deathWidth);
+        var stats = player.GetComponent<PlayerMovement>().moveStats;
+        RaycastHit2D hit = Physics2D.Raycast(destination + Vector2.up * 0.1f,
+            Vector2.down, 20f, stats.GroundLayer);
+        deathGroundY = hit.collider != null && !hit.collider.isTrigger ? hit.point.y : deathFeet.y - 3f;
+        phase = RacePhase.DeathPresentation;
+    }
+
+    /// <summary>실제 경과만큼 제한시간을 연장하고 함정의 느려진 시계를 연속해서 복구한다.</summary>
+    [Server]
+    private void FinishDeathClock()
+    {
+        double elapsed = DeathElapsed;
+        simulationDelay += elapsed - DeathSequence.WorldElapsed(elapsed);
+        matchEndsAt += elapsed;
+        endsAt += elapsed;
+        dyingPlayerId = 0;
     }
 
     /// <summary>다음 공격자를 선택한다. 경기 제한시간은 변경하지 않는다.</summary>
@@ -289,6 +395,14 @@ public sealed class RaceManager : NetworkBehaviour
     {
         if (phase == RacePhase.Ended)
             return;
+
+        // 결정타의 점수는 즉시 기록하되 사망 연출을 끝낸 뒤 로비로 돌아간다.
+        if (phase == RacePhase.Racing && pendingDeath != null && pendingDeathPresentation && deathSequence != null)
+        {
+            endAfterDeath = true;
+            deferredEndReason = reason;
+            return;
+        }
 
         phase = RacePhase.Ended;
         endReason = reason;

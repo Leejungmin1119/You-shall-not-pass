@@ -18,6 +18,7 @@ public sealed class Spear : ItemBase
     private float age;
     private float stuckAge;
     private bool stuck;
+    private bool hitSoundPlayed;
     public bool IsStuck => stuck;
 
     /// <summary>
@@ -31,8 +32,11 @@ public sealed class Spear : ItemBase
         groundY = spawn.GroundY;
         hasGround = spawn.HasGround;
         speed = spawn.FallSpeed;
+        hitSoundPlayed = false;
         if (hasGround)
             warning = CreateWarning(visual, new Vector2(startPosition.x, groundY));
+
+        RequestSound(SoundType.ArrowStart, spawn.Position);
         Advance(initialAge);
     }
 
@@ -56,6 +60,10 @@ public sealed class Spear : ItemBase
         if (hasGround && nextY <= groundY)
         {
             nextY = groundY;
+
+            if (!stuck)
+                PlayHitSound(new Vector2(startPosition.x, groundY));
+
             stuck = true;
             stuckAge = Mathf.Max(0f, age - (startPosition.y - groundY) / speed);
             if (warning != null) Destroy(warning.gameObject);
@@ -74,6 +82,23 @@ public sealed class Spear : ItemBase
             return;
         }
         CheckPlayerHits(previousY);
+    }
+
+    /// <summary>서버가 승인한 플레이어 적중도 충돌음으로 처리한다. 이후 지면 접촉과 중복하지 않는다.</summary>
+    public override void ConfirmHit(PlayerState player)
+    {
+        base.ConfirmHit(player);
+        PlayHitSound(transform.position);
+    }
+
+    /// <summary>화살 하나의 최초 충돌에서만 한 번 재생을 요청한다.</summary>
+    private void PlayHitSound(Vector2 position)
+    {
+        if (hitSoundPlayed)
+            return;
+
+        hitSoundPlayed = true;
+        RequestSound(SoundType.ArrowHit, position);
     }
 
     /// <summary>

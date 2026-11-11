@@ -74,6 +74,7 @@ public sealed class Bomb : ItemBase
         if (exploded) return;
         if (onGround) transform.position = new Vector2(start.x, groundY);
         BeginExplosion(onGround);
+        RequestSound(SoundType.BombExplosion, transform.position);
         PublishState(true, onGround);
         if (onGround) CheckExplosionHits();
     }

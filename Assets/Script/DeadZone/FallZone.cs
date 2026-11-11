@@ -70,11 +70,11 @@ public sealed class FallZone : NetworkBehaviour
 
         // 공수 경기에서는 부활 위치를 탐색하지 않고 최신 main의 공격자 교대를 따른다.
         if (player.Race.Roles != null)
-            return player.TryDie();
+            return player.TryFall();
 
         if (TryGetRespawnPosition(player.transform.position, out Vector2 position))
         {
-            if (!player.TryDie()) return false;
+            if (!player.TryFall()) return false;
             player.Respawn(position);
             return true;
         }

@@ -32,9 +32,9 @@ public sealed class FixedCannonTrap : NetworkBehaviour
     private void FixedUpdate()
     {
         if (!isServer) return;
-        bool running = race != null && race.IsRunning && !NetworkServer.isLoadingScene;
+        bool running = race != null && race.IsSimulating && !NetworkServer.isLoadingScene;
         if (!running) { wasRunning = false; return; }
-        double now = NetworkTime.time;
+        double now = (race != null ? race.SimulationTime : NetworkTime.time);
         if (!wasRunning || observedRound != race.RoundNumber)
         {
             nextShotAt = now + fireInterval;
@@ -46,18 +46,28 @@ public sealed class FixedCannonTrap : NetworkBehaviour
         projectile.Initialize(this, race, muzzle.position, shootLeft ? Vector2.left : Vector2.right,
             projectileSpeed, projectileLifetime, groundLayer);
         NetworkServer.Spawn(projectile.gameObject);
+
+        RpcPlayFireSound(muzzle.position);
+
         // 지연된 프레임의 탄환을 한꺼번에 쏟아내지 않고 원래 주기를 유지한다.
         nextShotAt += fireInterval;
         if (nextShotAt <= now) nextShotAt = now + fireInterval;
     }
 
-    /// <summary>고정 함정은 득점 없이 기존 사망·SafeZone 부활 규칙만 사용한다.</summary>
+    /// <summary>발사가 확정된 경우에만 각 화면의 공용 재생기에 대포음을 요청한다.</summary>
+    [ClientRpc]
+    private void RpcPlayFireSound(Vector2 position)
+    {
+        SoundPlayer.Play(SoundType.CannonFire, position);
+    }
+
+    /// <summary>고정 함정의 적중으로 사망과 위치 복구를 처리한다.</summary>
     [Server]
-    public bool TryKill(PlayerState player)
+    public bool TryKill(PlayerState player, Vector2 hitOrigin)
     {
         if (player == null || !player.CanReceiveHit || fallZone == null ||
             !fallZone.TryGetRespawnPosition(player.transform.position, out Vector2 position) ||
-            !player.TryDie()) return false;
+            !player.TryDie(hitOrigin)) return false;
         player.Respawn(position);
         return true;
     }
