@@ -80,6 +80,40 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     public Sprite RestingSprite => character == CharacterStyle.JackOLantern && jackIdleFrames.Length > 0
         ? jackIdleFrames[0] : null;
 
+    public const int CharacterCount = 3;
+
+    /// <summary>로비 표시와 이름표에 쓰는 캐릭터 이름.</summary>
+    public static string GetDisplayName(CharacterStyle style) => style switch
+    {
+        CharacterStyle.Knight => "기사",
+        CharacterStyle.JackOLantern => "잭오랜턴",
+        _ => "인형"
+    };
+
+    /// <summary>캐릭터별 대기 그림. 로비는 게임 플레이어 프리팹에서 이 값을 읽어 같은 그림을 보여 준다.</summary>
+    public Sprite[] GetIdleFrames(CharacterStyle style) => style switch
+    {
+        CharacterStyle.Knight => knightFrames,
+        CharacterStyle.JackOLantern => jackIdleFrames,
+        _ => dollFrames
+    };
+
+    /// <summary>로비에서 고른 캐릭터로 바꾸고 이전 캐릭터의 재생 위치를 비운다.</summary>
+    public void SetCharacter(CharacterStyle style)
+    {
+        if (character == style)
+            return;
+
+        character = style;
+        walkPhase = 0f;
+        wallSlidePhase = 0f;
+        fallPhase = 0f;
+        jackActiveAirFrames = null;
+        Sprite[] idle = GetIdleFrames(style);
+        if (visual != null && idle != null && idle.Length > 0 && idle[0] != null)
+            visual.sprite = idle[0];
+    }
+
     private void Awake()
     {
         visual = GetComponent<SpriteRenderer>();
