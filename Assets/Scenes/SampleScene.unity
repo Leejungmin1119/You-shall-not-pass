@@ -3569,7 +3569,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.910965, y: -6.5934134, z: -10}
+  m_LocalPosition: {x: -19.295685, y: -6.5934157, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3624,6 +3624,8 @@ MonoBehaviour:
   outputCamera: {fileID: 519420031}
   mapBounds: {fileID: 1477400975}
   reopenCooldown: 1
+  deathZoomMultiplier: 2.5
+  deathZoomDuration: 0.65
   race: {fileID: 1106115873}
 --- !u!1 &532494647
 GameObject:
@@ -8464,6 +8466,7 @@ MonoBehaviour:
     m_Bits: 64
   detectionWidth: 4
   detectionDistance: 10
+  preparationDuration: 0.5
   rearmDelay: 0.35
   dropSpeed: 18
   groundWait: 0.8

@@ -12,7 +12,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer), typeof(CapsuleCollider2D))]
 public sealed class PlayerIdleBoil : MonoBehaviour
 {
-    public enum CharacterStyle { Doll, Knight }
+    public enum CharacterStyle { Doll, Knight, JackOLantern }
 
     [SerializeField] private CharacterStyle character;
     [SerializeField] private Sprite[] dollFrames = new Sprite[0];
@@ -44,8 +44,23 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     [SerializeField] private Sprite[] knightWallSlideFrames = new Sprite[0];
     [SerializeField, Min(1f)] private float wallSlideFramesPerSecond = 6f;
 
+    [Header("Jack-o'-lantern")]
+    [SerializeField] private Sprite[] jackIdleFrames = new Sprite[0];
+    [SerializeField] private Sprite[] jackWalkFrames = new Sprite[0];
+    [SerializeField] private Sprite[] jackRunFrames = new Sprite[0];
+    [SerializeField] private Sprite[] jackStandingAirFrames = new Sprite[0];
+    [SerializeField] private Sprite[] jackMovingAirFrames = new Sprite[0];
+    [SerializeField] private Sprite[] jackRunningAirFrames = new Sprite[0];
+    [SerializeField] private Sprite[] jackWallSlideFrames = new Sprite[0];
+    // 달리기 키 없이 가속하는 이동이라 속도로만 걷기와 달리기 그림을 나눈다.
+    [SerializeField, Range(0.1f, 1f)] private float jackRunSpeedRatio = 0.75f;
+    [SerializeField, Min(1f)] private float jackRunFramesPerSecond = 25f;
+    [SerializeField, Min(0.01f)] private float jackFallSecondsPerFrame = 0.12f;
+
     private float walkPhase;
     private float wallSlidePhase;
+    private float fallPhase;
+    private Sprite[] jackActiveAirFrames;
 
     private SpriteRenderer visual;
     private CapsuleCollider2D capsule;
@@ -62,6 +77,8 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     public bool IsWallSliding { get; private set; }
     public int CurrentFrame { get; private set; }
     public CharacterStyle Character => character;
+    public Sprite RestingSprite => character == CharacterStyle.JackOLantern && jackIdleFrames.Length > 0
+        ? jackIdleFrames[0] : null;
 
     private void Awake()
     {
@@ -78,6 +95,8 @@ public sealed class PlayerIdleBoil : MonoBehaviour
         previousPosition = transform.position;
         stationaryTime = 0f;
         wallSlidePhase = 0f;
+        jackActiveAirFrames = null;
+        fallPhase = 0f;
     }
 
     private void LateUpdate()
@@ -85,7 +104,8 @@ public sealed class PlayerIdleBoil : MonoBehaviour
         if (state != null && state.Status == PlayerStatus.Dead)
             return;
 
-        Sprite[] frames = character == CharacterStyle.Knight ? knightFrames : dollFrames;
+        bool isJack = character == CharacterStyle.JackOLantern;
+        Sprite[] frames = isJack ? jackIdleFrames : character == CharacterStyle.Knight ? knightFrames : dollFrames;
         if (frames == null || frames.Length == 0)
             return;
 
@@ -115,7 +135,13 @@ public sealed class PlayerIdleBoil : MonoBehaviour
 
         UpdateFacing(controlledHere, horizontalSpeed);
 
-        Sprite[] wallFrames = character == CharacterStyle.Knight ? knightWallSlideFrames : dollWallSlideFrames;
+        float speed = Mathf.Abs(horizontalSpeed);
+        float maxSpeed = movement != null && movement.moveStats != null
+            ? Mathf.Max(0.01f, movement.moveStats.MaxRunSpeed * 0.01f)
+            : 10f;
+        bool running = isJack && speed >= maxSpeed * jackRunSpeedRatio;
+        Sprite[] wallFrames = isJack ? jackWallSlideFrames :
+            character == CharacterStyle.Knight ? knightWallSlideFrames : dollWallSlideFrames;
         int wallDirection = 0;
         if (alive && !grounded && verticalSpeed < -0.05f)
             wallDirection = controlledHere && movement.Controller != null
@@ -130,6 +156,9 @@ public sealed class PlayerIdleBoil : MonoBehaviour
             IsBoiling = false;
             stationaryTime = 0f;
             walkPhase = 0f;
+            jackActiveAirFrames = null;
+            fallPhase = 0f;
+            // 잭오랜턴 원본은 오른쪽 벽에 등을 대고 왼쪽을 본다.
             visual.flipX = wallDirection < 0;
             CurrentFrame = (int)wallSlidePhase % wallFrames.Length;
             wallSlidePhase += delta * wallSlideFramesPerSecond;
@@ -139,7 +168,13 @@ public sealed class PlayerIdleBoil : MonoBehaviour
         }
         wallSlidePhase = 0f;
 
-        Sprite[] airFrames = character == CharacterStyle.Knight ? knightAirFrames : dollAirFrames;
+        // 공중에서도 매 프레임 가로 속도로 서기·걷기·달리기 공중 자세를 다시 고른다.
+        // (공중 방향 전환 때 그림이 튀면 느려지는 쪽만 지연시키는 방식으로 바꿀 것)
+        if (isJack && alive && !grounded)
+            jackActiveAirFrames = running ? jackRunningAirFrames :
+                speed >= walkSpeedThreshold ? jackMovingAirFrames : jackStandingAirFrames;
+        Sprite[] airFrames = isJack ? jackActiveAirFrames :
+            character == CharacterStyle.Knight ? knightAirFrames : dollAirFrames;
         IsAirborne = alive && !grounded && airFrames != null && airFrames.Length >= 3;
         if (IsAirborne)
         {
@@ -149,26 +184,36 @@ public sealed class PlayerIdleBoil : MonoBehaviour
             walkPhase = 0f;
             // 0 도약(상승) · 1 정점 · 2 낙하. 점프 없이 발판에서 떨어질 때도 낙하 그림이 나온다.
             CurrentFrame = verticalSpeed > apexSpeedBand ? 0 : verticalSpeed < -apexSpeedBand ? 2 : 1;
+            if (isJack && CurrentFrame == 2)
+            {
+                CurrentFrame += (int)fallPhase % (airFrames.Length - 2);
+                fallPhase += delta / jackFallSecondsPerFrame;
+            }
+            else
+            {
+                fallPhase = 0f;
+            }
             if (airFrames[CurrentFrame] != null)
                 visual.sprite = airFrames[CurrentFrame];
             return;
         }
 
+        jackActiveAirFrames = null;
+        fallPhase = 0f;
         if (delta > 0f)
             stationaryTime = alive && grounded && stationary ? stationaryTime + delta : 0f;
 
-        Sprite[] walkFrames = character == CharacterStyle.Knight ? knightWalkFrames : dollWalkFrames;
+        Sprite[] walkFrames = isJack ? (running ? jackRunFrames : jackWalkFrames) :
+            character == CharacterStyle.Knight ? knightWalkFrames : dollWalkFrames;
         IsWalking = alive && grounded && walkFrames != null && walkFrames.Length > 0 &&
                     Mathf.Abs(horizontalSpeed) >= walkSpeedThreshold;
         IsBoiling = !IsWalking && alive && grounded && stationaryTime >= idleDelay;
 
         if (IsWalking)
         {
-            float maxSpeed = movement != null && movement.moveStats != null
-                ? movement.moveStats.MaxRunSpeed * 0.01f
-                : 10f;
-            float ratio = Mathf.Max(minWalkPlaybackRatio, Mathf.Clamp01(Mathf.Abs(horizontalSpeed) / Mathf.Max(0.01f, maxSpeed)));
-            walkPhase += delta * walkFramesPerSecondAtMaxSpeed * ratio;
+            float ratio = Mathf.Max(minWalkPlaybackRatio, Mathf.Clamp01(speed / maxSpeed));
+            float playbackRate = running ? jackRunFramesPerSecond : walkFramesPerSecondAtMaxSpeed;
+            walkPhase += delta * playbackRate * ratio;
             CurrentFrame = (int)walkPhase % walkFrames.Length;
             if (walkFrames[CurrentFrame] != null)
                 visual.sprite = walkFrames[CurrentFrame];

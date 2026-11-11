@@ -17,6 +17,8 @@ public sealed class DeathSequence : MonoBehaviour
     [SerializeField] private Sprite[] dollForward = Array.Empty<Sprite>();
     [SerializeField] private Sprite[] knightBackward = Array.Empty<Sprite>();
     [SerializeField] private Sprite[] knightForward = Array.Empty<Sprite>();
+    [SerializeField] private Sprite[] jackBackward = Array.Empty<Sprite>();
+    [SerializeField] private Sprite[] jackForward = Array.Empty<Sprite>();
     [SerializeField] private Sprite starSprite;
 
     private RaceManager race;
@@ -94,11 +96,14 @@ public sealed class DeathSequence : MonoBehaviour
 
         source = identity.GetComponent<SpriteRenderer>();
         var animator = identity.GetComponent<PlayerIdleBoil>();
-        bool knight = animator != null && animator.Character == PlayerIdleBoil.CharacterStyle.Knight;
-        frames = knight ? (race.DeathForward ? knightForward : knightBackward) :
-            (race.DeathForward ? dollForward : dollBackward);
+        frames = animator?.Character switch
+        {
+            PlayerIdleBoil.CharacterStyle.JackOLantern => race.DeathForward ? jackForward : jackBackward,
+            PlayerIdleBoil.CharacterStyle.Knight => race.DeathForward ? knightForward : knightBackward,
+            _ => race.DeathForward ? dollForward : dollBackward
+        };
 
-        if (frames.Length != 12 || frames[0] == null || starSprite == null)
+        if (frames.Length != 12 || Array.Exists(frames, frame => frame == null) || starSprite == null)
         {
             Debug.LogError("사망 연출의 몸 12프레임과 별 Sprite 연결을 확인하세요.", this);
             sequenceStartedAt = race.DeathStartedAt;
@@ -141,7 +146,7 @@ public sealed class DeathSequence : MonoBehaviour
             SoundPlayer.Play(SoundType.PlayerHit, race.DeathFeet);
     }
 
-    /// <summary>몸은 한 번만 쓰러진다. 바닥 접촉 뒤에는 같은 프레임을 유지하고 별만 연속 회전한다.</summary>
+    /// <summary>쓰러지는 동작이 끝나면 마지막 프레임을 유지하고 별만 계속 회전한다.</summary>
     private void LateUpdate()
     {
         if (!active || corpse == null || source == null || frames == null || frames.Length != 12)

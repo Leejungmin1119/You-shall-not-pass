@@ -1,0 +1,361 @@
+fileFormatVersion: 2
+guid: 25e1ce14ce82e034a99d48bbad874dca
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8507277406330136784
+    second: JackOLantern_Run_0
+  - first:
+      213: 3626886397091011353
+    second: JackOLantern_Run_1
+  - first:
+      213: 4670626422324877382
+    second: JackOLantern_Run_2
+  - first:
+      213: 7658781995040749430
+    second: JackOLantern_Run_3
+  - first:
+      213: -5917197992169372556
+    second: JackOLantern_Run_4
+  - first:
+      213: -4118049304261627972
+    second: JackOLantern_Run_5
+  - first:
+      213: 8890947792385095750
+    second: JackOLantern_Run_6
+  - first:
+      213: -1642565178007920567
+    second: JackOLantern_Run_7
+  - first:
+      213: -778197785521140348
+    second: JackOLantern_Run_8
+  - first:
+      213: 2150854877487381002
+    second: JackOLantern_Run_9
+  - first:
+      213: 7746009659566369964
+    second: JackOLantern_Run_10
+  - first:
+      213: 75531882151937426
+    second: JackOLantern_Run_11
+  - first:
+      213: 7112018550588254085
+    second: JackOLantern_Run_12
+  - first:
+      213: -1195034180598707990
+    second: JackOLantern_Run_13
+  - first:
+      213: 1636743027667568600
+    second: JackOLantern_Run_14
+  - first:
+      213: -2844610471575783853
+    second: JackOLantern_Run_15
+  - first:
+      213: 5943926169261990362
+    second: JackOLantern_Run_16
+  - first:
+      213: -4197800685549512854
+    second: JackOLantern_Run_17
+  - first:
+      213: 7004830498049939979
+    second: JackOLantern_Run_18
+  - first:
+      213: 2794184033548490392
+    second: JackOLantern_Run_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 244.00836
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: JackOLantern_Run_1
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 692
+        width: 347
+        height: 425
+      alignment: 9
+      pivot: {x: 0.59654176, y: 0.58}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91b5e4b46f9455230800000000000000
+      internalID: 3626886397091011353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Run_2
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 692
+        width: 339
+        height: 426
+      alignment: 9
+      pivot: {x: 0.58702064, y: 0.5786385}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6485a3d2cf561d040800000000000000
+      internalID: 4670626422324877382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Run_3
+      rect:
+        serializedVersion: 2
+        x: 1404
+        y: 691
+        width: 336
+        height: 428
+      alignment: 9
+      pivot: {x: 0.5833333, y: 0.57827103}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 677bf8285a5794a60800000000000000
+      internalID: 7658781995040749430
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Run_4
+      rect:
+        serializedVersion: 2
+        x: 2046
+        y: 692
+        width: 333
+        height: 429
+      alignment: 9
+      pivot: {x: 0.5825826, y: 0.57459205}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 474071bd6c3e1eda0800000000000000
+      internalID: -5917197992169372556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Run_5
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 52
+        width: 344
+        height: 425
+      alignment: 9
+      pivot: {x: 0.59011626, y: 0.58}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbfe0f3e9ffb9d6c0800000000000000
+      internalID: -4118049304261627972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Run_6
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 52
+        width: 338
+        height: 425
+      alignment: 9
+      pivot: {x: 0.5887574, y: 0.58}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64838a139edf26b70800000000000000
+      internalID: 8890947792385095750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Run_7
+      rect:
+        serializedVersion: 2
+        x: 1405
+        y: 51
+        width: 334
+        height: 428
+      alignment: 9
+      pivot: {x: 0.5838323, y: 0.57827103}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 940696c5caf6439e0800000000000000
+      internalID: -1642565178007920567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: JackOLantern_Run_8
+      rect:
+        serializedVersion: 2
+        x: 2047
+        y: 51
+        width: 333
+        height: 429
+      alignment: 9
+      pivot: {x: 0.5795796, y: 0.5769231}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48d4405bc394335f0800000000000000
+      internalID: -778197785521140348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 4ae303c85ef1f294c89c46358bedafb2
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      JackOLantern_Run_1: 3626886397091011353
+      JackOLantern_Run_2: 4670626422324877382
+      JackOLantern_Run_3: 7658781995040749430
+      JackOLantern_Run_4: -5917197992169372556
+      JackOLantern_Run_5: -4118049304261627972
+      JackOLantern_Run_6: 8890947792385095750
+      JackOLantern_Run_7: -1642565178007920567
+      JackOLantern_Run_8: -778197785521140348
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

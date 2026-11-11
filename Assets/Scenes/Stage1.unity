@@ -8625,6 +8625,32 @@ MonoBehaviour:
   - {fileID: -1822645608, guid: 29170f8b01afb014e9606bf79c24e940, type: 3}
   - {fileID: 1060266605, guid: 29170f8b01afb014e9606bf79c24e940, type: 3}
   - {fileID: -1709881073, guid: 29170f8b01afb014e9606bf79c24e940, type: 3}
+  jackBackward:
+  - {fileID: 1163356553, guid: 00e6dc4f4c7d0884c80f49ac3218aff8, type: 3}
+  - {fileID: -320866356, guid: 00e6dc4f4c7d0884c80f49ac3218aff8, type: 3}
+  - {fileID: -551213633, guid: 00e6dc4f4c7d0884c80f49ac3218aff8, type: 3}
+  - {fileID: 633951872, guid: 00e6dc4f4c7d0884c80f49ac3218aff8, type: 3}
+  - {fileID: -1354116511, guid: 00e6dc4f4c7d0884c80f49ac3218aff8, type: 3}
+  - {fileID: 1593511270, guid: 00e6dc4f4c7d0884c80f49ac3218aff8, type: 3}
+  - {fileID: 2002799057, guid: 00e6dc4f4c7d0884c80f49ac3218aff8, type: 3}
+  - {fileID: 1119885545, guid: 00e6dc4f4c7d0884c80f49ac3218aff8, type: 3}
+  - {fileID: -1865680748, guid: 00e6dc4f4c7d0884c80f49ac3218aff8, type: 3}
+  - {fileID: 6430187735967046000, guid: 00e6dc4f4c7d0884c80f49ac3218aff8, type: 3}
+  - {fileID: -5105117875440363906, guid: 00e6dc4f4c7d0884c80f49ac3218aff8, type: 3}
+  - {fileID: -68267258, guid: 00e6dc4f4c7d0884c80f49ac3218aff8, type: 3}
+  jackForward:
+  - {fileID: 331508890, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
+  - {fileID: -1690343130, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
+  - {fileID: -1798722789, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
+  - {fileID: 204463632, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
+  - {fileID: -925211434, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
+  - {fileID: -1174045998, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
+  - {fileID: -684671959, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
+  - {fileID: 82139364, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
+  - {fileID: 210474081, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
+  - {fileID: 3467831749123647318, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
+  - {fileID: 6210170387552178139, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
+  - {fileID: 1629795516, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
   starSprite: {fileID: 21300000, guid: 84b7a35928a6d9c4381896eba194ba76, type: 3}
 --- !u!1 &1135383571
 GameObject:

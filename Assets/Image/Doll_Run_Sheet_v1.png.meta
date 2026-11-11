@@ -1,0 +1,6851 @@
+fileFormatVersion: 2
+guid: 7cfa8438355bb36438e97d066c2fa027
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8187045412469059682
+    second: Doll_Run_Sheet_v1_0
+  - first:
+      213: 1258919190343491199
+    second: Doll_Run_Sheet_v1_1
+  - first:
+      213: -2834743580075408758
+    second: Doll_Run_Sheet_v1_2
+  - first:
+      213: -4093334833578709721
+    second: Doll_Run_Sheet_v1_3
+  - first:
+      213: -455674186485075577
+    second: Doll_Run_Sheet_v1_4
+  - first:
+      213: 508879815734831355
+    second: Doll_Run_Sheet_v1_5
+  - first:
+      213: -3461791757725080179
+    second: Doll_Run_Sheet_v1_6
+  - first:
+      213: -2943522791698563847
+    second: Doll_Run_Sheet_v1_7
+  - first:
+      213: -630563778368443311
+    second: Doll_Run_Sheet_v1_8
+  - first:
+      213: -6189009623577893098
+    second: Doll_Run_Sheet_v1_9
+  - first:
+      213: 2066761880406143609
+    second: Doll_Run_Sheet_v1_10
+  - first:
+      213: -6886451066396069280
+    second: Doll_Run_Sheet_v1_11
+  - first:
+      213: 8399438645702140292
+    second: Doll_Run_Sheet_v1_12
+  - first:
+      213: 1058430064207015322
+    second: Doll_Run_Sheet_v1_13
+  - first:
+      213: 1781767782184408593
+    second: Doll_Run_Sheet_v1_14
+  - first:
+      213: 2769749016899745264
+    second: Doll_Run_Sheet_v1_15
+  - first:
+      213: -1317244005013224421
+    second: Doll_Run_Sheet_v1_16
+  - first:
+      213: -5751158952572601801
+    second: Doll_Run_Sheet_v1_17
+  - first:
+      213: -8988535142167943709
+    second: Doll_Run_Sheet_v1_18
+  - first:
+      213: -939867092110810157
+    second: Doll_Run_Sheet_v1_19
+  - first:
+      213: 993641068346733981
+    second: Doll_Run_Sheet_v1_20
+  - first:
+      213: -331235935180988084
+    second: Doll_Run_Sheet_v1_21
+  - first:
+      213: -5635820730968875923
+    second: Doll_Run_Sheet_v1_22
+  - first:
+      213: 5873112861303668262
+    second: Doll_Run_Sheet_v1_23
+  - first:
+      213: 2884974382969385156
+    second: Doll_Run_Sheet_v1_24
+  - first:
+      213: 282843773491054141
+    second: Doll_Run_Sheet_v1_25
+  - first:
+      213: -8169685859531644722
+    second: Doll_Run_Sheet_v1_26
+  - first:
+      213: 5274792061013851991
+    second: Doll_Run_Sheet_v1_27
+  - first:
+      213: 8362778680502265530
+    second: Doll_Run_Sheet_v1_28
+  - first:
+      213: -7806173950400900399
+    second: Doll_Run_Sheet_v1_29
+  - first:
+      213: 3685016632073896450
+    second: Doll_Run_Sheet_v1_30
+  - first:
+      213: -8484409504412851610
+    second: Doll_Run_Sheet_v1_31
+  - first:
+      213: -4225092464492250980
+    second: Doll_Run_Sheet_v1_32
+  - first:
+      213: 893303357801411728
+    second: Doll_Run_Sheet_v1_33
+  - first:
+      213: 9061633112671586343
+    second: Doll_Run_Sheet_v1_34
+  - first:
+      213: 8625232583387801392
+    second: Doll_Run_Sheet_v1_35
+  - first:
+      213: -2795142839732895574
+    second: Doll_Run_Sheet_v1_36
+  - first:
+      213: 8471499156533541106
+    second: Doll_Run_Sheet_v1_37
+  - first:
+      213: -2976308908013633293
+    second: Doll_Run_Sheet_v1_38
+  - first:
+      213: 4136466261029004069
+    second: Doll_Run_Sheet_v1_39
+  - first:
+      213: -4860823798749910444
+    second: Doll_Run_Sheet_v1_40
+  - first:
+      213: 8963358128815798327
+    second: Doll_Run_Sheet_v1_41
+  - first:
+      213: 771093817705853659
+    second: Doll_Run_Sheet_v1_42
+  - first:
+      213: -725649515814136772
+    second: Doll_Run_Sheet_v1_43
+  - first:
+      213: -5249091277322586167
+    second: Doll_Run_Sheet_v1_44
+  - first:
+      213: -6380834072056690560
+    second: Doll_Run_Sheet_v1_45
+  - first:
+      213: -2160588256481410137
+    second: Doll_Run_Sheet_v1_46
+  - first:
+      213: 8873372080528660847
+    second: Doll_Run_Sheet_v1_47
+  - first:
+      213: -8623455302414566320
+    second: Doll_Run_Sheet_v1_48
+  - first:
+      213: 2831633409045338097
+    second: Doll_Run_Sheet_v1_49
+  - first:
+      213: -273215256598403282
+    second: Doll_Run_Sheet_v1_50
+  - first:
+      213: 550428054438468227
+    second: Doll_Run_Sheet_v1_51
+  - first:
+      213: -3285813581259734315
+    second: Doll_Run_Sheet_v1_52
+  - first:
+      213: 4003271322365466868
+    second: Doll_Run_Sheet_v1_53
+  - first:
+      213: -4945519794288210056
+    second: Doll_Run_Sheet_v1_54
+  - first:
+      213: -92372731927820370
+    second: Doll_Run_Sheet_v1_55
+  - first:
+      213: 8391994695849223327
+    second: Doll_Run_Sheet_v1_56
+  - first:
+      213: 7419231180038720733
+    second: Doll_Run_Sheet_v1_57
+  - first:
+      213: -4497288911887188173
+    second: Doll_Run_Sheet_v1_58
+  - first:
+      213: -2213048143024896443
+    second: Doll_Run_Sheet_v1_59
+  - first:
+      213: -6381772915843012157
+    second: Doll_Run_Sheet_v1_60
+  - first:
+      213: -3412591252626168687
+    second: Doll_Run_Sheet_v1_61
+  - first:
+      213: -5384700868601130075
+    second: Doll_Run_Sheet_v1_62
+  - first:
+      213: 7299652266863815660
+    second: Doll_Run_Sheet_v1_63
+  - first:
+      213: -1581461921696086340
+    second: Doll_Run_Sheet_v1_64
+  - first:
+      213: -1401078028259267777
+    second: Doll_Run_Sheet_v1_65
+  - first:
+      213: 986683759525425249
+    second: Doll_Run_Sheet_v1_66
+  - first:
+      213: 3840324186456349812
+    second: Doll_Run_Sheet_v1_67
+  - first:
+      213: 4962138017226441951
+    second: Doll_Run_Sheet_v1_68
+  - first:
+      213: 7836508318880232458
+    second: Doll_Run_Sheet_v1_69
+  - first:
+      213: 4941234013821532294
+    second: Doll_Run_Sheet_v1_70
+  - first:
+      213: 5332955507124112378
+    second: Doll_Run_Sheet_v1_71
+  - first:
+      213: -2485666836338692863
+    second: Doll_Run_Sheet_v1_72
+  - first:
+      213: 7420689662942391660
+    second: Doll_Run_Sheet_v1_73
+  - first:
+      213: -6252899808820955238
+    second: Doll_Run_Sheet_v1_74
+  - first:
+      213: 4297217040525893843
+    second: Doll_Run_Sheet_v1_75
+  - first:
+      213: 5057471005058697391
+    second: Doll_Run_Sheet_v1_76
+  - first:
+      213: -4019135814089172196
+    second: Doll_Run_Sheet_v1_77
+  - first:
+      213: 4457373321791355503
+    second: Doll_Run_Sheet_v1_78
+  - first:
+      213: -7707093389990197949
+    second: Doll_Run_Sheet_v1_79
+  - first:
+      213: 4518659637267882203
+    second: Doll_Run_Sheet_v1_80
+  - first:
+      213: -2211611036881088664
+    second: Doll_Run_Sheet_v1_81
+  - first:
+      213: 4588682342989916888
+    second: Doll_Run_Sheet_v1_82
+  - first:
+      213: 114634487138050691
+    second: Doll_Run_Sheet_v1_83
+  - first:
+      213: -4859254059744597245
+    second: Doll_Run_Sheet_v1_84
+  - first:
+      213: 1045177051725760806
+    second: Doll_Run_Sheet_v1_85
+  - first:
+      213: 8958922456961895992
+    second: Doll_Run_Sheet_v1_86
+  - first:
+      213: 8837266391047417916
+    second: Doll_Run_Sheet_v1_87
+  - first:
+      213: -5397011417505584378
+    second: Doll_Run_Sheet_v1_88
+  - first:
+      213: -4319269558382183448
+    second: Doll_Run_Sheet_v1_89
+  - first:
+      213: -2210448981123627045
+    second: Doll_Run_Sheet_v1_90
+  - first:
+      213: -7983074727003831361
+    second: Doll_Run_Sheet_v1_91
+  - first:
+      213: -8740531249797404763
+    second: Doll_Run_Sheet_v1_92
+  - first:
+      213: -1734265318875509494
+    second: Doll_Run_Sheet_v1_93
+  - first:
+      213: 7315106889466743063
+    second: Doll_Run_Sheet_v1_94
+  - first:
+      213: 1308444908553484365
+    second: Doll_Run_Sheet_v1_95
+  - first:
+      213: -938500100825022861
+    second: Doll_Run_Sheet_v1_96
+  - first:
+      213: 3796851079652676390
+    second: Doll_Run_Sheet_v1_97
+  - first:
+      213: -6568578441155851817
+    second: Doll_Run_Sheet_v1_98
+  - first:
+      213: 7054692411059563298
+    second: Doll_Run_Sheet_v1_99
+  - first:
+      213: -2420177714375072594
+    second: Doll_Run_Sheet_v1_100
+  - first:
+      213: -2654127138123817698
+    second: Doll_Run_Sheet_v1_101
+  - first:
+      213: 6596269653457123176
+    second: Doll_Run_Sheet_v1_102
+  - first:
+      213: 8029074693030952327
+    second: Doll_Run_Sheet_v1_103
+  - first:
+      213: -947698806577985152
+    second: Doll_Run_Sheet_v1_104
+  - first:
+      213: 2783178725108847231
+    second: Doll_Run_Sheet_v1_105
+  - first:
+      213: 3661878302091060434
+    second: Doll_Run_Sheet_v1_106
+  - first:
+      213: -6540797616254229838
+    second: Doll_Run_Sheet_v1_107
+  - first:
+      213: 8129442707476060291
+    second: Doll_Run_Sheet_v1_108
+  - first:
+      213: 675484036567905915
+    second: Doll_Run_Sheet_v1_109
+  - first:
+      213: 5974313273546696886
+    second: Doll_Run_Sheet_v1_110
+  - first:
+      213: -7485771518131488439
+    second: Doll_Run_Sheet_v1_111
+  - first:
+      213: -2403435691346213143
+    second: Doll_Run_Sheet_v1_112
+  - first:
+      213: 2184504261170086845
+    second: Doll_Run_Sheet_v1_113
+  - first:
+      213: -3152753093755137471
+    second: Doll_Run_Sheet_v1_114
+  - first:
+      213: 5005455184842202475
+    second: Doll_Run_Sheet_v1_115
+  - first:
+      213: 3653381120207128247
+    second: Doll_Run_Sheet_v1_116
+  - first:
+      213: 223173881935096956
+    second: Doll_Run_Sheet_v1_117
+  - first:
+      213: -1317533408753528445
+    second: Doll_Run_Sheet_v1_118
+  - first:
+      213: -5625814321852748371
+    second: Doll_Run_Sheet_v1_119
+  - first:
+      213: -1048336378100423701
+    second: Doll_Run_Sheet_v1_120
+  - first:
+      213: 7307455071166229565
+    second: Doll_Run_Sheet_v1_121
+  - first:
+      213: -5774842084707364804
+    second: Doll_Run_Sheet_v1_122
+  - first:
+      213: -4888858862215363787
+    second: Doll_Run_Sheet_v1_123
+  - first:
+      213: -3959619752618911360
+    second: Doll_Run_Sheet_v1_124
+  - first:
+      213: -6244802619207557737
+    second: Doll_Run_Sheet_v1_125
+  - first:
+      213: 796769063075645263
+    second: Doll_Run_Sheet_v1_126
+  - first:
+      213: -2764073518339765357
+    second: Doll_Run_Sheet_v1_127
+  - first:
+      213: 156696152601273364
+    second: Doll_Run_Sheet_v1_128
+  - first:
+      213: -6143865125528048719
+    second: Doll_Run_Sheet_v1_129
+  - first:
+      213: 3101408906378902968
+    second: Doll_Run_Sheet_v1_130
+  - first:
+      213: -3169871437845874496
+    second: Doll_Run_Sheet_v1_131
+  - first:
+      213: -5504912922587609422
+    second: Doll_Run_Sheet_v1_132
+  - first:
+      213: -8696985997382122731
+    second: Doll_Run_Sheet_v1_133
+  - first:
+      213: 8070775846021182157
+    second: Doll_Run_Sheet_v1_134
+  - first:
+      213: 539901299426393482
+    second: Doll_Run_Sheet_v1_135
+  - first:
+      213: 7062860583918811835
+    second: Doll_Run_Sheet_v1_136
+  - first:
+      213: -5388190011301140267
+    second: Doll_Run_Sheet_v1_137
+  - first:
+      213: 8172938375227637738
+    second: Doll_Run_Sheet_v1_138
+  - first:
+      213: -3273564649849795816
+    second: Doll_Run_Sheet_v1_139
+  - first:
+      213: -6365795143335482319
+    second: Doll_Run_Sheet_v1_140
+  - first:
+      213: 8804107801291928919
+    second: Doll_Run_Sheet_v1_141
+  - first:
+      213: -4537735943597425158
+    second: Doll_Run_Sheet_v1_142
+  - first:
+      213: 1714573429282359479
+    second: Doll_Run_Sheet_v1_143
+  - first:
+      213: -5803995419045499077
+    second: Doll_Run_Sheet_v1_144
+  - first:
+      213: 4486398885258415945
+    second: Doll_Run_Sheet_v1_145
+  - first:
+      213: -3970175129341248203
+    second: Doll_Run_Sheet_v1_146
+  - first:
+      213: -998635329748635458
+    second: Doll_Run_Sheet_v1_147
+  - first:
+      213: -8840762066462117182
+    second: Doll_Run_Sheet_v1_148
+  - first:
+      213: -6188214273502641202
+    second: Doll_Run_Sheet_v1_149
+  - first:
+      213: -4559013942774983899
+    second: Doll_Run_Sheet_v1_150
+  - first:
+      213: -8471350848167078950
+    second: Doll_Run_Sheet_v1_151
+  - first:
+      213: 5238946352436102763
+    second: Doll_Run_Sheet_v1_152
+  - first:
+      213: -3573754431886118259
+    second: Doll_Run_Sheet_v1_153
+  - first:
+      213: -2903534290918779414
+    second: Doll_Run_Sheet_v1_154
+  - first:
+      213: -7563717086566278897
+    second: Doll_Run_Sheet_v1_155
+  - first:
+      213: -211539453246280752
+    second: Doll_Run_Sheet_v1_156
+  - first:
+      213: 4015934847182807657
+    second: Doll_Run_Sheet_v1_157
+  - first:
+      213: -1088051156769337326
+    second: Doll_Run_Sheet_v1_158
+  - first:
+      213: -4635780679714762277
+    second: Doll_Run_Sheet_v1_159
+  - first:
+      213: 8291960804606889980
+    second: Doll_Run_Sheet_v1_160
+  - first:
+      213: 707708135875324500
+    second: Doll_Run_Sheet_v1_161
+  - first:
+      213: -1839582227978648045
+    second: Doll_Run_Sheet_v1_162
+  - first:
+      213: -7659014206839624678
+    second: Doll_Run_Sheet_v1_163
+  - first:
+      213: -2402352507769981943
+    second: Doll_Run_Sheet_v1_164
+  - first:
+      213: 5765039386333761120
+    second: Doll_Run_Sheet_v1_165
+  - first:
+      213: -3275977201166124268
+    second: Doll_Run_Sheet_v1_166
+  - first:
+      213: 9218054173930699631
+    second: Doll_Run_Sheet_v1_167
+  - first:
+      213: 4007498010685106693
+    second: Doll_Run_Sheet_v1_168
+  - first:
+      213: 517934345025043545
+    second: Doll_Run_Sheet_v1_169
+  - first:
+      213: -3795703754740484035
+    second: Doll_Run_Sheet_v1_170
+  - first:
+      213: 7226818349656006382
+    second: Doll_Run_Sheet_v1_171
+  - first:
+      213: -557014973012677450
+    second: Doll_Run_Sheet_v1_172
+  - first:
+      213: 5018110574927460044
+    second: Doll_Run_Sheet_v1_173
+  - first:
+      213: 6589512999555119483
+    second: Doll_Run_Sheet_v1_174
+  - first:
+      213: 3798338583750753362
+    second: Doll_Run_Sheet_v1_175
+  - first:
+      213: 4240122051160555168
+    second: Doll_Run_Sheet_v1_176
+  - first:
+      213: -7930660035569674300
+    second: Doll_Run_Sheet_v1_177
+  - first:
+      213: 4235305027836368276
+    second: Doll_Run_Sheet_v1_178
+  - first:
+      213: 9135820144248090313
+    second: Doll_Run_Sheet_v1_179
+  - first:
+      213: 6966204183675546592
+    second: Doll_Run_Sheet_v1_180
+  - first:
+      213: -5927667631424383220
+    second: Doll_Run_Sheet_v1_181
+  - first:
+      213: -5458154427805905750
+    second: Doll_Run_Sheet_v1_182
+  - first:
+      213: 523193508934470440
+    second: Doll_Run_Sheet_v1_183
+  - first:
+      213: 2920832805451513975
+    second: Doll_Run_Sheet_v1_184
+  - first:
+      213: -7076245661659925286
+    second: Doll_Run_Sheet_v1_185
+  - first:
+      213: -4135559011676953954
+    second: Doll_Run_Sheet_v1_186
+  - first:
+      213: -8399410006751334993
+    second: Doll_Run_Sheet_v1_187
+  - first:
+      213: -195643769841076851
+    second: Doll_Run_Sheet_v1_188
+  - first:
+      213: 2928587347741346840
+    second: Doll_Run_Sheet_v1_189
+  - first:
+      213: 1186797323430790895
+    second: Doll_Run_Sheet_v1_190
+  - first:
+      213: 8414650119828256678
+    second: Doll_Run_Sheet_v1_191
+  - first:
+      213: 7623556779720734154
+    second: Doll_Run_Sheet_v1_192
+  - first:
+      213: -4944226358473000256
+    second: Doll_Run_Sheet_v1_193
+  - first:
+      213: -8533663330852425195
+    second: Doll_Run_Sheet_v1_194
+  - first:
+      213: -8875141006115187768
+    second: Doll_Run_Sheet_v1_195
+  - first:
+      213: 6018042240262608929
+    second: Doll_Run_Sheet_v1_196
+  - first:
+      213: -1597618789950417311
+    second: Doll_Run_Sheet_v1_197
+  - first:
+      213: 7541213207246459424
+    second: Doll_Run_Sheet_v1_198
+  - first:
+      213: 1901840942058131762
+    second: Doll_Run_Sheet_v1_199
+  - first:
+      213: -505196013699603079
+    second: Doll_Run_Sheet_v1_200
+  - first:
+      213: -1041585969543434012
+    second: Doll_Run_Sheet_v1_201
+  - first:
+      213: 8308538695707110326
+    second: Doll_Run_Sheet_v1_202
+  - first:
+      213: -7901258170232514610
+    second: Doll_Run_Sheet_v1_203
+  - first:
+      213: -1067755892698624765
+    second: Doll_Run_Sheet_v1_204
+  - first:
+      213: -2345303014756085560
+    second: Doll_Run_Sheet_v1_205
+  - first:
+      213: 5148369839878575890
+    second: Doll_Run_Sheet_v1_206
+  - first:
+      213: 7728254240894235290
+    second: Doll_Run_Sheet_v1_207
+  - first:
+      213: 5629642926030129800
+    second: Doll_Run_Sheet_v1_208
+  - first:
+      213: 2687427689165053362
+    second: Doll_Run_Sheet_v1_209
+  - first:
+      213: 3214289948459619769
+    second: Doll_Run_Sheet_v1_210
+  - first:
+      213: -3321251316050467143
+    second: Doll_Run_Sheet_v1_211
+  - first:
+      213: -1606905767069127941
+    second: Doll_Run_Sheet_v1_212
+  - first:
+      213: 7996591759322154993
+    second: Doll_Run_Sheet_v1_213
+  - first:
+      213: 2718909922367947069
+    second: Doll_Run_Sheet_v1_214
+  - first:
+      213: 4039476864067657353
+    second: Doll_Run_Sheet_v1_215
+  - first:
+      213: -4460040574650671648
+    second: Doll_Run_Sheet_v1_216
+  - first:
+      213: -5409339703683864829
+    second: Doll_Run_Sheet_v1_217
+  - first:
+      213: 2539284009122258065
+    second: Doll_Run_Sheet_v1_218
+  - first:
+      213: 2164872216238548775
+    second: Doll_Run_Sheet_v1_219
+  - first:
+      213: -6801885818014318993
+    second: Doll_Run_Sheet_v1_220
+  - first:
+      213: 5673165087981442384
+    second: Doll_Run_Sheet_v1_221
+  - first:
+      213: -4618818478972739876
+    second: Doll_Run_Sheet_v1_222
+  - first:
+      213: -2234077120197231307
+    second: Doll_Run_Sheet_v1_223
+  - first:
+      213: 575489354796876311
+    second: Doll_Run_Sheet_v1_224
+  - first:
+      213: -1590937297205819120
+    second: Doll_Run_Sheet_v1_225
+  - first:
+      213: 3879937735879938131
+    second: Doll_Run_Sheet_v1_226
+  - first:
+      213: -6529514542096175731
+    second: Doll_Run_Sheet_v1_227
+  - first:
+      213: -2249938129503989650
+    second: Doll_Run_Sheet_v1_228
+  - first:
+      213: -7981829008204726774
+    second: Doll_Run_Sheet_v1_229
+  - first:
+      213: -8945077105229245406
+    second: Doll_Run_Sheet_v1_230
+  - first:
+      213: -3874849095832645032
+    second: Doll_Run_Sheet_v1_231
+  - first:
+      213: -3036473779435946062
+    second: Doll_Run_Sheet_v1_232
+  - first:
+      213: -4778750326193167180
+    second: Doll_Run_Sheet_v1_233
+  - first:
+      213: -4444169886298188028
+    second: Doll_Run_Sheet_v1_234
+  - first:
+      213: 6220283246161278011
+    second: Doll_Run_Sheet_v1_235
+  - first:
+      213: 9105460101852990665
+    second: Doll_Run_Sheet_v1_236
+  - first:
+      213: -5236575936631040426
+    second: Doll_Run_Sheet_v1_237
+  - first:
+      213: -302290390322362873
+    second: Doll_Run_Sheet_v1_238
+  - first:
+      213: 320659752924004634
+    second: Doll_Run_Sheet_v1_239
+  - first:
+      213: 9214270903850337438
+    second: Doll_Run_Sheet_v1_240
+  - first:
+      213: -4230344340829453724
+    second: Doll_Run_Sheet_v1_241
+  - first:
+      213: 2039398822052154259
+    second: Doll_Run_Sheet_v1_242
+  - first:
+      213: -918341155153040302
+    second: Doll_Run_Sheet_v1_243
+  - first:
+      213: 5331276258123002577
+    second: Doll_Run_Sheet_v1_244
+  - first:
+      213: 1859712600826486090
+    second: Doll_Run_Sheet_v1_245
+  - first:
+      213: -2559146290973079103
+    second: Doll_Run_Sheet_v1_246
+  - first:
+      213: -5626518330662226259
+    second: Doll_Run_Sheet_v1_247
+  - first:
+      213: 8882215112040615960
+    second: Doll_Run_Sheet_v1_248
+  - first:
+      213: 8003202144934371485
+    second: Doll_Run_Sheet_v1_249
+  - first:
+      213: 2192831893252902498
+    second: Doll_Run_Sheet_v1_250
+  - first:
+      213: 7818349187620666302
+    second: Doll_Run_Sheet_v1_251
+  - first:
+      213: -125166713966429803
+    second: Doll_Run_Sheet_v1_252
+  - first:
+      213: 471716719996900360
+    second: Doll_Run_Sheet_v1_253
+  - first:
+      213: -7862975218784555399
+    second: Doll_Run_Sheet_v1_254
+  - first:
+      213: 8586526429169248848
+    second: Doll_Run_Sheet_v1_255
+  - first:
+      213: 1750432913113070368
+    second: Doll_Run_Sheet_v1_256
+  - first:
+      213: 5579142025750532973
+    second: Doll_Run_Sheet_v1_257
+  - first:
+      213: 7406454930902271559
+    second: Doll_Run_Sheet_v1_258
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1009
+        width: 10
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9f4acdf295c16e80800000000000000
+      internalID: -8187045412469059682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_1
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 991
+        width: 45
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7e98556554987110800000000000000
+      internalID: 1258919190343491199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_2
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 485
+        width: 467
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a824948abb7f8a8d0800000000000000
+      internalID: -2834743580075408758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_3
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 995
+        width: 43
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72deec108ad8137c0800000000000000
+      internalID: -4093334833578709721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_4
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 964
+        width: 47
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 781fd3dddbe1da9f0800000000000000
+      internalID: -455674186485075577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_5
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 1016
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf8ad3a0f77ef0700800000000000000
+      internalID: 508879815734831355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_6
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 999
+        width: 41
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d85eb6adcbe35ffc0800000000000000
+      internalID: -3461791757725080179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_7
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 193
+        width: 443
+        height: 831
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fc7a8ccd918627d0800000000000000
+      internalID: -2943522791698563847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_8
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 125
+        width: 588
+        height: 899
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15cee1e9599cf37f0800000000000000
+      internalID: -630563778368443311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_9
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 901
+        width: 73
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6176a23c9883c1aa0800000000000000
+      internalID: -6189009623577893098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_10
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 997
+        width: 17
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9723de4eafc9eac10800000000000000
+      internalID: 2066761880406143609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_11
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 943
+        width: 45
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0623a58bd396e60a0800000000000000
+      internalID: -6886451066396069280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_12
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 977
+        width: 21
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 481a3c532fcc09470800000000000000
+      internalID: 8399438645702140292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_13
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 995
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9d27ac198c40be00800000000000000
+      internalID: 1058430064207015322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_14
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 987
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11656519b5c1ab810800000000000000
+      internalID: 1781767782184408593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_15
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 919
+        width: 55
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f5fb4d5e00207620800000000000000
+      internalID: 2769749016899745264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_16
+      rect:
+        serializedVersion: 2
+        x: 1470
+        y: 917
+        width: 51
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b148ca67e8538bde0800000000000000
+      internalID: -1317244005013224421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_17
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 975
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73a3a115767cf20b0800000000000000
+      internalID: -5751158952572601801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_18
+      rect:
+        serializedVersion: 2
+        x: 920
+        y: 975
+        width: 33
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e5e6f759ee424380800000000000000
+      internalID: -8988535142167943709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_19
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 955
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d3e7aefbdbe4f2f0800000000000000
+      internalID: -939867092110810157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_20
+      rect:
+        serializedVersion: 2
+        x: 993
+        y: 961
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d95fb01894f1acd00800000000000000
+      internalID: 993641068346733981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_21
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 949
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4161b20ca6376bf0800000000000000
+      internalID: -331235935180988084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_22
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 887
+        width: 35
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6c51d0b7ea89c1b0800000000000000
+      internalID: -5635820730968875923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_23
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 885
+        width: 37
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62e78cfb70d718150800000000000000
+      internalID: 5873112861303668262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_24
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 927
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c0fdf28aec790820800000000000000
+      internalID: 2884974382969385156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_25
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 931
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d368dd5d9ecdce300800000000000000
+      internalID: 282843773491054141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_26
+      rect:
+        serializedVersion: 2
+        x: 991
+        y: 927
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec0a510eef17f9e80800000000000000
+      internalID: -8169685859531644722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_27
+      rect:
+        serializedVersion: 2
+        x: 1030
+        y: 919
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75ff7c4be63d33940800000000000000
+      internalID: 5274792061013851991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_28
+      rect:
+        serializedVersion: 2
+        x: 1038
+        y: 913
+        width: 49
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab62c8ae6ee8e0470800000000000000
+      internalID: 8362778680502265530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_29
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 919
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d25277a626eaa390800000000000000
+      internalID: -7806173950400900399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_30
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 919
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 202cb225a1fc32330800000000000000
+      internalID: 3685016632073896450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_31
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 914
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66226801282514a80800000000000000
+      internalID: -8484409504412851610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_32
+      rect:
+        serializedVersion: 2
+        x: 1424
+        y: 899
+        width: 18
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9872cef9c47d55c0800000000000000
+      internalID: -4225092464492250980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_33
+      rect:
+        serializedVersion: 2
+        x: 1480
+        y: 899
+        width: 19
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 094ba66cba6a56c00800000000000000
+      internalID: 893303357801411728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_34
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 880
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72805bd2e4361cd70800000000000000
+      internalID: 9061633112671586343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 813
+        width: 75
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03764fd065bf2b770800000000000000
+      internalID: 8625232583387801392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_36
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 849
+        width: 33
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa08e358568a539d0800000000000000
+      internalID: -2795142839732895574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_37
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 881
+        width: 25
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f8f334599fc09570800000000000000
+      internalID: 8471499156533541106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_38
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 884
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f0440c31d602b6d0800000000000000
+      internalID: -2976308908013633293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_39
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 855
+        width: 37
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 523a502062ea76930800000000000000
+      internalID: 4136466261029004069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_40
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 901
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45a2fbf3282ea8cb0800000000000000
+      internalID: -4860823798749910444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_41
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 867
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 738fcae6abe346c70800000000000000
+      internalID: 8963358128815798327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_42
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 865
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd27bd4edb973ba00800000000000000
+      internalID: 771093817705853659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_43
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 863
+        width: 21
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c34d67a2c99fde5f0800000000000000
+      internalID: -725649515814136772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_44
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 865
+        width: 21
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c7f59d4b4b7727b0800000000000000
+      internalID: -5249091277322586167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_45
+      rect:
+        serializedVersion: 2
+        x: 544
+        y: 850
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0880a54f739b277a0800000000000000
+      internalID: -6380834072056690560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_46
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 833
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a38b829d6c0402e0800000000000000
+      internalID: -2160588256481410137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_47
+      rect:
+        serializedVersion: 2
+        x: 558
+        y: 881
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6997c3e4ec842b70800000000000000
+      internalID: 8873372080528660847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_48
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 886
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05cfe1b6715535880800000000000000
+      internalID: -8623455302414566320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_49
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 865
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f79648359bfb4720800000000000000
+      internalID: 2831633409045338097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_50
+      rect:
+        serializedVersion: 2
+        x: 952
+        y: 883
+        width: 25
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e272c33fb28553cf0800000000000000
+      internalID: -273215256598403282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_51
+      rect:
+        serializedVersion: 2
+        x: 954
+        y: 844
+        width: 21
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38ad633366383a700800000000000000
+      internalID: 550428054438468227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_52
+      rect:
+        serializedVersion: 2
+        x: 974
+        y: 877
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d20cd2f4f17662d0800000000000000
+      internalID: -3285813581259734315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_53
+      rect:
+        serializedVersion: 2
+        x: 984
+        y: 887
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f81a15be0a7e8730800000000000000
+      internalID: 4003271322365466868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_54
+      rect:
+        serializedVersion: 2
+        x: 1054
+        y: 897
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87fc9c713fbfd5bb0800000000000000
+      internalID: -4945519794288210056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_55
+      rect:
+        serializedVersion: 2
+        x: 1478
+        y: 857
+        width: 51
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea7828e5d73d7bef0800000000000000
+      internalID: -92372731927820370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_56
+      rect:
+        serializedVersion: 2
+        x: 542
+        y: 839
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f942e0396ba567470800000000000000
+      internalID: 8391994695849223327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_57
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 845
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ddcc5b0137766f660800000000000000
+      internalID: 7419231180038720733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_58
+      rect:
+        serializedVersion: 2
+        x: 974
+        y: 837
+        width: 16
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33f39a2ff8b6691c0800000000000000
+      internalID: -4497288911887188173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_59
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 819
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 546c92c607ca941e0800000000000000
+      internalID: -2213048143024896443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_60
+      rect:
+        serializedVersion: 2
+        x: 500
+        y: 816
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c9e7f958536f67a0800000000000000
+      internalID: -6381772915843012157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_61
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 817
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 194ac9f165a04a0d0800000000000000
+      internalID: -3412591252626168687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_62
+      rect:
+        serializedVersion: 2
+        x: 968
+        y: 799
+        width: 24
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a3da41e613b545b0800000000000000
+      internalID: -5384700868601130075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_63
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 805
+        width: 23
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cebea4ebf039d4560800000000000000
+      internalID: 7299652266863815660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_64
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 517
+        width: 134
+        height: 299
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb68f7bd2c48d0ae0800000000000000
+      internalID: -1581461921696086340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_65
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 775
+        width: 24
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3b600fd4fe5e8ce0800000000000000
+      internalID: -1401078028259267777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_66
+      rect:
+        serializedVersion: 2
+        x: 538
+        y: 785
+        width: 25
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 160f820d6a761bd00800000000000000
+      internalID: 986683759525425249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_67
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 798
+        width: 11
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47c521c20829b4530800000000000000
+      internalID: 3840324186456349812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_68
+      rect:
+        serializedVersion: 2
+        x: 574
+        y: 807
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd44e337c3e0dd440800000000000000
+      internalID: 4962138017226441951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_69
+      rect:
+        serializedVersion: 2
+        x: 1503
+        y: 795
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a04ff32ebced0cc60800000000000000
+      internalID: 7836508318880232458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_70
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 795
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 688f8e1e72ac29440800000000000000
+      internalID: 4941234013821532294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_71
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 787
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afb881d47c6720a40800000000000000
+      internalID: 5332955507124112378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_72
+      rect:
+        serializedVersion: 2
+        x: 1008
+        y: 789
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10d20169e23218dd0800000000000000
+      internalID: -2485666836338692863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_73
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 779
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6d28149ee59bf660800000000000000
+      internalID: 7420689662942391660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_74
+      rect:
+        serializedVersion: 2
+        x: 983
+        y: 783
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a977e1fc0cc3939a0800000000000000
+      internalID: -6252899808820955238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_75
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 751
+        width: 15
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d02d477128c2ab30800000000000000
+      internalID: 4297217040525893843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_76
+      rect:
+        serializedVersion: 2
+        x: 1480
+        y: 775
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa88c5e551fbf2640800000000000000
+      internalID: 5057471005058697391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_77
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 751
+        width: 21
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1b1a2975492938c0800000000000000
+      internalID: -4019135814089172196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_78
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 761
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6a3da48b65cbdd30800000000000000
+      internalID: 4457373321791355503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_79
+      rect:
+        serializedVersion: 2
+        x: 596
+        y: 755
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3458fde4567ea0590800000000000000
+      internalID: -7707093389990197949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_80
+      rect:
+        serializedVersion: 2
+        x: 1488
+        y: 738
+        width: 30
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd06f3ccff085be30800000000000000
+      internalID: 4518659637267882203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_81
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 737
+        width: 21
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86f8e55ca77ce41e0800000000000000
+      internalID: -2211611036881088664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_82
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 737
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8da650177464eaf30800000000000000
+      internalID: 4588682342989916888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_83
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 741
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3826fdc6573479100800000000000000
+      internalID: 114634487138050691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_84
+      rect:
+        serializedVersion: 2
+        x: 1414
+        y: 731
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30b6c879d26709cb0800000000000000
+      internalID: -4859254059744597245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_85
+      rect:
+        serializedVersion: 2
+        x: 1464
+        y: 743
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 629018fadf6318e00800000000000000
+      internalID: 1045177051725760806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_86
+      rect:
+        serializedVersion: 2
+        x: 1482
+        y: 739
+        width: 9
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83ecb79128c745c70800000000000000
+      internalID: 8958922456961895992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_87
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 701
+        width: 25
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3031e7f5f644aa70800000000000000
+      internalID: 8837266391047417916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_88
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 713
+        width: 7
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60b2adad5b6f915b0800000000000000
+      internalID: -5397011417505584378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_89
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 702
+        width: 9
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ebb87b983fde04c0800000000000000
+      internalID: -4319269558382183448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_90
+      rect:
+        serializedVersion: 2
+        x: 592
+        y: 707
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd78006fc58e251e0800000000000000
+      internalID: -2210448981123627045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_91
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 719
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb3c989f4db663190800000000000000
+      internalID: -7983074727003831361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_92
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 721
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a7ef9b332563b680800000000000000
+      internalID: -8740531249797404763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_93
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 695
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0d452a81e6aee7e0800000000000000
+      internalID: -1734265318875509494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_94
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 685
+        width: 11
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7198da875fa748560800000000000000
+      internalID: 7315106889466743063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_95
+      rect:
+        serializedVersion: 2
+        x: 976
+        y: 691
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d48bf7e36b7882210800000000000000
+      internalID: 1308444908553484365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_96
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 627
+        width: 35
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37ef7a47127c9f2f0800000000000000
+      internalID: -938500100825022861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_97
+      rect:
+        serializedVersion: 2
+        x: 1442
+        y: 671
+        width: 16
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62391cbb0ff11b430800000000000000
+      internalID: 3796851079652676390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_98
+      rect:
+        serializedVersion: 2
+        x: 1480
+        y: 689
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d9cd97a5b8b7d4a0800000000000000
+      internalID: -6568578441155851817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_99
+      rect:
+        serializedVersion: 2
+        x: 1492
+        y: 693
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22b69d8de5d47e160800000000000000
+      internalID: 7054692411059563298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_100
+      rect:
+        serializedVersion: 2
+        x: 984
+        y: 679
+        width: 23
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea46b51013dc96ed0800000000000000
+      internalID: -2420177714375072594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_101
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 673
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1dd7671e65aa2bd0800000000000000
+      internalID: -2654127138123817698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_102
+      rect:
+        serializedVersion: 2
+        x: 1456
+        y: 675
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86730012d48aa8b50800000000000000
+      internalID: 6596269653457123176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_103
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 663
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78d3039b4e00d6f60800000000000000
+      internalID: 8029074693030952327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_104
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 643
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0898bdfd4f819d2f0800000000000000
+      internalID: -947698806577985152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_105
+      rect:
+        serializedVersion: 2
+        x: 1448
+        y: 631
+        width: 25
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f729988fd46df9620800000000000000
+      internalID: 2783178725108847231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_106
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 621
+        width: 7
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d429de0aea91d230800000000000000
+      internalID: 3661878302091060434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_107
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 639
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b2e17ff83b6a35a0800000000000000
+      internalID: -6540797616254229838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_108
+      rect:
+        serializedVersion: 2
+        x: 522
+        y: 647
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3881001221591d070800000000000000
+      internalID: 8129442707476060291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_109
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 647
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b76b313072dcf5900800000000000000
+      internalID: 675484036567905915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_110
+      rect:
+        serializedVersion: 2
+        x: 1494
+        y: 645
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b8e6aed44609e250800000000000000
+      internalID: 5974313273546696886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_111
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 623
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 949390037723d1890800000000000000
+      internalID: -7485771518131488439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_112
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 619
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e640d009f745aed0800000000000000
+      internalID: -2403435691346213143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_113
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 612
+        width: 7
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db3ce513d0be05e10800000000000000
+      internalID: 2184504261170086845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_114
+      rect:
+        serializedVersion: 2
+        x: 1008
+        y: 629
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1421636e3cb2f34d0800000000000000
+      internalID: -3152753093755137471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_115
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 597
+        width: 7
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6d18a778f2f67540800000000000000
+      internalID: 5005455184842202475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_116
+      rect:
+        serializedVersion: 2
+        x: 999
+        y: 615
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b6801bb5ca63b230800000000000000
+      internalID: 3653381120207128247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_117
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 609
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7ce2e3967fd81300800000000000000
+      internalID: 223173881935096956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_118
+      rect:
+        serializedVersion: 2
+        x: 1038
+        y: 599
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3815987685e27bde0800000000000000
+      internalID: -1317533408753528445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_119
+      rect:
+        serializedVersion: 2
+        x: 1064
+        y: 615
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dad69ad5ea71de1b0800000000000000
+      internalID: -5625814321852748371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_120
+      rect:
+        serializedVersion: 2
+        x: 1438
+        y: 605
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be364325e9f8371f0800000000000000
+      internalID: -1048336378100423701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_121
+      rect:
+        serializedVersion: 2
+        x: 1446
+        y: 607
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3c6df0bbab496560800000000000000
+      internalID: 7307455071166229565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_122
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 570
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c309a0b68b3abdfa0800000000000000
+      internalID: -5774842084707364804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_123
+      rect:
+        serializedVersion: 2
+        x: 510
+        y: 581
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53302a064c8472cb0800000000000000
+      internalID: -4888858862215363787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_124
+      rect:
+        serializedVersion: 2
+        x: 1004
+        y: 565
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 089978f50da9c09c0800000000000000
+      internalID: -3959619752618911360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_125
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 593
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79d54bdaa110659a0800000000000000
+      internalID: -6244802619207557737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_126
+      rect:
+        serializedVersion: 2
+        x: 1076
+        y: 0
+        width: 421
+        height: 610
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4705accd31be0b00800000000000000
+      internalID: 796769063075645263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_127
+      rect:
+        serializedVersion: 2
+        x: 1078
+        y: 581
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39b4b4e97c904a9d0800000000000000
+      internalID: -2764073518339765357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_128
+      rect:
+        serializedVersion: 2
+        x: 1486
+        y: 577
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41428711252bc2200800000000000000
+      internalID: 156696152601273364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_129
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 535
+        width: 7
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1bb6dfc483b9cbaa0800000000000000
+      internalID: -6143865125528048719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_130
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 582
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bd72f7e7fa6a0b20800000000000000
+      internalID: 3101408906378902968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_131
+      rect:
+        serializedVersion: 2
+        x: 1493
+        y: 575
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c83a83d8ba5204d0800000000000000
+      internalID: -3169871437845874496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_132
+      rect:
+        serializedVersion: 2
+        x: 1496
+        y: 583
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b645b9fcde9a93b0800000000000000
+      internalID: -5504912922587609422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_133
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 561
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5130e7160591e4780800000000000000
+      internalID: -8696985997382122731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_134
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 553
+        width: 29
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc235e30fd7210070800000000000000
+      internalID: 8070775846021182157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_135
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 571
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8df41e0f5d1e7700800000000000000
+      internalID: 539901299426393482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_136
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 545
+        width: 25
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbab69ac742540260800000000000000
+      internalID: 7062860583918811835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_137
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 531
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d8661a8bbd4935b0800000000000000
+      internalID: -5388190011301140267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_138
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 551
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aeff992762c1c6170800000000000000
+      internalID: 8172938375227637738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_139
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 549
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81b4d688b46f192d0800000000000000
+      internalID: -3273564649849795816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_140
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 553
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13ce4986b0728a7a0800000000000000
+      internalID: -6365795143335482319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_141
+      rect:
+        serializedVersion: 2
+        x: 1530
+        y: 555
+        width: 6
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 755304c26697e2a70800000000000000
+      internalID: 8804107801291928919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_142
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 465
+        width: 116
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afd7a558339b601c0800000000000000
+      internalID: -4537735943597425158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_143
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 529
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b8c2b123736bc710800000000000000
+      internalID: 1714573429282359479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_144
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 531
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3f6cc1dae0147fa0800000000000000
+      internalID: -5803995419045499077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_145
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 543
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94f49842404e24e30800000000000000
+      internalID: 4486398885258415945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_146
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 535
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53d368731ca17e8c0800000000000000
+      internalID: -3970175129341248203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_147
+      rect:
+        serializedVersion: 2
+        x: 402
+        y: 471
+        width: 57
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb07d2665722422f0800000000000000
+      internalID: -998635329748635458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_148
+      rect:
+        serializedVersion: 2
+        x: 942
+        y: 518
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c2f6ccadbd4f4580800000000000000
+      internalID: -8840762066462117182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_149
+      rect:
+        serializedVersion: 2
+        x: 948
+        y: 523
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec38fd1a7eb0f1aa0800000000000000
+      internalID: -6188214273502641202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_150
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 495
+        width: 17
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52318d649f02bb0c0800000000000000
+      internalID: -4559013942774983899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_151
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 507
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad31c476947bf6a80800000000000000
+      internalID: -8471350848167078950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_152
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 471
+        width: 35
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b66484e43f974b840800000000000000
+      internalID: 5238946352436102763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_153
+      rect:
+        serializedVersion: 2
+        x: 862
+        y: 463
+        width: 97
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8233fc5749776ec0800000000000000
+      internalID: -3573754431886118259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_154
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 423
+        width: 35
+        height: 81
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae5de9c22f294b7d0800000000000000
+      internalID: -2903534290918779414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_155
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 0
+        width: 471
+        height: 488
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f091aa15267480790800000000000000
+      internalID: -7563717086566278897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_156
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 481
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0db6641fcf5701df0800000000000000
+      internalID: -211539453246280752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_157
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 481
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 962a17757777bb730800000000000000
+      internalID: 4015934847182807657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_158
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 0
+        width: 417
+        height: 483
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2109f47dc3776e0f0800000000000000
+      internalID: -1088051156769337326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_159
+      rect:
+        serializedVersion: 2
+        x: 654
+        y: 455
+        width: 27
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd19bf088066aafb0800000000000000
+      internalID: -4635780679714762277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_160
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 360
+        width: 101
+        height: 116
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cff4e0a4b66f21370800000000000000
+      internalID: 8291960804606889980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_161
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 455
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45aa08bccc842d900800000000000000
+      internalID: 707708135875324500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_162
+      rect:
+        serializedVersion: 2
+        x: 1528
+        y: 463
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 316063ec5bd7876e0800000000000000
+      internalID: -1839582227978648045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_163
+      rect:
+        serializedVersion: 2
+        x: 566
+        y: 439
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1c67a77827b5b590800000000000000
+      internalID: -7659014206839624678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_164
+      rect:
+        serializedVersion: 2
+        x: 1488
+        y: 433
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 904f9155f1129aed0800000000000000
+      internalID: -2402352507769981943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_165
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 423
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06e4f8207c8810050800000000000000
+      internalID: 5765039386333761120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_166
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 397
+        width: 31
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41bf638a7146982d0800000000000000
+      internalID: -3275977201166124268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_167
+      rect:
+        serializedVersion: 2
+        x: 976
+        y: 413
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6b327d8e6b1def70800000000000000
+      internalID: 9218054173930699631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_168
+      rect:
+        serializedVersion: 2
+        x: 1494
+        y: 391
+        width: 33
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50a68f4453e7d9730800000000000000
+      internalID: 4007498010685106693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_169
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 387
+        width: 9
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95c313cea82103700800000000000000
+      internalID: 517934345025043545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_170
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 389
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d38b31aab83f25bc0800000000000000
+      internalID: -3795703754740484035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_171
+      rect:
+        serializedVersion: 2
+        x: 1492
+        y: 405
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eee558beff0da4460800000000000000
+      internalID: 7226818349656006382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_172
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 361
+        width: 15
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bc610f45d51548f0800000000000000
+      internalID: -557014973012677450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_173
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 359
+        width: 9
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc6be261bf8e3a540800000000000000
+      internalID: 5018110574927460044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_174
+      rect:
+        serializedVersion: 2
+        x: 952
+        y: 367
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b793d4d0927a27b50800000000000000
+      internalID: 6589512999555119483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_175
+      rect:
+        serializedVersion: 2
+        x: 980
+        y: 361
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25cbf1541d866b430800000000000000
+      internalID: 3798338583750753362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_176
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 13
+        width: 107
+        height: 352
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0aeb9b75a80f7da30800000000000000
+      internalID: 4240122051160555168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_177
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 343
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c79b7157b2a0f190800000000000000
+      internalID: -7930660035569674300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_178
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 341
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 495dc93bb73d6ca30800000000000000
+      internalID: 4235305027836368276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_179
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 243
+        width: 69
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cee3cd7404f8ce70800000000000000
+      internalID: 9135820144248090313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_180
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 331
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0eb22d8ebcdeca060800000000000000
+      internalID: 6966204183675546592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_181
+      rect:
+        serializedVersion: 2
+        x: 1046
+        y: 338
+        width: 17
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c075e5202b1bcbda0800000000000000
+      internalID: -5927667631424383220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_182
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 305
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aac4769677db044b0800000000000000
+      internalID: -5458154427805905750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_183
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 287
+        width: 13
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82b44d079b1c24700800000000000000
+      internalID: 523193508934470440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_184
+      rect:
+        serializedVersion: 2
+        x: 1014
+        y: 287
+        width: 15
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 770ce3916f1e88820800000000000000
+      internalID: 2920832805451513975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_185
+      rect:
+        serializedVersion: 2
+        x: 1046
+        y: 293
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad47c51ff002ccd90800000000000000
+      internalID: -7076245661659925286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_186
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 285
+        width: 5
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9264517dfa8b96c0800000000000000
+      internalID: -4135559011676953954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_187
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 289
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fada9b0d91d4f6b80800000000000000
+      internalID: -8399410006751334993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_188
+      rect:
+        serializedVersion: 2
+        x: 1034
+        y: 285
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d85ba14270fe84df0800000000000000
+      internalID: -195643769841076851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_189
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 277
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81c83db2dae64a820800000000000000
+      internalID: 2928587347741346840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_190
+      rect:
+        serializedVersion: 2
+        x: 1088
+        y: 280
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe60a73b0e9587010800000000000000
+      internalID: 1186797323430790895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_191
+      rect:
+        serializedVersion: 2
+        x: 1094
+        y: 271
+        width: 9
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a7bf8583b7d6c470800000000000000
+      internalID: 8414650119828256678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_192
+      rect:
+        serializedVersion: 2
+        x: 1468
+        y: 231
+        width: 43
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac57644ff705cc960800000000000000
+      internalID: 7623556779720734154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_193
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 235
+        width: 9
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0caf7169254926bb0800000000000000
+      internalID: -4944226358473000256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_194
+      rect:
+        serializedVersion: 2
+        x: 606
+        y: 257
+        width: 21
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 512b3c3f966529980800000000000000
+      internalID: -8533663330852425195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_195
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 201
+        width: 51
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c35007074a25d480800000000000000
+      internalID: -8875141006115187768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_196
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 235
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12816265881648350800000000000000
+      internalID: 6018042240262608929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_197
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 227
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1661482dc2e14d9e0800000000000000
+      internalID: -1597618789950417311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_198
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 241
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 022d869f475c7a860800000000000000
+      internalID: 7541213207246459424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_199
+      rect:
+        serializedVersion: 2
+        x: 1462
+        y: 191
+        width: 39
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2315baaa242b46a10800000000000000
+      internalID: 1901840942058131762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_200
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 231
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 975ed75f6ee2df8f0800000000000000
+      internalID: -505196013699603079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_201
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 225
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e0355a441b8b81f0800000000000000
+      internalID: -1041585969543434012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_202
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 201
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bba5385cebdd4370800000000000000
+      internalID: 8308538695707110326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_203
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 157
+        width: 5
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec753ac8e87195290800000000000000
+      internalID: -7901258170232514610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_204
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 191
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30d4edc3ca19e21f0800000000000000
+      internalID: -1067755892698624765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_205
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 85
+        width: 45
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c09fc2855fc37fd0800000000000000
+      internalID: -2345303014756085560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_206
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 155
+        width: 43
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2171c46971fa27740800000000000000
+      internalID: 5148369839878575890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_207
+      rect:
+        serializedVersion: 2
+        x: 1479
+        y: 145
+        width: 13
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a92386a3946404b60800000000000000
+      internalID: 7728254240894235290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_208
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 127
+        width: 5
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88a01520a62802e40800000000000000
+      internalID: 5629642926030129800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_209
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 135
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bd5b34ae39ab4520800000000000000
+      internalID: 2687427689165053362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_210
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 129
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b55b079da37b9c20800000000000000
+      internalID: 3214289948459619769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_211
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 142
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b66309568b88e1d0800000000000000
+      internalID: -3321251316050467143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_212
+      rect:
+        serializedVersion: 2
+        x: 1438
+        y: 33
+        width: 87
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfa6156f7bf13b9e0800000000000000
+      internalID: -1606905767069127941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_213
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 109
+        width: 21
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f7863c56d999fe60800000000000000
+      internalID: 7996591759322154993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_214
+      rect:
+        serializedVersion: 2
+        x: 614
+        y: 129
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d31c6034b228bb520800000000000000
+      internalID: 2718909922367947069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_215
+      rect:
+        serializedVersion: 2
+        x: 1006
+        y: 99
+        width: 19
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98e59294eca1f0830800000000000000
+      internalID: 4039476864067657353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_216
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 85
+        width: 29
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ed1e184ab0ca12c0800000000000000
+      internalID: -4460040574650671648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_217
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 101
+        width: 17
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 307a18c033a2ee4b0800000000000000
+      internalID: -5409339703683864829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_218
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 63
+        width: 27
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19cdf834a595d3320800000000000000
+      internalID: 2539284009122258065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_219
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 45
+        width: 63
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 727e2098fcb2b0e10800000000000000
+      internalID: 2164872216238548775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_220
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 95
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6e3d7ee2e8da91a0800000000000000
+      internalID: -6801885818014318993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_221
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 33
+        width: 27
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 055184df6912bbe40800000000000000
+      internalID: 5673165087981442384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_222
+      rect:
+        serializedVersion: 2
+        x: 941
+        y: 101
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cded1de9019a6efb0800000000000000
+      internalID: -4618818478972739876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_223
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 95
+        width: 11
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53df0d122b6fef0e0800000000000000
+      internalID: -2234077120197231307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_224
+      rect:
+        serializedVersion: 2
+        x: 990
+        y: 23
+        width: 53
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 712cfa4e48c8cf700800000000000000
+      internalID: 575489354796876311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_225
+      rect:
+        serializedVersion: 2
+        x: 1042
+        y: 33
+        width: 53
+        height: 71
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 019802415fadbe9e0800000000000000
+      internalID: -1590937297205819120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_226
+      rect:
+        serializedVersion: 2
+        x: 1292
+        y: 0
+        width: 159
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 350d1c160de48d530800000000000000
+      internalID: 3879937735879938131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_227
+      rect:
+        serializedVersion: 2
+        x: 1522
+        y: 87
+        width: 14
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8d2c9a6e118265a0800000000000000
+      internalID: -6529514542096175731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_228
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 0
+        width: 155
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e60de40213d96c0e0800000000000000
+      internalID: -2249938129503989650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_229
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 69
+        width: 27
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0e7c0c7ec8da3190800000000000000
+      internalID: -7981829008204726774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_230
+      rect:
+        serializedVersion: 2
+        x: 566
+        y: 57
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 224d45e04c3bcd380800000000000000
+      internalID: -8945077105229245406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_231
+      rect:
+        serializedVersion: 2
+        x: 1032
+        y: 73
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 852d6a4f645c93ac0800000000000000
+      internalID: -3874849095832645032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_232
+      rect:
+        serializedVersion: 2
+        x: 1122
+        y: 65
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bfbeee7f274cd5d0800000000000000
+      internalID: -3036473779435946062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_233
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 42
+        width: 21
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b469f0b5e77eadb0800000000000000
+      internalID: -4778750326193167180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_234
+      rect:
+        serializedVersion: 2
+        x: 577
+        y: 61
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40755bdd8032352c0800000000000000
+      internalID: -4444169886298188028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_235
+      rect:
+        serializedVersion: 2
+        x: 1194
+        y: 45
+        width: 39
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b34b1c9e7a2e25650800000000000000
+      internalID: 6220283246161278011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_236
+      rect:
+        serializedVersion: 2
+        x: 1082
+        y: 51
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cc807748b71d5e70800000000000000
+      internalID: 9105460101852990665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_237
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 49
+        width: 14
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6569fb12ee1f357b0800000000000000
+      internalID: -5236575936631040426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_238
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 49
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70642d9dd7c0ecbf0800000000000000
+      internalID: -302290390322362873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_239
+      rect:
+        serializedVersion: 2
+        x: 1176
+        y: 17
+        width: 27
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a11cccaa856337400800000000000000
+      internalID: 320659752924004634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_240
+      rect:
+        serializedVersion: 2
+        x: 1264
+        y: 43
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e948738519aafdf70800000000000000
+      internalID: 9214270903850337438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_241
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 35
+        width: 9
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 462c64f3c3cca45c0800000000000000
+      internalID: -4230344340829453724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_242
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 13
+        width: 43
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39bc4c76c666d4c10800000000000000
+      internalID: 2039398822052154259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_243
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 7
+        width: 23
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25c2b70c5956143f0800000000000000
+      internalID: -918341155153040302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_244
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 5
+        width: 33
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d235eca28f7cf940800000000000000
+      internalID: 5331276258123002577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_245
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 17
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4d949cd1c60fc910800000000000000
+      internalID: 1859712600826486090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_246
+      rect:
+        serializedVersion: 2
+        x: 862
+        y: 15
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c98a4ed1061c7cd0800000000000000
+      internalID: -2559146290973079103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_247
+      rect:
+        serializedVersion: 2
+        x: 916
+        y: 11
+        width: 27
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da677aa83679ae1b0800000000000000
+      internalID: -5626518330662226259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_248
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 9
+        width: 21
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81099cb9597f34b70800000000000000
+      internalID: 8882215112040615960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_249
+      rect:
+        serializedVersion: 2
+        x: 1044
+        y: 15
+        width: 17
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d902572b2f5111f60800000000000000
+      internalID: 8003202144934371485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_250
+      rect:
+        serializedVersion: 2
+        x: 1278
+        y: 15
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26e8c712df08e6e10800000000000000
+      internalID: 2192831893252902498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_251
+      rect:
+        serializedVersion: 2
+        x: 1282
+        y: 17
+        width: 23
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebbf71aa92b508c60800000000000000
+      internalID: 7818349187620666302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_252
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 0
+        width: 73
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 599f35c6981534ef0800000000000000
+      internalID: -125166713966429803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_253
+      rect:
+        serializedVersion: 2
+        x: 1451
+        y: 0
+        width: 85
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 804170a8bdfdb8600800000000000000
+      internalID: 471716719996900360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_254
+      rect:
+        serializedVersion: 2
+        x: 1488
+        y: 19
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97ea5a6c2b911e290800000000000000
+      internalID: -7862975218784555399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_255
+      rect:
+        serializedVersion: 2
+        x: 1498
+        y: 7
+        width: 23
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05ae2214b48792770800000000000000
+      internalID: 8586526429169248848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_256
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 36
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02bb145d579ca4810800000000000000
+      internalID: 1750432913113070368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_257
+      rect:
+        serializedVersion: 2
+        x: 570
+        y: 0
+        width: 142
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d635054ec181d6d40800000000000000
+      internalID: 5579142025750532973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Doll_Run_Sheet_v1_258
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 0
+        width: 139
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 746ce51c48309c660800000000000000
+      internalID: 7406454930902271559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Doll_Run_Sheet_v1_0: -8187045412469059682
+      Doll_Run_Sheet_v1_1: 1258919190343491199
+      Doll_Run_Sheet_v1_10: 2066761880406143609
+      Doll_Run_Sheet_v1_100: -2420177714375072594
+      Doll_Run_Sheet_v1_101: -2654127138123817698
+      Doll_Run_Sheet_v1_102: 6596269653457123176
+      Doll_Run_Sheet_v1_103: 8029074693030952327
+      Doll_Run_Sheet_v1_104: -947698806577985152
+      Doll_Run_Sheet_v1_105: 2783178725108847231
+      Doll_Run_Sheet_v1_106: 3661878302091060434
+      Doll_Run_Sheet_v1_107: -6540797616254229838
+      Doll_Run_Sheet_v1_108: 8129442707476060291
+      Doll_Run_Sheet_v1_109: 675484036567905915
+      Doll_Run_Sheet_v1_11: -6886451066396069280
+      Doll_Run_Sheet_v1_110: 5974313273546696886
+      Doll_Run_Sheet_v1_111: -7485771518131488439
+      Doll_Run_Sheet_v1_112: -2403435691346213143
+      Doll_Run_Sheet_v1_113: 2184504261170086845
+      Doll_Run_Sheet_v1_114: -3152753093755137471
+      Doll_Run_Sheet_v1_115: 5005455184842202475
+      Doll_Run_Sheet_v1_116: 3653381120207128247
+      Doll_Run_Sheet_v1_117: 223173881935096956
+      Doll_Run_Sheet_v1_118: -1317533408753528445
+      Doll_Run_Sheet_v1_119: -5625814321852748371
+      Doll_Run_Sheet_v1_12: 8399438645702140292
+      Doll_Run_Sheet_v1_120: -1048336378100423701
+      Doll_Run_Sheet_v1_121: 7307455071166229565
+      Doll_Run_Sheet_v1_122: -5774842084707364804
+      Doll_Run_Sheet_v1_123: -4888858862215363787
+      Doll_Run_Sheet_v1_124: -3959619752618911360
+      Doll_Run_Sheet_v1_125: -6244802619207557737
+      Doll_Run_Sheet_v1_126: 796769063075645263
+      Doll_Run_Sheet_v1_127: -2764073518339765357
+      Doll_Run_Sheet_v1_128: 156696152601273364
+      Doll_Run_Sheet_v1_129: -6143865125528048719
+      Doll_Run_Sheet_v1_13: 1058430064207015322
+      Doll_Run_Sheet_v1_130: 3101408906378902968
+      Doll_Run_Sheet_v1_131: -3169871437845874496
+      Doll_Run_Sheet_v1_132: -5504912922587609422
+      Doll_Run_Sheet_v1_133: -8696985997382122731
+      Doll_Run_Sheet_v1_134: 8070775846021182157
+      Doll_Run_Sheet_v1_135: 539901299426393482
+      Doll_Run_Sheet_v1_136: 7062860583918811835
+      Doll_Run_Sheet_v1_137: -5388190011301140267
+      Doll_Run_Sheet_v1_138: 8172938375227637738
+      Doll_Run_Sheet_v1_139: -3273564649849795816
+      Doll_Run_Sheet_v1_14: 1781767782184408593
+      Doll_Run_Sheet_v1_140: -6365795143335482319
+      Doll_Run_Sheet_v1_141: 8804107801291928919
+      Doll_Run_Sheet_v1_142: -4537735943597425158
+      Doll_Run_Sheet_v1_143: 1714573429282359479
+      Doll_Run_Sheet_v1_144: -5803995419045499077
+      Doll_Run_Sheet_v1_145: 4486398885258415945
+      Doll_Run_Sheet_v1_146: -3970175129341248203
+      Doll_Run_Sheet_v1_147: -998635329748635458
+      Doll_Run_Sheet_v1_148: -8840762066462117182
+      Doll_Run_Sheet_v1_149: -6188214273502641202
+      Doll_Run_Sheet_v1_15: 2769749016899745264
+      Doll_Run_Sheet_v1_150: -4559013942774983899
+      Doll_Run_Sheet_v1_151: -8471350848167078950
+      Doll_Run_Sheet_v1_152: 5238946352436102763
+      Doll_Run_Sheet_v1_153: -3573754431886118259
+      Doll_Run_Sheet_v1_154: -2903534290918779414
+      Doll_Run_Sheet_v1_155: -7563717086566278897
+      Doll_Run_Sheet_v1_156: -211539453246280752
+      Doll_Run_Sheet_v1_157: 4015934847182807657
+      Doll_Run_Sheet_v1_158: -1088051156769337326
+      Doll_Run_Sheet_v1_159: -4635780679714762277
+      Doll_Run_Sheet_v1_16: -1317244005013224421
+      Doll_Run_Sheet_v1_160: 8291960804606889980
+      Doll_Run_Sheet_v1_161: 707708135875324500
+      Doll_Run_Sheet_v1_162: -1839582227978648045
+      Doll_Run_Sheet_v1_163: -7659014206839624678
+      Doll_Run_Sheet_v1_164: -2402352507769981943
+      Doll_Run_Sheet_v1_165: 5765039386333761120
+      Doll_Run_Sheet_v1_166: -3275977201166124268
+      Doll_Run_Sheet_v1_167: 9218054173930699631
+      Doll_Run_Sheet_v1_168: 4007498010685106693
+      Doll_Run_Sheet_v1_169: 517934345025043545
+      Doll_Run_Sheet_v1_17: -5751158952572601801
+      Doll_Run_Sheet_v1_170: -3795703754740484035
+      Doll_Run_Sheet_v1_171: 7226818349656006382
+      Doll_Run_Sheet_v1_172: -557014973012677450
+      Doll_Run_Sheet_v1_173: 5018110574927460044
+      Doll_Run_Sheet_v1_174: 6589512999555119483
+      Doll_Run_Sheet_v1_175: 3798338583750753362
+      Doll_Run_Sheet_v1_176: 4240122051160555168
+      Doll_Run_Sheet_v1_177: -7930660035569674300
+      Doll_Run_Sheet_v1_178: 4235305027836368276
+      Doll_Run_Sheet_v1_179: 9135820144248090313
+      Doll_Run_Sheet_v1_18: -8988535142167943709
+      Doll_Run_Sheet_v1_180: 6966204183675546592
+      Doll_Run_Sheet_v1_181: -5927667631424383220
+      Doll_Run_Sheet_v1_182: -5458154427805905750
+      Doll_Run_Sheet_v1_183: 523193508934470440
+      Doll_Run_Sheet_v1_184: 2920832805451513975
+      Doll_Run_Sheet_v1_185: -7076245661659925286
+      Doll_Run_Sheet_v1_186: -4135559011676953954
+      Doll_Run_Sheet_v1_187: -8399410006751334993
+      Doll_Run_Sheet_v1_188: -195643769841076851
+      Doll_Run_Sheet_v1_189: 2928587347741346840
+      Doll_Run_Sheet_v1_19: -939867092110810157
+      Doll_Run_Sheet_v1_190: 1186797323430790895
+      Doll_Run_Sheet_v1_191: 8414650119828256678
+      Doll_Run_Sheet_v1_192: 7623556779720734154
+      Doll_Run_Sheet_v1_193: -4944226358473000256
+      Doll_Run_Sheet_v1_194: -8533663330852425195
+      Doll_Run_Sheet_v1_195: -8875141006115187768
+      Doll_Run_Sheet_v1_196: 6018042240262608929
+      Doll_Run_Sheet_v1_197: -1597618789950417311
+      Doll_Run_Sheet_v1_198: 7541213207246459424
+      Doll_Run_Sheet_v1_199: 1901840942058131762
+      Doll_Run_Sheet_v1_2: -2834743580075408758
+      Doll_Run_Sheet_v1_20: 993641068346733981
+      Doll_Run_Sheet_v1_200: -505196013699603079
+      Doll_Run_Sheet_v1_201: -1041585969543434012
+      Doll_Run_Sheet_v1_202: 8308538695707110326
+      Doll_Run_Sheet_v1_203: -7901258170232514610
+      Doll_Run_Sheet_v1_204: -1067755892698624765
+      Doll_Run_Sheet_v1_205: -2345303014756085560
+      Doll_Run_Sheet_v1_206: 5148369839878575890
+      Doll_Run_Sheet_v1_207: 7728254240894235290
+      Doll_Run_Sheet_v1_208: 5629642926030129800
+      Doll_Run_Sheet_v1_209: 2687427689165053362
+      Doll_Run_Sheet_v1_21: -331235935180988084
+      Doll_Run_Sheet_v1_210: 3214289948459619769
+      Doll_Run_Sheet_v1_211: -3321251316050467143
+      Doll_Run_Sheet_v1_212: -1606905767069127941
+      Doll_Run_Sheet_v1_213: 7996591759322154993
+      Doll_Run_Sheet_v1_214: 2718909922367947069
+      Doll_Run_Sheet_v1_215: 4039476864067657353
+      Doll_Run_Sheet_v1_216: -4460040574650671648
+      Doll_Run_Sheet_v1_217: -5409339703683864829
+      Doll_Run_Sheet_v1_218: 2539284009122258065
+      Doll_Run_Sheet_v1_219: 2164872216238548775
+      Doll_Run_Sheet_v1_22: -5635820730968875923
+      Doll_Run_Sheet_v1_220: -6801885818014318993
+      Doll_Run_Sheet_v1_221: 5673165087981442384
+      Doll_Run_Sheet_v1_222: -4618818478972739876
+      Doll_Run_Sheet_v1_223: -2234077120197231307
+      Doll_Run_Sheet_v1_224: 575489354796876311
+      Doll_Run_Sheet_v1_225: -1590937297205819120
+      Doll_Run_Sheet_v1_226: 3879937735879938131
+      Doll_Run_Sheet_v1_227: -6529514542096175731
+      Doll_Run_Sheet_v1_228: -2249938129503989650
+      Doll_Run_Sheet_v1_229: -7981829008204726774
+      Doll_Run_Sheet_v1_23: 5873112861303668262
+      Doll_Run_Sheet_v1_230: -8945077105229245406
+      Doll_Run_Sheet_v1_231: -3874849095832645032
+      Doll_Run_Sheet_v1_232: -3036473779435946062
+      Doll_Run_Sheet_v1_233: -4778750326193167180
+      Doll_Run_Sheet_v1_234: -4444169886298188028
+      Doll_Run_Sheet_v1_235: 6220283246161278011
+      Doll_Run_Sheet_v1_236: 9105460101852990665
+      Doll_Run_Sheet_v1_237: -5236575936631040426
+      Doll_Run_Sheet_v1_238: -302290390322362873
+      Doll_Run_Sheet_v1_239: 320659752924004634
+      Doll_Run_Sheet_v1_24: 2884974382969385156
+      Doll_Run_Sheet_v1_240: 9214270903850337438
+      Doll_Run_Sheet_v1_241: -4230344340829453724
+      Doll_Run_Sheet_v1_242: 2039398822052154259
+      Doll_Run_Sheet_v1_243: -918341155153040302
+      Doll_Run_Sheet_v1_244: 5331276258123002577
+      Doll_Run_Sheet_v1_245: 1859712600826486090
+      Doll_Run_Sheet_v1_246: -2559146290973079103
+      Doll_Run_Sheet_v1_247: -5626518330662226259
+      Doll_Run_Sheet_v1_248: 8882215112040615960
+      Doll_Run_Sheet_v1_249: 8003202144934371485
+      Doll_Run_Sheet_v1_25: 282843773491054141
+      Doll_Run_Sheet_v1_250: 2192831893252902498
+      Doll_Run_Sheet_v1_251: 7818349187620666302
+      Doll_Run_Sheet_v1_252: -125166713966429803
+      Doll_Run_Sheet_v1_253: 471716719996900360
+      Doll_Run_Sheet_v1_254: -7862975218784555399
+      Doll_Run_Sheet_v1_255: 8586526429169248848
+      Doll_Run_Sheet_v1_256: 1750432913113070368
+      Doll_Run_Sheet_v1_257: 5579142025750532973
+      Doll_Run_Sheet_v1_258: 7406454930902271559
+      Doll_Run_Sheet_v1_26: -8169685859531644722
+      Doll_Run_Sheet_v1_27: 5274792061013851991
+      Doll_Run_Sheet_v1_28: 8362778680502265530
+      Doll_Run_Sheet_v1_29: -7806173950400900399
+      Doll_Run_Sheet_v1_3: -4093334833578709721
+      Doll_Run_Sheet_v1_30: 3685016632073896450
+      Doll_Run_Sheet_v1_31: -8484409504412851610
+      Doll_Run_Sheet_v1_32: -4225092464492250980
+      Doll_Run_Sheet_v1_33: 893303357801411728
+      Doll_Run_Sheet_v1_34: 9061633112671586343
+      Doll_Run_Sheet_v1_35: 8625232583387801392
+      Doll_Run_Sheet_v1_36: -2795142839732895574
+      Doll_Run_Sheet_v1_37: 8471499156533541106
+      Doll_Run_Sheet_v1_38: -2976308908013633293
+      Doll_Run_Sheet_v1_39: 4136466261029004069
+      Doll_Run_Sheet_v1_4: -455674186485075577
+      Doll_Run_Sheet_v1_40: -4860823798749910444
+      Doll_Run_Sheet_v1_41: 8963358128815798327
+      Doll_Run_Sheet_v1_42: 771093817705853659
+      Doll_Run_Sheet_v1_43: -725649515814136772
+      Doll_Run_Sheet_v1_44: -5249091277322586167
+      Doll_Run_Sheet_v1_45: -6380834072056690560
+      Doll_Run_Sheet_v1_46: -2160588256481410137
+      Doll_Run_Sheet_v1_47: 8873372080528660847
+      Doll_Run_Sheet_v1_48: -8623455302414566320
+      Doll_Run_Sheet_v1_49: 2831633409045338097
+      Doll_Run_Sheet_v1_5: 508879815734831355
+      Doll_Run_Sheet_v1_50: -273215256598403282
+      Doll_Run_Sheet_v1_51: 550428054438468227
+      Doll_Run_Sheet_v1_52: -3285813581259734315
+      Doll_Run_Sheet_v1_53: 4003271322365466868
+      Doll_Run_Sheet_v1_54: -4945519794288210056
+      Doll_Run_Sheet_v1_55: -92372731927820370
+      Doll_Run_Sheet_v1_56: 8391994695849223327
+      Doll_Run_Sheet_v1_57: 7419231180038720733
+      Doll_Run_Sheet_v1_58: -4497288911887188173
+      Doll_Run_Sheet_v1_59: -2213048143024896443
+      Doll_Run_Sheet_v1_6: -3461791757725080179
+      Doll_Run_Sheet_v1_60: -6381772915843012157
+      Doll_Run_Sheet_v1_61: -3412591252626168687
+      Doll_Run_Sheet_v1_62: -5384700868601130075
+      Doll_Run_Sheet_v1_63: 7299652266863815660
+      Doll_Run_Sheet_v1_64: -1581461921696086340
+      Doll_Run_Sheet_v1_65: -1401078028259267777
+      Doll_Run_Sheet_v1_66: 986683759525425249
+      Doll_Run_Sheet_v1_67: 3840324186456349812
+      Doll_Run_Sheet_v1_68: 4962138017226441951
+      Doll_Run_Sheet_v1_69: 7836508318880232458
+      Doll_Run_Sheet_v1_7: -2943522791698563847
+      Doll_Run_Sheet_v1_70: 4941234013821532294
+      Doll_Run_Sheet_v1_71: 5332955507124112378
+      Doll_Run_Sheet_v1_72: -2485666836338692863
+      Doll_Run_Sheet_v1_73: 7420689662942391660
+      Doll_Run_Sheet_v1_74: -6252899808820955238
+      Doll_Run_Sheet_v1_75: 4297217040525893843
+      Doll_Run_Sheet_v1_76: 5057471005058697391
+      Doll_Run_Sheet_v1_77: -4019135814089172196
+      Doll_Run_Sheet_v1_78: 4457373321791355503
+      Doll_Run_Sheet_v1_79: -7707093389990197949
+      Doll_Run_Sheet_v1_8: -630563778368443311
+      Doll_Run_Sheet_v1_80: 4518659637267882203
+      Doll_Run_Sheet_v1_81: -2211611036881088664
+      Doll_Run_Sheet_v1_82: 4588682342989916888
+      Doll_Run_Sheet_v1_83: 114634487138050691
+      Doll_Run_Sheet_v1_84: -4859254059744597245
+      Doll_Run_Sheet_v1_85: 1045177051725760806
+      Doll_Run_Sheet_v1_86: 8958922456961895992
+      Doll_Run_Sheet_v1_87: 8837266391047417916
+      Doll_Run_Sheet_v1_88: -5397011417505584378
+      Doll_Run_Sheet_v1_89: -4319269558382183448
+      Doll_Run_Sheet_v1_9: -6189009623577893098
+      Doll_Run_Sheet_v1_90: -2210448981123627045
+      Doll_Run_Sheet_v1_91: -7983074727003831361
+      Doll_Run_Sheet_v1_92: -8740531249797404763
+      Doll_Run_Sheet_v1_93: -1734265318875509494
+      Doll_Run_Sheet_v1_94: 7315106889466743063
+      Doll_Run_Sheet_v1_95: 1308444908553484365
+      Doll_Run_Sheet_v1_96: -938500100825022861
+      Doll_Run_Sheet_v1_97: 3796851079652676390
+      Doll_Run_Sheet_v1_98: -6568578441155851817
+      Doll_Run_Sheet_v1_99: 7054692411059563298
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
