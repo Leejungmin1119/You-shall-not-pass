@@ -138,7 +138,6 @@ public static class DisappearingFloorSetup
         respawns.arraySize = 0;
         settings.FindProperty("walkableDuration").floatValue = 8f;
         settings.FindProperty("unavailableDuration").floatValue = 3f;
-        settings.FindProperty("reappearDuration").floatValue = 2f;
         settings.FindProperty("maximumOpacity").floatValue = 0.65f;
         settings.ApplyModifiedProperties();
     }

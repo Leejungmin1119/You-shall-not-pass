@@ -2,7 +2,7 @@ using Mirror;
 using UnityEngine;
 
 /// <summary>
-/// 확정된 착지점까지 곧게 낙하하고, 꽂힌 뒤 투명해지며 접촉 판정을 유지한다.
+/// 확정된 착지점까지 곧게 낙하하고, 꽂힌 뒤에는 피격 판정 없이 투명해진다.
 /// </summary>
 [RequireComponent(typeof(SpriteRenderer))]
 public sealed class Spear : ItemBase
@@ -54,6 +54,7 @@ public sealed class Spear : ItemBase
     private void Advance(float deltaTime)
     {
         if (visual == null) return;
+        bool wasFalling = !stuck;
         float previousY = transform.position.y;
         age += deltaTime;
         float nextY = startPosition.y - speed * age;
@@ -81,7 +82,9 @@ public sealed class Spear : ItemBase
             Destroy(gameObject);
             return;
         }
-        CheckPlayerHits(previousY);
+        // 착지한 프레임의 마지막 낙하 구간까지는 검사하되, 이후 박힌 화살에는 맞지 않는다.
+        if (wasFalling)
+            CheckPlayerHits(previousY);
     }
 
     /// <summary>서버가 승인한 플레이어 적중도 충돌음으로 처리한다. 이후 지면 접촉과 중복하지 않는다.</summary>
