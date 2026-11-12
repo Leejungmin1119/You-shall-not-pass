@@ -1,0 +1,299 @@
+fileFormatVersion: 2
+guid: 04fc5ee4ddcf5f940862542ac332ebfe
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1330962031631561823
+    second: ProgressRoute_Doodle_CharacterHead_v1_0
+  - first:
+      213: 1924690449274321391
+    second: ProgressRoute_Doodle_CharacterHead_v1_1
+  - first:
+      213: -508777640766906789
+    second: ProgressRoute_Doodle_CharacterHead_v1_2
+  - first:
+      213: -504539446225739386
+    second: ProgressRoute_Doodle_CharacterHead_v1_3
+  - first:
+      213: -7825920481041859386
+    second: ProgressRoute_Doodle_CharacterHead_v1_4
+  - first:
+      213: -1280312899475898738
+    second: ProgressRoute_Doodle_CharacterHead_v1_5
+  - first:
+      213: -5283458191231578961
+    second: ProgressRoute_Doodle_CharacterHead_v1_6
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_CharacterHead_v1_0
+      rect:
+        serializedVersion: 2
+        x: 1094
+        y: 456
+        width: 75
+        height: 184
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ab811f7519778de0800000000000000
+      internalID: -1330962031631561823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_CharacterHead_v1_1
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 458
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe9359324cfd5ba10800000000000000
+      internalID: 1924690449274321391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_CharacterHead_v1_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 39
+        width: 2019
+        height: 409
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5e5d6c6e6570f8f0800000000000000
+      internalID: -508777640766906789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_CharacterHead_v1_3
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 401
+        width: 39
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 681ea8cfb048ff8f0800000000000000
+      internalID: -504539446225739386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_CharacterHead_v1_4
+      rect:
+        serializedVersion: 2
+        x: 1205
+        y: 397
+        width: 51
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ccbb0739ceb46390800000000000000
+      internalID: -7825920481041859386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_CharacterHead_v1_5
+      rect:
+        serializedVersion: 2
+        x: 1698
+        y: 398
+        width: 41
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8e7369833a6b3ee0800000000000000
+      internalID: -1280312899475898738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_CharacterHead_v1_6
+      rect:
+        serializedVersion: 2
+        x: 1977
+        y: 265
+        width: 134
+        height: 66
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fac830e94c26da6b0800000000000000
+      internalID: -5283458191231578961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ProgressRoute_Doodle_CharacterHead_v1_0: -1330962031631561823
+      ProgressRoute_Doodle_CharacterHead_v1_1: 1924690449274321391
+      ProgressRoute_Doodle_CharacterHead_v1_2: -508777640766906789
+      ProgressRoute_Doodle_CharacterHead_v1_3: -504539446225739386
+      ProgressRoute_Doodle_CharacterHead_v1_4: -7825920481041859386
+      ProgressRoute_Doodle_CharacterHead_v1_5: -1280312899475898738
+      ProgressRoute_Doodle_CharacterHead_v1_6: -5283458191231578961
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

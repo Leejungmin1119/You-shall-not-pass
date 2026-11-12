@@ -54,6 +54,7 @@ public sealed class RaceManager : NetworkBehaviour
     private bool endAfterDeath;
     private RaceEndReason deferredEndReason;
     private DeathSequence deathSequence;
+    private RaceProgress progress;
     [SyncVar] private uint dyingPlayerId;
     [SyncVar] private double deathStartedAt;
     [SyncVar] private double deathRemaining;
@@ -87,6 +88,7 @@ public sealed class RaceManager : NetworkBehaviour
     {
         Roles = GetComponent<rolechangeManager>();
         deathSequence = GetComponent<DeathSequence>();
+        progress = GetComponent<RaceProgress>();
     }
 
     public RacePhase Phase => phase;
@@ -127,6 +129,7 @@ public sealed class RaceManager : NetworkBehaviour
         bool wasAttacker = Roles.IsAttacker(player);
         participants.RemoveAt(removedIndex);
         startPositions.Remove(player);
+        progress?.RemovePlayer(player.netId);
 
         if (pendingDeath == player)
             pendingDeath = null;
@@ -257,6 +260,7 @@ public sealed class RaceManager : NetworkBehaviour
     private void PrepareRound()
     {
         pendingDeath = null;
+        progress?.ResetRecords();
         Roles.ChooseFirst(participants);
         endsAt = 0;
         roundNumber++;
@@ -300,6 +304,7 @@ public sealed class RaceManager : NetworkBehaviour
             return false;
 
         RpcPlayGoalSound(player.transform.position);
+        progress?.ResetRecords();
         player.GetComponent<PlayerScore>().AddGoalScore(1);
 
         if (phase != RacePhase.Ended)
@@ -321,6 +326,7 @@ public sealed class RaceManager : NetworkBehaviour
     {
         if (IsRunning && Roles.IsAttacker(player))
         {
+            progress?.RecordDeath(player);
             pendingDeath = player;
             pendingDeathPresentation = present;
             pendingHitOrigin = hitOrigin;
@@ -403,6 +409,10 @@ public sealed class RaceManager : NetworkBehaviour
 
         phase = RacePhase.Ended;
         endReason = reason;
+
+        if (reason == RaceEndReason.TimeLimit)
+            progress?.ResetRecords();
+
         Winners.Clear();
         var remaining = participants.Where(p => p != null).ToArray();
         if (reason != RaceEndReason.PlayerDisconnected && remaining.Length > 0)

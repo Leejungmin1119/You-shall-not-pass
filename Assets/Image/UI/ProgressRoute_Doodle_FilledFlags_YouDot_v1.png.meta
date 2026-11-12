@@ -1,0 +1,325 @@
+fileFormatVersion: 2
+guid: 2747179f14d0cd74ab76c82be0c77358
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4508224097884580015
+    second: ProgressRoute_Doodle_FilledFlags_YouDot_v1_0
+  - first:
+      213: 6036585934198578686
+    second: ProgressRoute_Doodle_FilledFlags_YouDot_v1_1
+  - first:
+      213: 3069096774752128404
+    second: ProgressRoute_Doodle_FilledFlags_YouDot_v1_2
+  - first:
+      213: -5526513355405568133
+    second: ProgressRoute_Doodle_FilledFlags_YouDot_v1_3
+  - first:
+      213: 6635472227545841105
+    second: ProgressRoute_Doodle_FilledFlags_YouDot_v1_4
+  - first:
+      213: -2593954035845679578
+    second: ProgressRoute_Doodle_FilledFlags_YouDot_v1_5
+  - first:
+      213: 628922708836463194
+    second: ProgressRoute_Doodle_FilledFlags_YouDot_v1_6
+  - first:
+      213: -8302924512276189045
+    second: ProgressRoute_Doodle_FilledFlags_YouDot_v1_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_FilledFlags_YouDot_v1_0
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 382
+        width: 184
+        height: 144
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 157dbbd81129f61c0800000000000000
+      internalID: -4508224097884580015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_FilledFlags_YouDot_v1_1
+      rect:
+        serializedVersion: 2
+        x: 436
+        y: 398
+        width: 42
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: efd96088ce246c350800000000000000
+      internalID: 6036585934198578686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_FilledFlags_YouDot_v1_2
+      rect:
+        serializedVersion: 2
+        x: 1045
+        y: 384
+        width: 165
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49dc560814f979a20800000000000000
+      internalID: 3069096774752128404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_FilledFlags_YouDot_v1_3
+      rect:
+        serializedVersion: 2
+        x: 1219
+        y: 389
+        width: 164
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b77599c4261ed43b0800000000000000
+      internalID: -5526513355405568133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_FilledFlags_YouDot_v1_4
+      rect:
+        serializedVersion: 2
+        x: 1524
+        y: 382
+        width: 154
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ddf6dfa5dee51c50800000000000000
+      internalID: 6635472227545841105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_FilledFlags_YouDot_v1_5
+      rect:
+        serializedVersion: 2
+        x: 1695
+        y: 396
+        width: 84
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6263ab93c8c600cd0800000000000000
+      internalID: -2593954035845679578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_FilledFlags_YouDot_v1_6
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 71
+        width: 2039
+        height: 309
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a52bf5b1fd16ab800800000000000000
+      internalID: 628922708836463194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ProgressRoute_Doodle_FilledFlags_YouDot_v1_7
+      rect:
+        serializedVersion: 2
+        x: 1997
+        y: 264
+        width: 124
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b80f4e8952616cc80800000000000000
+      internalID: -8302924512276189045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ProgressRoute_Doodle_FilledFlags_YouDot_v1_0: -4508224097884580015
+      ProgressRoute_Doodle_FilledFlags_YouDot_v1_1: 6036585934198578686
+      ProgressRoute_Doodle_FilledFlags_YouDot_v1_2: 3069096774752128404
+      ProgressRoute_Doodle_FilledFlags_YouDot_v1_3: -5526513355405568133
+      ProgressRoute_Doodle_FilledFlags_YouDot_v1_4: 6635472227545841105
+      ProgressRoute_Doodle_FilledFlags_YouDot_v1_5: -2593954035845679578
+      ProgressRoute_Doodle_FilledFlags_YouDot_v1_6: 628922708836463194
+      ProgressRoute_Doodle_FilledFlags_YouDot_v1_7: -8302924512276189045
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
