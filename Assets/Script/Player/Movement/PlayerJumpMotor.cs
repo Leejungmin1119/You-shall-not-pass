@@ -13,6 +13,9 @@ public enum JumpKind
 /// </summary>
 public sealed class PlayerJumpMotor
 {
+    // 접촉 해결 중 생기는 미세한 위쪽 속도는 실제 도약으로 취급하지 않는다.
+    private const float GroundedUpwardSpeedTolerance = 0.01f;
+
     private enum JumpPhase { None, Rising, ApexHold, Cutting, Falling, CutFalling }
 
     private readonly PlayerMovementStats _stats;
@@ -50,7 +53,7 @@ public sealed class PlayerJumpMotor
     /// </summary>
     public void BeginStep(CollisionState contacts, float verticalSpeed, float timeStep)
     {
-        _isGrounded = contacts.IsGrounded && verticalSpeed <= 0f;
+        _isGrounded = contacts.IsGrounded && verticalSpeed <= GroundedUpwardSpeedTolerance;
         _isTouchingWall = contacts.IsAgainstWall && contacts.WallDirection != 0;
 
         _jumpBufferTimer = Mathf.Max(0f, _jumpBufferTimer - timeStep);
@@ -146,7 +149,7 @@ public sealed class PlayerJumpMotor
     /// <summary>접지·낙하·점프 단계 중 하나만 계산하여 수직 속도를 반환한다.</summary>
     public float CalculateVerticalSpeed(float verticalSpeed, float timeStep)
     {
-        if (_isGrounded && verticalSpeed <= 0f) return -2f;
+        if (_isGrounded) return -2f;
 
         // 점프 상태가 설정되어 있지 않으면 return
         if (Kind == JumpKind.None) return verticalSpeed + _stats.Gravity * timeStep;
