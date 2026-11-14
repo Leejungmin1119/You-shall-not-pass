@@ -5,6 +5,8 @@ public class NetworkPlayerProfile : NetworkBehaviour
 {
     [SyncVar(hook = nameof(OnNameChanged))] private string playerName;
     [SyncVar(hook = nameof(OnColorChanged))] private Color playerColor = Color.white;
+    // -1이면 로비를 거치지 않은 시험 씬이므로 프리팹에 지정된 캐릭터를 그대로 쓴다.
+    [SyncVar(hook = nameof(OnCharacterChanged))] private int characterIndex = -1;
     private PlayerInfoHUD hud;
     public string PlayerName => string.IsNullOrWhiteSpace(playerName) ? $"Player {netId}" : playerName;
     public Color PlayerColor => playerColor;
@@ -20,10 +22,27 @@ public class NetworkPlayerProfile : NetworkBehaviour
         playerColor = new Color(color.r, color.g, color.b, 1f);
     }
 
+    /// <summary>로비에서 고른 캐릭터를 모든 화면에 전달한다.</summary>
+    [Server]
+    public void SetCharacter(PlayerIdleBoil.CharacterStyle style)
+    {
+        characterIndex = (int)style;
+        ApplyCharacter();
+    }
+
+    private void OnCharacterChanged(int previous, int current) => ApplyCharacter();
+
+    private void ApplyCharacter()
+    {
+        if (characterIndex < 0 || characterIndex >= PlayerIdleBoil.CharacterCount) return;
+        GetComponent<PlayerIdleBoil>()?.SetCharacter((PlayerIdleBoil.CharacterStyle)characterIndex);
+    }
+
     /// <summary>기존 이름표를 갱신하고 게임 HUD의 플레이어 칸에 등록한다.</summary>
     public override void OnStartClient()
     {
         base.OnStartClient();
+        ApplyCharacter();
         GetComponent<NetworkPlayerScore>()?.RefreshDisplay();
 
         hud = FindFirstObjectByType<PlayerInfoHUD>(FindObjectsInactive.Include);

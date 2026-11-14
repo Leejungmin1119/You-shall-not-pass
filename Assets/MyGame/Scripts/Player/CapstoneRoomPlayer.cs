@@ -8,7 +8,9 @@ public class CapstoneRoomPlayer : NetworkRoomPlayer
     [SyncVar] private string playerName;
     [SyncVar] private int seatIndex = -1;
     [SyncVar] private double countdownEndsAt;
+    [SyncVar] private PlayerIdleBoil.CharacterStyle character;
     public int SeatIndex => seatIndex;
+    public PlayerIdleBoil.CharacterStyle Character => character;
     public double CountdownEndsAt => countdownEndsAt;
 
     // 고정 좌석은 SyncVar 하나로 모든 화면에서 동일하게 배치한다. 위치 입력은 전송하지 않는다.
@@ -22,6 +24,8 @@ public class CapstoneRoomPlayer : NetworkRoomPlayer
     {
         seatIndex = seat;
         countdownEndsAt = 0d;
+        // 처음에는 자리마다 다른 캐릭터를 줘서 고르지 않아도 서로 구분되게 한다.
+        character = (PlayerIdleBoil.CharacterStyle)(seat % PlayerIdleBoil.CharacterCount);
         transform.position = CapstoneRoomManager.GetLobbySeatPosition(seat);
     }
 
@@ -117,6 +121,29 @@ public class CapstoneRoomPlayer : NetworkRoomPlayer
         }
         playerName = name;
         TargetNameResult(connectionToClient, true, "Name saved. Ready up when you are done.");
+    }
+
+    /// <summary>방에 들어오면 이 PC에서 미리 고른 캐릭터가 있을 때 그 캐릭터로 바꿔 달라고 요청한다.</summary>
+    public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+        if (CapstoneLobbyUI.PreferredCharacter >= 0)
+            CmdSetCharacter(CapstoneLobbyUI.PreferredCharacter);
+    }
+
+    /// <summary>로비 자기 자리에서 고른 캐릭터를 서버에 요청한다.</summary>
+    public void RequestCharacter(int requested)
+    {
+        if (isLocalPlayer && !readyToBegin) CmdSetCharacter(requested);
+    }
+
+    [Command]
+    private void CmdSetCharacter(int requested)
+    {
+        // 준비를 마친 뒤에는 바꿀 수 없다. 이름 변경과 같은 규칙.
+        if (!(NetworkManager.singleton is CapstoneRoomManager manager) || !manager.IsLobby || readyToBegin) return;
+        if (requested < 0 || requested >= PlayerIdleBoil.CharacterCount) return;
+        character = (PlayerIdleBoil.CharacterStyle)requested;
     }
 
     [TargetRpc]

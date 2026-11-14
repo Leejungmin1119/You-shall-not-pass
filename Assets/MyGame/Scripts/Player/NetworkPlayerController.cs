@@ -24,6 +24,8 @@ public class NetworkPlayerController : NetworkBehaviour
         playerState = GetComponent<PlayerState>();
         fixedRoomPlayer = GetComponent<CapstoneRoomPlayer>();
         body.simulated = false;
+        // 원격 캐릭터의 표시 위치는 NetworkTransform 보간에만 맡긴다.
+        body.interpolation = RigidbodyInterpolation2D.None;
         platformMovement = GetComponent<PlayerMovement>();
         if (platformMovement != null) platformMovement.enabled = false;
     }
@@ -37,6 +39,10 @@ public class NetworkPlayerController : NetworkBehaviour
         bool inLobby = (NetworkManager.singleton is PracticeNetworkManager manager && manager.IsLobby)
             || (NetworkManager.singleton is CapstoneRoomManager roomManager && roomManager.IsLobby);
         body.simulated = !inLobby;
+        // 자기 캐릭터만 물리 틱 사이의 표시 위치를 부드럽게 잇는다.
+        body.interpolation = inLobby
+            ? RigidbodyInterpolation2D.None
+            : RigidbodyInterpolation2D.Interpolate;
         if (platformMovement != null)
         {
             platformMovement.MovementLocked = false;
@@ -110,7 +116,9 @@ public class NetworkPlayerController : NetworkBehaviour
         {
             if (fixedRoomPlayer != null && NetworkManager.singleton is CapstoneRoomManager)
             {
-                body.simulated = false;
+                if (body.simulated)
+                    body.simulated = false;
+
                 transform.position = CapstoneRoomManager.GetLobbySeatPosition(fixedRoomPlayer.SeatIndex);
             }
             else MoveInLobby();
@@ -118,7 +126,11 @@ public class NetworkPlayerController : NetworkBehaviour
         }
         // 골인·대기·판 종료 상태는 소유자의 물리와 이동도 함께 멈춘다.
         bool canMove = playerState == null || playerState.CanMove;
-        body.simulated = canMove;
+
+        // 같은 값을 다시 대입해도 보간된 표시 위치가 물리 위치에 반영될 수 있다.
+        // 공수·생존 상태가 바뀔 때만 물리 활성 상태를 변경한다.
+        if (body.simulated != canMove)
+            body.simulated = canMove;
 
         if (platformMovement != null)
             platformMovement.MovementLocked = !canMove;

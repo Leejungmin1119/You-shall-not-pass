@@ -348,6 +348,10 @@ public class CapstoneRoomManager : NetworkRoomManager
         }
         profile.SetPlayerName(lobby.PlayerName);
         profile.SetPlayerColor(CapstoneLobbyUI.GetCrewColor(lobby.netId));
+        // 1인 시험은 로비를 바로 지나가므로 방장 PC에서 미리 고른 캐릭터를 직접 쓴다.
+        int preferred = CapstoneLobbyUI.PreferredCharacter;
+        profile.SetCharacter(IsSoloTest && preferred >= 0
+            ? (PlayerIdleBoil.CharacterStyle)preferred : lobby.Character);
         Debug.Log($"Server: copied player name '{lobby.PlayerName}' to game player.");
         return true;
     }

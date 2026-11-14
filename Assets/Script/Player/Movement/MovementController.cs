@@ -59,25 +59,26 @@ public class MovementController : MonoBehaviour
         _moveStats = _playerMovement.moveStats;
     }
 
-    private void Start()
-    {
-        CalculateRaySpacing();
-    }
-
     /// <summary>
     /// 부활 전 접촉 기록을 지우고 현재 위치에서 지면과 벽을 다시 확인한다.
     /// </summary>
     public void ResetSensors()
     {
         _internalState = default;
-        CalculateRaySpacing();
         PollSensors(Vector2.zero);
     }
 
+    /// <summary>활성 콜라이더의 현재 크기로 Ray 배치를 갱신한 뒤 접촉을 확인한다.</summary>
     public void PollSensors(Vector2 moveDelta)
     {
         _internalState.Reset();
-        UpdateRaycastCorners();
+
+        // 공수 교대 중 콜라이더가 꺼져 있으면 접촉을 비우고 다음 물리 틱에 다시 확인한다.
+        if (!TryUpdateRaycastLayout())
+        {
+            State = _internalState;
+            return;
+        }
 
         GroundProbes(moveDelta);
         HorizontalProbes(moveDelta);
@@ -190,20 +191,19 @@ public class MovementController : MonoBehaviour
         }
     }
 
-    private void UpdateRaycastCorners()
+    /// <summary>같은 Bounds로 Ray 시작점과 간격을 계산하여 활성화·크기 변경을 반영한다.</summary>
+    private bool TryUpdateRaycastLayout()
     {
-        Bounds bounds = _coll.bounds;
-        bounds.Expand(CollisionPadding * -2f);
+        if (!_coll.isActiveAndEnabled)
+            return false;
 
-        RayCastCorners.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
-        RayCastCorners.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
-        RayCastCorners.topLeft = new Vector2(bounds.min.x, bounds.max.y);
-        RayCastCorners.topRight = new Vector2(bounds.max.x, bounds.max.y);
-    }
-
-    private void CalculateRaySpacing()
-    {
         Bounds bounds = _coll.bounds;
+
+        // 비활성 물리 바디 등의 빈 Bounds를 축소하면 음수 간격이 생기므로 검사하지 않는다.
+        float padding = CollisionPadding * 2f;
+        if (bounds.size.x <= padding || bounds.size.y <= padding)
+            return false;
+
         bounds.Expand(CollisionPadding * -2f);
 
         NumOfHorizontalRays = Mathf.Max(2, NumOfHorizontalRays);
@@ -211,6 +211,12 @@ public class MovementController : MonoBehaviour
 
         _horizontalRaySpace = bounds.size.y / (NumOfHorizontalRays - 1);
         _verticalRaySpace = bounds.size.x / (NumOfVerticalRays - 1);
+
+        RayCastCorners.bottomLeft = new Vector2(bounds.min.x, bounds.min.y);
+        RayCastCorners.bottomRight = new Vector2(bounds.max.x, bounds.min.y);
+        RayCastCorners.topLeft = new Vector2(bounds.min.x, bounds.max.y);
+        RayCastCorners.topRight = new Vector2(bounds.max.x, bounds.max.y);
+        return true;
     }
 
     public bool IsGrounded() => _internalState.IsGrounded;

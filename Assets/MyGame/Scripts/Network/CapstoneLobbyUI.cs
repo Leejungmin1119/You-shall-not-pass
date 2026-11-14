@@ -216,13 +216,67 @@ public class CapstoneLobbyUI : MonoBehaviour
                 source.width / sprite.texture.width, source.height / sprite.texture.height), true);
     }
 
-    private void DrawCrew(float x, uint id, bool ready, bool local, string playerName)
+    private PlayerIdleBoil characterLook;
+
+    /// <summary>
+    /// 이 PC에서 고른 캐릭터. -1이면 아직 안 골라서 자리 순서대로 기본 캐릭터를 받는다.
+    /// 방에 들어가면 자동으로 이 값을 요청하고, 1인 시험은 방장 PC이므로 이 값을 바로 쓴다.
+    /// </summary>
+    public static int PreferredCharacter = -1;
+
+    public static void StepPreferredCharacter(int direction, PlayerIdleBoil.CharacterStyle current)
     {
+        int count = PlayerIdleBoil.CharacterCount;
+        PreferredCharacter = (((int)current + (direction < 0 ? -1 : 1)) % count + count) % count;
+    }
+
+    /// <summary>방에 들어가기 전에도 캐릭터를 고를 수 있게 한다(1인 시험은 바로 게임으로 넘어가므로 필요).</summary>
+    private void DrawCharacterPicker(bool enabled)
+    {
+        var style = (PlayerIdleBoil.CharacterStyle)Mathf.Max(0, PreferredCharacter);
+        if (Action(new Rect(560, 100, 36, 40), "<", enabled)) StepPreferredCharacter(-1, style);
+        if (Action(new Rect(864, 100, 36, 40), ">", enabled))
+            StepPreferredCharacter(1, PreferredCharacter < 0 ? (PlayerIdleBoil.CharacterStyle)(-1 + PlayerIdleBoil.CharacterCount) : style);
+        Sprite[] frames = GetCrewFrames(style);
+        if (PreferredCharacter >= 0 && frames != null && frames.Length > 0)
+            DrawSprite(new Rect(604, 92, 48, 56), frames[Mathf.FloorToInt(Time.unscaledTime * idleFramesPerSecond) % frames.Length], true);
+        centered.fontSize = 17;
+        centered.normal.textColor = Ink;
+        Label(new Rect(652, 100, 206, 40), PreferredCharacter < 0
+            ? "캐릭터 · 자리 순서대로" : "캐릭터 · " + PlayerIdleBoil.GetDisplayName(style), centered);
+    }
+
+    /// <summary>게임 플레이어 프리팹의 캐릭터별 대기 그림을 그대로 쓴다. 없으면 로비에 지정한 그림을 쓴다.</summary>
+    private Sprite[] GetCrewFrames(PlayerIdleBoil.CharacterStyle style)
+    {
+        if (characterLook == null && manager != null && manager.playerPrefab != null)
+            characterLook = manager.playerPrefab.GetComponent<PlayerIdleBoil>();
+        Sprite[] frames = characterLook != null ? characterLook.GetIdleFrames(style) : null;
+        return frames != null && frames.Length > 0 ? frames : idleFrames;
+    }
+
+    private void DrawCrew(float x, CapstoneRoomPlayer player)
+    {
+        uint id = player.netId;
+        bool ready = player.IsReady, local = player.isLocalPlayer;
+        string playerName = player.PlayerName;
         Rounded(new Rect(x - 42, 450, 84, 10), new Color(.27f, .25f, .16f, .16f), 5);
-        if (idleFrames != null && idleFrames.Length > 0)
+        Sprite[] crewFrames = GetCrewFrames(player.Character);
+        if (crewFrames != null && crewFrames.Length > 0)
         {
-            int frame = (Mathf.FloorToInt(Time.unscaledTime * idleFramesPerSecond) + (int)(id % 3)) % idleFrames.Length;
-            DrawSprite(new Rect(x - 63, 310, 126, 150), idleFrames[frame], true);
+            int frame = (Mathf.FloorToInt(Time.unscaledTime * idleFramesPerSecond) + (int)(id % 3)) % crewFrames.Length;
+            DrawSprite(new Rect(x - 63, 310, 126, 150), crewFrames[frame], true);
+        }
+        // 준비 전에는 자기 자리에서 캐릭터를 넘겨 고른다. 준비 후에는 잠긴다.
+        if (local)
+        {
+            for (int direction = -1; direction <= 1; direction += 2)
+            {
+                if (!Action(new Rect(direction < 0 ? x - 90 : x + 60, 365, 30, 44), direction < 0 ? "<" : ">", !ready))
+                    continue;
+                StepPreferredCharacter(direction, player.Character);
+                player.RequestCharacter(PreferredCharacter);
+            }
         }
         string displayName = string.IsNullOrEmpty(playerName) ? "P" + id : playerName;
         centered.fontSize = 17;
@@ -237,11 +291,9 @@ public class CapstoneLobbyUI : MonoBehaviour
         badge.normal.textColor = ready ? Color.white : Ink;
         Rounded(new Rect(x - 58, 274, 116, 28), ready ? Accent : new Color(.97f, .88f, .64f), 8);
         Label(new Rect(x - 58, 274, 116, 28), ready ? "READY" : "준비 중", badge);
-        if (local)
-        {
-            badge.normal.textColor = Accent;
-            Label(new Rect(x - 30, 512, 60, 22), "나", badge);
-        }
+        string characterName = PlayerIdleBoil.GetDisplayName(player.Character);
+        badge.normal.textColor = local ? Accent : Muted;
+        Label(new Rect(x - 80, 512, 160, 22), local ? "나 · " + characterName : characterName, badge);
     }
 
     private void DrawLandscape()
@@ -271,7 +323,7 @@ public class CapstoneLobbyUI : MonoBehaviour
             Label(new Rect(x - 80, 239, 160, 24), $"{seat + 1:00} 번 자리", badge);
             if (occupied)
             {
-                DrawCrew(x, player.netId, player.IsReady, player.isLocalPlayer, player.PlayerName);
+                DrawCrew(x, player);
                 if (local != null && manager.CanKickLobbyPlayer(player) &&
                     Action(new Rect(x + 58, 316, 28, 28), "×", true, new Color(1f, .82f, .76f)))
                     local.RequestKick(player.netId);
@@ -402,6 +454,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (Action(new Rect(1045, 34, 165, 38), showLocalAddresses ? "내 IP 닫기" : "내 IP 보기"))
             ToggleLocalAddressPanel();
         bool busy = NetworkClient.active || NetworkServer.active || (manager.Lan != null && manager.Lan.Searching);
+        DrawCharacterPicker(!busy);
         Rounded(new Rect(68, 552, 1148, 112), new Color(.30f, .23f, .15f, .25f), 20);
         Rounded(new Rect(62, 546, 1156, 112), Ink, 18);
         Rounded(new Rect(65, 549, 1150, 106), Paper, 16);

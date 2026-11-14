@@ -11,13 +11,15 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D _rb;
     private PlayerInputAdapter _input;
+    private PlayerJumpMotor _jumpMotor;
 
     public bool IsFacingRight { get; private set; }
     public bool MovementLocked { get; set; }
     public MovementController Controller { get; private set; }
     [HideInInspector] public Vector2 Velocity;
 
-    public bool IsJumping { get; private set; }
+    // 기존 호출부가 사용하던 일반 점프 상태를 유지한다.
+    public bool IsJumping => _jumpMotor != null && _jumpMotor.Kind == JumpKind.Ground;
 
     /// <summary>기본 이동 입력 방향으로 실제 달리는지 확인한다. 일반 점프 중에도 유지한다.</summary>
     public bool IsRunningWithInput
@@ -25,8 +27,9 @@ public class PlayerMovement : MonoBehaviour
         get
         {
             if (!isActiveAndEnabled || MovementLocked || moveStats == null ||
-                _rb == null || !_rb.simulated || _isWallJumping || _useWallJumpmoveStats ||
-                WallJumpCancleTime >= 0f || Controller.IsTouchingWall() ||
+                _rb == null || _jumpMotor == null || !_rb.simulated ||
+                _jumpMotor.Kind == JumpKind.Wall || _jumpMotor.IsHorizontalControlLocked ||
+                Controller.IsTouchingWall() ||
                 Mathf.Abs(_input.Move.x) < moveStats.MoveThreshold || moveStats.MaxRunSpeed <= 0f)
                 return false;
 
@@ -36,43 +39,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool _isFastFalling;
-    private bool _isFalling;
-    private float _fastFallTime;
-    private float _fastFallReleaseSpeed;
-
-    private float _apexPoint;
-    private float _timePastApexThreshold;
-    private bool _isPastApexThreshold;
-
-    private float _jumpBufferTimer;
-    private bool _jumpReleasedDuringBuffer;
-    private float _coyoteTimer;
-
-    private bool _useWallJumpmoveStats;
-    private bool _isWallJumping;
-    private float _wallJumpTime;
-    private bool _isWallJumpFastFalling;
-    private bool _isWallJumpFalling;
-    private float _wallJumpFastFallTime;
-    private float _wallJumpFastFallReleaseSpeed;
-    private int _lastWallDir;
-    private float _wallJumpCoyoteTimer;
-    private float WallJumpCancleTime;
-
-    private float _wallJumpApexPoint;
-    private float _timePastWallJumpApexThreshold;
-    private bool _isPastWallJumpApexThreshold;
-
+    /// <summary>물리·접촉 담당을 보관하고 플레이어마다 독립된 입력 및 점프 상태를 만든다.</summary>
     private void Awake()
     {
         IsFacingRight = true;
         _rb = GetComponent<Rigidbody2D>();
         Controller = GetComponent<MovementController>();
         _input = new PlayerInputAdapter();
-        //
+        _jumpMotor = new PlayerJumpMotor(moveStats);
     }
 
+    /// <summary>렌더 프레임의 입력을 다음 물리 틱에서 소비할 때까지 보관한다.</summary>
     private void Update()
     {
         if (MovementLocked)
@@ -81,75 +58,70 @@ public class PlayerMovement : MonoBehaviour
         }
 
         _input.Read();
-
-        //Debug.Log(Controller.IsGrounded());
     }
 
+    /// <summary>접촉과 입력을 점프 담당에게 전달하고 계산된 속도를 물리에 한 번 적용한다.</summary>
     private void FixedUpdate()
     {
         if (MovementLocked)
         {
             Velocity = Vector2.zero;
             _rb.linearVelocity = Vector2.zero;
+            _jumpMotor.Reset();
             _input.Clear();
             return;
         }
 
+        float timeStep = Time.fixedDeltaTime;
         Velocity = _rb.linearVelocity;
-        Controller.PollSensors(Velocity * Time.fixedDeltaTime);
+        Controller.PollSensors(Velocity * timeStep);
 
-        CountTimers(Time.fixedDeltaTime);
+        _jumpMotor.BeginStep(Controller.State, Velocity.y, timeStep);
+        _jumpMotor.ReadInput(_input.JumpPressed, _input.JumpReleased, Velocity.y);
 
-        JumpChecks();
-        LandCheck();
-        WallJumpCheck();
-        VelocityReset();
+        JumpKind startedJump = _jumpMotor.TryStartJump();
+        if (startedJump != JumpKind.None)
+        {
+            Velocity.y = _jumpMotor.InitialVerticalSpeed;
 
-        HandleHorizontalMovement(Time.fixedDeltaTime);
-        Jump(Time.fixedDeltaTime);
-        WallJump(Time.fixedDeltaTime);
-        Fall(Time.fixedDeltaTime);
+            if (startedJump == JumpKind.Wall)
+                Velocity.x = _jumpMotor.WallLaunchSpeedX;
 
-        ClampVelocity();
+            JumpStarted?.Invoke();
+        }
+
+        HandleHorizontalMovement(timeStep);
+
+        Velocity.y = _jumpMotor.CalculateVerticalSpeed(Velocity.y, timeStep);
+        Velocity.y = Mathf.Clamp(Velocity.y, -moveStats.MaxFallSpeed, 100f);
 
         _rb.linearVelocity = Velocity;
         _input.Clear();
     }
 
-    /// <summary>
-    /// 부활 위치에서 속도, 점프 상태와 입력 버퍼를 초기화한다.
-    /// </summary>
+    /// <summary>이동이 비활성화된 동안 이전 점프와 미사용 입력이 남지 않도록 비운다.</summary>
+    private void OnDisable()
+    {
+        _jumpMotor?.Reset();
+        _input?.Clear();
+    }
+
+    /// <summary>부활 위치에서 속도, 점프·입력 버퍼와 접촉 기록을 초기화한다.</summary>
     public void ResetMovement()
     {
         Velocity = Vector2.zero;
         _rb.linearVelocity = Vector2.zero;
         _rb.angularVelocity = 0f;
-        ResetJumpValues();
-        ResetWallJumpValues();
-        _fastFallReleaseSpeed = 0f;
-        _apexPoint = 0f;
-        _timePastApexThreshold = 0f;
-        _jumpBufferTimer = 0f;
-        _jumpReleasedDuringBuffer = false;
-        _coyoteTimer = 0f;
-        _wallJumpCoyoteTimer = 0f;
-        WallJumpCancleTime = -1f;
-        _wallJumpFastFallReleaseSpeed = 0f;
-        _wallJumpApexPoint = 0f;
-        _timePastWallJumpApexThreshold = 0f;
-        _lastWallDir = 0;
+
+        _jumpMotor.Reset();
         _input.Clear();
         Controller.ResetSensors();
     }
 
-    private void ClampVelocity()
-    {
-        Velocity.y = Mathf.Clamp(Velocity.y, -moveStats.MaxFallSpeed, 100f);
-    }
-
+    /// <summary>벽점프 제어 제한과 지상·공중 가속 설정에 따라 수평 속도를 계산한다.</summary>
     private void HandleHorizontalMovement(float timeStep)
     {
-        if (WallJumpCancleTime >= 0f)
+        if (_jumpMotor.IsHorizontalControlLocked)
         {
             return;
         }
@@ -162,7 +134,7 @@ public class PlayerMovement : MonoBehaviour
             ? moveStats.GroundDeceleration
             : moveStats.AirDeceleration;
 
-        if (_useWallJumpmoveStats)
+        if (_jumpMotor.UsesWallMoveSettings)
         {
             acceleration = moveStats.WallJumpMoveAcceleration;
             deceleration = moveStats.WallJumpMoveDeceleration;
@@ -194,6 +166,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>수평 조작 방향에 맞춰 캐릭터가 바라보는 방향을 기록한다.</summary>
     private void TurnCheck(Vector2 moveInput)
     {
         if (IsFacingRight && moveInput.x < 0f)
@@ -206,334 +179,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>바라보는 방향을 저장한다.</summary>
     private void Turn(bool turnRight)
     {
         IsFacingRight = turnRight;
     }
 
-    private void LandCheck()
-    {
-        if (!Controller.IsGrounded() || Velocity.y > 0f)
-        {
-            return;
-        }
-
-        if (IsJumping || _isFalling || _isWallJumpFalling || _isWallJumping)
-        {
-            ResetJumpValues();
-            ResetWallJumpValues();
-        }
-    }
-
-    private void Fall(float timeStep)
-    {
-        if (!Controller.IsGrounded() && !IsJumping && !_isWallJumping)
-        {
-            _isFalling = true;
-            Velocity.y += moveStats.Gravity * timeStep;
-        }
-    }
-
-    private void VelocityReset()
-    {
-        if (Controller.IsGrounded() && Velocity.y <= 0f)
-        {
-            Velocity.y = -2f;
-        }
-    }
-
-    private void ResetJumpValues()
-    {
-        IsJumping = false;
-        _isFalling = false;
-        _isFastFalling = false;
-        _fastFallTime = 0f;
-        _isPastApexThreshold = false;
-    }
-
-    private void JumpChecks()
-    {
-        if (_input.JumpPressed)
-        {
-            if (Controller.IsTouchingWall() && !Controller.IsGrounded())
-            {
-                return;
-            }
-
-            _jumpBufferTimer = moveStats.JumpBufferTime;
-            _jumpReleasedDuringBuffer = false;
-        }
-
-        if (_input.JumpReleased)
-        {
-            if (_jumpBufferTimer > 0f)
-            {
-                _jumpReleasedDuringBuffer = true;
-            }
-
-            if (IsJumping && Velocity.y > 0f)
-            {
-                if (_isPastApexThreshold)
-                {
-                    _isPastApexThreshold = false;
-                    _isFastFalling = true;
-                    _fastFallTime = moveStats.TimeForUpwardsCancel;
-                    Velocity.y = 0f;
-                }
-                else
-                {
-                    _isFastFalling = true;
-                    _fastFallReleaseSpeed = Velocity.y;
-                }
-            }
-        }
-
-        if (_jumpBufferTimer > 0f && !IsJumping &&
-            (Controller.IsGrounded() || _coyoteTimer > 0f))
-        {
-            InitiateJump();
-
-            if (_jumpReleasedDuringBuffer)
-            {
-                _isFastFalling = true;
-                _fastFallReleaseSpeed = Velocity.y;
-            }
-        }
-    }
-
-    private void InitiateJump()
-    {
-        IsJumping = true;
-        _input.ConsumeJump();
-        ResetWallJumpValues();
-
-        _fastFallTime = 0f;
-        _isFastFalling = false;
-        _isPastApexThreshold = false;
-        _jumpBufferTimer = 0f;
-        Velocity.y = moveStats.InitialJumpVelocity;
-
-        JumpStarted?.Invoke();
-    }
-
-    private void Jump(float timeStep)
-    {
-        if (IsJumping)
-        {
-            //Debug.Log("실행중");
-            if (Velocity.y >= 0f)
-            {
-                _apexPoint = Mathf.InverseLerp(moveStats.InitialJumpVelocity, 0f, Velocity.y);
-
-                if (_apexPoint > moveStats.ApexThreshold)
-                {
-                    if (!_isPastApexThreshold)
-                    {
-                        _isPastApexThreshold = true;
-                        _timePastApexThreshold = 0f;
-                    }
-
-                    _timePastApexThreshold += timeStep;
-                    Velocity.y = _timePastApexThreshold < moveStats.ApexHangTime
-                        ? 0f
-                        : -0.01f;
-                }
-                else if (!_isFastFalling)
-                {
-                    Velocity.y += moveStats.Gravity * timeStep;
-                    _isPastApexThreshold = false;
-                }
-            }
-            else if (!_isFastFalling)
-            {
-                Velocity.y += moveStats.Gravity * moveStats.GravityOnReleaseMultiplier * timeStep;
-                _isFalling = true;
-            }
-        }
-        // 빠른 하강(컷오프)
-        if (_isFastFalling)
-        {
-            //Debug.Log("실행중2");
-            if (_fastFallTime >= moveStats.TimeForUpwardsCancel)
-            {
-                Velocity.y += moveStats.Gravity * moveStats.GravityOnReleaseMultiplier * timeStep;
-            }
-            else
-            {
-                Velocity.y = Mathf.Lerp(
-                    _fastFallReleaseSpeed,
-                    0f,
-                    _fastFallTime / moveStats.TimeForUpwardsCancel);
-            }
-
-            _fastFallTime += timeStep;
-        }
-    }
-
-    private void ResetWallJumpValues()
-    {
-        _useWallJumpmoveStats = false;
-        _isWallJumping = false;
-        _isWallJumpFastFalling = false;
-        _isWallJumpFalling = false;
-        _isPastWallJumpApexThreshold = false;
-        _wallJumpFastFallTime = 0f;
-        _wallJumpTime = 0f;
-    }
-
-    private void WallJumpCheck()
-    {
-        if (ShouldWallJumpCoyote())
-        {
-            _wallJumpCoyoteTimer = moveStats.WallJumpCoyoteTime;
-        }
-
-        if (_input.JumpReleased && !Controller.IsTouchingWall() && _isWallJumping &&
-            Velocity.y > 0f)
-        {
-            if (_isPastWallJumpApexThreshold)
-            {
-                _isPastWallJumpApexThreshold = false;
-                _isWallJumpFastFalling = true;
-                _wallJumpFastFallTime = moveStats.TimeForUpwardsCancel;
-                Velocity.y = 0f;
-            }
-            else
-            {
-                _isWallJumpFastFalling = true;
-                _wallJumpFastFallReleaseSpeed = Velocity.y;
-            }
-        }
-
-        if (_input.JumpPressed && _wallJumpCoyoteTimer > 0f && !Controller.IsGrounded())
-        {
-            InitiateWallJump();
-        }
-    }
-
-    private void InitiateWallJump()
-    {
-        _isWallJumping = true;
-        _useWallJumpmoveStats = true;
-
-        _input.ConsumeJump();
-        ResetJumpValues();
-
-        _wallJumpTime = 0f;
-        Velocity.y = moveStats.InitialWallJumpVelocity;
-        Velocity.x = Mathf.Abs(moveStats.WallJumpDirection.x) * -_lastWallDir;
-        WallJumpCancleTime = moveStats.WallJumpCancleTime;
-
-        JumpStarted?.Invoke();
-    }
-
-    private void WallJump(float timeStep)
-    {
-        if (_isWallJumping)
-        {
-            _wallJumpTime += timeStep;
-            if (_wallJumpTime >= moveStats.TimeTillJumpApex)
-            {
-                _useWallJumpmoveStats = false;
-            }
-
-            if (Velocity.y >= 0f)
-            {
-                _wallJumpApexPoint = Mathf.InverseLerp(
-                    moveStats.WallJumpDirection.y,
-                    0f,
-                    Velocity.y);
-
-                if (_wallJumpApexPoint > moveStats.ApexThreshold)
-                {
-                    if (!_isPastWallJumpApexThreshold)
-                    {
-                        _isPastWallJumpApexThreshold = true;
-                        _timePastWallJumpApexThreshold = 0f;
-                    }
-
-                    _timePastWallJumpApexThreshold += timeStep;
-                    Velocity.y = _timePastWallJumpApexThreshold < moveStats.ApexHangTime
-                        ? 0f
-                        : -0.01f;
-                }
-                else if (!_isWallJumpFastFalling)
-                {
-                    Velocity.y += moveStats.WallJumpGravity * timeStep;
-                    _isPastWallJumpApexThreshold = false;
-                }
-            }
-            else if (!_isWallJumpFastFalling)
-            {
-                Velocity.y += moveStats.WallJumpGravity * timeStep;
-                _isWallJumpFalling = true;
-            }
-        }
-
-        if (_isWallJumpFastFalling)
-        {
-            if (_wallJumpFastFallTime >= moveStats.TimeForUpwardsCancel)
-            {
-                Velocity.y += moveStats.WallJumpGravity *
-                              moveStats.WallJumpGravityOnReleaseMultiplier *
-                            timeStep;
-            }
-            else
-            {
-                Velocity.y = Mathf.Lerp(
-                    _wallJumpFastFallReleaseSpeed,
-                    0f,
-                    _wallJumpFastFallTime / moveStats.TimeForUpwardsCancel);
-            }
-
-            _wallJumpFastFallTime += timeStep;
-        }
-    }
-
-    private bool ShouldWallJumpCoyote()
-    {
-        if (!Controller.IsTouchingWall())
-        {
-            return false;
-        }
-
-        bool isWallAngleValid =
-            Controller.State.WallAngle >= moveStats.MinAngleForWallSlide &&
-            Controller.State.WallAngle <= moveStats.MaxAngleForWallSlide;
-
-        if (!isWallAngleValid)
-        {
-            return false;
-        }
-
-        if (Controller.State.WallDirection != 0)
-        {
-            _lastWallDir = Controller.GetWallDirection();
-        }
-
-        return true;
-    }
-
-    private void CountTimers(float timeStep)
-    {
-        _jumpBufferTimer -= timeStep;
-        HandleCoyoteTimer(timeStep);
-        _wallJumpCoyoteTimer -= timeStep;
-        WallJumpCancleTime -= timeStep;
-    }
-
-    private void HandleCoyoteTimer(float timeStep)
-    {
-        if (Controller.IsGrounded())
-        {
-            _coyoteTimer = moveStats.JumpCoyoteTime;
-        }
-        else
-        {
-            _coyoteTimer -= timeStep;
-        }
-    }
-
+    /// <summary>접촉 담당과 애니메이션이 같은 벽 각도 기준을 사용하도록 한다.</summary>
     public bool IsWallSlideable(float angle)
     {
         return angle >= moveStats.MinAngleForWallSlide &&
