@@ -131,14 +131,14 @@ public sealed class PlayerHeldItem : NetworkBehaviour
         Camera camera = conveyor.OutputCamera;
         Vector2 point = camera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, -camera.transform.position.z));
         nextAimSendTime = Time.unscaledTime + AimInterval;
-        CmdUpdateMissileAim(point);
+        CmdUpdateMissileAim(point, CurrentRound);
     }
 
     /// <summary>소유자의 요청만 받아 유효한 조준점을 해당 소유자의 미사일에 적용한다.</summary>
     [Command(channel = Channels.Unreliable)]
-    private void CmdUpdateMissileAim(Vector2 position)
+    private void CmdUpdateMissileAim(Vector2 position, int round)
     {
-        if (!state.CanUseTraps || !hasActiveMissiles || NetworkServer.isLoadingScene || itemNetwork == null ||
+        if (!ServerAllowsRound(round) || !hasActiveMissiles || itemNetwork == null ||
             NetworkTime.time < nextServerAimTime || !itemNetwork.IsValidAim(position)) return;
         nextServerAimTime = NetworkTime.time + AimInterval * 0.8f;
         foreach (Missile missile in activeMissiles)

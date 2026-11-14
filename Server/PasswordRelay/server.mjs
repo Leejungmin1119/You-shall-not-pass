@@ -4,7 +4,7 @@ import { pathToFileURL } from 'node:url';
 import { WebSocketServer, WebSocket } from 'ws';
 
 // 1 auth JSON, 2 ready, 3 peer joined, 4 data + uint32LE peer,
-// 5 peer left, 6 kick + peer, 7 lock, 8 heartbeat, 9 error UTF8.
+// 5 peer left, 6 kick + peer, 7 lock, 8 heartbeat, 9 error UTF8, 10 unlock.
 export function createRelay({ maxRooms = 100, maxSockets = 500, maxGuests = 3 } = {}) {
   const rooms = new Map(), attempts = new Map(), key = randomBytes(32);
   const server = http.createServer((req, res) => {
@@ -40,7 +40,8 @@ export function createRelay({ maxRooms = 100, maxSockets = 500, maxGuests = 3 } 
         const now = Date.now(), history = (attempts.get(ip) ?? []).filter(t => now - t < 60000);
         history.push(now); attempts.set(ip, history);
         if (history.length > 30) return reject(ws, 'Too many attempts. Wait a minute.');
-        if (auth.version !== 1 || !['host', 'join'].includes(auth.mode) ||
+        if (auth === null || typeof auth !== 'object' || Array.isArray(auth) ||
+            auth.version !== 1 || !['host', 'join'].includes(auth.mode) ||
             typeof auth.password !== 'string' || auth.password.length < 8 || auth.password.length > 64 ||
             Buffer.byteLength(auth.password) > 256) return reject(ws, 'Use a password with 8-64 characters.');
         const roomKey = createHmac('sha256', key).update(auth.password).digest('hex');
@@ -69,6 +70,7 @@ export function createRelay({ maxRooms = 100, maxSockets = 500, maxGuests = 3 } 
       } else if (ws.isHost && data[0] === 6 && data.length === 5) {
         room.guests.get(data.readUInt32LE(1))?.close(1000);
       } else if (ws.isHost && data[0] === 7 && data.length === 1) room.locked = true;
+      else if (ws.isHost && data[0] === 10 && data.length === 1) room.locked = false;
       else reject(ws, 'Invalid message.');
     });
     ws.on('close', () => {

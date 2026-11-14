@@ -66,6 +66,25 @@ test('malformed auth and text frames cannot enter a room; heartbeat works', asyn
   const host = await peer(url); host.auth('host'); await host.next(2);
   host.send(Buffer.from([8])); assert.deepEqual(await host.next(8), Buffer.from([8]));
 });
+test('valid JSON with a non-object auth is rejected without stopping the relay', async t => {
+  const url = await setup(t);
+  for (const value of [null, [], 42, 'host']) {
+    const malformed = await peer(url);
+    malformed.send(Buffer.concat([Buffer.from([1]), Buffer.from(JSON.stringify(value))]));
+    await malformed.next(9);
+  }
+  const host = await peer(url); host.auth('host'); await host.next(2);
+});
+test('only the host can reopen a room after returning from a game', async t => {
+  const url = await setup(t), host = await peer(url); host.auth('host'); await host.next(2);
+  const guest = await peer(url); guest.auth('join'); await guest.next(2); await host.next(3);
+  host.send(Buffer.from([7])); host.send(Buffer.from([8])); await host.next(8);
+  guest.send(Buffer.from([10])); await guest.next(9); await host.next(5);
+  const blocked = await peer(url); blocked.auth('join'); await blocked.next(9);
+  host.send(Buffer.from([10])); host.send(Buffer.from([8])); await host.next(8);
+  const replacement = await peer(url); replacement.auth('join'); await replacement.next(2);
+  await host.next(3);
+});
 test('separate rooms are isolated and a host can kick its own guest', async t => {
   const url = await setup(t);
   const a = await peer(url); a.auth('host', 'password-room-a'); await a.next(2);

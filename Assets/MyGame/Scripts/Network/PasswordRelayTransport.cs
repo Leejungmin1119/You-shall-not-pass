@@ -115,6 +115,7 @@ public class PasswordRelayTransport : Transport
         }
     }
     public void LockRoom() { if (RoomOpen) hostSocket.Send(new ArraySegment<byte>(new byte[] { 7 })); }
+    public void UnlockRoom() { if (RoomOpen) hostSocket.Send(new ArraySegment<byte>(new byte[] { 10 })); }
     public override bool Available() => true;
     public override int GetMaxPacketSize(int channelId = Channels.Reliable) => MaxPayload;
     public override int GetBatchThreshold(int channelId = Channels.Reliable) => 16384;

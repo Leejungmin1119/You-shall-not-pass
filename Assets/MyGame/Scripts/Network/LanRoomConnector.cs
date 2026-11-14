@@ -112,10 +112,13 @@ public class LanRoomConnector : MonoBehaviour
             Join(Rooms[0]);
             return;
         }
-        if (rooms.Count == 0 && now - searchStarted > 15)
+        if (rooms.Count != 1 && now - searchStarted > 15)
         {
+            bool multipleRooms = rooms.Count > 1;
             Cancel();
-            manager.ReportConnectionFailure("방을 찾지 못했습니다. 같은 내부망인지 확인하거나 방장 IP로 직접 참가해 주세요.");
+            manager.ReportConnectionFailure(multipleRooms
+                ? "방이 여러 개 검색됐습니다. 참가할 방장의 IP를 입력해 주세요."
+                : "방을 찾지 못했습니다. 같은 내부망인지 확인하거나 방장 IP로 직접 참가해 주세요.");
         }
     }
 

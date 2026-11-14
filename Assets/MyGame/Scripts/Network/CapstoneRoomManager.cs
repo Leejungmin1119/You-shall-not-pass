@@ -266,6 +266,8 @@ public class CapstoneRoomManager : NetworkRoomManager
             if (!Lan.Advertising) Lan.Advertise();
         }
         else Lan?.Cancel();
+        if (IsLobby && transport is PasswordRelayTransport relay)
+            relay.UnlockRoom();
     }
 
     public override void OnRoomStopServer()
@@ -359,10 +361,10 @@ public class CapstoneRoomManager : NetworkRoomManager
     public override void OnRoomServerDisconnect(NetworkConnectionToClient connection)
     {
         CancelLobbyCountdown();
-        seatsByConnection.Remove(connection.connectionId);
+        bool wasParticipant = seatsByConnection.Remove(connection.connectionId);
         var race = FindFirstObjectByType<RaceManager>();
         // 현재 정책: 준비 연출을 포함해 경기 도중 이탈하면 판을 중단하고 남은 인원은 로비로 복귀한다.
-        if (race != null && !IsLobby)
+        if (wasParticipant && race != null && !IsLobby)
             race.EndMatch(RaceEndReason.PlayerDisconnected);
     }
 

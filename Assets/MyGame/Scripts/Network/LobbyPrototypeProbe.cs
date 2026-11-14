@@ -15,6 +15,8 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         public int sequence;
         public string action, name;
         public uint playerId;
+        public int character, roundOffset;
+        public float x, y;
         public bool ready;
     }
     [Serializable] private sealed class PlayerReport
@@ -23,6 +25,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         public string name;
         public int seat;
         public bool ready, local;
+        public int character;
         public float x, y;
     }
     [Serializable] private sealed class Snapshot
@@ -41,6 +44,11 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         public string[] errors;
         public PlayerReport[] players;
         public uint[] kickablePlayers;
+        public string endReason;
+        public uint[] winners;
+        public float timeScale;
+        public bool uiHidden;
+        public MissileReport[] missiles;
     }
     [Serializable] private sealed class GamePlayerReport
     {
@@ -48,6 +56,13 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         public bool local;
         public int score, cost, count;
         public int[] slots;
+        public int character;
+        public float x, y;
+    }
+    [Serializable] private sealed class MissileReport
+    {
+        public uint id, owner;
+        public float aimX, aimY;
     }
     [Serializable] private sealed class EventReport
     {
@@ -160,7 +175,9 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
             gamePlayers = race == null ? new GamePlayerReport[0] : race.Participants.Select(p => new GamePlayerReport {
                 id = p.netId, local = p.isLocalPlayer, score = p.GetComponent<PlayerScore>().Score,
                 cost = p.GetComponent<PlayerCost>().CurrentCost, count = p.InventoryCount,
-                slots = p.GetComponent<PlayerInventory>().Items.ToArray()
+                slots = p.GetComponent<PlayerInventory>().Items.ToArray(),
+                character = (int)p.GetComponent<PlayerIdleBoil>().Character,
+                x = p.transform.position.x, y = p.transform.position.y
             }).ToArray(),
             required = manager.RequiredLobbyPlayers, localPlayerId = local != null ? local.netId : 0,
             lastCommand = lastCommand, gameSceneEnteredTime = gameSceneEnteredTime, errors = errors.ToArray(),
@@ -168,9 +185,15 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
             {
                 netId = player.netId, name = player.PlayerName, seat = player.SeatIndex,
                 ready = player.IsReady, local = player.isLocalPlayer,
-                x = player.transform.position.x, y = player.transform.position.y
+                x = player.transform.position.x, y = player.transform.position.y, character = (int)player.Character
             }).ToArray(),
-            kickablePlayers = players.Where(manager.CanKickLobbyPlayer).Select(player => player.netId).ToArray()
+            kickablePlayers = players.Where(manager.CanKickLobbyPlayer).Select(player => player.netId).ToArray(),
+            endReason = race != null ? race.EndReason.ToString() : "",
+            winners = race != null ? race.Winners.ToArray() : new uint[0],
+            timeScale = Time.timeScale, uiHidden = DeathSequence.IsUIHidden,
+            missiles = FindObjectsByType<Missile>(FindObjectsSortMode.None).Where(m => !m.HasExploded)
+                .Select(m => new MissileReport { id = m.InstanceId, owner = m.OwnerNetId,
+                    aimX = m.AimPosition.x, aimY = m.AimPosition.y }).ToArray()
         };
         Write(Path.Combine(directory, id + ".json"), JsonUtility.ToJson(snapshot, true), false);
     }
@@ -206,6 +229,24 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
             case "kick":
                 if (local == null || !manager.IsLobby) return;
                 local.RequestKick(command.playerId);
+                break;
+            case "character":
+                if (local == null || !manager.IsLobby) return;
+                local.RequestCharacter(command.character);
+                break;
+            case "rawCharacter":
+                if (local == null || !manager.IsLobby) return;
+                typeof(CapstoneRoomPlayer).GetMethod("CmdSetCharacter", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                    .Invoke(local, new object[] { command.character });
+                break;
+            case "searchMultipleFixture":
+                manager.BeginLanRoom(false);
+                var found = typeof(LanRoomConnector).GetMethod("OnFound", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+                foreach (long serverId in new long[] { 101, 102 })
+                    found.Invoke(manager.Lan, new object[] { new Mirror.Discovery.ServerResponse {
+                        serverId = serverId, uri = new Uri("kcp://127.0.0.1:7777") } });
+                typeof(LanRoomConnector).GetField("searchStarted", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                    .SetValue(manager.Lan, Time.unscaledTime - 16f);
                 break;
             case "nudge":
                 if (local == null || !manager.IsLobby) return;
@@ -244,6 +285,45 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                 var conveyor = FindFirstObjectByType<ConveyorController>();
                 if (observedHolder == null || conveyor == null || conveyor.Items.Count == 0 || !observedHolder.CanRequestPurchase) return;
                 observedHolder.RequestPurchase(conveyor.Items[0].Id, PurchaseDestination.Hand);
+                break;
+            case "buyMissile":
+                var catalog = FindFirstObjectByType<ConveyorController>();
+                if (observedHolder == null || catalog == null || !observedHolder.CanRequestPurchase) return;
+                var missileOffer = catalog.Items.FirstOrDefault(item => catalog.GetItemData(item.ItemId)?.Prefab is Missile);
+                if (missileOffer.Id == 0) return;
+                observedHolder.RequestPurchase(missileOffer.Id, PurchaseDestination.Hand);
+                // Keep automatic mouse updates from overwriting the explicit aim requests under test.
+                typeof(PlayerHeldItem).GetField("nextAimSendTime", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                    .SetValue(observedHolder, float.PositiveInfinity);
+                break;
+            case "useAt":
+                var aimCamera = FindFirstObjectByType<ConveyorController>()?.OutputCamera;
+                if (observedHolder == null || aimCamera == null || !observedHolder.HasHeldItem) return;
+                observedHolder.RequestUse(aimCamera.ViewportToScreenPoint(new Vector3(command.x, command.y)));
+                break;
+            case "aim":
+                if (observedHolder == null) return;
+                var aimRace = FindFirstObjectByType<RaceManager>();
+                if (aimRace == null) return;
+                typeof(PlayerHeldItem).GetMethod("CmdUpdateMissileAim", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                    .Invoke(observedHolder, new object[] { new Vector2(command.x, command.y), aimRace.RoundNumber + command.roundOffset });
+                break;
+            case "deathFixture":
+                var deathRace = FindFirstObjectByType<RaceManager>();
+                if (!NetworkServer.active || deathRace == null || !deathRace.IsRunning) return;
+                var dying = deathRace.Participants.First(p => deathRace.Roles.IsAttacker(p));
+                dying.TryDie((Vector2)dying.transform.position + Vector2.left);
+                break;
+            case "timeLimitFixture":
+                var timedRace = FindFirstObjectByType<RaceManager>();
+                if (!NetworkServer.active || timedRace == null || !timedRace.IsRunning) return;
+                typeof(RaceManager).GetField("matchEndsAt", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                    .SetValue(timedRace, NetworkTime.time + 1d);
+                break;
+            case "scoreLimitFixture":
+                var scoredRace = FindFirstObjectByType<RaceManager>();
+                if (!NetworkServer.active || scoredRace == null || !scoredRace.IsRunning) return;
+                scoredRace.Participants.First(p => scoredRace.Roles.IsAttacker(p)).GetComponent<PlayerScore>().AddGoalScore(20);
                 break;
             case "use":
                 var offers = FindFirstObjectByType<ConveyorController>();

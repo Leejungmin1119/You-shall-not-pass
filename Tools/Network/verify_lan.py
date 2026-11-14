@@ -137,6 +137,13 @@ try:
  check(True,'goal score and attacker turn identical on four peers')
  wait(lambda:all(all(p['count']==0 for p in read(i)['gamePlayers']) for i in ids),'turn resets inventories')
  check(True,'turn reset clears inventory on every peer')
+ # Wait for owner teleport acknowledgements and reliable transform interpolation.
+ def positions_agree():
+  expected={p['id']:(p['x'],p['y']) for p in read('host')['gamePlayers']}
+  return all(all(abs(p['x']-expected[p['id']][0])<.3 and abs(p['y']-expected[p['id']][1])<.3
+                 for p in read(i)['gamePlayers']) for i in ids)
+ wait(positions_agree,'positions after attacker change')
+ check(True,'turn teleport positions agree on host and three clients')
  command('c3','leave');remain=['host','c1','c2']
  wait(lambda:all(read(i)['scene']=='LobbyScene' for i in remain),'disconnect abort returns all remaining peers',30)
  wait(lambda:read('host')['advertising'],'advertise after disconnected game')
