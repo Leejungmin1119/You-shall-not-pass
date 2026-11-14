@@ -14,6 +14,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
     {
         public int sequence;
         public string action, name;
+        public uint playerId;
         public bool ready;
     }
     [Serializable] private sealed class PlayerReport
@@ -39,6 +40,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         public uint localPlayerId;
         public string[] errors;
         public PlayerReport[] players;
+        public uint[] kickablePlayers;
     }
     [Serializable] private sealed class GamePlayerReport
     {
@@ -167,7 +169,8 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                 netId = player.netId, name = player.PlayerName, seat = player.SeatIndex,
                 ready = player.IsReady, local = player.isLocalPlayer,
                 x = player.transform.position.x, y = player.transform.position.y
-            }).ToArray()
+            }).ToArray(),
+            kickablePlayers = players.Where(manager.CanKickLobbyPlayer).Select(player => player.netId).ToArray()
         };
         Write(Path.Combine(directory, id + ".json"), JsonUtility.ToJson(snapshot, true), false);
     }
@@ -199,6 +202,10 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
             case "rename":
                 if (local == null || !manager.IsLobby) return;
                 local.RequestName(command.name);
+                break;
+            case "kick":
+                if (local == null || !manager.IsLobby) return;
+                local.RequestKick(command.playerId);
                 break;
             case "nudge":
                 if (local == null || !manager.IsLobby) return;

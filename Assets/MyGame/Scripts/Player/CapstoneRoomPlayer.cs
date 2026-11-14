@@ -36,6 +36,7 @@ public class CapstoneRoomPlayer : NetworkRoomPlayer
 
     public string PlayerName => playerName;
     public bool IsReady => readyToBegin;
+    internal bool IsBeingRemoved { get; private set; }
 
     public override void OnStartServer()
     {
@@ -53,6 +54,32 @@ public class CapstoneRoomPlayer : NetworkRoomPlayer
     public void ToggleReady()
     {
         if (isLocalPlayer) CmdChangeReadyState(!readyToBegin);
+    }
+
+    public void RequestKick(uint playerId)
+    {
+        if (isLocalPlayer) CmdRequestKick(playerId);
+    }
+
+    [Command]
+    private void CmdRequestKick(uint playerId)
+    {
+        if (NetworkManager.singleton is CapstoneRoomManager manager)
+            manager.ServerTryKickPlayer(connectionToClient, playerId);
+    }
+
+    [Server]
+    internal void ServerNotifyRemoved()
+    {
+        IsBeingRemoved = true;
+        TargetRemovedFromRoom(connectionToClient);
+    }
+
+    [TargetRpc]
+    private void TargetRemovedFromRoom(NetworkConnectionToClient target)
+    {
+        if (NetworkManager.singleton is CapstoneRoomManager manager)
+            manager.ReportConnectionFailure("방장이 내보냈습니다. 다른 방에 참가하거나 새 방을 만들어 주세요.");
     }
 
     public void RequestName(string requestedName)

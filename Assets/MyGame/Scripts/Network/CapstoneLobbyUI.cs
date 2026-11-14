@@ -258,6 +258,7 @@ public class CapstoneLobbyUI : MonoBehaviour
     /// <summary>빈 자리도 고정 위치에 그리며 서버가 배정한 좌석 번호로 참가자를 연결한다.</summary>
     private void DrawSeats(CapstoneRoomPlayer[] players, bool connected)
     {
+        var local = players.FirstOrDefault(player => player.isLocalPlayer);
         for (int seat = 0; seat < CapstoneRoomManager.LobbySeatCount; seat++)
         {
             float x = 200 + seat * 194;
@@ -268,7 +269,13 @@ public class CapstoneLobbyUI : MonoBehaviour
             if (grassSprite == null) Rounded(new Rect(x - 88, 460, 176, 72), new Color(.62f, .72f, .44f), 8);
             badge.normal.textColor = Muted;
             Label(new Rect(x - 80, 239, 160, 24), $"{seat + 1:00} 번 자리", badge);
-            if (occupied) DrawCrew(x, player.netId, player.IsReady, player.isLocalPlayer, player.PlayerName);
+            if (occupied)
+            {
+                DrawCrew(x, player.netId, player.IsReady, player.isLocalPlayer, player.PlayerName);
+                if (local != null && manager.CanKickLobbyPlayer(player) &&
+                    Action(new Rect(x + 58, 316, 28, 28), "×", true, new Color(1f, .82f, .76f)))
+                    local.RequestKick(player.netId);
+            }
             else
             {
                 Rounded(new Rect(x - 31, 373, 62, 62), new Color(1f, .98f, .89f, .75f), 20);

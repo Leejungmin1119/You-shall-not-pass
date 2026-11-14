@@ -186,6 +186,39 @@ public class CapstoneRoomManager : NetworkRoomManager
     public bool IsLobby => Utils.IsSceneActive(RoomScene);
     public bool IsEditingText => GetComponent<CapstoneLobbyUI>()?.IsEditingText == true;
 
+    public bool CanKickLobbyPlayer(CapstoneRoomPlayer player)
+    {
+        return NetworkServer.active && NetworkServer.localConnection != null &&
+            IsLobby && !IsSoloTest && !NetworkServer.isLoadingScene &&
+            player != null && !player.IsBeingRemoved && player.connectionToClient != null &&
+            player.connectionToClient != NetworkServer.localConnection &&
+            player.connectionToClient.identity == player.netIdentity;
+    }
+
+    /// <summary>요청자의 실제 연결이 방장인지 확인하고 현재 대기실 참가자만 내보낸다.</summary>
+    [Server]
+    public bool ServerTryKickPlayer(NetworkConnectionToClient requester, uint playerId)
+    {
+        if (requester == null || requester != NetworkServer.localConnection ||
+            !NetworkServer.spawned.TryGetValue(playerId, out NetworkIdentity identity) ||
+            !identity.TryGetComponent(out CapstoneRoomPlayer player) || !CanKickLobbyPlayer(player))
+            return false;
+
+        CancelLobbyCountdown();
+        player.ServerNotifyRemoved();
+        // 클라이언트가 안내를 받고 연결을 정리할 시간을 주며, 응답하지 않아도 서버가 종료한다.
+        StartCoroutine(DisconnectRemovedPlayer(player.connectionToClient));
+        return true;
+    }
+
+    private System.Collections.IEnumerator DisconnectRemovedPlayer(NetworkConnectionToClient connection)
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        if (NetworkServer.active && NetworkServer.connections.TryGetValue(connection.connectionId, out var current) &&
+            current == connection)
+            connection.Disconnect();
+    }
+
     public bool CanStartGame()
     {
         if (transport is PasswordRelayTransport relay && !relay.RoomOpen) return false;
@@ -196,7 +229,7 @@ public class CapstoneRoomManager : NetworkRoomManager
         {
             var player = connection.identity != null
                 ? connection.identity.GetComponent<CapstoneRoomPlayer>() : null;
-            if (!connection.isReady || player == null || !player.readyToBegin || player.SeatIndex < 0)
+            if (!connection.isReady || player == null || player.IsBeingRemoved || !player.readyToBegin || player.SeatIndex < 0)
                 return false;
         }
         return true;
