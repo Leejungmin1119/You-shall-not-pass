@@ -43,7 +43,8 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         public uint localPlayerId;
         public string[] errors;
         public PlayerReport[] players;
-        public uint[] kickablePlayers;
+        public uint[] kickablePlayers, serverPlayerIds;
+        public bool serverRegistryValid;
         public string endReason;
         public uint[] winners;
         public float timeScale;
@@ -188,6 +189,8 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                 x = player.transform.position.x, y = player.transform.position.y, character = (int)player.Character
             }).ToArray(),
             kickablePlayers = players.Where(manager.CanKickLobbyPlayer).Select(player => player.netId).ToArray(),
+            serverPlayerIds = PlayerState.ServerPlayers.Where(p => p != null).Select(p => p.netId).ToArray(),
+            serverRegistryValid = ValidateServerRegistry(),
             endReason = race != null ? race.EndReason.ToString() : "",
             winners = race != null ? race.Winners.ToArray() : new uint[0],
             timeScale = Time.timeScale, uiHidden = DeathSequence.IsUIHidden,
@@ -196,6 +199,24 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                     aimX = m.AimPosition.x, aimY = m.AimPosition.y }).ToArray()
         };
         Write(Path.Combine(directory, id + ".json"), JsonUtility.ToJson(snapshot, true), false);
+    }
+
+    private static bool ValidateServerRegistry()
+    {
+        var players = PlayerState.ServerPlayers;
+        int count = 0;
+        foreach (NetworkIdentity identity in NetworkServer.spawned.Values)
+            if (identity != null && identity.TryGetComponent<PlayerState>(out _)) count++;
+        if (count != players.Count) return false;
+        for (int index = 0; index < players.Count; index++)
+        {
+            var player = players[index];
+            if (player == null || !NetworkServer.spawned.TryGetValue(player.netId, out var identity) ||
+                identity != player.netIdentity) return false;
+            for (int previous = 0; previous < index; previous++)
+                if (players[previous] == player) return false;
+        }
+        return true;
     }
 
     private System.Collections.IEnumerator CaptureFrame(CapstoneRoomManager manager)
@@ -305,6 +326,8 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                 if (observedHolder == null) return;
                 var aimRace = FindFirstObjectByType<RaceManager>();
                 if (aimRace == null) return;
+                typeof(PlayerHeldItem).GetField("nextAimSendTime", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                    .SetValue(observedHolder, float.PositiveInfinity);
                 typeof(PlayerHeldItem).GetMethod("CmdUpdateMissileAim", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
                     .Invoke(observedHolder, new object[] { new Vector2(command.x, command.y), aimRace.RoundNumber + command.roundOffset });
                 break;

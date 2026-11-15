@@ -85,9 +85,11 @@ public abstract class ItemBase : MonoBehaviour
         float nearest = float.PositiveInfinity;
         Vector2 delta = to - from;
         float distance = delta.magnitude;
-        foreach (NetworkIdentity identity in NetworkServer.spawned.Values)
+        var players = PlayerState.ServerPlayers;
+        for (int playerIndex = 0; playerIndex < players.Count; playerIndex++)
         {
-            if (identity == null || !identity.TryGetComponent(out PlayerState player) || !CanHit(player)) continue;
+            PlayerState player = players[playerIndex];
+            if (player == null || !CanHit(player)) continue;
             Collider2D collider = player.GetComponent<Collider2D>();
             if (collider == null) continue;
             Bounds body = collider.bounds;

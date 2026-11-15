@@ -89,9 +89,13 @@ public sealed class FallZone : NetworkBehaviour
     private void Update()
     {
         if (!isServer) return;
-        foreach (var identity in NetworkServer.spawned.Values)
-            if (identity != null && identity.TryGetComponent(out PlayerState player) && player.Race != null)
-                ServerTryContact(identity.connectionToClient, player.Race.RoundNumber);
+        var players = PlayerState.ServerPlayers;
+        for (int playerIndex = 0; playerIndex < players.Count; playerIndex++)
+        {
+            PlayerState player = players[playerIndex];
+            if (player != null && player.Race != null)
+                ServerTryContact(player.connectionToClient, player.Race.RoundNumber);
+        }
     }
 
     /// <summary>

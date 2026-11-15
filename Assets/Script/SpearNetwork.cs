@@ -108,9 +108,13 @@ public class SpearNetwork : MonoBehaviour
             return false;
         if (!owner.TryGetComponent(out PlayerState actor) || !actor.CanUseTraps || owner.connectionToClient == null)
             return false;
-        foreach (var identity in NetworkServer.spawned.Values)
-            if (identity != null && identity.TryGetComponent(out PlayerState player) && player.IsInvincible &&
-                Vector2.Distance(cursor, player.transform.position) < 1.5f) return false;
+        var players = PlayerState.ServerPlayers;
+        for (int index = 0; index < players.Count; index++)
+        {
+            PlayerState player = players[index];
+            if (player != null && player.IsInvincible &&
+                (cursor - (Vector2)player.transform.position).sqrMagnitude < 1.5f * 1.5f) return false;
+        }
         Bounds area = useBounds.bounds;
         if (cursor.x < area.min.x || cursor.x > area.max.x || cursor.y < area.min.y || cursor.y > area.max.y ||
             (data.Placement == ItemPlacement.Drop && (startY <= cursor.y || startY > area.max.y + area.size.x)))

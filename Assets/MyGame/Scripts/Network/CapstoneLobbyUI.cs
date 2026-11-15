@@ -16,6 +16,11 @@ public class CapstoneLobbyUI : MonoBehaviour
     private GUIStyle title, heading, text, small, button, input;
     private GUIStyle menuTitle, menuSubtitle;
     private string previousScreen;
+    private readonly System.Collections.Generic.List<CapstoneRoomPlayer> roomPlayers =
+        new System.Collections.Generic.List<CapstoneRoomPlayer>(CapstoneRoomManager.LobbySeatCount);
+    private static readonly System.Comparison<CapstoneRoomPlayer> CompareRoomPlayers =
+        (left, right) => left.netId.CompareTo(right.netId);
+    private int roomRosterFrame = -1;
     [SerializeField] private Texture2D mainMenuBackground;
     public string CurrentScreen => manager != null && !manager.IsLobby ? "Game" :
         manager != null && !manager.IsSoloTest && NetworkClient.isConnected && NetworkClient.localPlayer != null &&
@@ -308,13 +313,18 @@ public class CapstoneLobbyUI : MonoBehaviour
     }
 
     /// <summary>빈 자리도 고정 위치에 그리며 서버가 배정한 좌석 번호로 참가자를 연결한다.</summary>
-    private void DrawSeats(CapstoneRoomPlayer[] players, bool connected)
+    private void DrawSeats(System.Collections.Generic.IReadOnlyList<CapstoneRoomPlayer> players, bool connected, CapstoneRoomPlayer local)
     {
-        var local = players.FirstOrDefault(player => player.isLocalPlayer);
         for (int seat = 0; seat < CapstoneRoomManager.LobbySeatCount; seat++)
         {
             float x = 200 + seat * 194;
-            var player = players.FirstOrDefault(p => p.SeatIndex == seat);
+            CapstoneRoomPlayer player = null;
+            for (int index = 0; index < players.Count; index++)
+                if (players[index] != null && players[index].SeatIndex == seat)
+                {
+                    player = players[index];
+                    break;
+                }
             bool occupied = player != null;
             // 그림과 캐릭터 모두 인게임의 발판·대기 애니메이션 에셋을 공유한다.
             DrawSprite(new Rect(x - 88, 460, 176, 88), grassSprite);
@@ -379,6 +389,8 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (screen != previousScreen)
         {
             previousScreen = screen;
+            roomRosterFrame = -1;
+            roomPlayers.Clear();
             showLocalAddresses = false;
             copiedAddress = null;
             GUI.FocusControl(null);
@@ -479,6 +491,18 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (busy && Action(new Rect(1045, 672, 165, 32), "연결 취소")) Leave();
     }
 
+    private System.Collections.Generic.IReadOnlyList<CapstoneRoomPlayer> CollectRoomPlayers()
+    {
+        if (roomRosterFrame == Time.frameCount) return roomPlayers;
+        roomRosterFrame = Time.frameCount;
+        roomPlayers.Clear();
+        foreach (NetworkIdentity identity in NetworkClient.spawned.Values)
+            if (identity != null && identity.TryGetComponent(out CapstoneRoomPlayer player))
+                roomPlayers.Add(player);
+        roomPlayers.Sort(CompareRoomPlayers);
+        return roomPlayers;
+    }
+
     private void DrawRoomLobby()
     {
         DrawLandscape();
@@ -486,15 +510,20 @@ public class CapstoneLobbyUI : MonoBehaviour
         Label(new Rect(78, 108, 790, 32), "방 대기실 · 이름을 정하고 READY로 함께 출발해요", small);
         if (Action(new Rect(948, 100, 275, 40), showLocalAddresses ? "내 IP 닫기" : "내 IP 보기"))
             ToggleLocalAddressPanel();
-        var players = NetworkClient.spawned.Values.Where(n => n != null)
-            .Select(n => n.GetComponent<CapstoneRoomPlayer>()).Where(n => n != null)
-            .OrderBy(n => n.netId).ToArray();
-        DrawSeats(players, true);
-        int ready = players.Count(n => n.IsReady);
-        var local = players.FirstOrDefault(n => n.isLocalPlayer);
+        var players = CollectRoomPlayers();
+        int ready = 0;
+        CapstoneRoomPlayer local = null;
+        for (int index = 0; index < players.Count; index++)
+        {
+            var player = players[index];
+            if (player == null) continue;
+            if (player.IsReady) ready++;
+            if (player.isLocalPlayer) local = player;
+        }
+        DrawSeats(players, true, local);
         Rounded(new Rect(948, 155, 275, 528), Panel, 18);
         Label(new Rect(972, 179, 226, 36), "우리들의 대기실", heading);
-        Label(new Rect(972, 231, 226, 34), (NetworkServer.active ? "방장" : "참가자") + $" · {players.Length} / 4명", text);
+        Label(new Rect(972, 231, 226, 34), (NetworkServer.active ? "방장" : "참가자") + $" · {players.Count} / 4명", text);
         DrawRoomCharacterPicker(local);
         if (local != null && editingPlayerId != local.netId)
         {
@@ -511,9 +540,9 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (Action(new Rect(972, 600, 226, 43), "방 나가기")) Leave();
         if (Action(new Rect(78, 586, 393, 57), local != null && local.IsReady ? "준비 취소  [ F ]" : "준비 완료  [ F ]", local != null))
             local.ToggleReady();
-        DrawStartStatus(players.Length, ready, true);
+        DrawStartStatus(players.Count, ready, true);
         Label(new Rect(78, 668, 820, 35), NetworkServer.active ? "방장 IP: " + manager.Lan.LocalAddresses :
-            $"참가 {players.Length} / 4명 · 준비 완료 {ready}명 · F : 준비 / 취소", small);
+            $"참가 {players.Count} / 4명 · 준비 완료 {ready}명 · F : 준비 / 취소", small);
     }
 
     private void DrawLocalAddresses()

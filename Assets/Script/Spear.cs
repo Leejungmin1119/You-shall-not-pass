@@ -115,9 +115,11 @@ public sealed class Spear : ItemBase
         float halfWidth = hitSize.x * Mathf.Abs(scale.x) * 0.5f;
         float bottom = transform.position.y;
         float top = Mathf.Max(previousY, bottom) + hitSize.y * Mathf.Abs(scale.y);
-        foreach (NetworkIdentity identity in NetworkServer.spawned.Values)
+        var players = PlayerState.ServerPlayers;
+        for (int playerIndex = 0; playerIndex < players.Count; playerIndex++)
         {
-            if (identity == null || !identity.TryGetComponent(out PlayerState player) || !CanHit(player))
+            PlayerState player = players[playerIndex];
+            if (player == null || !CanHit(player))
                 continue;
             Collider2D collider = player.GetComponent<Collider2D>();
             if (collider == null) continue;

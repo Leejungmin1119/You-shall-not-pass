@@ -23,6 +23,13 @@ public sealed class RoundTrap : ItemBase
     [SerializeField, Min(0.1f)] private float minHitSpeed = 0.5f;
     private const float Skin = 0.01f;
     private const float SnapshotInterval = 0.04f;
+    private const float SnapshotHeartbeatInterval = 0.25f;
+    private const float SnapshotPositionThreshold = 0.01f;
+    private const float SnapshotAngleThreshold = 0.5f;
+    private bool hasSentSnapshot;
+    private Vector2 lastSentPosition;
+    private float lastSentAngle;
+    private float nextSnapshotHeartbeat;
     private readonly RaycastHit2D[] groundHits = new RaycastHit2D[12];
     private ContactFilter2D groundFilter;
     private Rigidbody2D body;
@@ -49,6 +56,9 @@ public sealed class RoundTrap : ItemBase
     public override void Initialize(ItemData data, ItemSpawnMessage spawn, bool isJudge, float initialAge)
     {
         base.Initialize(data, spawn, isJudge, initialAge);
+        hasSentSnapshot = false;
+        nextSnapshot = 0f;
+        nextSnapshotHeartbeat = 0f;
         firstBounceHeight = 0f;
         lastBounceSoundStep = double.NegativeInfinity;
         body = GetComponent<Rigidbody2D>();
@@ -85,7 +95,7 @@ public sealed class RoundTrap : ItemBase
         {
             // MovePosition은 다음 물리 단계에 적용되므로 이번에 계산한 목적지를 메시지로 보낸다.
             PublishMovement(next, angle);
-            nextSnapshot = age + SnapshotInterval;
+            nextSnapshot = Mathf.Min(age + SnapshotInterval, nextSnapshotHeartbeat);
         }
     }
 
@@ -188,9 +198,11 @@ public sealed class RoundTrap : ItemBase
         if (impactVelocity.sqrMagnitude < minHitSpeed * minHitSpeed) return;
         Vector2 delta = next - previous;
         float distance = delta.magnitude;
-        foreach (NetworkIdentity identity in NetworkServer.spawned.Values)
+        var players = PlayerState.ServerPlayers;
+        for (int playerIndex = 0; playerIndex < players.Count; playerIndex++)
         {
-            if (identity == null || !identity.TryGetComponent(out PlayerState player) || !CanHit(player)) continue;
+            PlayerState player = players[playerIndex];
+            if (player == null || !CanHit(player)) continue;
             Collider2D collider = player.GetComponent<Collider2D>();
             if (collider == null) continue;
             Bounds bounds = collider.bounds;
@@ -208,10 +220,19 @@ public sealed class RoundTrap : ItemBase
         }
     }
 
-    /// <summary>계산한 위치와 회전을 공통 전송 경로로 전달한다.</summary>
+    /// <summary>움직이는 동안 기존 주기를 유지하고, 정지한 몸체는 복구용 상태만 주기적으로 보낸다.</summary>
     private void PublishMovement(Vector2 position, float angle)
     {
+        bool changed = !hasSentSnapshot ||
+            (position - lastSentPosition).sqrMagnitude >= SnapshotPositionThreshold * SnapshotPositionThreshold ||
+            Mathf.Abs(Mathf.DeltaAngle(lastSentAngle, angle)) >= SnapshotAngleThreshold;
+        if (!changed && age < nextSnapshotHeartbeat) return;
+
         PublishState(false, position: position, angle: angle);
+        lastSentPosition = position;
+        lastSentAngle = angle;
+        hasSentSnapshot = true;
+        nextSnapshotHeartbeat = age + SnapshotHeartbeatInterval;
     }
 
     /// <summary>서버의 최신 위치를 수신하고 소멸 메시지는 즉시 충돌 판정에도 적용한다.</summary>

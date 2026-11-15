@@ -14,7 +14,10 @@ def check(condition,label):
  if not condition:raise AssertionError(label)
  passed.append(label);print('PASS '+label,flush=True)
 def read(ident):
- try:return json.loads((REPORT/(ident+'.json')).read_text())
+ try:
+  snapshot=json.loads((REPORT/(ident+'.json')).read_text())
+  if snapshot.get('serverRegistryValid') is False:raise AssertionError('Server player registry diverged on '+ident)
+  return snapshot
  except (OSError,ValueError):return {}
 def wait(predicate,label,timeout=20):
  deadline=time.monotonic()+timeout

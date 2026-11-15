@@ -84,9 +84,11 @@ public sealed class RotatingFirebarTrap : NetworkBehaviour
         }
         // 긴 프레임도 회전 호를 짧은 선분들로 나누어 화염구가 플레이어를 건너뛰지 않게 한다.
         int steps = Mathf.Clamp(Mathf.CeilToInt((float)(now - previousCheckTime) * degreesPerSecond / 2f), 1, 180);
-        foreach (NetworkIdentity identity in NetworkServer.spawned.Values)
+        var players = PlayerState.ServerPlayers;
+        for (int playerIndex = 0; playerIndex < players.Count; playerIndex++)
         {
-            if (identity == null || !identity.TryGetComponent(out PlayerState player) ||
+            PlayerState player = players[playerIndex];
+            if (player == null ||
                 !player.CanReceiveHit || !player.TryGetComponent(out CapsuleCollider2D capsule) ||
                 !capsule.enabled) continue;
             CapsuleSegment(capsule, out Vector2 a, out Vector2 b, out float playerRadius);
