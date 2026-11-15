@@ -224,26 +224,37 @@ public class CapstoneLobbyUI : MonoBehaviour
     /// </summary>
     public static int PreferredCharacter = -1;
 
-    public static void StepPreferredCharacter(int direction, PlayerIdleBoil.CharacterStyle current)
-    {
-        int count = PlayerIdleBoil.CharacterCount;
-        PreferredCharacter = (((int)current + (direction < 0 ? -1 : 1)) % count + count) % count;
-    }
-
-    /// <summary>방에 들어가기 전에도 캐릭터를 고를 수 있게 한다(1인 시험은 바로 게임으로 넘어가므로 필요).</summary>
+    /// <summary>입장 전 캐릭터를 이름으로 골라 메인 미리보기와 게임에 사용한다.</summary>
     private void DrawCharacterPicker(bool enabled)
     {
-        var style = (PlayerIdleBoil.CharacterStyle)Mathf.Max(0, PreferredCharacter);
-        if (Action(new Rect(560, 100, 36, 40), "<", enabled)) StepPreferredCharacter(-1, style);
-        if (Action(new Rect(864, 100, 36, 40), ">", enabled))
-            StepPreferredCharacter(1, PreferredCharacter < 0 ? (PlayerIdleBoil.CharacterStyle)(-1 + PlayerIdleBoil.CharacterCount) : style);
-        Sprite[] frames = GetCrewFrames(style);
-        if (PreferredCharacter >= 0 && frames != null && frames.Length > 0)
-            DrawSprite(new Rect(604, 92, 48, 56), frames[Mathf.FloorToInt(Time.unscaledTime * idleFramesPerSecond) % frames.Length], true);
-        centered.fontSize = 17;
-        centered.normal.textColor = Ink;
-        Label(new Rect(652, 100, 206, 40), PreferredCharacter < 0
-            ? "캐릭터 · 자리 순서대로" : "캐릭터 · " + PlayerIdleBoil.GetDisplayName(style), centered);
+        Label(new Rect(560, 73, 340, 23), "캐릭터 선택", small);
+        for (int index = 0; index < PlayerIdleBoil.CharacterCount; index++)
+        {
+            var style = (PlayerIdleBoil.CharacterStyle)index;
+            Color fill = PreferredCharacter == index ? new Color(.75f, .84f, .65f) : Paper;
+            if (Action(new Rect(560 + index * 116, 100, 108, 42), PlayerIdleBoil.GetDisplayName(style), enabled, fill))
+                PreferredCharacter = index;
+        }
+    }
+
+    /// <summary>대기실에서는 자신의 캐릭터만 고르며 준비를 마치면 선택을 잠근다.</summary>
+    private void DrawRoomCharacterPicker(CapstoneRoomPlayer local)
+    {
+        Label(new Rect(972, 270, 226, 23), "내 캐릭터 선택", small);
+        int previousFontSize = button.fontSize;
+        button.fontSize = 14;
+        for (int index = 0; index < PlayerIdleBoil.CharacterCount; index++)
+        {
+            var style = (PlayerIdleBoil.CharacterStyle)index;
+            Color fill = local != null && local.Character == style ? new Color(.75f, .84f, .65f) : Paper;
+            if (Action(new Rect(972 + index * 76, 298, 70, 32), PlayerIdleBoil.GetDisplayName(style),
+                local != null && !local.IsReady, fill))
+            {
+                PreferredCharacter = index;
+                local.RequestCharacter(index);
+            }
+        }
+        button.fontSize = previousFontSize;
     }
 
     /// <summary>게임 플레이어 프리팹의 캐릭터별 대기 그림을 그대로 쓴다. 없으면 로비에 지정한 그림을 쓴다.</summary>
@@ -266,17 +277,6 @@ public class CapstoneLobbyUI : MonoBehaviour
         {
             int frame = (Mathf.FloorToInt(Time.unscaledTime * idleFramesPerSecond) + (int)(id % 3)) % crewFrames.Length;
             DrawSprite(new Rect(x - 63, 310, 126, 150), crewFrames[frame], true);
-        }
-        // 준비 전에는 자기 자리에서 캐릭터를 넘겨 고른다. 준비 후에는 잠긴다.
-        if (local)
-        {
-            for (int direction = -1; direction <= 1; direction += 2)
-            {
-                if (!Action(new Rect(direction < 0 ? x - 90 : x + 60, 365, 30, 44), direction < 0 ? "<" : ">", !ready))
-                    continue;
-                StepPreferredCharacter(direction, player.Character);
-                player.RequestCharacter(PreferredCharacter);
-            }
         }
         string displayName = string.IsNullOrEmpty(playerName) ? "P" + id : playerName;
         centered.fontSize = 17;
@@ -446,10 +446,12 @@ public class CapstoneLobbyUI : MonoBehaviour
         DrawMenuTitle(new Rect(72, 40, 690, 88), "세상에서 가장");
         DrawMenuTitle(new Rect(72, 120, 690, 88), "더러운 게임");
         Label(new Rect(78, 220, 630, 40), "친구들과 함께, 과연 끝까지 지나갈 수 있을까?", menuSubtitle);
-        if (idleFrames != null && idleFrames.Length > 0)
+        var selectedStyle = (PlayerIdleBoil.CharacterStyle)Mathf.Max(0, PreferredCharacter);
+        Sprite[] previewFrames = GetCrewFrames(selectedStyle);
+        if (previewFrames != null && previewFrames.Length > 0)
         {
-            int frame = Mathf.FloorToInt(Time.unscaledTime * idleFramesPerSecond) % idleFrames.Length;
-            DrawSprite(new Rect(302, 308, 118, 151), idleFrames[frame], true);
+            int frame = Mathf.FloorToInt(Time.unscaledTime * idleFramesPerSecond) % previewFrames.Length;
+            DrawSprite(new Rect(302, 308, 118, 151), previewFrames[frame], true);
         }
         if (Action(new Rect(1045, 34, 165, 38), showLocalAddresses ? "내 IP 닫기" : "내 IP 보기"))
             ToggleLocalAddressPanel();
@@ -493,7 +495,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         Rounded(new Rect(948, 155, 275, 528), Panel, 18);
         Label(new Rect(972, 179, 226, 36), "우리들의 대기실", heading);
         Label(new Rect(972, 231, 226, 34), (NetworkServer.active ? "방장" : "참가자") + $" · {players.Length} / 4명", text);
-        Label(new Rect(972, 276, 226, 42), "네 자리에서 친구들과 함께 준비해요.", small);
+        DrawRoomCharacterPicker(local);
         if (local != null && editingPlayerId != local.netId)
         {
             editingPlayerId = local.netId;
@@ -505,7 +507,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         requestedName = GUI.TextField(new Rect(972, 366, 226, 43), requestedName, 16, input);
         GUI.enabled = true;
         if (Action(new Rect(972, 424, 226, 39), "이름 저장", local != null)) local.RequestName(requestedName);
-        Label(new Rect(972, 490, 226, 76), "2~4명 전원 READY 시\n5초 뒤 게임을 시작해요.\n준비 해제 시 시작이 취소돼요.", small);
+        Label(new Rect(972, 490, 226, 76), "캐릭터 변경은 준비 해제 후\n2~4명 전원 READY 시\n5초 뒤 시작 · 준비 해제 시 취소", small);
         if (Action(new Rect(972, 600, 226, 43), "방 나가기")) Leave();
         if (Action(new Rect(78, 586, 393, 57), local != null && local.IsReady ? "준비 취소  [ F ]" : "준비 완료  [ F ]", local != null))
             local.ToggleReady();
