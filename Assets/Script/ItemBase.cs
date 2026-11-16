@@ -18,6 +18,11 @@ public abstract class ItemBase : MonoBehaviour
     public uint OwnerNetId { get; private set; }
     public ItemData Data { get; private set; }
     protected bool IsJudge { get; private set; }
+    private RaceManager race;
+
+    // 사망 연출의 기존 deltaTime에 스킬 배율만 곱한다. 소유자의 이동 시간에는 관여하지 않는다.
+    protected float StageDeltaTime => Time.deltaTime * (race != null ? race.StageTimeScale : 1f);
+    protected float StageFixedDeltaTime => Time.fixedDeltaTime * (race != null ? race.StageTimeScale : 1f);
 
     /// <summary>
     /// 서버가 확정한 소유자와 설정을 생성 정보 메시지에서 읽어 적용한다.
@@ -28,8 +33,10 @@ public abstract class ItemBase : MonoBehaviour
         InstanceId = spawn.InstanceId;
         OwnerNetId = spawn.OwnerNetId;
         IsJudge = isJudge;
+        race = FindFirstObjectByType<RaceManager>(FindObjectsInactive.Include);
         hitPlayers.Clear();
         instances[InstanceId] = this;
+        TimeSkillGrayscale.Register(gameObject);
     }
 
     /// <summary>라운드 종료 시 등록된 함정을 즉시 멈추고 파괴한다.</summary>

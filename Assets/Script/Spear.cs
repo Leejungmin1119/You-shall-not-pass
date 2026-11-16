@@ -45,7 +45,7 @@ public sealed class Spear : ItemBase
     /// </summary>
     private void Update()
     {
-        Advance(Time.deltaTime);
+        Advance(StageDeltaTime);
     }
 
     /// <summary>
@@ -147,6 +147,7 @@ public sealed class Spear : ItemBase
         renderer.color = new Color(1f, 0.2f, 0.2f, 0.4f);
         renderer.sortingLayerID = source.sortingLayerID;
         renderer.sortingOrder = source.sortingOrder - 1;
+        TimeSkillGrayscale.Register(marker);
         return renderer;
     }
 

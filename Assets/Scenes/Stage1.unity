@@ -7248,7 +7248,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.601822, y: -2.81596, z: -10}
+  m_LocalPosition: {x: -9.824891, y: -2.81596, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9729,6 +9729,9 @@ MonoBehaviour:
   syncInterval: 0
   roundDuration: 900
   conveyor: {fileID: 302568695}
+  skillTimeScale: 0.1
+  skillDuration: 5
+  skillRecoveryDuration: 1
   mapPreviewDuration: 6
   cameraReturnDuration: 1.5
   countdownThreeDuration: 1
@@ -10891,7 +10894,7 @@ MonoBehaviour:
   detectionDistance: 10
   preparationDuration: 0.15
   rearmDelay: 0.35
-  dropSpeed: 24
+  dropSpeed: 18
   groundWait: 1.5
   returnSpeed: 3
   maxDropDistance: 30

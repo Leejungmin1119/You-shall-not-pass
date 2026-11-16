@@ -13,6 +13,7 @@ public struct ItemSpawnMessage : NetworkMessage
     public float GroundY;
     public float FallSpeed;
     public double SpawnTime;
+    public double SimulationSpawnTime;
 }
 
 public struct ItemHitMessage : NetworkMessage
@@ -56,6 +57,7 @@ public class SpearNetwork : MonoBehaviour
     private FallZone fallZone;
     private bool clientRegistered;
     private uint nextInstanceId;
+    private RaceManager race;
     public LayerMask GroundLayer => dropper != null ? dropper.GroundLayer : 0;
 
     /// <summary>씬에 연결된 생성기, 상품 목록과 부활 위치 담당을 보관한다.</summary>
@@ -64,6 +66,7 @@ public class SpearNetwork : MonoBehaviour
         dropper = FindFirstObjectByType<SpearDropper>();
         conveyor = FindFirstObjectByType<ConveyorController>(FindObjectsInactive.Include);
         fallZone = FindFirstObjectByType<FallZone>(FindObjectsInactive.Include);
+        race = FindFirstObjectByType<RaceManager>(FindObjectsInactive.Include);
     }
 
     /// <summary>아이템 종류와 무관한 서버 적중 처리를 구독한다.</summary>
@@ -129,7 +132,8 @@ public class SpearNetwork : MonoBehaviour
             batch[index] = new ItemSpawnMessage {
                 ItemId = data.Id, OwnerNetId = owner.netId, Position = position,
                 HasGround = ground, GroundY = ground ? ground.point.y : 0f,
-                FallSpeed = distance / data.FallTime, SpawnTime = NetworkTime.localTime
+                FallSpeed = distance / data.FallTime, SpawnTime = NetworkTime.localTime,
+                SimulationSpawnTime = race != null ? race.SimulationTime : NetworkTime.time
             };
         }
         foreach (ItemSpawnMessage prepared in batch)
@@ -148,7 +152,10 @@ public class SpearNetwork : MonoBehaviour
         if (NetworkServer.active || dropper == null || conveyor == null) return;
         ItemData data = conveyor.GetItemData(message.ItemId);
         if (data == null || data.Prefab == null) return;
-        float age = Mathf.Clamp((float)(NetworkTime.predictedTime - message.SpawnTime), 0f, MaxCatchUpSeconds);
+        // 감속 중 새 함정을 만들 때도 실제 시간이 아닌 함정 시계로 지연을 보정한다.
+        double elapsed = race != null ? race.SimulationTime - message.SimulationSpawnTime :
+            NetworkTime.predictedTime - message.SpawnTime;
+        float age = Mathf.Clamp((float)elapsed, 0f, MaxCatchUpSeconds);
         dropper.Spawn(data, message, false, age);
     }
 

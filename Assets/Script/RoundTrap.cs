@@ -31,7 +31,7 @@ public sealed class RoundTrap : ItemBase
     private Vector2 velocity;
     private float radius;
     private float age;
-    private float nextSnapshot;
+    private double nextSnapshot;
     private bool expired;
     private bool grounded;
     private float firstBounceHeight;
@@ -71,7 +71,7 @@ public sealed class RoundTrap : ItemBase
     {
         if (body == null || expired) return;
         if (!IsJudge) { InterpolateMovement(); return; }
-        float step = Time.fixedDeltaTime;
+        float step = StageFixedDeltaTime;
         age += step;
         if (age >= Data.Lifetime) { Expire(); return; }
         Vector2 previous = body.position;
@@ -81,11 +81,11 @@ public sealed class RoundTrap : ItemBase
         body.MovePosition(next);
         float angle = body.rotation - velocity.x / radius * Mathf.Rad2Deg * step;
         body.MoveRotation(angle);
-        if (age >= nextSnapshot)
+        if (NetworkTime.localTime >= nextSnapshot)
         {
             // MovePosition은 다음 물리 단계에 적용되므로 이번에 계산한 목적지를 메시지로 보낸다.
             PublishMovement(next, angle);
-            nextSnapshot = age + SnapshotInterval;
+            nextSnapshot = NetworkTime.localTime + SnapshotInterval;
         }
     }
 

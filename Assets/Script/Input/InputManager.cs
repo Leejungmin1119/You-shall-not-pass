@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour
     public static bool JumpWasPressed;
     public static bool JumpIsHeld;
     public static bool JumpWasReleased;
-    public static bool DashWasPressed;
+    public static bool TimeSkillWasPressed;
     // 공격 입력
     public static bool AttackPressed;      // 홀드
     public static bool AttackWasPressed;   // 이번 프레임에 눌림
@@ -37,7 +37,7 @@ public class InputManager : MonoBehaviour
     //플레이어 동작 입력
     private InputAction moveAction;
     private InputAction jumpAction;
-    private InputAction DashAction;
+    private InputAction timeSkillAction;
     private InputAction AttackAction;
 
     // 플레이어 스킬 입력
@@ -69,7 +69,7 @@ public class InputManager : MonoBehaviour
         PlayerInput = GetComponent<PlayerInput>();
         moveAction = PlayerInput.actions["move"];
         jumpAction = PlayerInput.actions.FindAction("Jump");
-        DashAction = PlayerInput.actions.FindAction("Dash");
+        timeSkillAction = PlayerInput.actions.FindAction("TimeSkill");
         AttackAction = PlayerInput.actions.FindAction("Attack");
 
         //스킬 관련
@@ -119,8 +119,8 @@ public class InputManager : MonoBehaviour
         JumpWasReleased = jumpAction.WasReleasedThisFrame(); // 점프키를 입력중?
         JumpIsHeld = jumpAction.IsPressed(); // 점프키를 입력?
 
-        // 대쉬 체크
-        DashWasPressed = DashAction.WasPressedThisFrame();
+        // 공격자 시간 감속 스킬 입력
+        TimeSkillWasPressed = timeSkillAction.WasPressedThisFrame();
 
         // 공격 키관련 입력 여부 체크
         AttackPressed = AttackAction.IsPressed();                 // 홀드
@@ -158,7 +158,7 @@ public class InputManager : MonoBehaviour
         JumpWasPressed = false;
         JumpIsHeld = false;
         JumpWasReleased = false;
-        DashWasPressed = false;
+        TimeSkillWasPressed = false;
         AttackPressed = false;
         AttackWasPressed = false;
 

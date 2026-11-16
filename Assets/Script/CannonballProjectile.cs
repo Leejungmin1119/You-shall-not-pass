@@ -19,7 +19,11 @@ public sealed class CannonballProjectile : NetworkBehaviour
     private readonly RaycastHit2D[] groundHits = new RaycastHit2D[16];
 
     /// <summary>원격 화면도 같은 레이스의 느려진 이동 시계를 사용한다.</summary>
-    private void Awake() => race = FindFirstObjectByType<RaceManager>(FindObjectsInactive.Include);
+    private void Awake()
+    {
+        race = FindFirstObjectByType<RaceManager>(FindObjectsInactive.Include);
+        TimeSkillGrayscale.Register(gameObject);
+    }
 
     public void Initialize(FixedCannonTrap cannon, RaceManager currentRace, Vector2 position,
         Vector2 flightDirection, float flightSpeed, float seconds, LayerMask groundLayer)
