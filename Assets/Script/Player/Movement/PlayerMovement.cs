@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     // 기존 호출부가 사용하던 일반 점프 상태를 유지한다.
     public bool IsJumping => _jumpMotor != null && _jumpMotor.Kind == JumpKind.Ground;
 
+    // JumpStarted를 받은 쪽이 벽을 찬 도약인지 구분할 때 쓴다.
+    public bool IsWallJumping => _jumpMotor != null && _jumpMotor.Kind == JumpKind.Wall;
+
     /// <summary>기본 이동 입력 방향으로 실제 달리는지 확인한다. 일반 점프 중에도 유지한다.</summary>
     public bool IsRunningWithInput
     {

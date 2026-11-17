@@ -30,6 +30,7 @@ GameObject:
   - component: {fileID: 6266641403651148106}
   - component: {fileID: 6303906116676528220}
   - component: {fileID: -8737488573194252538}
+  - component: {fileID: 2968489035657099835}
   m_Layer: 3
   m_Name: NetworkPlatformPlayer
   m_TagString: Player
@@ -536,7 +537,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470005336}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abeb96127d136264593b11df20d7e232, type: 3}
   m_Name: 
@@ -555,7 +556,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a0da09f434b17f4283373164e8bd73f, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationSync
   syncDirection: 0
   syncMode: 0
@@ -570,13 +571,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6143cf900006d34ba6c47565122a5cc, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTimeSkill
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
   grayscaleLit: {fileID: 2100000, guid: f65b39cefb38b064f8b5a89cd626b41c, type: 2}
   grayscaleUnlit: {fileID: 2100000, guid: accec2c5cad5a3a4b8642803d2554da8, type: 2}
+--- !u!114 &2968489035657099835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470005336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94e0dccef85500f49bed447782cecd17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementAudio
+  runSoundSpeedRatio: 0.75
+  stepCooldown: 0.09
+  minAirSeconds: 0.06
+  stepDelayAfterLanding: 0.12
+  softLandingVolume: 0.65
+  softLandingSpeed: 1
+  pitchVariation: 0.03
+  volumeVariation: 0.06
 --- !u!1 &2903386058226145057
 GameObject:
   m_ObjectHideFlags: 0
