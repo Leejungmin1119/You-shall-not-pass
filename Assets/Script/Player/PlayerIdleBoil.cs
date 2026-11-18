@@ -79,6 +79,8 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     public bool IsAirborne { get; private set; }
     public bool IsWallSliding { get; private set; }
     public int CurrentFrame { get; private set; }
+    // 발소리가 걸음 주기의 절반 지점을 찾을 때 쓴다.
+    public int CurrentFrameCount { get; private set; }
     public CharacterStyle Character => character;
     public Sprite RestingSprite => character == CharacterStyle.JackOLantern && jackIdleFrames.Length > 0
         ? jackIdleFrames[0] : null;
@@ -318,6 +320,7 @@ public sealed class PlayerIdleBoil : MonoBehaviour
         if (frames == null || frames.Length == 0)
             return;
 
+        CurrentFrameCount = frames.Length;
         CurrentFrame %= frames.Length;
         if (frames[CurrentFrame] != null)
             visual.sprite = frames[CurrentFrame];

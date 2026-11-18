@@ -7,7 +7,8 @@ public enum SoundType
 {
     Jump, CannonFire, StoneCrusherImpact, PlayerHit, Run,
     DeathScream, BasketballHigh, BasketballMiddle, BasketballLow, GoalFireworks,
-    ArrowStart, ArrowHit, BombExplosion
+    ArrowStart, ArrowHit, BombExplosion,
+    WalkStep, RunStep, Land, WallJump
 }
 
 /// <summary>타입에 등록된 음원을 재생한다. 네트워크 전파와 동작 판정은 호출한 쪽이 담당한다.</summary>
@@ -30,6 +31,7 @@ public sealed class SoundPlayer : MonoBehaviour
         public AudioSource Source;
         public SoundSetting Setting;
         public Vector2 Position;
+        public float Gain = 1f;
         public bool Reserved;
         public bool InUse;
     }
@@ -111,6 +113,15 @@ public sealed class SoundPlayer : MonoBehaviour
         return current.PlayLocal(type, position);
     }
 
+    /// <summary>발소리처럼 같은 음원을 자주 반복할 때 재생마다 음량과 음높이를 조금씩 달리한다.</summary>
+    public static bool Play(SoundType type, Vector2 position, float volumeScale, float pitch)
+    {
+        if (current == null || (NetworkServer.active && !NetworkClient.active))
+            return false;
+
+        return current.PlayLocal(type, position, false, false, pitch, volumeScale) != null;
+    }
+
     /// <summary>비어 있는 재생기를 사용한다. 상한에 도달하면 재생 중인 소리를 끊지 않고 새 소리를 생략한다.</summary>
     private bool PlayLocal(SoundType type, Vector2 position)
     {
@@ -160,7 +171,8 @@ public sealed class SoundPlayer : MonoBehaviour
     }
 
     /// <summary>반복 채널은 일시 정지 중에도 다른 효과음이 빼앗지 못하게 예약한다.</summary>
-    private AudioSource PlayLocal(SoundType type, Vector2 position, bool loop, bool reserve = false, float pitch = 1f)
+    private AudioSource PlayLocal(SoundType type, Vector2 position, bool loop, bool reserve = false, float pitch = 1f,
+        float gain = 1f)
     {
         bool impactSound = type == SoundType.PlayerHit || type == SoundType.ArrowHit ||
             type == SoundType.BombExplosion;
@@ -179,6 +191,7 @@ public sealed class SoundPlayer : MonoBehaviour
 
             voice.Setting = setting;
             voice.Position = position;
+            voice.Gain = Mathf.Clamp01(gain);
             voice.Reserved = reserve;
             voice.InUse = true;
             voice.Source.clip = setting.Clip;
@@ -231,7 +244,7 @@ public sealed class SoundPlayer : MonoBehaviour
             gain = 1f - Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(near, far, distance));
         }
 
-        return masterVolume * setting.Volume * gain;
+        return masterVolume * setting.Volume * gain * voice.Gain;
     }
 
     /// <summary>씬 전환과 비활성화 시 재생을 끝내고 공용 참조를 정리한다.</summary>

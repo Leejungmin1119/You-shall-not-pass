@@ -31,6 +31,7 @@ public static class ItemVisuals
         renderer.sprite = circle;
         renderer.color = color;
         renderer.sortingOrder = order;
+        TimeSkillGrayscale.Register(go);
         return renderer;
     }
 }

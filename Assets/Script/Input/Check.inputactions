@@ -27,7 +27,7 @@
                     "priority": 0
                 },
                 {
-                    "name": "Dash",
+                    "name": "TimeSkill",
                     "type": "Button",
                     "id": "cc7a9b9e-6352-40f3-9da5-402cadeb19fc",
                     "expectedControlType": "",
@@ -211,7 +211,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash",
+                    "action": "TimeSkill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -222,7 +222,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dash",
+                    "action": "TimeSkill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

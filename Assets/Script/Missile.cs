@@ -18,7 +18,7 @@ public sealed class Missile : ItemBase
     private LayerMask groundLayer;
     private Vector2 aim;
     private float age;
-    private float nextSnapshot;
+    private double nextSnapshot;
     private float explosionAge;
     private bool exploded;
     private Vector2 remoteFrom;
@@ -71,7 +71,7 @@ public sealed class Missile : ItemBase
         if (visual == null) return;
         if (exploded) { UpdateExplosion(); return; }
         float previousAge = age;
-        age += Time.deltaTime;
+        age += StageDeltaTime;
         if (IsJudge)
         {
             if (owner == null) { Explode(); return; }
@@ -79,10 +79,10 @@ public sealed class Missile : ItemBase
             float flightStep = Mathf.Max(0f, age - preparationTime) - Mathf.Max(0f, previousAge - preparationTime);
             if (flightStep > 0f) Fly(flightStep);
             if (!exploded && age >= preparationTime + Data.Lifetime) Explode();
-            if (!exploded && age >= nextSnapshot)
+            if (!exploded && NetworkTime.localTime >= nextSnapshot)
             {
                 PublishState(false);
-                nextSnapshot = age + SnapshotInterval;
+                nextSnapshot = NetworkTime.localTime + SnapshotInterval;
             }
         }
         else InterpolateMovement();
@@ -173,7 +173,7 @@ public sealed class Missile : ItemBase
     /// <summary>추가 적중 판정 없이 폭발 표시와 잔여 연기를 지운다.</summary>
     private void UpdateExplosion()
     {
-        explosionAge += Time.deltaTime;
+        explosionAge += StageDeltaTime;
         if (explosion != null)
             explosion.color = new Color(1f, 0.5f, 0.1f, 0.8f * (1f - Mathf.Clamp01(explosionAge / ExplosionDuration)));
         if (explosionAge >= ExplosionDuration) Destroy(gameObject);

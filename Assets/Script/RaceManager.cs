@@ -25,6 +25,14 @@ public sealed class RaceManager : NetworkBehaviour
     [SerializeField, Min(1f)] private float roundDuration = 900f;
     [SerializeField] private ConveyorController conveyor;
 
+    [Header("공격자 시간 감속 스킬")]
+    [SerializeField, Range(0.01f, 1f)] private float skillTimeScale = 0.1f;
+    [SerializeField, Min(0.1f)] private float skillDuration = 5f;
+    [SerializeField, Min(0.1f)] private float skillRecoveryDuration = 1f;
+    [SyncVar] private double skillStartedAt = -1d;
+    [SyncVar] private double skillSimulationDelay;
+    [SyncVar] private uint skillOwnerId;
+
     [Header("라운드 시작 연출")]
     [SerializeField, Min(0.1f)] private float mapPreviewDuration = 6f;
     [SerializeField, Min(0f)] private float cameraReturnDuration = 1.5f;
@@ -77,9 +85,82 @@ public sealed class RaceManager : NetworkBehaviour
     public double RemainingTime => IsDeathPresentation ? deathRemaining :
         System.Math.Max(0d, (matchEndsAt > 0 ? matchEndsAt : endsAt) - NetworkTime.time);
     // 통신 시계는 건드리지 않고 함정의 이동 시계만 히트스톱·슬로모션에 맞춘다.
-    public double SimulationTime => NetworkTime.time - simulationDelay - (IsDeathPresentation ?
+    public double SimulationTime => NetworkTime.time - simulationDelay - skillSimulationDelay - SkillLostTime(NetworkTime.time) - (IsDeathPresentation ?
         DeathElapsed - DeathSequence.WorldElapsed(DeathElapsed) : 0d);
     public double DeathElapsed => System.Math.Max(0d, NetworkTime.time - deathStartedAt);
+
+    public bool IsTimeSkillActive => skillStartedAt >= 0d &&
+        NetworkTime.time < skillStartedAt + skillDuration + skillRecoveryDuration;
+
+    // 공격자 물리·입력과 경기 시계에는 이 배율을 적용하지 않는다.
+    public float StageTimeScale => GetStageTimeScale(NetworkTime.time);
+    internal double TimeSkillStartedAt => skillStartedAt;
+
+    /// <summary>감속 중에는 완전 흑백, 복귀 중에는 속도와 같은 곡선으로 색상을 돌려준다.</summary>
+    public float TimeSkillGrayscale => IsTimeSkillActive
+        ? Mathf.Clamp01((1f - StageTimeScale) / Mathf.Max(0.0001f, 1f - skillTimeScale))
+        : 0f;
+
+    /// <summary>5초 감속 이후 SmoothStep 곡선으로 정상 속도까지 복귀한다.</summary>
+    private float GetStageTimeScale(double now)
+    {
+        if (skillStartedAt < 0d)
+            return 1f;
+
+        float elapsed = (float)System.Math.Max(0d, now - skillStartedAt);
+        float recovery = Mathf.Clamp01((elapsed - skillDuration) / skillRecoveryDuration);
+        return Mathf.Lerp(skillTimeScale, 1f, Mathf.SmoothStep(0f, 1f, recovery));
+    }
+
+    /// <summary>감속으로 지연된 시간을 적분해 복귀·취소 순간에도 함정 위치가 튀지 않게 한다.</summary>
+    private double SkillLostTime(double now)
+    {
+        if (skillStartedAt < 0d)
+            return 0d;
+
+        double elapsed = System.Math.Max(0d, now - skillStartedAt);
+        double hold = System.Math.Min(elapsed, skillDuration);
+        double u = System.Math.Clamp((elapsed - skillDuration) / skillRecoveryDuration, 0d, 1d);
+        double recovery = skillRecoveryDuration * (u - u * u * u + 0.5d * u * u * u * u);
+        return (1d - skillTimeScale) * (hold + recovery);
+    }
+
+    /// <summary>현재 생존 공격자의 요청만 승인한다. 개인 사용 횟수는 플레이어가 보관한다.</summary>
+    [Server]
+    public bool TryStartTimeSkill(PlayerState player)
+    {
+        if (!IsRunning || pendingDeath != null || player == null || !player.CanMove ||
+            !Roles.IsAttacker(player) || IsTimeSkillActive)
+            return false;
+
+        StopTimeSkill();
+        skillOwnerId = player.netId;
+        skillStartedAt = NetworkTime.time;
+        return true;
+    }
+
+    /// <summary>누적된 함정 시각은 유지하면서 즉시 정상 배율로 복구한다.</summary>
+    [Server]
+    private void StopTimeSkill()
+    {
+        double canceledStart = skillStartedAt;
+        skillSimulationDelay += SkillLostTime(NetworkTime.time);
+        skillStartedAt = -1d;
+        skillOwnerId = 0;
+
+        if (canceledStart >= 0d)
+        {
+            global::TimeSkillGrayscale.Cancel(canceledStart);
+            RpcResetTimeSkillGrayscale(canceledStart);
+        }
+    }
+
+    /// <summary>사망·골인 때 모든 화면의 흑백을 즉시 해제하고 지연된 이전 스킬 상태의 재적용을 막는다.</summary>
+    [ClientRpc]
+    private void RpcResetTimeSkillGrayscale(double canceledStart)
+    {
+        global::TimeSkillGrayscale.Cancel(canceledStart);
+    }
 
     public rolechangeManager Roles { get; private set; }
 
@@ -127,6 +208,8 @@ public sealed class RaceManager : NetworkBehaviour
             return;
 
         bool wasAttacker = Roles.IsAttacker(player);
+        if (skillOwnerId == player.netId)
+            StopTimeSkill();
         participants.RemoveAt(removedIndex);
         startPositions.Remove(player);
         progress?.RemovePlayer(player.netId);
@@ -162,6 +245,9 @@ public sealed class RaceManager : NetworkBehaviour
     {
         if (!isServer || NetworkServer.isLoadingScene)
             return;
+
+        if (skillStartedAt >= 0d && !IsTimeSkillActive)
+            StopTimeSkill();
 
         if (phase == RacePhase.Waiting)
         {
@@ -307,6 +393,7 @@ public sealed class RaceManager : NetworkBehaviour
             return false;
 
         RpcPlayGoalSound(player.transform.position);
+        StopTimeSkill();
         progress?.ResetRecords();
         player.GetComponent<PlayerScore>().AddGoalScore(1);
 
@@ -329,6 +416,10 @@ public sealed class RaceManager : NetworkBehaviour
     {
         if (IsRunning && Roles.IsAttacker(player))
         {
+            StopTimeSkill();
+            if (player.TryGetComponent(out PlayerTimeSkill skill))
+                skill.ResetUsage();
+
             progress?.RecordDeath(player);
             pendingDeath = player;
             pendingDeathPresentation = present;
@@ -382,6 +473,7 @@ public sealed class RaceManager : NetworkBehaviour
     [Server]
     private void ResetTurn()
     {
+        StopTimeSkill();
         pendingDeath = null;
         roundNumber++;
         ClearRoundItems();
@@ -401,6 +493,8 @@ public sealed class RaceManager : NetworkBehaviour
     {
         if (phase == RacePhase.Ended)
             return;
+
+        StopTimeSkill();
 
         // 결정타의 점수는 즉시 기록하되 사망 연출을 끝낸 뒤 로비로 돌아간다.
         if (phase == RacePhase.Racing && pendingDeath != null && pendingDeathPresentation && deathSequence != null)

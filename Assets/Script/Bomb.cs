@@ -46,14 +46,14 @@ public sealed class Bomb : ItemBase
     {
         if (visual == null) return;
         if (exploded) { UpdateExplosion(); return; }
-        age += Time.deltaTime;
+        age += StageDeltaTime;
         Vector2 previous = transform.position;
         float y = start.y - 0.5f * acceleration * age * age;
         bool landed = hasGround && y <= groundY + bodyRadius;
         if (landed) y = groundY + bodyRadius;
         Vector2 next = new Vector2(start.x, y);
         transform.position = next;
-        transform.Rotate(0f, 0f, spinSpeed * Time.deltaTime);
+        transform.Rotate(0f, 0f, spinSpeed * StageDeltaTime);
         if (spark != null) spark.color = Color.Lerp(Color.yellow, Color.red, Mathf.PingPong(age * 8f, 1f));
         if (warning != null) warning.color = new Color(1f, 0.15f, 0.1f, Mathf.Lerp(0.15f, 0.6f, Mathf.Clamp01(age / Data.FallTime)));
         if (!IsJudge) return;
@@ -102,7 +102,7 @@ public sealed class Bomb : ItemBase
     /// <summary>지면 폭발의 피해를 0.2초 유지하고 약 0.4초 동안 연기를 지운다.</summary>
     private void UpdateExplosion()
     {
-        explosionAge += Time.deltaTime;
+        explosionAge += StageDeltaTime;
         if (IsJudge && groundExplosion && explosionAge <= Data.Lifetime) CheckExplosionHits();
         float fade = Mathf.Clamp01(explosionAge / smokeDuration);
         if (explosion != null) explosion.color = Color.Lerp(new Color(1f, 0.5f, 0.1f, 0.8f), new Color(0.4f, 0.4f, 0.4f, 0f), fade);

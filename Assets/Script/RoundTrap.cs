@@ -29,7 +29,7 @@ public sealed class RoundTrap : ItemBase
     private bool hasSentSnapshot;
     private Vector2 lastSentPosition;
     private float lastSentAngle;
-    private float nextSnapshotHeartbeat;
+    private double nextSnapshotHeartbeat;
     private readonly RaycastHit2D[] groundHits = new RaycastHit2D[12];
     private ContactFilter2D groundFilter;
     private Rigidbody2D body;
@@ -38,7 +38,7 @@ public sealed class RoundTrap : ItemBase
     private Vector2 velocity;
     private float radius;
     private float age;
-    private float nextSnapshot;
+    private double nextSnapshot;
     private bool expired;
     private bool grounded;
     private float firstBounceHeight;
@@ -81,7 +81,7 @@ public sealed class RoundTrap : ItemBase
     {
         if (body == null || expired) return;
         if (!IsJudge) { InterpolateMovement(); return; }
-        float step = Time.fixedDeltaTime;
+        float step = StageFixedDeltaTime;
         age += step;
         if (age >= Data.Lifetime) { Expire(); return; }
         Vector2 previous = body.position;
@@ -91,11 +91,11 @@ public sealed class RoundTrap : ItemBase
         body.MovePosition(next);
         float angle = body.rotation - velocity.x / radius * Mathf.Rad2Deg * step;
         body.MoveRotation(angle);
-        if (age >= nextSnapshot)
+        if (NetworkTime.localTime >= nextSnapshot)
         {
             // MovePosition은 다음 물리 단계에 적용되므로 이번에 계산한 목적지를 메시지로 보낸다.
             PublishMovement(next, angle);
-            nextSnapshot = Mathf.Min(age + SnapshotInterval, nextSnapshotHeartbeat);
+            nextSnapshot = System.Math.Min(NetworkTime.localTime + SnapshotInterval, nextSnapshotHeartbeat);
         }
     }
 
@@ -226,13 +226,13 @@ public sealed class RoundTrap : ItemBase
         bool changed = !hasSentSnapshot ||
             (position - lastSentPosition).sqrMagnitude >= SnapshotPositionThreshold * SnapshotPositionThreshold ||
             Mathf.Abs(Mathf.DeltaAngle(lastSentAngle, angle)) >= SnapshotAngleThreshold;
-        if (!changed && age < nextSnapshotHeartbeat) return;
+        if (!changed && NetworkTime.localTime < nextSnapshotHeartbeat) return;
 
         PublishState(false, position: position, angle: angle);
         lastSentPosition = position;
         lastSentAngle = angle;
         hasSentSnapshot = true;
-        nextSnapshotHeartbeat = age + SnapshotHeartbeatInterval;
+        nextSnapshotHeartbeat = NetworkTime.localTime + SnapshotHeartbeatInterval;
     }
 
     /// <summary>서버의 최신 위치를 수신하고 소멸 메시지는 즉시 충돌 판정에도 적용한다.</summary>

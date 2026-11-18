@@ -47,23 +47,30 @@ public sealed class PlayerJumpAudio : NetworkBehaviour
         if (!isLocalPlayer || !state.CanMove)
             return;
 
-        SoundPlayer.Play(SoundType.Jump, transform.position);
-        CmdPlayJumpSound();
+        bool wallJump = movement.IsWallJumping;
+        PlayJumpSound(transform.position, wallJump);
+        CmdPlayJumpSound(wallJump);
     }
 
-    /// <summary>클라이언트가 임의의 음원이나 위치를 지정하지 못하도록 점프음만 전달한다.</summary>
+    /// <summary>클라이언트가 임의의 음원이나 위치를 지정하지 못하도록 점프 종류만 전달한다.</summary>
     [Command]
-    private void CmdPlayJumpSound()
+    private void CmdPlayJumpSound(bool wallJump)
     {
         if (state.CanMove && !NetworkServer.isLoadingScene)
-            RpcPlayJumpSound(transform.position);
+            RpcPlayJumpSound(transform.position, wallJump);
     }
 
     /// <summary>이미 즉시 재생한 소유자를 제외해 호스트와 원격 화면에서 중복을 막는다.</summary>
     [ClientRpc(includeOwner = false)]
-    private void RpcPlayJumpSound(Vector2 position)
+    private void RpcPlayJumpSound(Vector2 position, bool wallJump)
     {
-        SoundPlayer.Play(SoundType.Jump, position);
+        PlayJumpSound(position, wallJump);
+    }
+
+    /// <summary>벽점프는 점프음 대신 벽을 차는 짧은 발소리만 낸다.</summary>
+    private static void PlayJumpSound(Vector2 position, bool wallJump)
+    {
+        SoundPlayer.Play(wallJump ? SoundType.WallJump : SoundType.Jump, position);
     }
 
     /// <summary>접속 종료 시 구독을 정리한다.</summary>
