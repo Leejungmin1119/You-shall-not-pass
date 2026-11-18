@@ -11,6 +11,8 @@ public sealed class DeathSequence : MonoBehaviour
     public const double TotalDuration = 6d;
     public const double SlowDuration = 3d;
     public const double HitStopDuration = 0.1d;
+    // 호박 사망 시트의 머리 높이를 일반 동작의 머리 높이에 맞춘 비율.
+    private const float JackDeathArtworkScale = 1.8f;
 
     [Header("12프레임 몸 동작")]
     [SerializeField] private Sprite[] dollBackward = Array.Empty<Sprite>();
@@ -31,7 +33,6 @@ public sealed class DeathSequence : MonoBehaviour
     private bool previousAudioPause;
     private float previousTimeScale;
     private double sequenceStartedAt = double.NegativeInfinity;
-    private float visualScale;
     private MapViewController mapView;
     private AudioSource scream;
     private bool screamStarted;
@@ -119,8 +120,20 @@ public sealed class DeathSequence : MonoBehaviour
 
         previousForceOff = source.forceRenderingOff;
         source.forceRenderingOff = true;
-        visualScale = source.bounds.size.y / Mathf.Max(0.01f, frames[0].bounds.size.y);
-        corpse.transform.localScale = Vector3.one * visualScale;
+        if (animator?.Character == PlayerIdleBoil.CharacterStyle.JackOLantern)
+        {
+            Vector3 playerScale = source.transform.lossyScale;
+            Vector3 parentScale = transform.lossyScale;
+            corpse.transform.localScale = new Vector3(
+                JackDeathArtworkScale * Mathf.Abs(playerScale.x) / Mathf.Max(0.001f, Mathf.Abs(parentScale.x)),
+                JackDeathArtworkScale * Mathf.Abs(playerScale.y) / Mathf.Max(0.001f, Mathf.Abs(parentScale.y)),
+                1f);
+        }
+        else
+        {
+            float visualScale = source.bounds.size.y / Mathf.Max(0.01f, frames[0].bounds.size.y);
+            corpse.transform.localScale = Vector3.one * visualScale;
+        }
         corpse.sharedMaterial = source.sharedMaterial;
         corpse.sortingLayerID = source.sortingLayerID;
         corpse.sortingOrder = source.sortingOrder + 1;
