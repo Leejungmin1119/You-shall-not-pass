@@ -698,7 +698,7 @@ Transform:
   m_GameObject: {fileID: 75135429}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.211723, y: 6, z: 10}
+  m_LocalPosition: {x: 2.7486463, y: 6, z: 10}
   m_LocalScale: {x: 1.8579481, y: 1.8579481, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -807,7 +807,7 @@ Transform:
   m_GameObject: {fileID: 137628204}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.9424496, y: 6, z: 10}
+  m_LocalPosition: {x: 2.1378362, y: 6, z: 10}
   m_LocalScale: {x: 1.8579481, y: 1.8579481, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6649,6 +6649,7 @@ MonoBehaviour:
   walkableDuration: 8
   unavailableDuration: 3
   maximumOpacity: 1
+  minimumBlinkOpacity: 0.3
   slowBlinkDuration: 2.5
   fastBlinkDuration: 1.5
   slowBlinkInterval: 0.4
@@ -6885,6 +6886,7 @@ MonoBehaviour:
   walkableDuration: 8
   unavailableDuration: 3
   maximumOpacity: 0.65
+  minimumBlinkOpacity: 0.3
   slowBlinkDuration: 2.5
   fastBlinkDuration: 1.5
   slowBlinkInterval: 0.4
@@ -7385,7 +7387,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.824891, y: -2.81596, z: -10}
+  m_LocalPosition: {x: -18.117197, y: -2.81596, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9869,6 +9871,9 @@ MonoBehaviour:
   skillTimeScale: 0.1
   skillDuration: 5
   skillRecoveryDuration: 1
+  skillWaveDuration: 0.6
+  skillWaveDistortion: 0.16
+  skillWaveDistortionWidth: 2.6
   mapPreviewDuration: 6
   cameraReturnDuration: 1.5
   countdownThreeDuration: 1

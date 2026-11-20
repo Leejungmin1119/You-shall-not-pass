@@ -29,9 +29,21 @@ public sealed class RaceManager : NetworkBehaviour
     [SerializeField, Range(0.01f, 1f)] private float skillTimeScale = 0.1f;
     [SerializeField, Min(0.1f)] private float skillDuration = 5f;
     [SerializeField, Min(0.1f)] private float skillRecoveryDuration = 1f;
+    [Header("시간 스킬 확산 연출")]
+    [Tooltip("이동하는 공격자를 중심으로 화면 전체로 효과가 퍼지는 시간입니다. 감속 판정은 즉시 적용됩니다.")]
+    [SerializeField, Min(0.01f)] private float skillWaveDuration = 0.6f;
+    [Tooltip("퍼지는 경계의 부드러운 폭입니다. 월드 유닛 기준입니다.")]
+    [SerializeField, Min(0.01f)] private float skillWaveSoftness = 0.8f;
+    [Tooltip("파동이 지나갈 때 그림이 휘어지는 세기입니다. 월드 유닛 기준이며 0이면 왜곡하지 않습니다.")]
+    [SerializeField, Range(0f, 0.5f)] private float skillWaveDistortion = 0.16f;
+    [Tooltip("굴절이 나타나는 파동 띠의 폭입니다. 월드 유닛 기준입니다.")]
+    [SerializeField, Min(0.01f)] private float skillWaveDistortionWidth = 2.6f;
+    [Tooltip("굴곡이 한 번 반복되는 길이입니다. 월드 유닛 기준입니다.")]
+    [SerializeField, Min(0.01f)] private float skillWaveWavelength = 1.5f;
     [SyncVar] private double skillStartedAt = -1d;
     [SyncVar] private double skillSimulationDelay;
     [SyncVar] private uint skillOwnerId;
+    [SyncVar] private Vector2 skillOrigin;
 
     [Header("라운드 시작 연출")]
     [SerializeField, Min(0.1f)] private float mapPreviewDuration = 6f;
@@ -95,6 +107,23 @@ public sealed class RaceManager : NetworkBehaviour
     // 공격자 물리·입력과 경기 시계에는 이 배율을 적용하지 않는다.
     public float StageTimeScale => GetStageTimeScale(NetworkTime.time);
     internal double TimeSkillStartedAt => skillStartedAt;
+    /// <summary>각 화면에 표시되는 시전자 위치를 따라가며, 생성 전에는 동기화된 발동 위치를 사용한다.</summary>
+    internal Vector2 TimeSkillCenter
+    {
+        get
+        {
+            if (isClient && NetworkClient.spawned.TryGetValue(skillOwnerId, out NetworkIdentity clientOwner) && clientOwner != null)
+                return clientOwner.transform.position;
+            if (isServer && NetworkServer.spawned.TryGetValue(skillOwnerId, out NetworkIdentity serverOwner) && serverOwner != null)
+                return serverOwner.transform.position;
+            return skillOrigin;
+        }
+    }
+    internal float SkillWaveDuration => Mathf.Max(0.01f, skillWaveDuration);
+    internal float SkillWaveSoftness => Mathf.Max(0.01f, skillWaveSoftness);
+    internal float SkillWaveDistortion => Mathf.Clamp(skillWaveDistortion, 0f, 0.5f);
+    internal float SkillWaveDistortionWidth => Mathf.Max(0.01f, skillWaveDistortionWidth);
+    internal float SkillWaveWavelength => Mathf.Max(0.01f, skillWaveWavelength);
 
     /// <summary>감속 중에는 완전 흑백, 복귀 중에는 속도와 같은 곡선으로 색상을 돌려준다.</summary>
     public float TimeSkillGrayscale => IsTimeSkillActive
@@ -135,6 +164,7 @@ public sealed class RaceManager : NetworkBehaviour
 
         StopTimeSkill();
         skillOwnerId = player.netId;
+        skillOrigin = player.transform.position;
         skillStartedAt = NetworkTime.time;
         return true;
     }
