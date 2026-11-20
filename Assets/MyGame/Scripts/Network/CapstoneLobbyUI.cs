@@ -22,6 +22,9 @@ public class CapstoneLobbyUI : MonoBehaviour
         NetworkClient.localPlayer.GetComponent<CapstoneRoomPlayer>() != null ? "Room" : "Main";
     private GUIStyle statusTitle, statusDetail, countdownNumber;
     private Font lobbyFont;
+    [Header("Stage1 인게임 글꼴")]
+    [SerializeField] private Font stageFont;
+    private Font styleFont;
     [Header("인게임과 공유하는 로비 그림")]
     [SerializeField] private Sprite skySprite;
     [SerializeField] private Sprite grassSprite;
@@ -84,13 +87,13 @@ public class CapstoneLobbyUI : MonoBehaviour
 
     private GUIStyle Style(int size, Color color, FontStyle weight = FontStyle.Normal)
     {
-        return new GUIStyle(GUI.skin.label) { font = lobbyFont, fontSize = size, fontStyle = weight,
+        return new GUIStyle(GUI.skin.label) { font = styleFont, fontSize = size,
+            fontStyle = stageFont != null && styleFont == stageFont ? FontStyle.Normal : weight,
             normal = { textColor = color }, wordWrap = true };
     }
 
     private void InitStyles()
     {
-        if (title != null && statusTitle != null && statusDetail != null && countdownNumber != null) return;
         // 한글 카운트다운도 macOS/Windows의 시스템 글꼴로 표시한다.
         if (lobbyFont == null)
         {
@@ -100,6 +103,15 @@ public class CapstoneLobbyUI : MonoBehaviour
                 string.Equals(fontName, name, System.StringComparison.OrdinalIgnoreCase)));
             if (available != null) lobbyFont = Font.CreateDynamicFontFromOSFont(available, 24);
         }
+        Font requestedFont = stageFont != null &&
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().path == "Assets/Scenes/Stage1.unity"
+            ? stageFont : lobbyFont;
+        if (title != null && statusTitle != null && statusDetail != null && countdownNumber != null && styleFont == requestedFont)
+            return;
+        styleFont = requestedFont;
+        // 씬을 오갈 때 게임 글꼴이 로비 스타일에 남지 않도록 함께 다시 만든다.
+        centered = null;
+        badge = null;
         title = Style(42, Ink, FontStyle.Bold);
         menuTitle = Style(66, Ink, FontStyle.Bold);
         menuSubtitle = Style(20, Ink);
@@ -112,7 +124,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         small = Style(14, Muted);
         button = Style(18, Ink, FontStyle.Bold);
         button.alignment = TextAnchor.MiddleCenter;
-        input = new GUIStyle(GUI.skin.textField) { font = lobbyFont, fontSize = 20,
+        input = new GUIStyle(GUI.skin.textField) { font = styleFont, fontSize = 20,
             padding = new RectOffset(12, 12, 7, 7), normal = { background = Texture2D.whiteTexture, textColor = Ink },
             focused = { background = Texture2D.whiteTexture, textColor = Ink },
             hover = { background = Texture2D.whiteTexture, textColor = Ink } };
