@@ -2,12 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-/// <summary>원본 텍스처를 바꾸지 않고 스테이지의 표시 재질에만 흑백 강도를 적용한다.</summary>
+/// <summary>무대는 흑백, Danger Rendering Layer의 피해 오브젝트는 붉게 표시한다.</summary>
 public sealed class TimeSkillGrayscale : MonoBehaviour
 {
     private static readonly int GrayscaleId = Shader.PropertyToID("_StageGrayscale");
+    private static readonly int DangerId = Shader.PropertyToID("_StageDanger");
+    // Default 비트를 유지하고 표시 분류만 추가한다. 물리 Layer와는 무관하다.
+    public const uint DangerRenderingLayer = 1u << 1;
     private static TimeSkillGrayscale current;
-    private readonly Dictionary<Material, Material> replacements = new();
+    private readonly Dictionary<(Material original, bool danger), Material> replacements = new();
     private readonly Dictionary<Renderer, Material> originals = new();
     private RaceManager race;
     private Material litTemplate;
@@ -73,16 +76,31 @@ public sealed class TimeSkillGrayscale : MonoBehaviour
             current.RegisterRenderer(renderer);
     }
 
+    /// <summary>박힌 창·피해가 끝난 폭발처럼 표시만 남은 경우 위험 강조를 해제한다.</summary>
+    public static void SetDanger(Renderer renderer, bool dangerous)
+    {
+        if (renderer == null)
+            return;
+
+        uint mask = dangerous ? renderer.renderingLayerMask | DangerRenderingLayer
+            : renderer.renderingLayerMask & ~DangerRenderingLayer;
+        if (mask == renderer.renderingLayerMask)
+            return;
+
+        renderer.renderingLayerMask = mask;
+        current?.RegisterRenderer(renderer);
+    }
+
     /// <summary>플레이어와 UI는 제외하고 프로젝트에서 사용하는 기본 스프라이트 재질만 교체한다.</summary>
     private void RegisterRenderer(Renderer renderer)
     {
-        if (renderer == null || originals.ContainsKey(renderer) ||
+        if (renderer == null ||
             !(renderer is SpriteRenderer || renderer is TilemapRenderer) ||
             renderer.GetComponentInParent<PlayerState>() != null ||
             renderer.GetComponentInParent<Canvas>() != null)
             return;
 
-        Material original = renderer.sharedMaterial;
+        Material original = originals.TryGetValue(renderer, out Material saved) ? saved : renderer.sharedMaterial;
 
         if (original == null)
             return;
@@ -97,14 +115,17 @@ public sealed class TimeSkillGrayscale : MonoBehaviour
         else
             return;
 
-        if (!replacements.TryGetValue(original, out Material replacement))
+        bool danger = (renderer.renderingLayerMask & DangerRenderingLayer) != 0;
+        var key = (original, danger);
+        if (!replacements.TryGetValue(key, out Material replacement))
         {
-            replacement = new Material(template) { name = original.name + " (Time Skill)", hideFlags = HideFlags.DontSave };
+            replacement = new Material(template) { name = original.name + (danger ? " (Time Skill Danger)" : " (Time Skill)"), hideFlags = HideFlags.DontSave };
             replacement.CopyPropertiesFromMaterial(original);
-            replacements.Add(original, replacement);
+            replacement.SetFloat(DangerId, danger ? 1f : 0f);
+            replacements.Add(key, replacement);
         }
 
-        originals.Add(renderer, original);
+        originals[renderer] = original;
         renderer.sharedMaterial = replacement;
     }
 
@@ -176,8 +197,7 @@ public sealed class TimeSkillGrayscale : MonoBehaviour
 
         foreach (var entry in originals)
         {
-            if (entry.Key != null && replacements.TryGetValue(entry.Value, out Material replacement) &&
-                entry.Key.sharedMaterial == replacement)
+            if (entry.Key != null && replacements.ContainsValue(entry.Key.sharedMaterial))
                 entry.Key.sharedMaterial = entry.Value;
         }
 

@@ -2,6 +2,7 @@ Shader "Game/Time Skill Sprite Unlit"
 {
     Properties
     {
+        [HideInInspector] _StageDanger("Time Skill Danger", Float) = 0
         _MainTex ("Sprite Texture", 2D) = "white" {}
         [MaterialToggle] _ZWrite("ZWrite", Float) = 0
 
@@ -52,6 +53,7 @@ Shader "Game/Time Skill Sprite Unlit"
             float _StageGrayscale;
             CBUFFER_START(UnityPerMaterial)
                 half4 _Color;
+                half _StageDanger;
             CBUFFER_END
 
             Varyings UnlitVertex(Attributes input)
@@ -69,7 +71,10 @@ Shader "Game/Time Skill Sprite Unlit"
             {
                 half4 color = CommonUnlitFragment(input, input.color);
                 half gray = dot(color.rgb, half3(0.299h, 0.587h, 0.114h));
-                color.rgb = lerp(color.rgb, gray.xxx, saturate(_StageGrayscale));
+                // 검은 대포알도 식별되도록 최소 밝기를 보장하고 원래 명암은 남긴다.
+                half3 danger = half3(0.35h + 0.65h * gray, 0.03h * gray, 0.03h * gray);
+                half3 stageColor = lerp(gray.xxx, danger, saturate(_StageDanger));
+                color.rgb = lerp(color.rgb, stageColor, saturate(_StageGrayscale));
                 return color;
             }
             ENDHLSL

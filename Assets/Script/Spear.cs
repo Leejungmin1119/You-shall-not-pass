@@ -63,7 +63,10 @@ public sealed class Spear : ItemBase
             nextY = groundY;
 
             if (!stuck)
+            {
                 PlayHitSound(new Vector2(startPosition.x, groundY));
+                TimeSkillGrayscale.SetDanger(visual, false);
+            }
 
             stuck = true;
             stuckAge = Mathf.Max(0f, age - (startPosition.y - groundY) / speed);
