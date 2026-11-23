@@ -16,6 +16,8 @@ public sealed class DisappearingFloor : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float maximumOpacity = 0.65f;
 
     [Header("사라지기 전 깜박임")]
+    [Tooltip("깜박임이 옅어질 때의 불투명도입니다. 0.3이면 30%까지 보이며, 실제로 사라진 동안에는 0%가 됩니다. 최대 불투명도를 넘지 않습니다.")]
+    [SerializeField, Range(0f, 1f)] private float minimumBlinkOpacity = 0.3f;
     [Tooltip("밟을 수 있는 시간의 마지막에 배치됩니다. 기본값은 일반 4초, 느린 2.5초, 빠른 1.5초입니다.")]
     [SerializeField, Min(0f)] private float slowBlinkDuration = 2.5f;
     [SerializeField, Min(0f)] private float fastBlinkDuration = 1.5f;
@@ -108,11 +110,13 @@ public sealed class DisappearingFloor : MonoBehaviour
         opacity = 0f;
     }
 
-    /// <summary>옅어지는 중간값 없이 보임과 숨김만 번갈아 반환한다.</summary>
+    /// <summary>최대 불투명도와 설정한 최소 불투명도를 번갈아 반환한다.</summary>
     private float BlinkOpacity(double elapsed, float interval)
     {
         double step = System.Math.Floor(elapsed / System.Math.Max(0.02d, interval));
-        return step % 2d < 1d ? maximumOpacity : 0f;
+        float maximum = Mathf.Clamp01(maximumOpacity);
+        float minimum = Mathf.Clamp(minimumBlinkOpacity, 0f, maximum);
+        return step % 2d < 1d ? maximum : minimum;
     }
 
     /// <summary>실제 발판과 연결된 부활 영역의 충돌을 같은 상태로 맞춘다.</summary>

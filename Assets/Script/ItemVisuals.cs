@@ -6,7 +6,7 @@ public static class ItemVisuals
     private static Sprite circle;
 
     /// <summary>지름 1유닛의 원을 한 번 만들고 필요한 크기와 색으로 표시한다.</summary>
-    public static SpriteRenderer CreateCircle(string name, Vector2 position, float radius, Color color, int order)
+    public static SpriteRenderer CreateCircle(string name, Vector2 position, float radius, Color color, int order, bool dangerous = false)
     {
         if (circle == null)
         {
@@ -31,6 +31,8 @@ public static class ItemVisuals
         renderer.sprite = circle;
         renderer.color = color;
         renderer.sortingOrder = order;
+        if (dangerous)
+            renderer.renderingLayerMask |= TimeSkillGrayscale.DangerRenderingLayer;
         TimeSkillGrayscale.Register(go);
         return renderer;
     }

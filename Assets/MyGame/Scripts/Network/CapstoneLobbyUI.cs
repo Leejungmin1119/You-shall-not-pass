@@ -15,7 +15,34 @@ public class CapstoneLobbyUI : MonoBehaviour
     public static string PendingConnectionError;
     private string requestedName = "";
     private uint editingPlayerId;
-    public bool IsEditingText { get; private set; }
+    private bool isEditingText;
+    private bool ownsIMEMode;
+    private IMECompositionMode previousIMEMode;
+    public bool IsEditingText
+    {
+        get => isEditingText;
+        private set
+        {
+            isEditingText = value;
+            // GUI.TextField는 기존 입력 API의 조합 모드를 사용한다.
+            // 새 Input System의 SetIMEEnabled만 켜면 IMGUI의 Auto/Off가 남을 수 있다.
+            if (value)
+            {
+                if (!ownsIMEMode)
+                {
+                    previousIMEMode = UnityEngine.Input.imeCompositionMode;
+                    ownsIMEMode = true;
+                }
+                if (UnityEngine.Input.imeCompositionMode != IMECompositionMode.On)
+                    UnityEngine.Input.imeCompositionMode = IMECompositionMode.On;
+            }
+            else if (ownsIMEMode)
+            {
+                UnityEngine.Input.imeCompositionMode = previousIMEMode;
+                ownsIMEMode = false;
+            }
+        }
+    }
     private GUIStyle title, heading, text, small, button, input;
     private GUIStyle menuTitle, menuSubtitle;
     private string previousScreen;
@@ -31,6 +58,9 @@ public class CapstoneLobbyUI : MonoBehaviour
         NetworkClient.localPlayer.GetComponent<CapstoneRoomPlayer>() != null ? "Room" : "Main";
     private GUIStyle statusTitle, statusDetail, countdownNumber;
     private Font lobbyFont;
+    [Header("로비 · Stage1 공통 글꼴")]
+    [SerializeField] private Font stageFont;
+    private Font styleFont;
     [Header("인게임과 공유하는 로비 그림")]
     [SerializeField] private Sprite skySprite;
     [SerializeField] private Sprite grassSprite;
@@ -93,13 +123,13 @@ public class CapstoneLobbyUI : MonoBehaviour
 
     private GUIStyle Style(int size, Color color, FontStyle weight = FontStyle.Normal)
     {
-        return new GUIStyle(GUI.skin.label) { font = lobbyFont, fontSize = size, fontStyle = weight,
+        return new GUIStyle(GUI.skin.label) { font = styleFont, fontSize = size,
+            fontStyle = stageFont != null && styleFont == stageFont ? FontStyle.Normal : weight,
             normal = { textColor = color }, wordWrap = true };
     }
 
     private void InitStyles()
     {
-        if (title != null && statusTitle != null && statusDetail != null && countdownNumber != null) return;
         // 한글 카운트다운도 macOS/Windows의 시스템 글꼴로 표시한다.
         if (lobbyFont == null)
         {
@@ -109,6 +139,13 @@ public class CapstoneLobbyUI : MonoBehaviour
                 string.Equals(fontName, name, System.StringComparison.OrdinalIgnoreCase)));
             if (available != null) lobbyFont = Font.CreateDynamicFontFromOSFont(available, 24);
         }
+        Font requestedFont = stageFont != null ? stageFont : lobbyFont;
+        if (title != null && statusTitle != null && statusDetail != null && countdownNumber != null && styleFont == requestedFont)
+            return;
+        styleFont = requestedFont;
+        // 글꼴이 변경되면 캐시한 스타일도 함께 다시 만든다.
+        centered = null;
+        badge = null;
         title = Style(42, Ink, FontStyle.Bold);
         menuTitle = Style(66, Ink, FontStyle.Bold);
         menuSubtitle = Style(20, Ink);
@@ -121,7 +158,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         small = Style(14, Muted);
         button = Style(18, Ink, FontStyle.Bold);
         button.alignment = TextAnchor.MiddleCenter;
-        input = new GUIStyle(GUI.skin.textField) { font = lobbyFont, fontSize = 20,
+        input = new GUIStyle(GUI.skin.textField) { font = styleFont, fontSize = 20,
             padding = new RectOffset(12, 12, 7, 7), normal = { background = Texture2D.whiteTexture, textColor = Ink },
             focused = { background = Texture2D.whiteTexture, textColor = Ink },
             hover = { background = Texture2D.whiteTexture, textColor = Ink } };
@@ -376,6 +413,11 @@ public class CapstoneLobbyUI : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        IsEditingText = false;
+    }
+
     private void OnDestroy()
     {
         if (circle != null) Destroy(circle);
@@ -384,10 +426,11 @@ public class CapstoneLobbyUI : MonoBehaviour
 
     private void OnGUI()
     {
-        if (DeathSequence.IsUIHidden)
+        if (DeathSequence.IsUIHidden || manager == null)
+        {
+            IsEditingText = false;
             return;
-
-        if (manager == null) return;
+        }
         InitStyles();
         string screen = CurrentScreen;
         if (screen != previousScreen)

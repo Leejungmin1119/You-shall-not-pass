@@ -96,13 +96,15 @@ public sealed class Bomb : ItemBase
         if (spark != null) Destroy(spark.gameObject);
         if (warning != null) Destroy(warning.gameObject);
         explosion = ItemVisuals.CreateCircle("BombExplosion", transform.position,
-            onGround ? explosionRadius : bodyRadius, new Color(1f, 0.5f, 0.1f, 0.8f), visual.sortingOrder + 1);
+            onGround ? explosionRadius : bodyRadius, new Color(1f, 0.5f, 0.1f, 0.8f), visual.sortingOrder + 1, onGround);
     }
 
     /// <summary>지면 폭발의 피해를 0.2초 유지하고 약 0.4초 동안 연기를 지운다.</summary>
     private void UpdateExplosion()
     {
         explosionAge += StageDeltaTime;
+        if (explosionAge > Data.Lifetime)
+            TimeSkillGrayscale.SetDanger(explosion, false);
         if (IsJudge && groundExplosion && explosionAge <= Data.Lifetime) CheckExplosionHits();
         float fade = Mathf.Clamp01(explosionAge / smokeDuration);
         if (explosion != null) explosion.color = Color.Lerp(new Color(1f, 0.5f, 0.1f, 0.8f), new Color(0.4f, 0.4f, 0.4f, 0f), fade);

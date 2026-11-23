@@ -1,13 +1,21 @@
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-/// <summary>원본 텍스처를 바꾸지 않고 스테이지의 표시 재질에만 흑백 강도를 적용한다.</summary>
+/// <summary>무대는 흑백, Danger Rendering Layer의 피해 오브젝트는 붉게 표시한다.</summary>
 public sealed class TimeSkillGrayscale : MonoBehaviour
 {
     private static readonly int GrayscaleId = Shader.PropertyToID("_StageGrayscale");
+    private static readonly int DangerId = Shader.PropertyToID("_StageDanger");
+    private static readonly int WaveId = Shader.PropertyToID("_StageWave");
+    private static readonly int WaveStyleId = Shader.PropertyToID("_StageWaveStyle");
+    private static readonly int WaveDistortionId = Shader.PropertyToID("_StageWaveDistortion");
+    private static readonly int SpriteUVBoundsId = Shader.PropertyToID("_StageSpriteUVBounds");
+    // Default 비트를 유지하고 표시 분류만 추가한다. 물리 Layer와는 무관하다.
+    public const uint DangerRenderingLayer = 1u << 1;
     private static TimeSkillGrayscale current;
-    private readonly Dictionary<Material, Material> replacements = new();
+    private readonly Dictionary<(Material original, bool danger, Vector4 uvBounds), Material> replacements = new();
     private readonly Dictionary<Renderer, Material> originals = new();
     private RaceManager race;
     private Material litTemplate;
@@ -17,6 +25,8 @@ public sealed class TimeSkillGrayscale : MonoBehaviour
     private readonly List<Renderer> destroyedRenderers = new();
     private float nextCleanupTime;
     private double canceledThrough = double.NegativeInfinity;
+    private double observedWaveStart = double.NegativeInfinity;
+    private float waveReach;
 
     /// <summary>해제된 스킬 시각을 기억하고 같은 스킬의 늦은 동기화가 흑백을 다시 켜지 못하게 한다.</summary>
     public static void Cancel(double startedAt)
@@ -36,6 +46,9 @@ public sealed class TimeSkillGrayscale : MonoBehaviour
     {
         current = null;
         Shader.SetGlobalFloat(GrayscaleId, 0f);
+        Shader.SetGlobalVector(WaveId, Vector4.zero);
+        Shader.SetGlobalVector(WaveStyleId, Vector4.zero);
+        Shader.SetGlobalVector(WaveDistortionId, Vector4.zero);
     }
 
     /// <summary>씬의 표시 대상을 한 번 수집하고 원래 재질별로 대체 재질을 공유한다.</summary>
@@ -73,16 +86,31 @@ public sealed class TimeSkillGrayscale : MonoBehaviour
             current.RegisterRenderer(renderer);
     }
 
+    /// <summary>박힌 창·피해가 끝난 폭발처럼 표시만 남은 경우 위험 강조를 해제한다.</summary>
+    public static void SetDanger(Renderer renderer, bool dangerous)
+    {
+        if (renderer == null)
+            return;
+
+        uint mask = dangerous ? renderer.renderingLayerMask | DangerRenderingLayer
+            : renderer.renderingLayerMask & ~DangerRenderingLayer;
+        if (mask == renderer.renderingLayerMask)
+            return;
+
+        renderer.renderingLayerMask = mask;
+        current?.RegisterRenderer(renderer);
+    }
+
     /// <summary>플레이어와 UI는 제외하고 프로젝트에서 사용하는 기본 스프라이트 재질만 교체한다.</summary>
     private void RegisterRenderer(Renderer renderer)
     {
-        if (renderer == null || originals.ContainsKey(renderer) ||
+        if (renderer == null ||
             !(renderer is SpriteRenderer || renderer is TilemapRenderer) ||
             renderer.GetComponentInParent<PlayerState>() != null ||
             renderer.GetComponentInParent<Canvas>() != null)
             return;
 
-        Material original = renderer.sharedMaterial;
+        Material original = originals.TryGetValue(renderer, out Material saved) ? saved : renderer.sharedMaterial;
 
         if (original == null)
             return;
@@ -97,15 +125,37 @@ public sealed class TimeSkillGrayscale : MonoBehaviour
         else
             return;
 
-        if (!replacements.TryGetValue(original, out Material replacement))
+        bool danger = (renderer.renderingLayerMask & DangerRenderingLayer) != 0;
+        Vector4 uvBounds = SpriteUVBounds(renderer);
+        var key = (original, danger, uvBounds);
+        if (!replacements.TryGetValue(key, out Material replacement))
         {
-            replacement = new Material(template) { name = original.name + " (Time Skill)", hideFlags = HideFlags.DontSave };
+            replacement = new Material(template) { name = original.name + (danger ? " (Time Skill Danger)" : " (Time Skill)"), hideFlags = HideFlags.DontSave };
             replacement.CopyPropertiesFromMaterial(original);
-            replacements.Add(original, replacement);
+            replacement.SetFloat(DangerId, danger ? 1f : 0f);
+            replacement.SetVector(SpriteUVBoundsId, uvBounds);
+            replacements.Add(key, replacement);
         }
 
-        originals.Add(renderer, original);
+        originals[renderer] = original;
         renderer.sharedMaterial = replacement;
+    }
+
+    /// <summary>굴절로 스프라이트 시트의 이웃 그림까지 읽지 않도록 실제 UV 사각형을 보관한다.</summary>
+    private static Vector4 SpriteUVBounds(Renderer renderer)
+    {
+        if (renderer is not SpriteRenderer sprite || sprite.sprite == null)
+            return new Vector4(0f, 0f, 1f, 1f);
+
+        Vector2[] coordinates = sprite.sprite.uv;
+        Vector2 minimum = Vector2.one;
+        Vector2 maximum = Vector2.zero;
+        foreach (Vector2 uv in coordinates)
+        {
+            minimum = Vector2.Min(minimum, uv);
+            maximum = Vector2.Max(maximum, uv);
+        }
+        return new Vector4(minimum.x, minimum.y, maximum.x, maximum.y);
     }
 
     /// <summary>네트워크 시각의 강도만 갱신한다. 매 프레임 전체 검색이나 재질 생성을 하지 않는다.</summary>
@@ -126,13 +176,63 @@ public sealed class TimeSkillGrayscale : MonoBehaviour
     private void ApplyStrength(float strength)
     {
         Shader.SetGlobalFloat(GrayscaleId, strength);
+        float waveProgress = UpdateWave(strength);
 
         if (outputCamera != null)
         {
             float gray = originalBackground.grayscale;
             outputCamera.backgroundColor = Color.Lerp(originalBackground,
-                new Color(gray, gray, gray, originalBackground.a), strength);
+                new Color(gray, gray, gray, originalBackground.a), strength * waveProgress);
         }
+    }
+
+    /// <summary>시전자를 따라가는 중심과 공통 시각으로 원을 넓힌다. 실제 감속은 즉시 적용된다.</summary>
+    private float UpdateWave(float strength)
+    {
+        if (strength <= 0f || race == null)
+        {
+            Shader.SetGlobalVector(WaveId, Vector4.zero);
+            Shader.SetGlobalVector(WaveStyleId, Vector4.zero);
+            Shader.SetGlobalVector(WaveDistortionId, Vector4.zero);
+            return 0f;
+        }
+
+        Vector2 center = race.TimeSkillCenter;
+        float softness = race.SkillWaveSoftness;
+        if (observedWaveStart != race.TimeSkillStartedAt)
+        {
+            observedWaveStart = race.TimeSkillStartedAt;
+            // 발동 순간 화면 모서리까지의 거리를 보관해 카메라가 움직여도 확산 속도를 유지한다.
+            if (outputCamera != null && outputCamera.orthographic)
+            {
+                Vector2 distance = center - (Vector2)outputCamera.transform.position;
+                float x = Mathf.Abs(distance.x) + outputCamera.orthographicSize * outputCamera.aspect;
+                float y = Mathf.Abs(distance.y) + outputCamera.orthographicSize;
+                waveReach = new Vector2(x, y).magnitude + softness;
+            }
+            else
+                waveReach = 50f;
+        }
+
+        float progress = Mathf.Clamp01((float)(NetworkTime.time - race.TimeSkillStartedAt) / race.SkillWaveDuration);
+        // 앞 65% 동안 반경 15%까지 감속해 거의 멈춘 뒤, 남은 시간에 빠르게 가속한다.
+        // 두 구간의 연결 속도를 0으로 맞춰 반경이 튀거나 역방향으로 움직이지 않게 한다.
+        float expansion;
+        if (progress < 0.65f)
+        {
+            float remaining = 1f - progress / 0.65f;
+            expansion = 0.15f * (1f - remaining * remaining * remaining);
+        }
+        else
+        {
+            float acceleration = (progress - 0.65f) / 0.35f;
+            expansion = 0.15f + 0.85f * acceleration * acceleration * acceleration;
+        }
+        Shader.SetGlobalVector(WaveId, new Vector4(center.x, center.y, waveReach * expansion, progress < 1f ? 1f : 0f));
+        Shader.SetGlobalVector(WaveStyleId, new Vector4(softness, 0f, 0f, 0f));
+        Shader.SetGlobalVector(WaveDistortionId, new Vector4(race.SkillWaveDistortion,
+            race.SkillWaveDistortionWidth, race.SkillWaveWavelength, 1f - expansion));
+        return progress;
     }
 
     /// <summary>수명이 끝난 함정의 참조가 경기 내내 쌓이지 않도록 주기적으로 제거한다.</summary>
@@ -157,6 +257,9 @@ public sealed class TimeSkillGrayscale : MonoBehaviour
             return;
 
         Shader.SetGlobalFloat(GrayscaleId, 0f);
+        Shader.SetGlobalVector(WaveId, Vector4.zero);
+        Shader.SetGlobalVector(WaveStyleId, Vector4.zero);
+        Shader.SetGlobalVector(WaveDistortionId, Vector4.zero);
 
         if (outputCamera != null)
             outputCamera.backgroundColor = originalBackground;
@@ -170,14 +273,16 @@ public sealed class TimeSkillGrayscale : MonoBehaviour
 
         current = null;
         Shader.SetGlobalFloat(GrayscaleId, 0f);
+        Shader.SetGlobalVector(WaveId, Vector4.zero);
+        Shader.SetGlobalVector(WaveStyleId, Vector4.zero);
+        Shader.SetGlobalVector(WaveDistortionId, Vector4.zero);
 
         if (outputCamera != null)
             outputCamera.backgroundColor = originalBackground;
 
         foreach (var entry in originals)
         {
-            if (entry.Key != null && replacements.TryGetValue(entry.Value, out Material replacement) &&
-                entry.Key.sharedMaterial == replacement)
+            if (entry.Key != null && replacements.ContainsValue(entry.Key.sharedMaterial))
                 entry.Key.sharedMaterial = entry.Value;
         }
 
