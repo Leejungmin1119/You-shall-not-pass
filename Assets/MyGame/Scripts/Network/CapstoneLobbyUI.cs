@@ -2,11 +2,14 @@ using System.Linq;
 using Mirror;
 using UnityEngine;
 
-// IP 접속용 메인 로비와 고정 네 자리 방 대기실을 연결한다.
+// 직접 IP 및 중계 접속 메뉴와 고정 네 자리 방 대기실을 연결한다.
 public class CapstoneLobbyUI : MonoBehaviour
 {
     private CapstoneRoomManager manager;
     private string directAddress = "";
+    private bool useRelay;
+    private string relayAddress;
+    private string roomPassword = "";
     private bool showLocalAddresses;
     private string copiedAddress;
     public static string PendingConnectionError;
@@ -23,7 +26,8 @@ public class CapstoneLobbyUI : MonoBehaviour
     private int roomRosterFrame = -1;
     [SerializeField] private Texture2D mainMenuBackground;
     public string CurrentScreen => manager != null && !manager.IsLobby ? "Game" :
-        manager != null && !manager.IsSoloTest && NetworkClient.isConnected && NetworkClient.localPlayer != null &&
+        manager != null && !manager.IsSoloTest && !manager.IsOpeningRelayRoom &&
+        NetworkClient.isConnected && NetworkClient.localPlayer != null &&
         NetworkClient.localPlayer.GetComponent<CapstoneRoomPlayer>() != null ? "Room" : "Main";
     private GUIStyle statusTitle, statusDetail, countdownNumber;
     private Font lobbyFont;
@@ -422,7 +426,8 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (showLocalAddresses) DrawLocalAddresses();
         DrawNotice();
         string focused = GUI.GetNameOfFocusedControl();
-        IsEditingText = focused == "PlayerName" || focused == "DirectAddress";
+        IsEditingText = focused == "PlayerName" || focused == "DirectAddress" ||
+            focused == "RelayAddress" || focused == "RoomPassword";
         if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Escape)
         {
             showLocalAddresses = false;
@@ -467,28 +472,79 @@ public class CapstoneLobbyUI : MonoBehaviour
         }
         if (Action(new Rect(1045, 34, 165, 38), showLocalAddresses ? "내 IP 닫기" : "내 IP 보기"))
             ToggleLocalAddressPanel();
-        bool busy = NetworkClient.active || NetworkServer.active || (manager.Lan != null && manager.Lan.Searching);
+        bool busy = NetworkClient.active || NetworkServer.active || manager.IsCheckingRelay ||
+            (manager.Lan != null && manager.Lan.Searching);
         DrawCharacterPicker(!busy);
+        DrawConnectionMode(busy);
         Rounded(new Rect(68, 552, 1148, 112), new Color(.30f, .23f, .15f, .25f), 20);
         Rounded(new Rect(62, 546, 1156, 112), Ink, 18);
         Rounded(new Rect(65, 549, 1150, 106), Paper, 16);
         if (Action(new Rect(87, 582, 159, 50), "방 만들기", !busy, new Color(.75f, .82f, .47f)))
-            manager.BeginLanRoom(true);
-        Label(new Rect(267, 558, 310, 23), "호스트 IP", small);
+        {
+            if (useRelay) ConnectViaRelay(true);
+            else manager.BeginLanRoom(true);
+        }
+        var addressField = new Rect(267, 587, 310, 45);
+        Label(new Rect(267, 558, 310, 23), useRelay ? "방 비밀번호 · 8~64자" : "호스트 IP", small);
         GUI.enabled = !busy;
-        GUI.SetNextControlName("DirectAddress");
-        directAddress = GUI.TextField(new Rect(267, 587, 310, 45), directAddress, 15, input);
+        if (useRelay)
+        {
+            GUI.SetNextControlName("RoomPassword");
+            roomPassword = GUI.PasswordField(addressField, roomPassword, '*', 64, input);
+        }
+        else
+        {
+            GUI.SetNextControlName("DirectAddress");
+            directAddress = GUI.TextField(addressField, directAddress, 15, input);
+        }
         GUI.enabled = true;
         if (Action(new Rect(594, 582, 128, 50), "참가", !busy, new Color(.75f, .82f, .47f)))
-            manager.BeginDirectRoom(directAddress);
+        {
+            if (useRelay) ConnectViaRelay(false);
+            else manager.BeginDirectRoom(directAddress);
+        }
         Box(new Rect(747, 572, 2, 66), new Color(.60f, .49f, .34f, .45f));
         if (Action(new Rect(775, 582, 415, 50), "테스트 게임 실행", !busy, new Color(1f, .76f, .41f)))
             manager.BeginSoloTest();
-        string status = manager.Lan != null && manager.Lan.Searching ? "방을 찾고 있어요…" :
-            manager.IsSoloTest ? "테스트 게임을 준비하는 중…" : NetworkServer.active ? "방을 만들고 있어요…" : NetworkClient.active ? "호스트에 연결하는 중…" :
-            string.IsNullOrEmpty(manager.LastConnectionError) ? "방을 만들거나, 친구의 호스트 IP로 참가해 주세요." : manager.LastConnectionError;
+        string status = manager.LastConnectionError;
+        if (manager.IsCheckingRelay) status = "중계 서버 응답을 기다리는 중… 무료 서버는 첫 연결에 약 1분 걸릴 수 있어요.";
+        else if (manager.IsOpeningRelayRoom) status = "중계 서버에서 방을 여는 중…";
+        else if (manager.Lan != null && manager.Lan.Searching) status = "방을 찾고 있어요…";
+        else if (manager.IsSoloTest) status = "테스트 게임을 준비하는 중…";
+        else if (NetworkServer.active) status = "방을 만들고 있어요…";
+        else if (NetworkClient.active) status = useRelay ? "중계 방에 연결하는 중…" : "호스트에 연결하는 중…";
+        else if (string.IsNullOrEmpty(status)) status = useRelay
+            ? "중계 주소(wss://서버주소/relay)와 같은 방 비밀번호를 입력해 주세요."
+            : "방을 만들거나, 친구의 호스트 IP로 참가해 주세요.";
         Label(new Rect(78, 673, 925, 36), status, small);
         if (busy && Action(new Rect(1045, 672, 165, 32), "연결 취소")) Leave();
+    }
+
+    private void DrawConnectionMode(bool busy)
+    {
+        var selected = new Color(.75f, .84f, .65f);
+        if (Action(new Rect(87, 497, 142, 39), "직접 IP", !busy, useRelay ? Paper : selected))
+        {
+            useRelay = false;
+            roomPassword = "";
+        }
+        if (Action(new Rect(241, 497, 142, 39), "중계 서버", !busy, useRelay ? selected : Paper))
+            useRelay = true;
+        if (!useRelay) return;
+
+        Rounded(new Rect(419, 497, 771, 39), Paper, 10);
+        Label(new Rect(431, 497, 119, 39), "중계 주소", small);
+        GUI.enabled = !busy;
+        GUI.SetNextControlName("RelayAddress");
+        relayAddress = GUI.TextField(new Rect(550, 500, 632, 33),
+            relayAddress ?? manager.DefaultRelayEndpoint, 256, input);
+        GUI.enabled = true;
+    }
+
+    private void ConnectViaRelay(bool host)
+    {
+        if (manager.BeginRoom(host, relayAddress ?? manager.DefaultRelayEndpoint, roomPassword))
+            roomPassword = "";
     }
 
     private System.Collections.Generic.IReadOnlyList<CapstoneRoomPlayer> CollectRoomPlayers()
@@ -508,7 +564,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         DrawLandscape();
         Label(new Rect(76, 40, 900, 58), "세상에서 가장 더러운 게임", title);
         Label(new Rect(78, 108, 790, 32), "방 대기실 · 이름을 정하고 READY로 함께 출발해요", small);
-        if (Action(new Rect(948, 100, 275, 40), showLocalAddresses ? "내 IP 닫기" : "내 IP 보기"))
+        if (!manager.IsRelayRoom && Action(new Rect(948, 100, 275, 40), showLocalAddresses ? "내 IP 닫기" : "내 IP 보기"))
             ToggleLocalAddressPanel();
         var players = CollectRoomPlayers();
         int ready = 0;
@@ -541,8 +597,10 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (Action(new Rect(78, 586, 393, 57), local != null && local.IsReady ? "준비 취소  [ F ]" : "준비 완료  [ F ]", local != null))
             local.ToggleReady();
         DrawStartStatus(players.Count, ready, true);
-        Label(new Rect(78, 668, 820, 35), NetworkServer.active ? "방장 IP: " + manager.Lan.LocalAddresses :
-            $"참가 {players.Count} / 4명 · 준비 완료 {ready}명 · F : 준비 / 취소", small);
+        string details = $"참가 {players.Count} / 4명 · 준비 완료 {ready}명 · F : 준비 / 취소";
+        if (manager.IsRelayRoom) details = "중계 서버 연결됨 · " + details;
+        else if (NetworkServer.active) details = "방장 IP: " + manager.Lan.LocalAddresses;
+        Label(new Rect(78, 668, 820, 35), details, small);
     }
 
     private void DrawLocalAddresses()

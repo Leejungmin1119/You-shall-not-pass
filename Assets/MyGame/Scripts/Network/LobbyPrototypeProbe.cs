@@ -13,7 +13,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
     [Serializable] private sealed class Control
     {
         public int sequence;
-        public string action, name;
+        public string action, name, relayAddress, roomPassword;
         public uint playerId;
         public int character, roundOffset;
         public float x, y;
@@ -295,6 +295,10 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                 break;
             case "direct":
                 manager.BeginDirectRoom(command.name);
+                break;
+            case "relayHost":
+            case "relayJoin":
+                manager.BeginRoom(command.action == "relayHost", command.relayAddress, command.roomPassword);
                 break;
             case "search":
                 manager.BeginLanRoom(false);

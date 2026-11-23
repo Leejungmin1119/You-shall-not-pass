@@ -1,11 +1,11 @@
 # 비밀번호 방 중계 서버
 
-현재 구현은 배포 전입니다. 공개 서버 URL이 없으므로 다른 Wi-Fi에서 접속 가능한 상태는 아닙니다.
-Unity LobbyScene의 PasswordRelayTransport → Relay Url에 공개 WSS URL을 넣어야 합니다.
+로비의 **중계 서버** 모드에서 같은 중계 주소와 방 비밀번호를 입력하면 방을 만들거나 참가할 수 있습니다.
+공개 중계 주소를 새 빌드의 기본값으로 넣으려면 Unity LobbyScene의 PasswordRelayTransport에서 Relay Url을 설정합니다.
 
 ## 동작
 
-Host가 비밀번호(8~64자)로 방을 만들고, 참가자는 같은 비밀번호만 입력합니다.
+Host가 비밀번호(8~64자)로 방을 만들고, 참가자는 같은 중계 주소와 비밀번호를 사용합니다.
 비밀번호가 방을 찾는 값이므로 동시에 같은 비밀번호의 방 두 개는 만들 수 없습니다.
 공개 방 목록은 제공하지 않습니다. Host 포함 최대 4명입니다.
 모든 게임 데이터는 중계를 거칩니다. 게임 규칙은 기존 Unity Host가 계속 판단합니다.
@@ -21,12 +21,24 @@ pnpm test
 pnpm start
 ```
 
-Unity Inspector에서 Relay Url을 `ws://127.0.0.1:8080/relay`로 설정합니다.
-같은 컴퓨터에서 에디터와 최신 빌드를 실행하고 동일한 비밀번호로 Create room / Join room을 선택합니다.
-이 주소는 로컬 개발 전용입니다. 다른 컴퓨터·외부 인터넷용으로 배포하면 반드시 WSS를 사용합니다.
-테스트를 끝낸 뒤 배포 주소로 바꾸어 새로 빌드합니다.
+같은 컴퓨터에서 게임 두 개를 실행하고 **중계 서버**를 선택한 뒤 `ws://127.0.0.1:8080/relay`를 입력합니다.
+동일한 비밀번호를 입력하고 한쪽은 **방 만들기**, 다른 쪽은 **참가**를 누릅니다.
+다른 컴퓨터에서 접속하려면 공개 WSS 주소를 사용합니다.
 
-## 공개 서버 배포
+## Render 무료 웹 서비스 배포
+
+1. GitHub 저장소 소유자가 Render 앱을 설치할 때 **Only select repositories**로 이 저장소를 연결합니다.
+2. Render에서 **Web Service**를 만들고 중계 코드가 있는 브랜치(`main`)를 선택합니다.
+3. **Free** 인스턴스, **Docker** 환경, **Root Directory** `Server/PasswordRelay`, **Dockerfile Path** `./Dockerfile`, **Docker Build Context** `.`로 설정합니다.
+4. **Health Check Path**를 `/health`로 설정하고 배포합니다. Render에서 할당하는 `PORT`를 사용합니다.
+5. Render가 할당한 HTTPS 주소의 `/health` 응답이 `ok`인지 확인하고 로비에 `wss://<서비스>.onrender.com/relay`를 입력합니다.
+6. 서로 다른 인터넷에 연결된 Mac과 Windows에서 같은 중계 주소와 방 비밀번호로 참가합니다.
+
+무료 인스턴스는 유휴 상태가 15분 이어지면 잠들 수 있습니다. 게임에서 연결하기 전에 서버가 응답할 때까지 최대 약 75초 기다립니다.
+
+[Render GitHub 연결](https://render.com/docs/git-provider) · [Docker 배포](https://render.com/docs/docker) · [무료 인스턴스 한도](https://render.com/docs/free)
+
+## 직접 운영하는 서버에 배포
 
 Docker Compose를 실행할 서버와 해당 서버를 가리키는 도메인이 필요합니다.
 
@@ -35,7 +47,7 @@ Docker Compose를 실행할 서버와 해당 서버를 가리키는 도메인이
 3. 도메인 DNS를 서버 공인 IP에 연결하고 서버 인바운드 TCP 80·443을 허용합니다.
 4. `docker compose up -d --build`를 실행합니다.
 5. `https://도메인/health`가 `ok`를 반환하는지 확인합니다.
-6. Unity Relay Url을 `wss://도메인/relay`로 설정합니다.
+6. 로비의 중계 주소에 `wss://도메인/relay`를 입력합니다.
 7. 새로 빌드한 Host·Client를 서로 다른 Wi-Fi 또는 모바일 핫스팟에서 시험합니다.
 
 또는 WebSocket을 지원하는 컨테이너 호스팅에 Dockerfile로 배포하고 HTTPS URL을 사용할 수 있습니다.
@@ -53,8 +65,8 @@ Docker Compose를 실행할 서버와 해당 서버를 가리키는 도메인이
 
 ## 검증
 
-Node 통합 테스트 6개: 데이터 전달/접속 ID 위조 방지, 비밀번호 거절, 정원/시작 후 입장, Host 종료/방 정리, 잘못된 메시지/heartbeat, 방 분리/kick.
-Unity C# 컴파일 및 Play 진입, 비밀번호 입력 UI 표시 확인. 공개 서버 배포와 서로 다른 인터넷의 실제 플레이 테스트는 아직 수행하지 않았습니다.
+Node 통합 테스트는 데이터 전달, 비밀번호, 정원, 시작 후 입장 제한, Host 종료, 잘못된 메시지, heartbeat, 방 분리와 강퇴를 확인합니다.
+공개 서버 배포와 서로 다른 인터넷에서의 플레이 테스트가 남아 있습니다.
 
 ## 문서
 
