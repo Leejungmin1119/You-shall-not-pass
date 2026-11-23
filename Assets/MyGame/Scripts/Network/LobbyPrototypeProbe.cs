@@ -30,7 +30,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
     }
     [Serializable] private sealed class Snapshot
     {
-        public string id, scene, screen;
+        public string id, scene, screen, lobbyTheme;
         public bool connected, server, countdown, advertising, searching;
         public string connectionError, racePhase;
         public int turn;
@@ -170,6 +170,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
             now = NetworkTime.time, deadline = deadline, countdown = manager.IsLobbyCountdownActive,
             advertising = manager.Lan.Advertising, searching = manager.Lan.Searching,
             connectionError = manager.LastConnectionError,
+            lobbyTheme = manager.GetComponent<CapstoneLobbyUI>()?.TestLobbyTheme,
             racePhase = race != null ? race.Phase.ToString() : "", turn = race != null ? race.RoundNumber : 0,
             attacker = race != null && race.Roles != null ? race.Roles.AttackerNetId : 0,
             requestResults = requestResults.ToArray(), serverChecks = serverChecks.ToArray(), maxTraps = maxTraps,
@@ -286,6 +287,12 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                 break;
             case "capture":
                 StartCoroutine(CaptureFrame(manager));
+                break;
+            case "theme":
+                if (!manager.GetComponent<CapstoneLobbyUI>().TrySelectTestTheme(command.name)) return;
+                break;
+            case "themePicker":
+                manager.GetComponent<CapstoneLobbyUI>().ToggleTestThemePicker();
                 break;
             case "showIp":
                 manager.GetComponent<CapstoneLobbyUI>().ToggleLocalAddressPanel();

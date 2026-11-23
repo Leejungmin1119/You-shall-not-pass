@@ -341,6 +341,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CapstoneLobbyUI
   mainMenuBackground: {fileID: 2800000, guid: 2541fa04cc85940a58089d4c7b7222b8, type: 3}
+  lobbyThemes:
+  - id: castle
+    displayName: "\uB2EC\uBE5B \uC131\uBB38"
+    scenes: {fileID: 2800000, guid: a15118059b8bc4b8999e468acee67738, type: 3}
+    previewGround: 0.626
+    panel: {r: 0.15294118, g: 0.1254902, b: 0.20784314, a: 1}
+    border: {r: 0.6666667, g: 0.49019608, b: 0.35686275, a: 1}
+    primary: {r: 0.9490196, g: 0.7176471, b: 0.4117647, a: 1}
+    selected: {r: 0.8392157, g: 0.74509805, b: 0.5686275, a: 1}
+    platform: {r: 0.29411766, g: 0.24313726, b: 0.34901962, a: 1}
+  - id: market
+    displayName: "\uD638\uBC15 \uC57C\uC2DC\uC7A5"
+    scenes: {fileID: 2800000, guid: c0ddca61563fb475d9d76e84dd1930a0, type: 3}
+    previewGround: 0.613
+    panel: {r: 0.21568628, g: 0.14117648, b: 0.18431373, a: 1}
+    border: {r: 0.75686276, g: 0.47843137, b: 0.3019608, a: 1}
+    primary: {r: 1, g: 0.6392157, b: 0.33333334, a: 1}
+    selected: {r: 0.9490196, g: 0.7647059, b: 0.50980395, a: 1}
+    platform: {r: 0.36078432, g: 0.22745098, b: 0.19215687, a: 1}
+  - id: station
+    displayName: "\uC720\uB839 \uAE30\uCC28\uC5ED"
+    scenes: {fileID: 2800000, guid: a9e994a6d389e4a4093a0af02c009368, type: 3}
+    previewGround: 0.675
+    panel: {r: 0.09019608, g: 0.16078432, b: 0.19215687, a: 1}
+    border: {r: 0.4117647, g: 0.6, b: 0.54901963, a: 1}
+    primary: {r: 0.9098039, g: 0.7019608, b: 0.43137255, a: 1}
+    selected: {r: 0.64705884, g: 0.84313726, b: 0.70980394, a: 1}
+    platform: {r: 0.2, g: 0.28235295, b: 0.32156864, a: 1}
+  - id: theater
+    displayName: "\uC720\uB839\uADF9\uC7A5"
+    scenes: {fileID: 2800000, guid: 7b7109f4e92b44340b03dfe1dbcc096d, type: 3}
+    previewGround: 0.641
+    panel: {r: 0.21568628, g: 0.11764706, b: 0.20392157, a: 1}
+    border: {r: 0.6666667, g: 0.40784314, b: 0.37254903, a: 1}
+    primary: {r: 0.9490196, g: 0.67058825, b: 0.34509805, a: 1}
+    selected: {r: 0.9372549, g: 0.75686276, b: 0.5137255, a: 1}
+    platform: {r: 0.34509805, g: 0.1882353, b: 0.2784314, a: 1}
   stageFont: {fileID: 12800000, guid: 5cde2747d54fa4b4a878684486de76b8, type: 3}
   skySprite: {fileID: 21300000, guid: 2ae692a79c0912e4aad904e22b611a39, type: 3}
   grassSprite: {fileID: 21300000, guid: db310e82ec565b34398a699c88812088, type: 3}

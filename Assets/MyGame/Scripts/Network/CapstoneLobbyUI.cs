@@ -52,6 +52,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         (left, right) => left.netId.CompareTo(right.netId);
     private int roomRosterFrame = -1;
     [SerializeField] private Texture2D mainMenuBackground;
+    [SerializeField] private LobbyTheme[] lobbyThemes = System.Array.Empty<LobbyTheme>();
     public string CurrentScreen => manager != null && !manager.IsLobby ? "Game" :
         manager != null && !manager.IsSoloTest && !manager.IsOpeningRelayRoom &&
         NetworkClient.isConnected && NetworkClient.localPlayer != null &&
@@ -69,7 +70,7 @@ public class CapstoneLobbyUI : MonoBehaviour
     [Header("중앙 알림")]
     [SerializeField] private float noticeDuration = 2.4f;
     private string noticeTitle, noticeDetail;
-    private Color noticeColor;
+    private bool noticeSuccess;
     private float noticeStartedAt = float.NegativeInfinity;
     private GUIStyle noticeHeading, noticeCaption;
 
@@ -78,7 +79,7 @@ public class CapstoneLobbyUI : MonoBehaviour
     {
         noticeTitle = message;
         noticeDetail = detail;
-        noticeColor = success ? Accent : new Color(1f, .7f, .32f);
+        noticeSuccess = success;
         noticeStartedAt = Time.unscaledTime;
     }
 
@@ -96,7 +97,10 @@ public class CapstoneLobbyUI : MonoBehaviour
         Color oldColor = GUI.color;
         GUIUtility.ScaleAroundPivot(new Vector2(scale, scale), new Vector2(640, 360));
         GUI.color = new Color(1, 1, 1, opacity);
-        Box(new Rect(280, 260, 720, 200), Panel);
+        Color noticeColor = noticeSuccess
+            ? (visibleTheme != null ? new Color(.52f, .81f, .44f) : Accent)
+            : new Color(1f, .7f, .32f);
+        Box(new Rect(280, 260, 720, 200), Surface);
         Box(new Rect(280, 260, 720, 4), noticeColor);
         noticeHeading.normal.textColor = new Color(noticeColor.r, noticeColor.g, noticeColor.b, pulse);
         Label(new Rect(300, 287, 680, 90), noticeTitle, noticeHeading);
@@ -111,9 +115,42 @@ public class CapstoneLobbyUI : MonoBehaviour
     private static readonly Color Panel = new Color(1f, .97f, .87f, .96f);
     private static readonly Color Accent = new Color(.30f, .48f, .27f);
 
+    [System.Serializable]
+    private sealed class LobbyTheme
+    {
+        public string id;
+        public string displayName;
+        public Texture2D scenes;
+        [Range(0f, 1f)] public float previewGround = .64f;
+        public Color panel;
+        public Color border;
+        public Color primary;
+        public Color selected;
+        public Color platform;
+    }
+
+    private const string ThemePreference = "Capstone.LobbyTheme";
+    private LobbyTheme selectedTheme;
+    private LobbyTheme visibleTheme;
+    private LobbyTheme styleTheme;
+    private bool showThemes;
+    private static readonly Rect LobbyFrame = new Rect(0, 0, 1280, 720);
+    private static readonly Color DarkOutline = new Color(.09f, .06f, .12f);
+    private Color Foreground => visibleTheme != null ? new Color(1f, .94f, .83f) : Ink;
+    private Color SecondaryText => visibleTheme != null ? new Color(.88f, .82f, .77f) : Muted;
+    private Color Surface => visibleTheme != null ? visibleTheme.panel : Panel;
+    private Color Border => visibleTheme != null ? visibleTheme.border : new Color(.48f, .48f, .34f);
+    private Color Selection => visibleTheme != null ? visibleTheme.selected : new Color(.75f, .84f, .65f);
+    private Color Primary => visibleTheme != null ? visibleTheme.primary : new Color(1f, .76f, .41f);
+
     private void Awake()
     {
         manager = GetComponent<CapstoneRoomManager>();
+        string savedTheme = PlayerPrefs.GetString(ThemePreference, "castle");
+        selectedTheme = System.Array.Find(lobbyThemes, theme =>
+            theme != null && theme.scenes != null && theme.id == savedTheme);
+        if (selectedTheme == null)
+            selectedTheme = System.Array.Find(lobbyThemes, theme => theme != null && theme.scenes != null);
         if (!string.IsNullOrEmpty(PendingConnectionError))
         {
             ShowNotice("ROOM CONNECTION", PendingConnectionError, false);
@@ -140,39 +177,66 @@ public class CapstoneLobbyUI : MonoBehaviour
             if (available != null) lobbyFont = Font.CreateDynamicFontFromOSFont(available, 24);
         }
         Font requestedFont = stageFont != null ? stageFont : lobbyFont;
-        if (title != null && statusTitle != null && statusDetail != null && countdownNumber != null && styleFont == requestedFont)
+        if (title != null && styleFont == requestedFont && styleTheme == visibleTheme)
             return;
         styleFont = requestedFont;
-        // 글꼴이 변경되면 캐시한 스타일도 함께 다시 만든다.
+        styleTheme = visibleTheme;
+        // 글꼴 또는 로비 테마가 바뀔 때만 스타일을 다시 만든다.
         centered = null;
         badge = null;
-        title = Style(42, Ink, FontStyle.Bold);
-        menuTitle = Style(66, Ink, FontStyle.Bold);
-        menuSubtitle = Style(20, Ink);
+        title = Style(42, Foreground, FontStyle.Bold);
+        menuTitle = Style(66, Foreground, FontStyle.Bold);
+        menuSubtitle = Style(20, Foreground);
         noticeHeading = Style(64, Accent, FontStyle.Bold);
         noticeHeading.alignment = TextAnchor.MiddleCenter;
-        noticeCaption = Style(20, Muted);
+        noticeCaption = Style(20, SecondaryText);
         noticeCaption.alignment = TextAnchor.MiddleCenter;
-        heading = Style(24, Ink, FontStyle.Bold);
-        text = Style(18, Ink);
-        small = Style(14, Muted);
+        heading = Style(24, Foreground, FontStyle.Bold);
+        text = Style(18, Foreground);
+        small = Style(14, SecondaryText);
         button = Style(18, Ink, FontStyle.Bold);
         button.alignment = TextAnchor.MiddleCenter;
         input = new GUIStyle(GUI.skin.textField) { font = styleFont, fontSize = 20,
             padding = new RectOffset(12, 12, 7, 7), normal = { background = Texture2D.whiteTexture, textColor = Ink },
             focused = { background = Texture2D.whiteTexture, textColor = Ink },
             hover = { background = Texture2D.whiteTexture, textColor = Ink } };
-        statusTitle = Style(22, Ink, FontStyle.Bold);
-        statusDetail = Style(14, Muted);
-        countdownNumber = Style(48, Accent, FontStyle.Bold);
+        statusTitle = Style(22, Foreground, FontStyle.Bold);
+        statusDetail = Style(14, SecondaryText);
+        countdownNumber = Style(48, visibleTheme != null ? Primary : Accent, FontStyle.Bold);
         countdownNumber.alignment = TextAnchor.MiddleCenter;
     }
 
     private void Box(Rect rect, Color color)
     {
         Color old = GUI.color;
-        GUI.color = color;
+        GUI.color = ToGuiColor(color);
         GUI.DrawTexture(rect, Texture2D.whiteTexture);
+        GUI.color = old;
+    }
+
+    private Color ToGuiColor(Color color)
+        => visibleTheme != null && QualitySettings.activeColorSpace == ColorSpace.Linear ? color.linear : color;
+
+    private void DrawMenuShade(Rect rect, bool darkAtTop, float opacity)
+    {
+        if (menuShade == null)
+        {
+            menuShade = new Texture2D(1, 64, TextureFormat.RGBA32, false)
+            {
+                filterMode = FilterMode.Bilinear,
+                wrapMode = TextureWrapMode.Clamp
+            };
+            for (int y = 0; y < 64; y++)
+                menuShade.SetPixel(0, y, new Color(1f, 1f, 1f, Mathf.SmoothStep(0f, 1f, y / 63f)));
+            menuShade.Apply(false, true);
+        }
+
+        Color old = GUI.color;
+        Color shade = DarkOutline;
+        shade.a = opacity;
+        GUI.color *= ToGuiColor(shade);
+        var uv = darkAtTop ? new Rect(0, 0, 1, 1) : new Rect(0, 1, 1, -1);
+        GUI.DrawTextureWithTexCoords(rect, menuShade, uv);
         GUI.color = old;
     }
 
@@ -196,12 +260,16 @@ public class CapstoneLobbyUI : MonoBehaviour
     {
         bool hover = enabled && rect.Contains(Event.current.mousePosition);
         Rounded(new Rect(rect.x, rect.y + 3, rect.width, rect.height), new Color(.38f, .31f, .22f, .23f), 9);
-        Rounded(rect, enabled ? new Color(.48f, .48f, .34f) : new Color(.66f, .65f, .56f), 9);
+        Color fill = fillColor ?? (visibleTheme != null ? Surface : Paper);
+        Color disabled = visibleTheme != null ? Color.Lerp(Surface, Border, .16f) : new Color(.89f, .88f, .79f);
+        Rounded(rect, enabled ? Border : Color.Lerp(Border, disabled, .55f), 9);
         Rounded(new Rect(rect.x + 2, rect.y + 2, rect.width - 4, rect.height - 4),
-            hover ? Color.Lerp(fillColor ?? Paper, Color.white, .18f) : enabled ? fillColor ?? Paper : new Color(.89f, .88f, .79f), 7);
+            hover ? Color.Lerp(fill, Color.white, .14f) : enabled ? fill : disabled, 7);
         GUI.enabled = enabled;
         bool clicked = GUI.Button(rect, GUIContent.none, GUIStyle.none);
-        button.normal.textColor = enabled ? Ink : new Color(.58f, .57f, .49f);
+        button.normal.textColor = enabled
+            ? (fillColor.HasValue ? Ink : Foreground)
+            : (visibleTheme != null ? SecondaryText : new Color(.58f, .57f, .49f));
         Label(rect, label, button);
         GUI.enabled = true;
         if (clicked) { GUI.FocusControl(null); IsEditingText = false; }
@@ -211,6 +279,7 @@ public class CapstoneLobbyUI : MonoBehaviour
     private void Leave() => manager.LeaveRoom();
 
     private Texture2D circle;
+    private Texture2D menuShade;
     private GUIStyle centered, badge;
     private static readonly Color[] CrewColors = {
         new Color(.37f, .88f, .82f), new Color(1f, .58f, .38f),
@@ -235,14 +304,18 @@ public class CapstoneLobbyUI : MonoBehaviour
                         Mathf.Clamp01(32f - Vector2.Distance(new Vector2(x + .5f, y + .5f), new Vector2(32, 32)))));
             circle.Apply();
         }
-        Box(new Rect(rect.x + radius, rect.y, rect.width - radius * 2, rect.height), color);
-        Box(new Rect(rect.x, rect.y + radius, rect.width, rect.height - radius * 2), color);
+        radius = Mathf.Min(radius, Mathf.Min(rect.width, rect.height) * .5f);
+        float middleWidth = rect.width - 2f * radius;
+        // Paint each section once, so translucent borders do not stack at the corners.
+        Box(new Rect(rect.x + radius, rect.y, middleWidth, radius), color);
+        Box(new Rect(rect.x, rect.y + radius, rect.width, rect.height - 2f * radius), color);
+        Box(new Rect(rect.x + radius, rect.yMax - radius, middleWidth, radius), color);
         Color old = GUI.color;
-        GUI.color *= color;
-        GUI.DrawTexture(new Rect(rect.x, rect.y, radius * 2, radius * 2), circle);
-        GUI.DrawTexture(new Rect(rect.xMax - radius * 2, rect.y, radius * 2, radius * 2), circle);
-        GUI.DrawTexture(new Rect(rect.x, rect.yMax - radius * 2, radius * 2, radius * 2), circle);
-        GUI.DrawTexture(new Rect(rect.xMax - radius * 2, rect.yMax - radius * 2, radius * 2, radius * 2), circle);
+        GUI.color *= ToGuiColor(color);
+        GUI.DrawTextureWithTexCoords(new Rect(rect.x, rect.y, radius, radius), circle, new Rect(0f, .5f, .5f, .5f));
+        GUI.DrawTextureWithTexCoords(new Rect(rect.xMax - radius, rect.y, radius, radius), circle, new Rect(.5f, .5f, .5f, .5f));
+        GUI.DrawTextureWithTexCoords(new Rect(rect.x, rect.yMax - radius, radius, radius), circle, new Rect(0f, 0f, .5f, .5f));
+        GUI.DrawTextureWithTexCoords(new Rect(rect.xMax - radius, rect.yMax - radius, radius, radius), circle, new Rect(.5f, 0f, .5f, .5f));
         GUI.color = old;
     }
 
@@ -277,7 +350,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         for (int index = 0; index < PlayerIdleBoil.CharacterCount; index++)
         {
             var style = (PlayerIdleBoil.CharacterStyle)index;
-            Color fill = PreferredCharacter == index ? new Color(.75f, .84f, .65f) : Paper;
+            Color? fill = PreferredCharacter == index ? Selection : null;
             if (Action(new Rect(560 + index * 116, 100, 108, 42), PlayerIdleBoil.GetDisplayName(style), enabled, fill))
                 PreferredCharacter = index;
         }
@@ -292,7 +365,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         for (int index = 0; index < PlayerIdleBoil.CharacterCount; index++)
         {
             var style = (PlayerIdleBoil.CharacterStyle)index;
-            Color fill = local != null && local.Character == style ? new Color(.75f, .84f, .65f) : Paper;
+            Color? fill = local != null && local.Character == style ? Selection : null;
             if (Action(new Rect(972 + index * 76, 298, 70, 32), PlayerIdleBoil.GetDisplayName(style),
                 local != null && !local.IsReady, fill))
             {
@@ -331,24 +404,33 @@ public class CapstoneLobbyUI : MonoBehaviour
         centered.normal.textColor = Ink;
         centered.wordWrap = false;
         // 이름은 캐릭터를 가리지 않도록 발판 흙 부분의 중상단에 배치한다.
-        Rounded(new Rect(x - 88, 476, 176, 31), new Color(1f, .97f, .87f, .94f), 9);
+        Color nameplate = visibleTheme != null ? Primary : new Color(1f, .97f, .87f, .94f);
+        Rounded(new Rect(x - 88, 476, 176, 31), nameplate, 9);
         Label(new Rect(x - 85, 477, 170, 28), displayName, centered);
         centered.fontSize = 17;
         badge.normal.textColor = ready ? Color.white : Ink;
         Rounded(new Rect(x - 58, 274, 116, 28), ready ? Accent : new Color(.97f, .88f, .64f), 8);
         Label(new Rect(x - 58, 274, 116, 28), ready ? "READY" : "준비 중", badge);
         string characterName = PlayerIdleBoil.GetDisplayName(player.Character);
-        badge.normal.textColor = local ? Accent : Muted;
+        badge.normal.textColor = visibleTheme != null
+            ? (local ? Selection : Foreground) : (local ? Accent : Muted);
         Label(new Rect(x - 80, 512, 160, 22), local ? "나 · " + characterName : characterName, badge);
     }
 
     private void DrawLandscape()
     {
-        Box(new Rect(0, 0, 1280, 720), Background);
-        DrawSprite(new Rect(0, 0, 1280, 720), skySprite);
-        Box(new Rect(0, 0, 1280, 720), new Color(1f, .99f, .94f, .10f));
+        if (visibleTheme != null)
+        {
+            DrawThemeScene(LobbyFrame, visibleTheme, true);
+            DrawMenuShade(new Rect(0, 0, 1280, 172), true, .39f);
+            return;
+        }
+
+        Box(LobbyFrame, Background);
+        DrawSprite(LobbyFrame, skySprite);
+        Box(LobbyFrame, new Color(1f, .99f, .94f, .10f));
         Rounded(new Rect(62, 174, 858, 390), new Color(1f, .98f, .90f, .55f), 24);
-        badge.normal.textColor = Muted;
+        badge.normal.textColor = SecondaryText;
         Label(new Rect(90, 194, 220, 28), "모험의 출발점", badge);
         Label(new Rect(676, 194, 220, 28), "READY로 함께 출발해요", badge);
     }
@@ -367,10 +449,17 @@ public class CapstoneLobbyUI : MonoBehaviour
                     break;
                 }
             bool occupied = player != null;
-            // 그림과 캐릭터 모두 인게임의 발판·대기 애니메이션 에셋을 공유한다.
-            DrawSprite(new Rect(x - 88, 460, 176, 88), grassSprite);
-            if (grassSprite == null) Rounded(new Rect(x - 88, 460, 176, 72), new Color(.62f, .72f, .44f), 8);
-            badge.normal.textColor = Muted;
+            if (visibleTheme != null)
+            {
+                Rounded(new Rect(x - 90, 459, 180, 90), Border, 9);
+                Rounded(new Rect(x - 88, 461, 176, 86), visibleTheme.platform, 7);
+                Box(new Rect(x - 81, 463, 162, 4), Color.Lerp(visibleTheme.platform, Border, .63f));
+            }
+            else if (grassSprite != null) DrawSprite(new Rect(x - 88, 460, 176, 88), grassSprite);
+            else Rounded(new Rect(x - 88, 460, 176, 72), new Color(.62f, .72f, .44f), 8);
+            badge.normal.textColor = SecondaryText;
+            if (visibleTheme != null)
+                Rounded(new Rect(x - 55, 239, 110, 24), Surface, 7);
             Label(new Rect(x - 80, 239, 160, 24), $"{seat + 1:00} 번 자리", badge);
             if (occupied)
             {
@@ -381,10 +470,12 @@ public class CapstoneLobbyUI : MonoBehaviour
             }
             else
             {
-                Rounded(new Rect(x - 31, 373, 62, 62), new Color(1f, .98f, .89f, .75f), 20);
-                Box(new Rect(x - 12, 402, 24, 3), new Color(.56f, .64f, .46f));
-                Box(new Rect(x - 1.5f, 391, 3, 25), new Color(.56f, .64f, .46f));
-                badge.normal.textColor = Muted;
+                Color emptySeat = visibleTheme != null ? Surface : new Color(1f, .98f, .89f, .75f);
+                Color plus = visibleTheme != null ? Primary : new Color(.56f, .64f, .46f);
+                Rounded(new Rect(x - 31, 373, 62, 62), emptySeat, 20);
+                Box(new Rect(x - 12, 402, 24, 3), plus);
+                Box(new Rect(x - 1.5f, 391, 3, 25), plus);
+                badge.normal.textColor = SecondaryText;
                 Label(new Rect(x - 80, 507, 160, 26), connected ? "친구를 기다려요" : "빈 자리", badge);
             }
         }
@@ -394,7 +485,8 @@ public class CapstoneLobbyUI : MonoBehaviour
     private void DrawStartStatus(int playerCount, int readyCount, bool connected)
     {
         bool counting = connected && manager.IsLobbyCountdownActive;
-        Rounded(new Rect(500, 579, 397, 76), counting ? new Color(.90f, .96f, .79f) : Panel, 14);
+        Color statusBackground = visibleTheme != null || !counting ? Surface : new Color(.90f, .96f, .79f);
+        Rounded(new Rect(500, 579, 397, 76), statusBackground, 14);
         if (counting)
         {
             int seconds = Mathf.Clamp(Mathf.CeilToInt((float)(manager.LobbyCountdownEndsAt - NetworkTime.time)), 1, 5);
@@ -421,6 +513,7 @@ public class CapstoneLobbyUI : MonoBehaviour
     private void OnDestroy()
     {
         if (circle != null) Destroy(circle);
+        if (menuShade != null) Destroy(menuShade);
         if (lobbyFont != null) Destroy(lobbyFont);
     }
 
@@ -431,21 +524,24 @@ public class CapstoneLobbyUI : MonoBehaviour
             IsEditingText = false;
             return;
         }
-        InitStyles();
         string screen = CurrentScreen;
+        visibleTheme = screen == "Game" ? null : selectedTheme;
+        InitStyles();
         if (screen != previousScreen)
         {
             previousScreen = screen;
             roomRosterFrame = -1;
             roomPlayers.Clear();
             showLocalAddresses = false;
+            showThemes = false;
             copiedAddress = null;
             GUI.FocusControl(null);
             IsEditingText = false;
         }
         Matrix4x4 oldMatrix = GUI.matrix;
         // Keep the same 16:9 composition on windowed, ultrawide and 4:3 screens.
-        if (screen != "Game") Box(new Rect(0, 0, Screen.width, Screen.height), Background);
+        if (screen != "Game")
+            Box(new Rect(0, 0, Screen.width, Screen.height), visibleTheme != null ? DarkOutline : Background);
         float scale = Mathf.Min(Screen.width / 1280f, Screen.height / 720f);
         GUI.matrix = Matrix4x4.TRS(new Vector3((Screen.width - 1280 * scale) * .5f,
             (Screen.height - 720 * scale) * .5f, 0), Quaternion.identity, new Vector3(scale, scale, 1));
@@ -459,14 +555,15 @@ public class CapstoneLobbyUI : MonoBehaviour
         }
         if (centered == null)
         {
-            centered = Style(17, Ink, FontStyle.Bold);
+            centered = Style(17, Foreground, FontStyle.Bold);
             centered.alignment = TextAnchor.MiddleCenter;
-            badge = Style(13, Muted, FontStyle.Bold);
+            badge = Style(13, SecondaryText, FontStyle.Bold);
             badge.alignment = TextAnchor.MiddleCenter;
         }
         if (screen == "Main") DrawMainMenu();
         else DrawRoomLobby();
         if (showLocalAddresses) DrawLocalAddresses();
+        if (showThemes && screen == "Main") DrawThemePicker();
         DrawNotice();
         string focused = GUI.GetNameOfFocusedControl();
         IsEditingText = focused == "PlayerName" || focused == "DirectAddress" ||
@@ -474,6 +571,7 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Escape)
         {
             showLocalAddresses = false;
+            showThemes = false;
             GUI.FocusControl(null);
             IsEditingText = false;
         }
@@ -483,26 +581,33 @@ public class CapstoneLobbyUI : MonoBehaviour
     public void ToggleLocalAddressPanel()
     {
         showLocalAddresses = !showLocalAddresses;
+        showThemes = false;
         if (showLocalAddresses) { manager.Lan.RefreshLocalAddresses(); copiedAddress = null; }
     }
 
     private void DrawMenuTitle(Rect rect, string label)
     {
-        menuTitle.normal.textColor = Paper;
+        menuTitle.normal.textColor = visibleTheme != null ? DarkOutline : Paper;
         Label(new Rect(rect.x - 3, rect.y, rect.width, rect.height), label, menuTitle);
         Label(new Rect(rect.x + 3, rect.y, rect.width, rect.height), label, menuTitle);
         Label(new Rect(rect.x, rect.y - 3, rect.width, rect.height), label, menuTitle);
         Label(new Rect(rect.x, rect.y + 3, rect.width, rect.height), label, menuTitle);
-        menuTitle.normal.textColor = Ink;
+        menuTitle.normal.textColor = Foreground;
         Label(rect, label, menuTitle);
     }
 
     private void DrawMainMenu()
     {
-        if (mainMenuBackground != null)
-            GUI.DrawTexture(new Rect(0, 0, 1280, 720), mainMenuBackground, ScaleMode.StretchToFill);
+        if (visibleTheme != null)
+        {
+            DrawThemeScene(LobbyFrame, visibleTheme, false);
+            DrawMenuShade(new Rect(0, 0, 1280, 314), true, .45f);
+            DrawMenuShade(new Rect(0, 642, 1280, 78), false, .8f);
+        }
+        else if (mainMenuBackground != null)
+            GUI.DrawTexture(LobbyFrame, mainMenuBackground, ScaleMode.StretchToFill);
         else
-            DrawSprite(new Rect(0, 0, 1280, 720), skySprite);
+            DrawSprite(LobbyFrame, skySprite);
         DrawMenuTitle(new Rect(72, 40, 690, 88), "세상에서 가장");
         DrawMenuTitle(new Rect(72, 120, 690, 88), "더러운 게임");
         Label(new Rect(78, 220, 630, 40), "친구들과 함께, 과연 끝까지 지나갈 수 있을까?", menuSubtitle);
@@ -511,8 +616,11 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (previewFrames != null && previewFrames.Length > 0)
         {
             int frame = Mathf.FloorToInt(Time.unscaledTime * idleFramesPerSecond) % previewFrames.Length;
-            DrawSprite(new Rect(302, 308, 118, 151), previewFrames[frame], true);
+            float feet = visibleTheme != null ? visibleTheme.previewGround * LobbyFrame.height : 459f;
+            DrawSprite(new Rect(302, feet - 151f, 118, 151), previewFrames[frame], true);
         }
+        if (selectedTheme != null && Action(new Rect(867, 34, 168, 38), showThemes ? "테마 닫기" : "테마 선택"))
+            ToggleThemePicker();
         if (Action(new Rect(1045, 34, 165, 38), showLocalAddresses ? "내 IP 닫기" : "내 IP 보기"))
             ToggleLocalAddressPanel();
         bool busy = NetworkClient.active || NetworkServer.active || manager.IsCheckingRelay ||
@@ -520,9 +628,9 @@ public class CapstoneLobbyUI : MonoBehaviour
         DrawCharacterPicker(!busy);
         DrawConnectionMode(busy);
         Rounded(new Rect(68, 552, 1148, 112), new Color(.30f, .23f, .15f, .25f), 20);
-        Rounded(new Rect(62, 546, 1156, 112), Ink, 18);
-        Rounded(new Rect(65, 549, 1150, 106), Paper, 16);
-        if (Action(new Rect(87, 582, 159, 50), "방 만들기", !busy, new Color(.75f, .82f, .47f)))
+        Rounded(new Rect(62, 546, 1156, 112), visibleTheme != null ? Border : Ink, 18);
+        Rounded(new Rect(65, 549, 1150, 106), visibleTheme != null ? Surface : Paper, 16);
+        if (Action(new Rect(87, 582, 159, 50), "방 만들기", !busy, visibleTheme != null ? Primary : new Color(.75f, .82f, .47f)))
         {
             if (useRelay) ConnectViaRelay(true);
             else manager.BeginLanRoom(true);
@@ -541,13 +649,13 @@ public class CapstoneLobbyUI : MonoBehaviour
             directAddress = GUI.TextField(addressField, directAddress, 15, input);
         }
         GUI.enabled = true;
-        if (Action(new Rect(594, 582, 128, 50), "참가", !busy, new Color(.75f, .82f, .47f)))
+        if (Action(new Rect(594, 582, 128, 50), "참가", !busy, visibleTheme != null ? Primary : new Color(.75f, .82f, .47f)))
         {
             if (useRelay) ConnectViaRelay(false);
             else manager.BeginDirectRoom(directAddress);
         }
         Box(new Rect(747, 572, 2, 66), new Color(.60f, .49f, .34f, .45f));
-        if (Action(new Rect(775, 582, 415, 50), "테스트 게임 실행", !busy, new Color(1f, .76f, .41f)))
+        if (Action(new Rect(775, 582, 415, 50), "테스트 게임 실행", !busy, visibleTheme != null ? null : Primary))
             manager.BeginSoloTest();
         string status = manager.LastConnectionError;
         if (manager.IsCheckingRelay) status = "중계 서버 응답을 기다리는 중… 무료 서버는 첫 연결에 약 1분 걸릴 수 있어요.";
@@ -565,23 +673,96 @@ public class CapstoneLobbyUI : MonoBehaviour
 
     private void DrawConnectionMode(bool busy)
     {
-        var selected = new Color(.75f, .84f, .65f);
-        if (Action(new Rect(87, 497, 142, 39), "직접 IP", !busy, useRelay ? Paper : selected))
+        if (Action(new Rect(87, 497, 142, 39), "직접 IP", !busy, useRelay ? null : Selection))
         {
             useRelay = false;
             roomPassword = "";
         }
-        if (Action(new Rect(241, 497, 142, 39), "중계 서버", !busy, useRelay ? selected : Paper))
+        if (Action(new Rect(241, 497, 142, 39), "중계 서버", !busy, useRelay ? Selection : null))
             useRelay = true;
         if (!useRelay) return;
 
-        Rounded(new Rect(419, 497, 771, 39), Paper, 10);
+        Rounded(new Rect(419, 497, 771, 39), Surface, 10);
         Label(new Rect(431, 497, 119, 39), "중계 주소", small);
         GUI.enabled = !busy;
         GUI.SetNextControlName("RelayAddress");
         relayAddress = GUI.TextField(new Rect(550, 500, 632, 33),
             relayAddress ?? manager.DefaultRelayEndpoint, 256, input);
         GUI.enabled = true;
+    }
+
+    private void DrawThemePicker()
+    {
+        var outer = new Rect(916, 82, 296, 326);
+        Rounded(outer, Border, 14);
+        Rounded(new Rect(918, 84, 292, 322), Surface, 12);
+        Label(new Rect(934, 94, 262, 34), "테마 선택", heading);
+        float row = 136;
+        foreach (LobbyTheme theme in lobbyThemes)
+        {
+            if (theme == null || theme.scenes == null) continue;
+            bool selected = theme == selectedTheme;
+            var option = new Rect(932, row, 264, 60);
+            bool choose = Action(option, "", true, selected ? Selection : null);
+            DrawThemeScene(new Rect(940, row + 8, 77, 44), theme, false);
+            text.normal.textColor = selected ? Ink : Foreground;
+            Label(new Rect(1032, row + 16, 153, 31), theme.displayName, text);
+            text.normal.textColor = Foreground;
+            if (choose) SelectTheme(theme);
+            row += 65;
+        }
+    }
+
+    private void ToggleThemePicker()
+    {
+        showThemes = !showThemes;
+        showLocalAddresses = false;
+    }
+
+    private void SelectTheme(LobbyTheme theme)
+    {
+        if (selectedTheme != theme)
+        {
+            selectedTheme = theme;
+            PlayerPrefs.SetString(ThemePreference, theme.id);
+            PlayerPrefs.Save();
+        }
+        showThemes = false;
+    }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+    internal string TestLobbyTheme => selectedTheme?.id;
+
+    internal bool TrySelectTestTheme(string id)
+    {
+        LobbyTheme theme = System.Array.Find(lobbyThemes, candidate =>
+            candidate != null && candidate.id == id && candidate.scenes != null);
+        if (theme == null) return false;
+        SelectTheme(theme);
+        return true;
+    }
+
+    internal void ToggleTestThemePicker() => ToggleThemePicker();
+#endif
+
+    // Each texture contains the entrance on the left and the waiting area on the right.
+    private static void DrawThemeScene(Rect destination, LobbyTheme theme, bool room)
+    {
+        Texture2D texture = theme.scenes;
+        float halfWidth = (texture.width - 2f) * .5f;
+        float sourceRatio = halfWidth / texture.height;
+        float targetRatio = destination.width / destination.height;
+        float width = Mathf.Min(1f, targetRatio / sourceRatio);
+        float height = Mathf.Min(1f, sourceRatio / targetRatio);
+        float x = (room ? .5f : 0f) + .5f / texture.width + (1f - width) * .25f;
+        float y = (1f - height) * (room ? .5f : 1f - theme.previewGround);
+        Color old = GUI.color;
+        // The project's linear GUI output lifts the dark midtones in the painted backgrounds.
+        if (QualitySettings.activeColorSpace == ColorSpace.Linear)
+            GUI.color *= new Color(.72f, .72f, .72f);
+        GUI.DrawTextureWithTexCoords(destination, texture,
+            new Rect(x, y, width * halfWidth / texture.width, height));
+        GUI.color = old;
     }
 
     private void ConnectViaRelay(bool host)
@@ -620,7 +801,9 @@ public class CapstoneLobbyUI : MonoBehaviour
             if (player.isLocalPlayer) local = player;
         }
         DrawSeats(players, true, local);
-        Rounded(new Rect(948, 155, 275, 528), Panel, 18);
+        if (visibleTheme != null)
+            Rounded(new Rect(946, 153, 279, 532), Border, 19);
+        Rounded(new Rect(948, 155, 275, 528), Surface, 18);
         Label(new Rect(972, 179, 226, 36), "우리들의 대기실", heading);
         Label(new Rect(972, 231, 226, 34), (NetworkServer.active ? "방장" : "참가자") + $" · {players.Count} / 4명", text);
         DrawRoomCharacterPicker(local);
@@ -637,18 +820,23 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (Action(new Rect(972, 424, 226, 39), "이름 저장", local != null)) local.RequestName(requestedName);
         Label(new Rect(972, 490, 226, 76), "캐릭터 변경은 준비 해제 후\n2~4명 전원 READY 시\n5초 뒤 시작 · 준비 해제 시 취소", small);
         if (Action(new Rect(972, 600, 226, 43), "방 나가기")) Leave();
-        if (Action(new Rect(78, 586, 393, 57), local != null && local.IsReady ? "준비 취소  [ F ]" : "준비 완료  [ F ]", local != null))
+        if (Action(new Rect(78, 586, 393, 57), local != null && local.IsReady ? "준비 취소  [ F ]" : "준비 완료  [ F ]",
+            local != null, visibleTheme != null ? Primary : null))
             local.ToggleReady();
         DrawStartStatus(players.Count, ready, true);
         string details = $"참가 {players.Count} / 4명 · 준비 완료 {ready}명 · F : 준비 / 취소";
         if (manager.IsRelayRoom) details = "중계 서버 연결됨 · " + details;
         else if (NetworkServer.active) details = "방장 IP: " + manager.Lan.LocalAddresses;
+        if (visibleTheme != null)
+            Rounded(new Rect(71, 669, 831, 34), new Color(.07f, .055f, .10f, .85f), 8);
         Label(new Rect(78, 668, 820, 35), details, small);
     }
 
     private void DrawLocalAddresses()
     {
-        Rounded(new Rect(506, 148, 391, 235), Panel, 14);
+        if (visibleTheme != null)
+            Rounded(new Rect(504, 146, 395, 239), Border, 15);
+        Rounded(new Rect(506, 148, 391, 235), Surface, 14);
         Label(new Rect(522, 158, 358, 32), "내 IPv4 주소 · 내부망", heading);
         Label(new Rect(522, 194, 358, 38), "방장이 이 주소를 알려주면 상대가 IP로 참가할 수 있어요.", small);
         var addresses = manager.Lan.LocalIPv4Addresses;
