@@ -368,11 +368,9 @@ public class CapstoneRoomManager : NetworkRoomManager
             race.EndMatch(RaceEndReason.PlayerDisconnected);
     }
 
+    /// <summary>시작 안내는 카드 선택 화면에서 표시하므로 별도의 중앙 알림을 띄우지 않는다.</summary>
     public override void OnRoomClientSceneChanged()
     {
-        if (Utils.IsSceneActive(GameplayScene))
-            GetComponent<CapstoneLobbyUI>()?.ShowNotice(IsSoloTest ? "SOLO TEST" : "GAME START!",
-                IsSoloTest ? "Developer mode. No one else can join." : "You shall not pass. Good luck!", true);
     }
 
     public override void Update()

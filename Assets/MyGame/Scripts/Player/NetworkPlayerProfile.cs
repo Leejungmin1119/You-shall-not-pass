@@ -10,6 +10,43 @@ public class NetworkPlayerProfile : NetworkBehaviour
     private PlayerInfoHUD hud;
     public string PlayerName => string.IsNullOrWhiteSpace(playerName) ? $"Player {netId}" : playerName;
     public Color PlayerColor => playerColor;
+    public event System.Action<bool> TurnCardChoiceResponded;
+    public bool IsTurnCardReady { get; private set; }
+
+    /// <summary>자기 게임 플레이어의 생성이 끝난 뒤 카드 선택을 받을 준비가 되었음을 알린다.</summary>
+    public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+
+        if (TryGetComponent<PlayerState>(out _))
+            CmdReadyForTurnCards();
+    }
+
+    /// <summary>모든 소유자가 게임 플레이어를 받은 뒤에만 선택 제한시간을 시작하도록 한다.</summary>
+    [Command]
+    private void CmdReadyForTurnCards()
+    {
+        if (TryGetComponent(out PlayerState player) && player.Race != null)
+            IsTurnCardReady = true;
+    }
+
+    /// <summary>소유자 본인의 카드 선택을 서버에 요청한다. 참가 여부와 중복 선택은 서버가 확인한다.</summary>
+    [Command]
+    public void CmdChooseTurnCard(byte index)
+    {
+        PlayerState player = GetComponent<PlayerState>();
+
+        bool accepted = player != null && player.Race != null && player.Race.Phase == RacePhase.CardSelection &&
+            player.Race.Roles.TryChooseCard(netId, index);
+        TargetTurnCardChoice(accepted);
+    }
+
+    /// <summary>카드 경합 결과는 요청한 소유자에게만 돌려준다.</summary>
+    [TargetRpc]
+    private void TargetTurnCardChoice(bool accepted)
+    {
+        TurnCardChoiceResponded?.Invoke(accepted);
+    }
 
     /// <summary>서버에서 게임에 표시할 이름을 지정한다.</summary>
     [Server]

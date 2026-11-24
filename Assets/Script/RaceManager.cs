@@ -14,7 +14,8 @@ public enum RacePhase
     Ended = 3,
     MapPreview = 4,
     StartCountdown = 5,
-    DeathPresentation = 6
+    DeathPresentation = 6,
+    CardSelection = 7
 }
 
 /// <summary>서버에서 공수 경기의 제한시간, 교대 초기화와 경기 종료를 관리한다.</summary>
@@ -210,15 +211,6 @@ public sealed class RaceManager : NetworkBehaviour
         progress = GetComponent<RaceProgress>();
     }
 
-    /// <summary>클라이언트 화면에 서버와 같은 범위의 시작 보호 구역을 표시한다.</summary>
-    public override void OnStartClient()
-    {
-        base.OnStartClient();
-
-        if (!TryGetComponent<StartProtectionZone>(out _))
-            gameObject.AddComponent<StartProtectionZone>();
-    }
-
     /// <summary>현재 공격자의 출발 위치를 고정하고 실제 조작 시작부터 2초를 센다.</summary>
     [Server]
     private void BeginStartProtection()
@@ -250,7 +242,7 @@ public sealed class RaceManager : NetworkBehaviour
     public float CountdownTwoDuration => countdownTwoDuration;
     public float StartCountdownDuration => countdownThreeDuration + countdownTwoDuration + countdownOneDuration;
     public bool IsPreparing => phase == RacePhase.Waiting || phase == RacePhase.MapPreview ||
-        phase == RacePhase.StartCountdown;
+        phase == RacePhase.StartCountdown || phase == RacePhase.CardSelection;
     public double EndsAt => endsAt;
     public float RoundDuration => roundDuration;
     public int RoundNumber => roundNumber;
@@ -323,6 +315,19 @@ public sealed class RaceManager : NetworkBehaviour
         if (phase == RacePhase.Waiting)
         {
             if (ArePlayersReady())
+            {
+                phase = RacePhase.CardSelection;
+                phaseStartedAt = NetworkTime.time;
+                conveyor.ClearItems();
+                Roles.BeginCardDraw(participants);
+            }
+
+            return;
+        }
+
+        if (phase == RacePhase.CardSelection)
+        {
+            if (Roles.CardPhase == TurnCardPhase.Complete)
                 PrepareRound();
 
             return;
@@ -408,7 +413,8 @@ public sealed class RaceManager : NetworkBehaviour
         {
             if (!connection.isReady || connection.identity == null ||
                 !connection.identity.TryGetComponent(out PlayerState player) ||
-                !startPositions.ContainsKey(player))
+                !startPositions.ContainsKey(player) ||
+                !player.TryGetComponent(out NetworkPlayerProfile profile) || !profile.IsTurnCardReady)
                 return false;
         }
 
