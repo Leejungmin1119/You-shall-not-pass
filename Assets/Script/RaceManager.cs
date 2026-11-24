@@ -25,6 +25,14 @@ public sealed class RaceManager : NetworkBehaviour
     [SerializeField, Min(1f)] private float roundDuration = 900f;
     [SerializeField] private ConveyorController conveyor;
 
+    public const float StartProtectionRadius = 3f;
+    private const double StartProtectionDuration = 2d;
+    [SyncVar] private Vector2 startProtectionCenter;
+    [SyncVar] private double startProtectionEndsAt;
+
+    public Vector2 StartProtectionCenter => startProtectionCenter;
+    public bool IsStartProtectionActive => IsRunning && NetworkTime.time < startProtectionEndsAt;
+
     [Header("공격자 시간 감속 스킬")]
     [SerializeField, Range(0.01f, 1f)] private float skillTimeScale = 0.1f;
     [SerializeField, Min(0.1f)] private float skillDuration = 5f;
@@ -200,6 +208,39 @@ public sealed class RaceManager : NetworkBehaviour
         Roles = GetComponent<rolechangeManager>();
         deathSequence = GetComponent<DeathSequence>();
         progress = GetComponent<RaceProgress>();
+    }
+
+    /// <summary>클라이언트 화면에 서버와 같은 범위의 시작 보호 구역을 표시한다.</summary>
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        if (!TryGetComponent<StartProtectionZone>(out _))
+            gameObject.AddComponent<StartProtectionZone>();
+    }
+
+    /// <summary>현재 공격자의 출발 위치를 고정하고 실제 조작 시작부터 2초를 센다.</summary>
+    [Server]
+    private void BeginStartProtection()
+    {
+        startProtectionEndsAt = 0d;
+
+        foreach (PlayerState player in participants)
+        {
+            if (!Roles.IsAttacker(player))
+                continue;
+
+            startProtectionCenter = startPositions[player];
+            startProtectionEndsAt = NetworkTime.time + StartProtectionDuration;
+            return;
+        }
+    }
+
+    /// <summary>고정된 시작 보호 구역 안인지 서버와 표시 담당이 같은 기준으로 확인한다.</summary>
+    public bool IsInsideStartProtection(Vector2 position)
+    {
+        return IsStartProtectionActive &&
+            (position - startProtectionCenter).sqrMagnitude <= StartProtectionRadius * StartProtectionRadius;
     }
 
     public RacePhase Phase => phase;
@@ -412,10 +453,11 @@ public sealed class RaceManager : NetworkBehaviour
         endsAt = matchEndsAt;
         phase = RacePhase.Racing;
 
+        BeginStartProtection();
         conveyor.ResetForRound();
     }
 
-    /// <summary>현재 공격자의 골인에만 1점을 지급하고 다음 공격자로 교대한다.</summary>
+    /// <summary>현재 공격자의 골인에만 2점을 지급하고 다음 공격자로 교대한다.</summary>
     [Server]
     public bool TryFinish(PlayerState player)
     {
@@ -425,7 +467,7 @@ public sealed class RaceManager : NetworkBehaviour
         RpcPlayGoalSound(player.transform.position);
         StopTimeSkill();
         progress?.ResetRecords();
-        player.GetComponent<PlayerScore>().AddGoalScore(1);
+        player.GetComponent<PlayerScore>().AddGoalScore(2);
 
         if (phase != RacePhase.Ended)
             CompleteTurn();
@@ -514,6 +556,7 @@ public sealed class RaceManager : NetworkBehaviour
             player.GetComponent<PlayerCost>().ResetCost(Roles.IsAttacker(player));
         }
 
+        BeginStartProtection();
         conveyor.ResetForRound();
     }
 

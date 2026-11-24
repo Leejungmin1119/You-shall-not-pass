@@ -38,6 +38,8 @@ public sealed class PlayerInfoHUD : MonoBehaviour
             icon.enabled = icon.sprite != null;
             RefreshName();
             RefreshScore(score.Score);
+
+            icon.transform.parent.gameObject.SetActive(true);
         }
 
         /// <summary>값 변경 구독을 해제하고 빈 플레이어 칸으로 되돌린다.</summary>
@@ -49,16 +51,19 @@ public sealed class PlayerInfoHUD : MonoBehaviour
             Profile = null;
             score = null;
             if (icon != null)
+            {
                 icon.enabled = false;
+                icon.transform.parent.gameObject.SetActive(false);
+            }
 
             if (nameText != null)
             {
-                nameText.text = "—";
+                nameText.text = string.Empty;
                 nameText.color = Color.white;
             }
 
             if (scoreText != null)
-                scoreText.text = "Score: —";
+                scoreText.text = string.Empty;
 
         }
 
@@ -86,6 +91,7 @@ public sealed class PlayerInfoHUD : MonoBehaviour
     /// <summary>씬에 연결된 UI 너비에 맞춰 처음 표시할 열 수를 설정한다.</summary>
     private void Awake()
     {
+        RefreshSlots();
         OnRectTransformDimensionsChange();
     }
 

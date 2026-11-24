@@ -111,6 +111,11 @@ public class SpearNetwork : MonoBehaviour
             return false;
         if (!owner.TryGetComponent(out PlayerState actor) || !actor.CanUseTraps || owner.connectionToClient == null)
             return false;
+
+        // 보호 시간에는 출발 구역 안으로 보낸 사용 요청을 서버에서 거절한다.
+        if (race != null && race.IsInsideStartProtection(cursor))
+            return false;
+
         foreach (var identity in NetworkServer.spawned.Values)
             if (identity != null && identity.TryGetComponent(out PlayerState player) && player.IsInvincible &&
                 Vector2.Distance(cursor, player.transform.position) < 1.5f) return false;
@@ -127,6 +132,13 @@ public class SpearNetwork : MonoBehaviour
             RaycastHit2D ground = data.Placement == ItemPlacement.Drop
                 ? Physics2D.Raycast(position, Vector2.down, Mathf.Max(1f, position.y - area.min.y + 1f), dropper.GroundLayer)
                 : default;
+
+            // 묶음 화살의 옆 칸과 위에서 떨어질 착지점도 보호 구역을 침범할 수 없다.
+            Vector2 target = new Vector2(x, cursor.y);
+            if (race != null && (race.IsInsideStartProtection(target) ||
+                (ground && race.IsInsideStartProtection(ground.point))))
+                return false;
+
             float distance = ground ? position.y - ground.point.y : Mathf.Max(1f, position.y - area.min.y);
             if (data.Placement == ItemPlacement.Drop && distance <= 0.01f) return false;
             batch[index] = new ItemSpawnMessage {
