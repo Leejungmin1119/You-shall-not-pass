@@ -1,0 +1,273 @@
+fileFormatVersion: 2
+guid: a168cf2ae73de814d8ae2189f6631bf5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -9217646508876194652
+    second: Ghost_Walk_0
+  - first:
+      213: -7154967499465162925
+    second: Ghost_Walk_1
+  - first:
+      213: 7383809077945557827
+    second: Ghost_Walk_2
+  - first:
+      213: -3896566508730625120
+    second: Ghost_Walk_3
+  - first:
+      213: 369052484376856862
+    second: Ghost_Walk_4
+  - first:
+      213: -5620716951712071579
+    second: Ghost_Walk_5
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 221.53392
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Ghost_Walk_1
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 566
+        width: 268
+        height: 410
+      alignment: 9
+      pivot: {x: 0.5187304, y: 0.544079}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35ff9e6c7f274bc90800000000000000
+      internalID: -7154967499465162925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Walk_2
+      rect:
+        serializedVersion: 2
+        x: 634
+        y: 569
+        width: 273
+        height: 405
+      alignment: 9
+      pivot: {x: 0.523882, y: 0.5433886}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 343ef3c3c3f887660800000000000000
+      internalID: 7383809077945557827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Walk_3
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 566
+        width: 267
+        height: 406
+      alignment: 9
+      pivot: {x: 0.5131827, y: 0.5494394}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a35d6bb76d9ce9c0800000000000000
+      internalID: -3896566508730625120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Walk_4
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 53
+        width: 268
+        height: 412
+      alignment: 9
+      pivot: {x: 0.51499903, y: 0.543865}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1902ca77432f1500800000000000000
+      internalID: 369052484376856862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Walk_5
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 58
+        width: 270
+        height: 411
+      alignment: 9
+      pivot: {x: 0.51488805, y: 0.5330228}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5608f2656b33ff1b0800000000000000
+      internalID: -5620716951712071579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Walk_6
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 59
+        width: 271
+        height: 410
+      alignment: 9
+      pivot: {x: 0.5129881, y: 0.5318839}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b7603cf1452bd141b50f69c6b41aad7
+      internalID: -2093542934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5faaa56e9f3a64145a112d527d587a3a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Ghost_Walk_1: -7154967499465162925
+      Ghost_Walk_2: 7383809077945557827
+      Ghost_Walk_3: -3896566508730625120
+      Ghost_Walk_4: 369052484376856862
+      Ghost_Walk_5: -5620716951712071579
+      Ghost_Walk_6: -2093542934
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
