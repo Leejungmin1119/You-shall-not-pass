@@ -1,0 +1,273 @@
+fileFormatVersion: 2
+guid: e27c39bcd2a8373438346d5c741b51a0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3980850534537808885
+    second: Ghost_MovingJump_0
+  - first:
+      213: -5024961251210879966
+    second: Ghost_MovingJump_1
+  - first:
+      213: 1279152439962073903
+    second: Ghost_MovingJump_2
+  - first:
+      213: 5719909672697326393
+    second: Ghost_MovingJump_3
+  - first:
+      213: -5465825932731042623
+    second: Ghost_MovingJump_4
+  - first:
+      213: 1445070831525040815
+    second: Ghost_MovingJump_5
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 221.53392
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Ghost_MovingJump_1
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 555
+        width: 289
+        height: 416
+      alignment: 9
+      pivot: {x: 0.53294027, y: 0.5290202}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22c197b8d50c34ab0800000000000000
+      internalID: -5024961251210879966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_MovingJump_2
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 596
+        width: 267
+        height: 375
+      alignment: 9
+      pivot: {x: 0.49071077, y: 0.47752637}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f2b738ded5670c110800000000000000
+      internalID: 1279152439962073903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_MovingJump_3
+      rect:
+        serializedVersion: 2
+        x: 1146
+        y: 576
+        width: 281
+        height: 395
+      alignment: 9
+      pivot: {x: 0.5338782, y: 0.50398076}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 93be17cba83316f40800000000000000
+      internalID: 5719909672697326393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_MovingJump_4
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 64
+        width: 287
+        height: 396
+      alignment: 9
+      pivot: {x: 0.5401385, y: 0.5027081}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c4b27bf54c7524b0800000000000000
+      internalID: -5465825932731042623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_MovingJump_5
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 70
+        width: 280
+        height: 390
+      alignment: 9
+      pivot: {x: 0.5322135, y: 0.4950574}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa21454d34ced0410800000000000000
+      internalID: 1445070831525040815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_MovingJump_6
+      rect:
+        serializedVersion: 2
+        x: 1144
+        y: 63
+        width: 283
+        height: 396
+      alignment: 9
+      pivot: {x: 0.5371724, y: 0.5052333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62f746cb4944929459f23652bd728f7e
+      internalID: 317602848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 9e8f127431be53547b511302e357ba00
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Ghost_MovingJump_1: -5024961251210879966
+      Ghost_MovingJump_2: 1279152439962073903
+      Ghost_MovingJump_3: 5719909672697326393
+      Ghost_MovingJump_4: -5465825932731042623
+      Ghost_MovingJump_5: 1445070831525040815
+      Ghost_MovingJump_6: 317602848
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

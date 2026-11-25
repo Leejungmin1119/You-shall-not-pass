@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: 98c2078189ebbb2419811e9315808a08
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6177545212848966350
+    second: Ghost_Death_Backward_0
+  - first:
+      213: 3611649670220080635
+    second: Ghost_Death_Backward_1
+  - first:
+      213: 6893393215842224318
+    second: Ghost_Death_Backward_2
+  - first:
+      213: 8355824443077070931
+    second: Ghost_Death_Backward_3
+  - first:
+      213: -7919695745013980429
+    second: Ghost_Death_Backward_4
+  - first:
+      213: 786478275308601430
+    second: Ghost_Death_Backward_5
+  - first:
+      213: -6024269445152274832
+    second: Ghost_Death_Backward_6
+  - first:
+      213: -4504864504453179211
+    second: Ghost_Death_Backward_7
+  - first:
+      213: -5950146142673807572
+    second: Ghost_Death_Backward_8
+  - first:
+      213: 7998553344090851164
+    second: Ghost_Death_Backward_9
+  - first:
+      213: 4799670608955461765
+    second: Ghost_Death_Backward_10
+  - first:
+      213: 6466894945270721252
+    second: Ghost_Death_Backward_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 221.53392
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Ghost_Death_Backward_10
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 40
+        width: 455
+        height: 220
+      alignment: 9
+      pivot: {x: 0.5209226, y: 0.009090909}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5805ca53dfadb9240800000000000000
+      internalID: 4799670608955461765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Death_Backward_11
+      rect:
+        serializedVersion: 2
+        x: 1048
+        y: 39
+        width: 465
+        height: 218
+      alignment: 9
+      pivot: {x: 0.52047265, y: 0.013761468}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ea61ac80b60fb950800000000000000
+      internalID: 6466894945270721252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Death_Backward_01
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 1063
+        width: 281
+        height: 417
+      alignment: 9
+      pivot: {x: 0.5338781, y: 0.007194245}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 369d484da07e38a45878762e4ada7048
+      internalID: -2130513512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Death_Backward_02
+      rect:
+        serializedVersion: 2
+        x: 647
+        y: 1067
+        width: 244
+        height: 418
+      alignment: 9
+      pivot: {x: 0.53696626, y: -0.0023923444}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b39bf8130f4eae49b00f850bb0419d1
+      internalID: 349028967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Death_Backward_03
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 1068
+        width: 328
+        height: 386
+      alignment: 9
+      pivot: {x: 0.5305481, y: -0.005181347}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0fef2f7e123e86419a45745c0842b3b
+      internalID: -1956575019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Death_Backward_04
+      rect:
+        serializedVersion: 2
+        x: 1579
+        y: 1068
+        width: 426
+        height: 343
+      alignment: 9
+      pivot: {x: 0.5235206, y: -0.005830904}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a47dbe09d104124292bdb65abc2975a
+      internalID: -473048142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Death_Backward_05
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 556
+        width: 461
+        height: 286
+      alignment: 9
+      pivot: {x: 0.5206502, y: -0.006993007}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38545473fa76d2140a7499450ac28bc4
+      internalID: 31117576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Death_Backward_06
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 553
+        width: 465
+        height: 248
+      alignment: 9
+      pivot: {x: 0.52047265, y: 0.004032258}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0450d67937522294abcb325e817c204a
+      internalID: -2129253551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Death_Backward_07
+      rect:
+        serializedVersion: 2
+        x: 1049
+        y: 551
+        width: 464
+        height: 223
+      alignment: 9
+      pivot: {x: 0.51943916, y: 0.013452915}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d03581f1a0f952c4bbd6ba5cb27a828a
+      internalID: -836921625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Death_Backward_08
+      rect:
+        serializedVersion: 2
+        x: 1563
+        y: 575
+        width: 459
+        height: 224
+      alignment: 9
+      pivot: {x: 0.5207403, y: -0.09375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63654b9bc0474114eae45f57f7dc414f
+      internalID: 502157355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Death_Backward_09
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 43
+        width: 458
+        height: 235
+      alignment: 9
+      pivot: {x: 0.52187717, y: -0.004255319}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a17707aee4cb98448bfcb39e0e5221ab
+      internalID: 817877028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ghost_Death_Backward_12
+      rect:
+        serializedVersion: 2
+        x: 1556
+        y: 39
+        width: 473
+        height: 221
+      alignment: 9
+      pivot: {x: 0.5201264, y: 0.013574661}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af017d1ff624c5b4a92533f7e6270249
+      internalID: 1265914153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c006241a7a44b2c40a617bf2432e073b
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Ghost_Death_Backward_01: -2130513512
+      Ghost_Death_Backward_02: 349028967
+      Ghost_Death_Backward_03: -1956575019
+      Ghost_Death_Backward_04: -473048142
+      Ghost_Death_Backward_05: 31117576
+      Ghost_Death_Backward_06: -2129253551
+      Ghost_Death_Backward_07: -836921625
+      Ghost_Death_Backward_08: 502157355
+      Ghost_Death_Backward_09: 817877028
+      Ghost_Death_Backward_10: 4799670608955461765
+      Ghost_Death_Backward_11: 6466894945270721252
+      Ghost_Death_Backward_12: 1265914153
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
