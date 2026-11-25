@@ -45,6 +45,7 @@ public class CapstoneLobbyUI : MonoBehaviour
     }
     private GUIStyle title, heading, text, small, button, input;
     private GUIStyle menuTitle, menuSubtitle;
+    private string gameTitle;
     private string previousScreen;
     private readonly System.Collections.Generic.List<CapstoneRoomPlayer> roomPlayers =
         new System.Collections.Generic.List<CapstoneRoomPlayer>(CapstoneRoomManager.LobbySeatCount);
@@ -146,6 +147,7 @@ public class CapstoneLobbyUI : MonoBehaviour
     private void Awake()
     {
         manager = GetComponent<CapstoneRoomManager>();
+        gameTitle = Application.productName;
         string savedTheme = PlayerPrefs.GetString(ThemePreference, "castle");
         selectedTheme = System.Array.Find(lobbyThemes, theme =>
             theme != null && theme.scenes != null && theme.id == savedTheme);
@@ -608,9 +610,8 @@ public class CapstoneLobbyUI : MonoBehaviour
             GUI.DrawTexture(LobbyFrame, mainMenuBackground, ScaleMode.StretchToFill);
         else
             DrawSprite(LobbyFrame, skySprite);
-        DrawMenuTitle(new Rect(72, 40, 690, 88), "세상에서 가장");
-        DrawMenuTitle(new Rect(72, 120, 690, 88), "더러운 게임");
-        Label(new Rect(78, 220, 630, 40), "친구들과 함께, 과연 끝까지 지나갈 수 있을까?", menuSubtitle);
+        DrawMenuTitle(new Rect(72, 50, 480, 88), gameTitle);
+        Label(new Rect(78, 139, 630, 40), "친구들과 함께, 과연 끝까지 지나갈 수 있을까?", menuSubtitle);
         var selectedStyle = (PlayerIdleBoil.CharacterStyle)Mathf.Max(0, PreferredCharacter);
         Sprite[] previewFrames = GetCrewFrames(selectedStyle);
         if (previewFrames != null && previewFrames.Length > 0)
@@ -786,7 +787,7 @@ public class CapstoneLobbyUI : MonoBehaviour
     private void DrawRoomLobby()
     {
         DrawLandscape();
-        Label(new Rect(76, 40, 900, 58), "세상에서 가장 더러운 게임", title);
+        Label(new Rect(76, 40, 900, 58), gameTitle, title);
         Label(new Rect(78, 108, 790, 32), "방 대기실 · 이름을 정하고 READY로 함께 출발해요", small);
         if (!manager.IsRelayRoom && Action(new Rect(948, 100, 275, 40), showLocalAddresses ? "내 IP 닫기" : "내 IP 보기"))
             ToggleLocalAddressPanel();
