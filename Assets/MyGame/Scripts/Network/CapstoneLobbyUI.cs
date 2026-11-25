@@ -349,11 +349,14 @@ public class CapstoneLobbyUI : MonoBehaviour
     private void DrawCharacterPicker(bool enabled)
     {
         Label(new Rect(560, 73, 340, 23), "캐릭터 선택", small);
+        // 테마 선택 창(x 916부터)과 겹치지 않게 제목 폭(340) 안에 캐릭터 수만큼 나눠 넣는다. 3명이면 예전 배치와 같다.
+        // 4명이면 버튼 폭이 79인데, 가장 긴 "잭오랜턴"이 이 글꼴 18px에서 약 60px라 글자 크기는 그대로 둔다.
+        float step = (340f + 8f) / PlayerIdleBoil.CharacterCount;
         for (int index = 0; index < PlayerIdleBoil.CharacterCount; index++)
         {
             var style = (PlayerIdleBoil.CharacterStyle)index;
             Color? fill = PreferredCharacter == index ? Selection : null;
-            if (Action(new Rect(560 + index * 116, 100, 108, 42), PlayerIdleBoil.GetDisplayName(style), enabled, fill))
+            if (Action(new Rect(560 + index * step, 100, step - 8f, 42), PlayerIdleBoil.GetDisplayName(style), enabled, fill))
                 PreferredCharacter = index;
         }
     }
@@ -363,12 +366,14 @@ public class CapstoneLobbyUI : MonoBehaviour
     {
         Label(new Rect(972, 270, 226, 23), "내 캐릭터 선택", small);
         int previousFontSize = button.fontSize;
-        button.fontSize = 14;
+        // 대기실 칸(폭 226)에 캐릭터 수만큼 나눠 넣는다. 4명이면 버튼 폭이 52라 글자를 줄인다.
+        float step = (226f + 6f) / PlayerIdleBoil.CharacterCount;
+        button.fontSize = PlayerIdleBoil.CharacterCount > 3 ? 12 : 14;
         for (int index = 0; index < PlayerIdleBoil.CharacterCount; index++)
         {
             var style = (PlayerIdleBoil.CharacterStyle)index;
             Color? fill = local != null && local.Character == style ? Selection : null;
-            if (Action(new Rect(972 + index * 76, 298, 70, 32), PlayerIdleBoil.GetDisplayName(style),
+            if (Action(new Rect(972 + index * step, 298, step - 6f, 32), PlayerIdleBoil.GetDisplayName(style),
                 local != null && !local.IsReady, fill))
             {
                 PreferredCharacter = index;

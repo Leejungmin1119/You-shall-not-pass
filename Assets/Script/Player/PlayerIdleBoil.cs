@@ -13,7 +13,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer), typeof(CapsuleCollider2D))]
 public sealed class PlayerIdleBoil : MonoBehaviour
 {
-    public enum CharacterStyle { Doll, Knight, JackOLantern }
+    public enum CharacterStyle { Doll, Knight, JackOLantern, Ghost }
 
     [SerializeField] private CharacterStyle character;
     [SerializeField] private Sprite[] dollFrames = new Sprite[0];
@@ -53,10 +53,21 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     [SerializeField] private Sprite[] jackMovingAirFrames = new Sprite[0];
     [SerializeField] private Sprite[] jackRunningAirFrames = new Sprite[0];
     [SerializeField] private Sprite[] jackWallSlideFrames = new Sprite[0];
-    // 달리기 키 없이 가속하는 이동이라 속도로만 걷기와 달리기 그림을 나눈다.
+    // 달리기 키 없이 가속하는 이동이라 속도로만 걷기와 달리기 그림을 나눈다. 유령도 같은 기준을 쓴다.
     [SerializeField, Range(0.1f, 1f)] private float jackRunSpeedRatio = 0.75f;
     [SerializeField, Min(1f)] private float jackRunFramesPerSecond = 25f;
+    // 공중 시트 3번째 이후 칸을 낙하 중 반복하는 간격. 유령 낙하 4칸도 같은 0.12초로 그려졌다.
     [SerializeField, Min(0.01f)] private float jackFallSecondsPerFrame = 0.12f;
+
+    [Header("Ghost")]
+    // 걸으며·달리며 점프와 벽 슬라이드 그림이 아직 없어 공중에서는 제자리 점프 그림(도약·정점·낙하 4칸)을 쓴다.
+    [SerializeField] private Sprite[] ghostIdleFrames = new Sprite[0];
+    [SerializeField] private Sprite[] ghostWalkFrames = new Sprite[0];
+    [SerializeField] private Sprite[] ghostRunFrames = new Sprite[0];
+    [SerializeField] private Sprite[] ghostAirFrames = new Sprite[0];
+    // 시안은 걷기 6칸 0.9초, 달리기 8칸 0.72초로 달리기가 1.25배 빨리 돈다.
+    // 게임의 걷기(6칸, 최고 속도 10fps)와 같은 비율이 되는 값: 8 × 1.25 × 10 / 6 ≈ 16.7.
+    [SerializeField, Min(1f)] private float ghostRunFramesPerSecond = 16.7f;
 
     private float walkPhase;
     private float wallSlidePhase;
@@ -85,13 +96,14 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     public Sprite RestingSprite => character == CharacterStyle.JackOLantern && jackIdleFrames.Length > 0
         ? jackIdleFrames[0] : null;
 
-    public const int CharacterCount = 3;
+    public const int CharacterCount = 4;
 
     /// <summary>로비 표시와 이름표에 쓰는 캐릭터 이름.</summary>
     public static string GetDisplayName(CharacterStyle style) => style switch
     {
         CharacterStyle.Knight => "기사",
         CharacterStyle.JackOLantern => "잭오랜턴",
+        CharacterStyle.Ghost => "유령",
         _ => "인형"
     };
 
@@ -100,8 +112,12 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     {
         CharacterStyle.Knight => knightFrames,
         CharacterStyle.JackOLantern => jackIdleFrames,
+        CharacterStyle.Ghost => ghostIdleFrames,
         _ => dollFrames
     };
+
+    /// <summary>걷기와 달리기 그림이 따로 있고, 낙하 그림을 반복하는 캐릭터.</summary>
+    private bool HasRunAnimation => character == CharacterStyle.JackOLantern || character == CharacterStyle.Ghost;
 
     /// <summary>로비에서 고른 캐릭터로 바꾸고 이전 캐릭터의 재생 위치를 비운다.</summary>
     public void SetCharacter(CharacterStyle style)
@@ -205,12 +221,14 @@ public sealed class PlayerIdleBoil : MonoBehaviour
         UpdateFacing(controlledHere, horizontalSpeed);
 
         bool alive = state == null || state.Status == PlayerStatus.Alive;
-        bool isJack = character == CharacterStyle.JackOLantern;
+        bool hasRun = HasRunAnimation;
         float speed = Mathf.Abs(horizontalSpeed);
         float maxSpeed = movement != null && movement.moveStats != null
             ? Mathf.Max(0.01f, movement.moveStats.MaxRunSpeed * 0.01f) : 10f;
-        bool running = isJack && speed >= maxSpeed * jackRunSpeedRatio;
-        PlayerAirPose airPose = !isJack ? PlayerAirPose.Standing : running ? PlayerAirPose.Running :
+        bool running = hasRun && speed >= maxSpeed * jackRunSpeedRatio;
+        // 유령은 공중 그림이 한 가지라 자세를 나누지 않는다. 나누면 공중에서 속도가 바뀔 때마다 낙하 반복이 처음으로 돌아간다.
+        PlayerAirPose airPose = character != CharacterStyle.JackOLantern ? PlayerAirPose.Standing :
+            running ? PlayerAirPose.Running :
             speed >= walkSpeedThreshold ? PlayerAirPose.Moving : PlayerAirPose.Standing;
 
         int wallDirection = 0;
@@ -288,7 +306,7 @@ public sealed class PlayerIdleBoil : MonoBehaviour
             CurrentFrame = next.Mode == PlayerAnimationMode.Rising ? 0 :
                 next.Mode == PlayerAnimationMode.Apex ? 1 : 2;
 
-            if (character == CharacterStyle.JackOLantern && next.Mode == PlayerAnimationMode.Falling &&
+            if (HasRunAnimation && next.Mode == PlayerAnimationMode.Falling &&
                 frames != null && frames.Length > 2)
             {
                 CurrentFrame += (int)fallPhase % (frames.Length - 2);
@@ -298,8 +316,8 @@ public sealed class PlayerIdleBoil : MonoBehaviour
         else if (IsWalking)
         {
             frames = GetWalkFrames(next.Mode);
-            float rate = next.Mode == PlayerAnimationMode.Run
-                ? jackRunFramesPerSecond : walkFramesPerSecondAtMaxSpeed;
+            float rate = next.Mode != PlayerAnimationMode.Run ? walkFramesPerSecondAtMaxSpeed :
+                character == CharacterStyle.Ghost ? ghostRunFramesPerSecond : jackRunFramesPerSecond;
             walkPhase += Time.deltaTime * rate * next.PlaybackRatio;
             CurrentFrame = (int)walkPhase;
         }
@@ -327,22 +345,32 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     }
 
     /// <summary>캐릭터와 동기화된 이동 자세에 맞는 지상 프레임을 반환한다.</summary>
-    private Sprite[] GetWalkFrames(PlayerAnimationMode mode)
-        => character == CharacterStyle.JackOLantern
-            ? (mode == PlayerAnimationMode.Run ? jackRunFrames : jackWalkFrames)
-            : character == CharacterStyle.Knight ? knightWalkFrames : dollWalkFrames;
+    private Sprite[] GetWalkFrames(PlayerAnimationMode mode) => character switch
+    {
+        CharacterStyle.JackOLantern => mode == PlayerAnimationMode.Run ? jackRunFrames : jackWalkFrames,
+        CharacterStyle.Ghost => mode == PlayerAnimationMode.Run ? ghostRunFrames : ghostWalkFrames,
+        CharacterStyle.Knight => knightWalkFrames,
+        _ => dollWalkFrames
+    };
 
-    /// <summary>소유자가 선택한 정지·이동·달리기 공중 자세를 그대로 선택한다.</summary>
-    private Sprite[] GetAirFrames(PlayerAirPose pose)
-        => character == CharacterStyle.JackOLantern
-            ? (pose == PlayerAirPose.Running ? jackRunningAirFrames :
-                pose == PlayerAirPose.Moving ? jackMovingAirFrames : jackStandingAirFrames)
-            : character == CharacterStyle.Knight ? knightAirFrames : dollAirFrames;
+    /// <summary>소유자가 선택한 정지·이동·달리기 공중 자세를 그대로 선택한다. 유령은 아직 한 가지뿐이다.</summary>
+    private Sprite[] GetAirFrames(PlayerAirPose pose) => character switch
+    {
+        CharacterStyle.JackOLantern => pose == PlayerAirPose.Running ? jackRunningAirFrames :
+            pose == PlayerAirPose.Moving ? jackMovingAirFrames : jackStandingAirFrames,
+        CharacterStyle.Ghost => ghostAirFrames,
+        CharacterStyle.Knight => knightAirFrames,
+        _ => dollAirFrames
+    };
 
-    /// <summary>캐릭터별 벽 슬라이드 프레임을 반환한다.</summary>
-    private Sprite[] GetWallFrames()
-        => character == CharacterStyle.JackOLantern ? jackWallSlideFrames :
-            character == CharacterStyle.Knight ? knightWallSlideFrames : dollWallSlideFrames;
+    /// <summary>캐릭터별 벽 슬라이드 프레임을 반환한다. 유령은 그림이 없어 벽에서도 낙하 그림을 쓴다.</summary>
+    private Sprite[] GetWallFrames() => character switch
+    {
+        CharacterStyle.JackOLantern => jackWallSlideFrames,
+        CharacterStyle.Ghost => null,
+        CharacterStyle.Knight => knightWallSlideFrames,
+        _ => dollWallSlideFrames
+    };
 
     /// <summary>
     /// 그림은 오른쪽을 보고 있다. 왼쪽으로 가면 뒤집고, 멈추면 마지막 방향을 유지한다(기획서 6-1).

@@ -97,6 +97,15 @@ public sealed class DeathSequence : MonoBehaviour
 
         source = identity.GetComponent<SpriteRenderer>();
         var animator = identity.GetComponent<PlayerIdleBoil>();
+        if (animator?.Character == PlayerIdleBoil.CharacterStyle.Ghost)
+        {
+            // 유령 사망 그림이 아직 없다. 쓰러지는 몸과 별 없이 멈춘 자세로 슬로모션만 보여 준다.
+            frames = null;
+            previousForceOff = source.forceRenderingOff;
+            sequenceStartedAt = race.DeathStartedAt;
+            return;
+        }
+
         frames = animator?.Character switch
         {
             PlayerIdleBoil.CharacterStyle.JackOLantern => race.DeathForward ? jackForward : jackBackward,

@@ -321,6 +321,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   nameText: {fileID: 2941428920519280310}
+  nameGap: 0.2
 --- !u!114 &5397608380628682180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +516,39 @@ MonoBehaviour:
   jackRunSpeedRatio: 0.75
   jackRunFramesPerSecond: 25
   jackFallSecondsPerFrame: 0.12
+  ghostIdleFrames:
+  - {fileID: 4298949797229914293, guid: d10b9a4bcee65104a8653b538de52fd4, type: 3}
+  - {fileID: 8219114447679377890, guid: d10b9a4bcee65104a8653b538de52fd4, type: 3}
+  - {fileID: 8774070139677031495, guid: d10b9a4bcee65104a8653b538de52fd4, type: 3}
+  - {fileID: 9112560898903934571, guid: d10b9a4bcee65104a8653b538de52fd4, type: 3}
+  - {fileID: 7718648228036862207, guid: d10b9a4bcee65104a8653b538de52fd4, type: 3}
+  - {fileID: 4157891481764535205, guid: d10b9a4bcee65104a8653b538de52fd4, type: 3}
+  - {fileID: 7979838062696260093, guid: d10b9a4bcee65104a8653b538de52fd4, type: 3}
+  - {fileID: 1317878842, guid: d10b9a4bcee65104a8653b538de52fd4, type: 3}
+  ghostWalkFrames:
+  - {fileID: -7154967499465162925, guid: a168cf2ae73de814d8ae2189f6631bf5, type: 3}
+  - {fileID: 7383809077945557827, guid: a168cf2ae73de814d8ae2189f6631bf5, type: 3}
+  - {fileID: -3896566508730625120, guid: a168cf2ae73de814d8ae2189f6631bf5, type: 3}
+  - {fileID: 369052484376856862, guid: a168cf2ae73de814d8ae2189f6631bf5, type: 3}
+  - {fileID: -5620716951712071579, guid: a168cf2ae73de814d8ae2189f6631bf5, type: 3}
+  - {fileID: -2093542934, guid: a168cf2ae73de814d8ae2189f6631bf5, type: 3}
+  ghostRunFrames:
+  - {fileID: -8833021857815103430, guid: ac84c1c9f27a88d47a92b387805bddfb, type: 3}
+  - {fileID: -3161231053265547160, guid: ac84c1c9f27a88d47a92b387805bddfb, type: 3}
+  - {fileID: 4227563845712291162, guid: ac84c1c9f27a88d47a92b387805bddfb, type: 3}
+  - {fileID: -7512115625107153793, guid: ac84c1c9f27a88d47a92b387805bddfb, type: 3}
+  - {fileID: -7074397511119046488, guid: ac84c1c9f27a88d47a92b387805bddfb, type: 3}
+  - {fileID: 2954595189059088516, guid: ac84c1c9f27a88d47a92b387805bddfb, type: 3}
+  - {fileID: -4475117883461913523, guid: ac84c1c9f27a88d47a92b387805bddfb, type: 3}
+  - {fileID: 798368926, guid: ac84c1c9f27a88d47a92b387805bddfb, type: 3}
+  ghostAirFrames:
+  - {fileID: -3819998776891288039, guid: a28d3112efa3fd64f8eb8523c493aef4, type: 3}
+  - {fileID: -1624486458650505715, guid: a28d3112efa3fd64f8eb8523c493aef4, type: 3}
+  - {fileID: -7335886374490787311, guid: a28d3112efa3fd64f8eb8523c493aef4, type: 3}
+  - {fileID: 1160118900545443916, guid: a28d3112efa3fd64f8eb8523c493aef4, type: 3}
+  - {fileID: -2033074560562182893, guid: a28d3112efa3fd64f8eb8523c493aef4, type: 3}
+  - {fileID: -1834741466, guid: a28d3112efa3fd64f8eb8523c493aef4, type: 3}
+  ghostRunFramesPerSecond: 16.7
 --- !u!114 &8312493072428740435
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -265,7 +265,7 @@ public static class PlayerWalkSpriteSetup
         return best;
     }
 
-    private static Texture2D LoadPixels(string assetPath)
+    internal static Texture2D LoadPixels(string assetPath)
     {
         // 임포트 설정(Read/Write)을 바꾸지 않으려고 원본 PNG를 직접 읽는다.
         var texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
@@ -326,7 +326,7 @@ public static class PlayerWalkSpriteSetup
         };
     }
 
-    private static void ApplyImport(string path, List<SpriteRect> rects, float pixelsPerUnit, TextureImporter reference)
+    internal static void ApplyImport(string path, List<SpriteRect> rects, float pixelsPerUnit, TextureImporter reference)
     {
         var importer = (TextureImporter)AssetImporter.GetAtPath(path);
         importer.textureType = TextureImporterType.Sprite;
@@ -360,7 +360,7 @@ public static class PlayerWalkSpriteSetup
         importer.SaveAndReimport();
     }
 
-    private static void AssignToPrefab(Dictionary<string, Sprite[]> walkFrames)
+    internal static void AssignToPrefab(Dictionary<string, Sprite[]> walkFrames)
     {
         GameObject root = PrefabUtility.LoadPrefabContents(PrefabPath);
         try
