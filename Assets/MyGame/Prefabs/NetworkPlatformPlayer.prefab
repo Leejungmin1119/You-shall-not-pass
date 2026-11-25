@@ -541,13 +541,32 @@ MonoBehaviour:
   - {fileID: 2954595189059088516, guid: ac84c1c9f27a88d47a92b387805bddfb, type: 3}
   - {fileID: -4475117883461913523, guid: ac84c1c9f27a88d47a92b387805bddfb, type: 3}
   - {fileID: 798368926, guid: ac84c1c9f27a88d47a92b387805bddfb, type: 3}
-  ghostAirFrames:
+  ghostStandingAirFrames:
   - {fileID: -3819998776891288039, guid: a28d3112efa3fd64f8eb8523c493aef4, type: 3}
   - {fileID: -1624486458650505715, guid: a28d3112efa3fd64f8eb8523c493aef4, type: 3}
   - {fileID: -7335886374490787311, guid: a28d3112efa3fd64f8eb8523c493aef4, type: 3}
   - {fileID: 1160118900545443916, guid: a28d3112efa3fd64f8eb8523c493aef4, type: 3}
   - {fileID: -2033074560562182893, guid: a28d3112efa3fd64f8eb8523c493aef4, type: 3}
   - {fileID: -1834741466, guid: a28d3112efa3fd64f8eb8523c493aef4, type: 3}
+  ghostMovingAirFrames:
+  - {fileID: -5024961251210879966, guid: e27c39bcd2a8373438346d5c741b51a0, type: 3}
+  - {fileID: 1279152439962073903, guid: e27c39bcd2a8373438346d5c741b51a0, type: 3}
+  - {fileID: 5719909672697326393, guid: e27c39bcd2a8373438346d5c741b51a0, type: 3}
+  - {fileID: -5465825932731042623, guid: e27c39bcd2a8373438346d5c741b51a0, type: 3}
+  - {fileID: 1445070831525040815, guid: e27c39bcd2a8373438346d5c741b51a0, type: 3}
+  - {fileID: 317602848, guid: e27c39bcd2a8373438346d5c741b51a0, type: 3}
+  ghostRunningAirFrames:
+  - {fileID: 7864316710708501592, guid: a948ca2ca38374a439a94f4a289f4482, type: 3}
+  - {fileID: 3239078521085644246, guid: a948ca2ca38374a439a94f4a289f4482, type: 3}
+  - {fileID: -5479788146777839249, guid: a948ca2ca38374a439a94f4a289f4482, type: 3}
+  - {fileID: 7513020291117532801, guid: a948ca2ca38374a439a94f4a289f4482, type: 3}
+  - {fileID: 5018564333527669255, guid: a948ca2ca38374a439a94f4a289f4482, type: 3}
+  - {fileID: -346630112, guid: a948ca2ca38374a439a94f4a289f4482, type: 3}
+  ghostWallSlideFrames:
+  - {fileID: -7905273665716118449, guid: 6460396c18d776f499601fd587592b15, type: 3}
+  - {fileID: -6342780752346834445, guid: 6460396c18d776f499601fd587592b15, type: 3}
+  - {fileID: -6049391136320360624, guid: 6460396c18d776f499601fd587592b15, type: 3}
+  - {fileID: -585666850, guid: 6460396c18d776f499601fd587592b15, type: 3}
   ghostRunFramesPerSecond: 16.7
 --- !u!114 &8312493072428740435
 MonoBehaviour:

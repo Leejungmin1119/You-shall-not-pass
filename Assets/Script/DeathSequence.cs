@@ -21,6 +21,9 @@ public sealed class DeathSequence : MonoBehaviour
     [SerializeField] private Sprite[] knightForward = Array.Empty<Sprite>();
     [SerializeField] private Sprite[] jackBackward = Array.Empty<Sprite>();
     [SerializeField] private Sprite[] jackForward = Array.Empty<Sprite>();
+    // 메뉴 Tools > 캐릭터 > 유령 시트 자르고 프리팹에 연결 이 채운다.
+    [SerializeField] private Sprite[] ghostBackward = Array.Empty<Sprite>();
+    [SerializeField] private Sprite[] ghostForward = Array.Empty<Sprite>();
     [SerializeField] private Sprite starSprite;
 
     private RaceManager race;
@@ -97,18 +100,10 @@ public sealed class DeathSequence : MonoBehaviour
 
         source = identity.GetComponent<SpriteRenderer>();
         var animator = identity.GetComponent<PlayerIdleBoil>();
-        if (animator?.Character == PlayerIdleBoil.CharacterStyle.Ghost)
-        {
-            // 유령 사망 그림이 아직 없다. 쓰러지는 몸과 별 없이 멈춘 자세로 슬로모션만 보여 준다.
-            frames = null;
-            previousForceOff = source.forceRenderingOff;
-            sequenceStartedAt = race.DeathStartedAt;
-            return;
-        }
-
         frames = animator?.Character switch
         {
             PlayerIdleBoil.CharacterStyle.JackOLantern => race.DeathForward ? jackForward : jackBackward,
+            PlayerIdleBoil.CharacterStyle.Ghost => race.DeathForward ? ghostForward : ghostBackward,
             PlayerIdleBoil.CharacterStyle.Knight => race.DeathForward ? knightForward : knightBackward,
             _ => race.DeathForward ? dollForward : dollBackward
         };
@@ -129,13 +124,16 @@ public sealed class DeathSequence : MonoBehaviour
 
         previousForceOff = source.forceRenderingOff;
         source.forceRenderingOff = true;
-        if (animator?.Character == PlayerIdleBoil.CharacterStyle.JackOLantern)
+        if (animator?.Character == PlayerIdleBoil.CharacterStyle.JackOLantern ||
+            animator?.Character == PlayerIdleBoil.CharacterStyle.Ghost)
         {
+            // 유령 사망 시트는 일반 동작과 같은 배율로 그려 같은 PPU로 잘랐으므로 1배다.
+            float artworkScale = animator.Character == PlayerIdleBoil.CharacterStyle.Ghost ? 1f : JackDeathArtworkScale;
             Vector3 playerScale = source.transform.lossyScale;
             Vector3 parentScale = transform.lossyScale;
             corpse.transform.localScale = new Vector3(
-                JackDeathArtworkScale * Mathf.Abs(playerScale.x) / Mathf.Max(0.001f, Mathf.Abs(parentScale.x)),
-                JackDeathArtworkScale * Mathf.Abs(playerScale.y) / Mathf.Max(0.001f, Mathf.Abs(parentScale.y)),
+                artworkScale * Mathf.Abs(playerScale.x) / Mathf.Max(0.001f, Mathf.Abs(parentScale.x)),
+                artworkScale * Mathf.Abs(playerScale.y) / Mathf.Max(0.001f, Mathf.Abs(parentScale.y)),
                 1f);
         }
         else

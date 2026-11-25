@@ -10045,6 +10045,32 @@ MonoBehaviour:
   - {fileID: 3467831749123647318, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
   - {fileID: 6210170387552178139, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
   - {fileID: 1629795516, guid: c3405eb455fc10846aeb5d886dd08b71, type: 3}
+  ghostBackward:
+  - {fileID: -2130513512, guid: 98c2078189ebbb2419811e9315808a08, type: 3}
+  - {fileID: 349028967, guid: 98c2078189ebbb2419811e9315808a08, type: 3}
+  - {fileID: -1956575019, guid: 98c2078189ebbb2419811e9315808a08, type: 3}
+  - {fileID: -473048142, guid: 98c2078189ebbb2419811e9315808a08, type: 3}
+  - {fileID: 31117576, guid: 98c2078189ebbb2419811e9315808a08, type: 3}
+  - {fileID: -2129253551, guid: 98c2078189ebbb2419811e9315808a08, type: 3}
+  - {fileID: -836921625, guid: 98c2078189ebbb2419811e9315808a08, type: 3}
+  - {fileID: 502157355, guid: 98c2078189ebbb2419811e9315808a08, type: 3}
+  - {fileID: 817877028, guid: 98c2078189ebbb2419811e9315808a08, type: 3}
+  - {fileID: 4799670608955461765, guid: 98c2078189ebbb2419811e9315808a08, type: 3}
+  - {fileID: 6466894945270721252, guid: 98c2078189ebbb2419811e9315808a08, type: 3}
+  - {fileID: 1265914153, guid: 98c2078189ebbb2419811e9315808a08, type: 3}
+  ghostForward:
+  - {fileID: -138138021, guid: 270b7ddbed9b248459d55164afe2c40b, type: 3}
+  - {fileID: -1449326026, guid: 270b7ddbed9b248459d55164afe2c40b, type: 3}
+  - {fileID: -947925597, guid: 270b7ddbed9b248459d55164afe2c40b, type: 3}
+  - {fileID: -1257457243, guid: 270b7ddbed9b248459d55164afe2c40b, type: 3}
+  - {fileID: -1553478873, guid: 270b7ddbed9b248459d55164afe2c40b, type: 3}
+  - {fileID: -2131816137, guid: 270b7ddbed9b248459d55164afe2c40b, type: 3}
+  - {fileID: 1414424231, guid: 270b7ddbed9b248459d55164afe2c40b, type: 3}
+  - {fileID: -1085331386, guid: 270b7ddbed9b248459d55164afe2c40b, type: 3}
+  - {fileID: -793685298, guid: 270b7ddbed9b248459d55164afe2c40b, type: 3}
+  - {fileID: -6639889402857374553, guid: 270b7ddbed9b248459d55164afe2c40b, type: 3}
+  - {fileID: -2792306259796269052, guid: 270b7ddbed9b248459d55164afe2c40b, type: 3}
+  - {fileID: 886077493, guid: 270b7ddbed9b248459d55164afe2c40b, type: 3}
   starSprite: {fileID: 21300000, guid: 84b7a35928a6d9c4381896eba194ba76, type: 3}
 --- !u!114 &1106115879
 MonoBehaviour:

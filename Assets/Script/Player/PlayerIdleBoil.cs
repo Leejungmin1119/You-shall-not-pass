@@ -1,5 +1,6 @@
 using Mirror;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// 충돌과 이동은 그대로 두고 플레이어 그림만 바꾼다.
@@ -60,11 +61,14 @@ public sealed class PlayerIdleBoil : MonoBehaviour
     [SerializeField, Min(0.01f)] private float jackFallSecondsPerFrame = 0.12f;
 
     [Header("Ghost")]
-    // 걸으며·달리며 점프와 벽 슬라이드 그림이 아직 없어 공중에서는 제자리 점프 그림(도약·정점·낙하 4칸)을 쓴다.
+    // 메뉴 Tools > 캐릭터 > 유령 시트 자르고 프리팹에 연결 이 채운다. 공중 시트는 잭오랜턴처럼 도약·정점·낙하 4칸 순서다.
     [SerializeField] private Sprite[] ghostIdleFrames = new Sprite[0];
     [SerializeField] private Sprite[] ghostWalkFrames = new Sprite[0];
     [SerializeField] private Sprite[] ghostRunFrames = new Sprite[0];
-    [SerializeField] private Sprite[] ghostAirFrames = new Sprite[0];
+    [SerializeField, FormerlySerializedAs("ghostAirFrames")] private Sprite[] ghostStandingAirFrames = new Sprite[0];
+    [SerializeField] private Sprite[] ghostMovingAirFrames = new Sprite[0];
+    [SerializeField] private Sprite[] ghostRunningAirFrames = new Sprite[0];
+    [SerializeField] private Sprite[] ghostWallSlideFrames = new Sprite[0];
     // 시안은 걷기 6칸 0.9초, 달리기 8칸 0.72초로 달리기가 1.25배 빨리 돈다.
     // 게임의 걷기(6칸, 최고 속도 10fps)와 같은 비율이 되는 값: 8 × 1.25 × 10 / 6 ≈ 16.7.
     [SerializeField, Min(1f)] private float ghostRunFramesPerSecond = 16.7f;
@@ -226,8 +230,7 @@ public sealed class PlayerIdleBoil : MonoBehaviour
         float maxSpeed = movement != null && movement.moveStats != null
             ? Mathf.Max(0.01f, movement.moveStats.MaxRunSpeed * 0.01f) : 10f;
         bool running = hasRun && speed >= maxSpeed * jackRunSpeedRatio;
-        // 유령은 공중 그림이 한 가지라 자세를 나누지 않는다. 나누면 공중에서 속도가 바뀔 때마다 낙하 반복이 처음으로 돌아간다.
-        PlayerAirPose airPose = character != CharacterStyle.JackOLantern ? PlayerAirPose.Standing :
+        PlayerAirPose airPose = !hasRun ? PlayerAirPose.Standing :
             running ? PlayerAirPose.Running :
             speed >= walkSpeedThreshold ? PlayerAirPose.Moving : PlayerAirPose.Standing;
 
@@ -353,21 +356,22 @@ public sealed class PlayerIdleBoil : MonoBehaviour
         _ => dollWalkFrames
     };
 
-    /// <summary>소유자가 선택한 정지·이동·달리기 공중 자세를 그대로 선택한다. 유령은 아직 한 가지뿐이다.</summary>
+    /// <summary>소유자가 선택한 정지·이동·달리기 공중 자세를 그대로 선택한다.</summary>
     private Sprite[] GetAirFrames(PlayerAirPose pose) => character switch
     {
         CharacterStyle.JackOLantern => pose == PlayerAirPose.Running ? jackRunningAirFrames :
             pose == PlayerAirPose.Moving ? jackMovingAirFrames : jackStandingAirFrames,
-        CharacterStyle.Ghost => ghostAirFrames,
+        CharacterStyle.Ghost => pose == PlayerAirPose.Running ? ghostRunningAirFrames :
+            pose == PlayerAirPose.Moving ? ghostMovingAirFrames : ghostStandingAirFrames,
         CharacterStyle.Knight => knightAirFrames,
         _ => dollAirFrames
     };
 
-    /// <summary>캐릭터별 벽 슬라이드 프레임을 반환한다. 유령은 그림이 없어 벽에서도 낙하 그림을 쓴다.</summary>
+    /// <summary>캐릭터별 벽 슬라이드 프레임을 반환한다.</summary>
     private Sprite[] GetWallFrames() => character switch
     {
         CharacterStyle.JackOLantern => jackWallSlideFrames,
-        CharacterStyle.Ghost => null,
+        CharacterStyle.Ghost => ghostWallSlideFrames,
         CharacterStyle.Knight => knightWallSlideFrames,
         _ => dollWallSlideFrames
     };
