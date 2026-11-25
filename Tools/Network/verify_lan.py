@@ -135,7 +135,7 @@ try:
  check(True,'actual remote use and trap spawn replicated to four peers')
  command('host','goalFixture')
  wait(lambda:all(read(i)['turn']==turn+1 and read(i)['attacker']!=attacker for i in ids),'goal turn propagation')
- wait(lambda:all(next(p for p in read(i)['gamePlayers'] if p['id']==attacker)['score']==1 for i in ids),'goal score propagation')
+ wait(lambda:all(next(p for p in read(i)['gamePlayers'] if p['id']==attacker)['score']==2 for i in ids),'two-point goal score propagation')
  check(len(read('host')['serverChecks'])==3,'server rejects stale/remote goal then accepts contact fixture')
  check(True,'goal score and attacker turn identical on four peers')
  wait(lambda:all(all(p['count']==0 for p in read(i)['gamePlayers']) for i in ids),'turn resets inventories')
