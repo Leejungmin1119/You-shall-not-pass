@@ -111,6 +111,8 @@ public class NetworkPlayerProfile : NetworkBehaviour
     /// <summary>색상이 동기화되면 HUD의 이름 색상도 갱신한다.</summary>
     private void OnColorChanged(Color previous, Color current)
     {
+        GetComponent<NetworkPlayerScore>()?.RefreshDisplay();
+
         if (hud != null)
             hud.RefreshName(this);
     }

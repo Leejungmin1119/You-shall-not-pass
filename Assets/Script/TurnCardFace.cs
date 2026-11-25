@@ -5,16 +5,26 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CanvasRenderer))]
 public sealed class TurnCardFace : MaskableGraphic
 {
-    private Color selectionColor = Color.white;
+    private TurnCardBorder border;
 
-    /// <summary>확정된 소유자의 색상으로 가장 바깥 선택 테두리만 갱신한다.</summary>
+    /// <summary>색상이 변하는 테두리만 별도의 표시 요소로 분리한다.</summary>
+    protected override void Awake()
+    {
+        base.Awake();
+        var outline = new GameObject("SelectionBorder", typeof(RectTransform));
+        outline.transform.SetParent(transform, false);
+        var rect = (RectTransform)outline.transform;
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.offsetMin = rect.offsetMax = Vector2.zero;
+        border = outline.AddComponent<TurnCardBorder>();
+    }
+
+    /// <summary>카드 본체의 메시를 건드리지 않고 테두리의 색상만 갱신한다.</summary>
     public void SetSelectionColor(Color value)
     {
-        if (selectionColor == value)
-            return;
-
-        selectionColor = value;
-        SetVerticesDirty();
+        if (border != null)
+            border.SetTint(value);
     }
 
     /// <summary>이미지나 소각 재질을 사용하지 않고 깨끗한 카드 앞면을 만든다.</summary>
@@ -22,7 +32,6 @@ public sealed class TurnCardFace : MaskableGraphic
     {
         helper.Clear();
         Rect area = rectTransform.rect;
-        AddRoundedRectangle(helper, area, 18f, selectionColor);
         AddRoundedRectangle(helper, Inset(area, 4f), 15f, new Color(0.08f, 0.035f, 0.12f));
         AddRoundedRectangle(helper, Inset(area, 7f), 13f, new Color(0.56f, 0.36f, 0.68f));
         AddRoundedRectangle(helper, Inset(area, 15f), 9f, new Color(1f, 237f / 255f, 181f / 255f));

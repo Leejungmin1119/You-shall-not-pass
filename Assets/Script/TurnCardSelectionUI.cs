@@ -20,6 +20,7 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
     private TMP_Text instruction;
     private readonly TurnCardView[] cards = new TurnCardView[rolechangeManager.CardCount];
     private readonly Vector2[] positions = new Vector2[rolechangeManager.CardCount];
+    private readonly Vector2[] positionVelocities = new Vector2[rolechangeManager.CardCount];
     private readonly Dictionary<uint, NetworkPlayerProfile> profiles = new Dictionary<uint, NetworkPlayerProfile>(4);
     private NetworkPlayerProfile localProfile;
     private int cursor = 4;
@@ -27,7 +28,9 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
     private int revealedCount;
     private int highestCard = -1;
     private bool requestPending;
+    private int pendingCard = -1;
     private double rejectionUntil;
+    private int lastCountdownSeconds = int.MinValue;
 
     public rolechangeManager Roles => roles;
     public string LocalPlayerName => localProfile != null ? localProfile.PlayerName : string.Empty;
@@ -65,10 +68,8 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
         backdrop.anchorMax = Vector2.one;
         var background = backdrop.gameObject.AddComponent<UnityEngine.UI.Image>();
         background.color = new Color(0.075f, 0.055f, 0.12f, 1f);
-        var backgroundClick = backdrop.gameObject.AddComponent<UnityEngine.UI.Button>();
-        backgroundClick.transition = UnityEngine.UI.Selectable.Transition.None;
-        backgroundClick.navigation = new UnityEngine.UI.Navigation { mode = UnityEngine.UI.Navigation.Mode.None };
-        backgroundClick.onClick.AddListener(() => Choose(cursor));
+        // 빈 공간은 뒤쪽 게임 UI의 입력만 막고 카드를 확정하지 않는다.
+        background.raycastTarget = true;
 
         MakeText("Eyebrow", root, new Vector2(0, 440), new Vector2(1100, 42), 22, new Color(0.76f, 0.57f, 0.91f)).text = "새로운 경기 · 공격 순서 결정";
         title = MakeText("Title", root, new Vector2(0, 365), new Vector2(1500, 100), 62, new Color(1f, 0.9f, 0.68f));
@@ -82,9 +83,13 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
             RectTransform card = MakeRect($"Card{index + 1:00}", fan, Vector2.zero, new Vector2(190, 285));
             cards[index] = card.gameObject.AddComponent<TurnCardView>();
             cards[index].Initialize(this, index, cardBack, burnMaterial);
+            positions[index] = new Vector2(0f, -200f);
+            card.anchoredPosition = positions[index];
         }
 
         RectTransform effects = MakeRect("CardEffects", root, Vector2.zero, new Vector2(1920, 1080));
+        // 입자 메시 갱신이 카드와 제목의 Canvas 배칭까지 갱신하지 않도록 분리한다.
+        effects.gameObject.AddComponent<Canvas>();
         effects.gameObject.AddComponent<TurnCardEffects>().Initialize(this);
         instruction = MakeText("Instructions", root, new Vector2(0, -402), new Vector2(1500, 65), 28, new Color(0.9f, 0.85f, 0.95f));
         MakeText("Rule", root, new Vector2(0, -465), new Vector2(1500, 45), 22, new Color(0.62f, 0.57f, 0.71f)).text = "A · D / 마우스 이동     좌클릭 확정     ·     선택 후에는 변경할 수 없습니다";
@@ -227,6 +232,7 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
 
         cursor = index;
         requestPending = true;
+        pendingCard = index;
         localProfile.CmdChooseTurnCard((byte)index);
     }
 
@@ -237,6 +243,7 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
 
         if (!accepted)
         {
+            pendingCard = -1;
             rejectionUntil = NetworkTime.time + 1.5d;
             MoveCursor(1);
         }
@@ -289,21 +296,29 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
             float angle = Mathf.Lerp(-46f, 46f, index / 9f);
             float radians = angle * Mathf.Deg2Rad;
             Vector2 fan = new Vector2(Mathf.Sin(radians) * 790f, Mathf.Cos(radians) * 420f - 430f);
-            bool highlighted = CanChoose() && cursor == index && !selected;
+            // 서버 승인 대기 중에도 커서 표시를 유지해 강조가 잠깐 사라지는 현상을 막는다.
+            bool awaitingConfirmation = requestPending && pendingCard == index && localProfile != null &&
+                roles.FindChosenCard(localProfile.netId) < 0;
+            bool highlighted = !selected && ((CanChoose() && cursor == index) || awaitingConfirmation);
 
-            if (highlighted)
+            if (highlighted || selected)
                 fan.y += 42f;
 
             Vector2 destination = selected ? new Vector2((selectedIndex++ - (selectedCount - 1) * 0.5f) * 300f, -65f) : fan;
             float deal = roles.CardPhase == TurnCardPhase.Dealing ? Mathf.SmoothStep(0f, 1f, PhaseElapsed / rolechangeManager.DealDuration) : 1f;
-            positions[index] = Vector2.Lerp(new Vector2(0f, -200f), Vector2.Lerp(fan, destination, selected ? arrange : 0f), deal);
+            Vector2 targetPosition = Vector2.Lerp(new Vector2(0f, -200f), Vector2.Lerp(fan, destination, selected ? arrange : 0f), deal);
 
             // 결과를 충분히 보여준 뒤 카드와 이름표를 함께 화면 아래로 보낸다.
             if (roles.CardPhase == TurnCardPhase.Dismissing)
-                positions[index] += Vector2.down * (900f * Mathf.SmoothStep(0f, 1f, PhaseElapsed / rolechangeManager.DismissDuration));
+                targetPosition += Vector2.down * (900f * Mathf.SmoothStep(0f, 1f, PhaseElapsed / rolechangeManager.DismissDuration));
 
+            // 단계 변경이나 서버 상태 수신으로 목표가 바뀌어도 현재 보이는 위치에서 이어서 움직인다.
+            positions[index] = Vector2.SmoothDamp(positions[index], targetPosition,
+                ref positionVelocities[index], 0.09f, Mathf.Infinity, Time.unscaledDeltaTime);
             cards[index].Rect.anchoredPosition = positions[index];
-            cards[index].Rect.localRotation = Quaternion.Euler(0, 0, Mathf.Lerp(-angle, 0, selected ? arrange : 0));
+            Quaternion targetRotation = Quaternion.Euler(0, 0, Mathf.Lerp(-angle, 0, selected ? arrange : 0));
+            cards[index].Rect.localRotation = Quaternion.Slerp(cards[index].Rect.localRotation,
+                targetRotation, 1f - Mathf.Exp(-24f * Time.unscaledDeltaTime));
 
             int rank = selectedCount;
 
@@ -336,29 +351,49 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
     /// <summary>선택 대기, 확정, 순차 공개 상태에 맞는 안내와 남은 시간을 표시한다.</summary>
     private void UpdateLabels()
     {
-        title.text = "운명의 카드를 고르세요";
-        subtitle.text = "높은 숫자부터 공격합니다 · 숫자는 선택이 끝난 뒤 공개됩니다";
-        timer.text = roles.CardPhase == TurnCardPhase.Choosing ?
-            Mathf.Max(0, Mathf.CeilToInt(rolechangeManager.SelectionDuration - PhaseElapsed)).ToString() : string.Empty;
+        string nextTitle = "운명의 카드를 고르세요";
+        string nextSubtitle = "높은 숫자부터 공격합니다 · 숫자는 선택이 끝난 뒤 공개됩니다";
+        string nextInstruction;
+
+        int countdownSeconds = roles.CardPhase == TurnCardPhase.Choosing
+            ? Mathf.Max(0, Mathf.CeilToInt(rolechangeManager.SelectionDuration - PhaseElapsed)) : -1;
+
+        if (countdownSeconds != lastCountdownSeconds)
+        {
+            lastCountdownSeconds = countdownSeconds;
+            timer.text = countdownSeconds >= 0 ? countdownSeconds.ToString() : string.Empty;
+        }
 
         if (roles.CardPhase == TurnCardPhase.Dealing)
-            instruction.text = "카드를 펼치는 중";
+            nextInstruction = "카드를 펼치는 중";
         else if (roles.CardPhase == TurnCardPhase.Burning)
-            instruction.text = "선택되지 않은 카드는 재가 됩니다";
+            nextInstruction = "선택되지 않은 카드는 재가 됩니다";
         else if (roles.CardPhase == TurnCardPhase.Revealing || roles.CardPhase == TurnCardPhase.ResultHold ||
             roles.CardPhase == TurnCardPhase.Dismissing)
         {
-            title.text = highestCard >= 0 ? "공격 순서가 정해졌습니다" : "카드를 공개합니다";
-            subtitle.text = "높은 숫자부터 차례대로 공격합니다";
+            nextTitle = highestCard >= 0 ? "공격 순서가 정해졌습니다" : "카드를 공개합니다";
+            nextSubtitle = "높은 숫자부터 차례대로 공격합니다";
             NetworkPlayerProfile highest = highestCard >= 0 ? Profile(roles.Cards[highestCard].OwnerId) : null;
-            instruction.text = highest != null ? $"첫 번째 공격자 · {highest.PlayerName}" : "낮은 숫자부터 공개합니다";
+            nextInstruction = highest != null ? $"첫 번째 공격자 · {highest.PlayerName}" : "낮은 숫자부터 공개합니다";
         }
         else if (NetworkTime.time < rejectionUntil)
-            instruction.text = "다른 플레이어가 먼저 선택했습니다 · 다른 카드를 골라주세요";
+            nextInstruction = "다른 플레이어가 먼저 선택했습니다 · 다른 카드를 골라주세요";
         else if (localProfile != null && roles.FindChosenCard(localProfile.netId) >= 0)
-            instruction.text = "선택이 확정되었습니다 · 다른 플레이어를 기다리는 중";
+            nextInstruction = "선택이 확정되었습니다 · 다른 플레이어를 기다리는 중";
         else
-            instruction.text = "마음에 드는 카드 한 장을 선택하세요";
+            nextInstruction = "마음에 드는 카드 한 장을 선택하세요";
+
+        // 최종 문구를 먼저 결정한 뒤 달라진 텍스트만 한 번 갱신한다.
+        SetLabelIfChanged(title, nextTitle);
+        SetLabelIfChanged(subtitle, nextSubtitle);
+        SetLabelIfChanged(instruction, nextInstruction);
+    }
+
+    /// <summary>같은 문구를 다시 대입해 불필요한 텍스트 갱신을 요청하지 않는다.</summary>
+    private static void SetLabelIfChanged(TMP_Text label, string value)
+    {
+        if (label.text != value)
+            label.text = value;
     }
 
     /// <summary>경기가 끝나 씬이 바뀌면 개인 선택 응답 구독을 해제한다.</summary>

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public sealed class TurnCardEffects : MaskableGraphic
 {
     private TurnCardSelectionUI screen;
+    private bool wasAnimating;
 
     /// <summary>텍스처 없이 그리는 입자는 클릭을 가로채지 않게 한다.</summary>
     public void Initialize(TurnCardSelectionUI owner)
@@ -17,8 +18,21 @@ public sealed class TurnCardEffects : MaskableGraphic
     /// <summary>표시 중인 짧은 연출만 갱신하며 오브젝트나 재질을 반복 생성하지 않는다.</summary>
     private void Update()
     {
-        if (screen != null)
+        bool animating = false;
+
+        if (screen != null && screen.Roles != null)
+        {
+            TurnCardPhase phase = screen.Roles.CardPhase;
+            animating = phase == TurnCardPhase.Burning ||
+                (screen.HighestCard >= 0 && (phase == TurnCardPhase.Revealing ||
+                    phase == TurnCardPhase.ResultHold || phase == TurnCardPhase.Dismissing));
+        }
+
+        // 효과가 끝나는 프레임에 한 번 비우고, 선택 대기 중에는 메시 갱신을 멈춘다.
+        if (animating || wasAnimating)
             SetVerticesDirty();
+
+        wasAnimating = animating;
     }
 
     /// <summary>동기화된 연출 시각과 카드 위치로 불씨·재 또는 별빛의 정점을 만든다.</summary>

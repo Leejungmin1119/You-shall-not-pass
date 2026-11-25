@@ -16,9 +16,9 @@ public sealed class rolechangeManager : NetworkBehaviour
 {
     public const int CardCount = 10;
     public const float DealDuration = 0.6f;
-    public const float SelectionDuration = 5f;
+    public const float SelectionDuration = 10f;
     public const float BurnDuration = 0.7f;
-    public const float RevealInterval = 0.5f;
+    public const float RevealInterval = 0.7f;
     public const float WinnerDuration = 1f;
     public const float ResultHoldDuration = 1.5f;
     public const float DismissDuration = 0.65f;
