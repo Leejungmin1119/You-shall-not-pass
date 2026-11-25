@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
@@ -13,6 +14,13 @@ public enum PlayerStatus
 [RequireComponent(typeof(NetworkIdentity), typeof(NetworkTransformReliable))]
 public sealed class PlayerState : NetworkBehaviour
 {
+    private static readonly List<PlayerState> serverPlayers = new List<PlayerState>(4);
+    public static IReadOnlyList<PlayerState> ServerPlayers => serverPlayers;
+
+    /// <summary>Domain Reload 없이 다시 실행해도 이전 서버 참가자를 남기지 않는다.</summary>
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetServerPlayers() => serverPlayers.Clear();
+
     private PlayerMovement _movement;
     private Rigidbody2D _body;
     private NetworkTransformReliable _networkTransform;
@@ -68,6 +76,8 @@ public sealed class PlayerState : NetworkBehaviour
         status = PlayerStatus.Alive;
         _lastDeathStep = double.NegativeInfinity;
         _invincibleUntil = 0;
+        if (!serverPlayers.Contains(this))
+            serverPlayers.Add(this);
 
         if (Race != null)
             Race.RegisterPlayer(this);
@@ -76,6 +86,7 @@ public sealed class PlayerState : NetworkBehaviour
     /// <summary>접속 종료 시 레이스 참가 목록에서 자신을 제거한다.</summary>
     public override void OnStopServer()
     {
+        serverPlayers.Remove(this);
         if (Race != null && Race.isServer)
             Race.UnregisterPlayer(this);
 

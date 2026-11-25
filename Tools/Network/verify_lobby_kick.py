@@ -24,7 +24,10 @@ peers = ['host', 'c1', 'c2', 'c3']
 
 def read(peer):
     try:
-        return json.loads((report / (peer + '.json')).read_text())
+        snapshot = json.loads((report / (peer + '.json')).read_text())
+        if snapshot.get('serverRegistryValid') is False:
+            raise AssertionError('Server player registry diverged on ' + peer)
+        return snapshot
     except (OSError, ValueError):
         return {}
 

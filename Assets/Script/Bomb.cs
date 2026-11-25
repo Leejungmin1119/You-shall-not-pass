@@ -114,9 +114,11 @@ public sealed class Bomb : ItemBase
     /// <summary>원과 플레이어 몸체의 최단 거리로 범위 피해를 검사한다.</summary>
     private void CheckExplosionHits()
     {
-        foreach (NetworkIdentity identity in NetworkServer.spawned.Values)
+        var players = PlayerState.ServerPlayers;
+        for (int playerIndex = 0; playerIndex < players.Count; playerIndex++)
         {
-            if (identity == null || !identity.TryGetComponent(out PlayerState player) || !CanHit(player)) continue;
+            PlayerState player = players[playerIndex];
+            if (player == null || !CanHit(player)) continue;
             Collider2D body = player.GetComponent<Collider2D>();
             if (body != null && body.bounds.SqrDistance(transform.position) <= explosionRadius * explosionRadius)
                 ReportHit(player);

@@ -12,11 +12,17 @@ using UnityEngine.InputSystem;
 public sealed class PlayerHeldItem : NetworkBehaviour
 {
     [SyncVar(hook = nameof(OnHeldItemChanged))] private int heldItemId;
-    [SyncVar] private bool hasActiveMissiles;
+    [SyncVar(hook = nameof(OnActiveMissilesChanged))] private bool hasActiveMissiles;
     private readonly List<Missile> activeMissiles = new List<Missile>();
     private float nextAimSendTime;
     private double nextServerAimTime;
     private const float AimInterval = 0.05f;
+    private const float AimHeartbeatInterval = 0.25f;
+    private const float AimPositionThreshold = 0.01f;
+    private Vector2 lastSentAim;
+    private int lastSentAimRound;
+    private float nextAimHeartbeatTime;
+    private bool hasSentAim;
     private PlayerState state;
     private PlayerInventory inventory;
     private ConveyorController conveyor;
@@ -67,6 +73,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
+        ResetAimSendState();
         FindSceneReferences();
         RefreshHeldVisual();
     }
@@ -112,8 +119,10 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     [Server]
     public void RegisterMissile(Missile missile)
     {
-        if (!activeMissiles.Contains(missile)) activeMissiles.Add(missile);
-        hasActiveMissiles = activeMissiles.Count > 0;
+        if (activeMissiles.Contains(missile)) return;
+        activeMissiles.Add(missile);
+        nextServerAimTime = 0d;
+        hasActiveMissiles = true;
     }
 
     /// <summary>마지막 미사일이 사라지면 소유자의 좌표 전송을 중단한다.</summary>
@@ -124,14 +133,43 @@ public sealed class PlayerHeldItem : NetworkBehaviour
         hasActiveMissiles = activeMissiles.Count > 0;
     }
 
-    /// <summary>비행 중에만 현재 카메라의 마우스 좌표를 초당 최대 20회 보낸다.</summary>
+    private void ResetAimSendState()
+    {
+        hasSentAim = false;
+        nextAimSendTime = 0f;
+    }
+
+    private void OnActiveMissilesChanged(bool previous, bool current)
+    {
+        if (isLocalPlayer) ResetAimSendState();
+    }
+
+    /// <summary>조준점 변경은 최대 초당 20회 보내고, 같은 좌표는 손실 복구용으로 재전송한다.</summary>
     private void UpdateMissileAim(Vector2 screenPosition)
     {
-        if (!hasActiveMissiles || Time.unscaledTime < nextAimSendTime || IsPointerOverUI(screenPosition)) return;
+        if (!hasActiveMissiles)
+        {
+            ResetAimSendState();
+            return;
+        }
+        float now = Time.unscaledTime;
+        if (now < nextAimSendTime || IsPointerOverUI(screenPosition)) return;
         Camera camera = conveyor.OutputCamera;
         Vector2 point = camera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, -camera.transform.position.z));
-        nextAimSendTime = Time.unscaledTime + AimInterval;
-        CmdUpdateMissileAim(point, CurrentRound);
+        int round = CurrentRound;
+        bool changed = !hasSentAim || round != lastSentAimRound ||
+            (point - lastSentAim).sqrMagnitude >= AimPositionThreshold * AimPositionThreshold;
+        if (!changed && now < nextAimHeartbeatTime)
+        {
+            nextAimSendTime = Mathf.Min(now + AimInterval, nextAimHeartbeatTime);
+            return;
+        }
+        lastSentAim = point;
+        lastSentAimRound = round;
+        hasSentAim = true;
+        nextAimSendTime = now + AimInterval;
+        nextAimHeartbeatTime = now + AimHeartbeatInterval;
+        CmdUpdateMissileAim(point, round);
     }
 
     /// <summary>소유자의 요청만 받아 유효한 조준점을 해당 소유자의 미사일에 적용한다.</summary>
@@ -224,7 +262,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     private void TargetResetHeldState()
     {
         requestPending = false;
-        nextAimSendTime = 0;
+        ResetAimSendState();
         RefreshHeldVisual();
     }
 
@@ -283,6 +321,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
     private void TargetUseResult(bool success)
     {
         requestPending = false;
+        if (success) ResetAimSendState();
         RequestCompleted?.Invoke("use", success);
         if (!success) Debug.Log("사용 실패: 사용 위치 또는 재사용 대기 시간을 확인하세요.");
     }

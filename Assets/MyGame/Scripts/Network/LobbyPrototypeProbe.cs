@@ -13,7 +13,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
     [Serializable] private sealed class Control
     {
         public int sequence;
-        public string action, name;
+        public string action, name, relayAddress, roomPassword;
         public uint playerId;
         public int character, roundOffset;
         public float x, y;
@@ -30,7 +30,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
     }
     [Serializable] private sealed class Snapshot
     {
-        public string id, scene, screen;
+        public string id, scene, screen, lobbyTheme;
         public bool connected, server, countdown, advertising, searching;
         public string connectionError, racePhase;
         public int turn;
@@ -43,7 +43,8 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
         public uint localPlayerId;
         public string[] errors;
         public PlayerReport[] players;
-        public uint[] kickablePlayers;
+        public uint[] kickablePlayers, serverPlayerIds;
+        public bool serverRegistryValid;
         public string endReason;
         public uint[] winners;
         public float timeScale;
@@ -169,6 +170,7 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
             now = NetworkTime.time, deadline = deadline, countdown = manager.IsLobbyCountdownActive,
             advertising = manager.Lan.Advertising, searching = manager.Lan.Searching,
             connectionError = manager.LastConnectionError,
+            lobbyTheme = manager.GetComponent<CapstoneLobbyUI>()?.TestLobbyTheme,
             racePhase = race != null ? race.Phase.ToString() : "", turn = race != null ? race.RoundNumber : 0,
             attacker = race != null && race.Roles != null ? race.Roles.AttackerNetId : 0,
             requestResults = requestResults.ToArray(), serverChecks = serverChecks.ToArray(), maxTraps = maxTraps,
@@ -188,6 +190,8 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                 x = player.transform.position.x, y = player.transform.position.y, character = (int)player.Character
             }).ToArray(),
             kickablePlayers = players.Where(manager.CanKickLobbyPlayer).Select(player => player.netId).ToArray(),
+            serverPlayerIds = PlayerState.ServerPlayers.Where(p => p != null).Select(p => p.netId).ToArray(),
+            serverRegistryValid = ValidateServerRegistry(),
             endReason = race != null ? race.EndReason.ToString() : "",
             winners = race != null ? race.Winners.ToArray() : new uint[0],
             timeScale = Time.timeScale, uiHidden = DeathSequence.IsUIHidden,
@@ -196,6 +200,24 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                     aimX = m.AimPosition.x, aimY = m.AimPosition.y }).ToArray()
         };
         Write(Path.Combine(directory, id + ".json"), JsonUtility.ToJson(snapshot, true), false);
+    }
+
+    private static bool ValidateServerRegistry()
+    {
+        var players = PlayerState.ServerPlayers;
+        int count = 0;
+        foreach (NetworkIdentity identity in NetworkServer.spawned.Values)
+            if (identity != null && identity.TryGetComponent<PlayerState>(out _)) count++;
+        if (count != players.Count) return false;
+        for (int index = 0; index < players.Count; index++)
+        {
+            var player = players[index];
+            if (player == null || !NetworkServer.spawned.TryGetValue(player.netId, out var identity) ||
+                identity != player.netIdentity) return false;
+            for (int previous = 0; previous < index; previous++)
+                if (players[previous] == player) return false;
+        }
+        return true;
     }
 
     private System.Collections.IEnumerator CaptureFrame(CapstoneRoomManager manager)
@@ -266,6 +288,12 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
             case "capture":
                 StartCoroutine(CaptureFrame(manager));
                 break;
+            case "theme":
+                if (!manager.GetComponent<CapstoneLobbyUI>().TrySelectTestTheme(command.name)) return;
+                break;
+            case "themePicker":
+                manager.GetComponent<CapstoneLobbyUI>().ToggleTestThemePicker();
+                break;
             case "showIp":
                 manager.GetComponent<CapstoneLobbyUI>().ToggleLocalAddressPanel();
                 break;
@@ -274,6 +302,10 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                 break;
             case "direct":
                 manager.BeginDirectRoom(command.name);
+                break;
+            case "relayHost":
+            case "relayJoin":
+                manager.BeginRoom(command.action == "relayHost", command.relayAddress, command.roomPassword);
                 break;
             case "search":
                 manager.BeginLanRoom(false);
@@ -305,6 +337,8 @@ public sealed class LobbyPrototypeProbe : MonoBehaviour
                 if (observedHolder == null) return;
                 var aimRace = FindFirstObjectByType<RaceManager>();
                 if (aimRace == null) return;
+                typeof(PlayerHeldItem).GetField("nextAimSendTime", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+                    .SetValue(observedHolder, float.PositiveInfinity);
                 typeof(PlayerHeldItem).GetMethod("CmdUpdateMissileAim", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
                     .Invoke(observedHolder, new object[] { new Vector2(command.x, command.y), aimRace.RoundNumber + command.roundOffset });
                 break;

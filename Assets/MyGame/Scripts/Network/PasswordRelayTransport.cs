@@ -10,7 +10,9 @@ using UnityEngine;
 public class PasswordRelayTransport : Transport
 {
     [SerializeField] private string relayUrl = "";
-    public string RoomPassword { private get; set; } = "";
+    public string DefaultEndpoint => relayUrl;
+    private Uri roomEndpoint;
+    private string roomPassword;
     public bool RoomOpen { get; private set; }
     public event Action<string> Failed;
     private SimpleWebClient hostSocket, clientSocket;
@@ -20,24 +22,41 @@ public class PasswordRelayTransport : Transport
     private const int MaxPayload = 65536;
 
     [Serializable] private struct Hello { public int version; public string mode; public string password; }
-    public bool ValidateSettings(string password, out string reason)
+    public bool TryConfigure(string endpoint, string password, out Uri address, out string reason)
     {
-        if (!Uri.TryCreate(relayUrl, UriKind.Absolute, out Uri url))
-        { reason = "Online rooms are not available yet."; return false; }
-        if (url.Scheme != "wss" && !(url.Scheme == "ws" && url.IsLoopback))
-        { reason = "The room service needs a secure connection."; return false; }
-        if (url.AbsolutePath != "/relay" || !string.IsNullOrEmpty(url.Query) || !string.IsNullOrEmpty(url.UserInfo))
-        { reason = "The room service is not configured correctly."; return false; }
+        if (!Uri.TryCreate(endpoint?.Trim(), UriKind.Absolute, out address) || string.IsNullOrEmpty(address.Host) ||
+            address.AbsolutePath != "/relay" || address.Query.Length != 0 || address.Fragment.Length != 0 ||
+            address.UserInfo.Length != 0)
+        {
+            reason = "중계 주소를 wss://서버주소/relay 형식으로 입력해 주세요.";
+            return false;
+        }
+        if (address.Scheme != "wss" && !(address.Scheme == "ws" && address.IsLoopback))
+        {
+            reason = "중계 서버에 접속하려면 보안 연결(wss://) 주소가 필요합니다.";
+            return false;
+        }
         if (string.IsNullOrWhiteSpace(password) || password.Length < 8 || password.Length > 64)
-        { reason = "Use a password with 8-64 characters."; return false; }
-        reason = null; return true;
+        {
+            reason = "방 비밀번호를 8~64자로 입력해 주세요.";
+            return false;
+        }
+
+        roomEndpoint = address;
+        roomPassword = password;
+        reason = null;
+        return true;
     }
+
+    public void ClearPassword() => roomPassword = null;
+
     private SimpleWebClient Open(bool host)
     {
         var socket = SimpleWebClient.Create(MaxPayload + 5, 1000, new TcpConfig(true, 5000, 60000));
         socket.onConnect += () => {
             if (host ? hostSocket != socket : clientSocket != socket) return;
-            var hello = new Hello { version = 1, mode = host ? "host" : "join", password = RoomPassword };
+            var hello = new Hello { version = 1, mode = host ? "host" : "join", password = roomPassword };
+            ClearPassword();
             byte[] json = Encoding.UTF8.GetBytes(JsonUtility.ToJson(hello));
             byte[] packet = new byte[json.Length + 1]; packet[0] = 1;
             Buffer.BlockCopy(json, 0, packet, 1, json.Length); socket.Send(new ArraySegment<byte>(packet));
@@ -121,21 +140,30 @@ public class PasswordRelayTransport : Transport
     public override int GetBatchThreshold(int channelId = Channels.Reliable) => 16384;
     public override bool ServerActive() => listening;
     public override bool ClientConnected() => connected;
-    public override Uri ServerUri() => Uri.TryCreate(relayUrl, UriKind.Absolute, out var uri) ? uri : new Uri("ws://localhost/relay");
+    public override Uri ServerUri() => roomEndpoint;
     public override string ServerGetClientAddress(int connectionId) => "relay-peer-" + connectionId;
     public override void ServerStart()
     {
-        if (!ValidateSettings(RoomPassword, out string reason)) { Failed?.Invoke(reason); return; }
+        if (roomEndpoint == null || roomPassword == null)
+        {
+            Failed?.Invoke("중계 주소와 방 비밀번호를 확인해 주세요.");
+            return;
+        }
         listening = true; RoomOpen = false; hostStarted = hostReceived = Time.unscaledTime;
-        hostSocket = Open(true); hostSocket.Connect(new Uri(relayUrl));
+        hostSocket = Open(true); hostSocket.Connect(roomEndpoint);
     }
     public override void ClientConnect(string address)
     {
         clientAttempt = true;
-        if (!ValidateSettings(RoomPassword, out string reason)) { Fail(false, reason); return; }
+        if (roomEndpoint == null || roomPassword == null)
+        {
+            Fail(false, "중계 주소와 방 비밀번호를 확인해 주세요.");
+            return;
+        }
         connected = false; clientStarted = clientReceived = Time.unscaledTime;
-        clientSocket = Open(false); clientSocket.Connect(new Uri(relayUrl));
+        clientSocket = Open(false); clientSocket.Connect(roomEndpoint);
     }
+    public override void ClientConnect(Uri uri) => ClientConnect(uri.Host);
     public override void ClientSend(ArraySegment<byte> data, int channelId = Channels.Reliable)
     {
         if (!connected || data.Count > MaxPayload) return;
@@ -148,21 +176,27 @@ public class PasswordRelayTransport : Transport
         hostSocket.Send(new ArraySegment<byte>(Frame(4, connectionId, data)));
         OnServerDataSent?.Invoke(connectionId, data, Channels.Reliable);
     }
+    // Mirror disconnects peers individually before ServerStop. Let the relay notify
+    // guests that the whole room closed when the host socket disconnects.
+    public void BeginRoomShutdown() => RoomOpen = false;
+
     public override void ServerDisconnect(int connectionId)
     {
         if (!peers.Remove(connectionId)) return;
-        hostSocket?.Send(new ArraySegment<byte>(Frame(6, connectionId, default)));
+        if (RoomOpen) hostSocket.Send(new ArraySegment<byte>(Frame(6, connectionId, default)));
         OnServerDisconnected?.Invoke(connectionId);
     }
     public override void ClientDisconnect()
     {
         if (clientSocket == null && !clientAttempt) return;
         clientAttempt = false;
+        ClearPassword();
         var socket = clientSocket; clientSocket = null; connected = false;
         socket?.Disconnect(); OnClientDisconnected?.Invoke();
     }
     public override void ServerStop()
     {
+        ClearPassword();
         var socket = hostSocket; hostSocket = null; listening = RoomOpen = false;
         foreach (int peer in new List<int>(peers)) { peers.Remove(peer); OnServerDisconnected?.Invoke(peer); }
         socket?.Disconnect();
