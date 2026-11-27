@@ -80,21 +80,21 @@ public class MovementController : MonoBehaviour
             return;
         }
 
-        GroundProbes(moveDelta);
+        GroundProbes();
         HorizontalProbes(moveDelta);
 
         State = _internalState;
     }
 
-    private void GroundProbes(Vector2 moveDelta)
+    /// <summary>현재 발아래의 지면만 검사하고 콜라이더 내부에서 시작한 Ray는 접지에서 제외한다.</summary>
+    private void GroundProbes()
     {
         float rayLength = _verticalProbeDistance + CollisionPadding;
-        float horizontalProjection = moveDelta.y <= 0f ? moveDelta.x : 0f;
 
         for (int i = 0; i < NumOfVerticalRays; i++)
         {
             Vector2 rayOrigin = RayCastCorners.bottomLeft +
-                                Vector2.right * (_verticalRaySpace * i + horizontalProjection);
+                                Vector2.right * (_verticalRaySpace * i);
             RaycastHit2D hit = Physics2D.Raycast(
                 rayOrigin,
                 Vector2.down,
@@ -106,10 +106,11 @@ public class MovementController : MonoBehaviour
                 Debug.DrawRay(
                     rayOrigin,
                     Vector2.down * (rayLength + _moveStats.ExtraRayDebugDistance),
-                    hit ? Color.cyan : Color.red);
+                    hit && hit.fraction > 0f ? Color.cyan : Color.red);
             }
 
-            if (!hit)
+            // 내부에서 시작하면 실제 바닥이 아니어도 위쪽 법선이 반환될 수 있다.
+            if (!hit || hit.fraction <= 0f)
             {
                 continue;
             }

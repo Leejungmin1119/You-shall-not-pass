@@ -38,8 +38,12 @@ MonoBehaviour:
   MaxAngleForWallSlide: 95
   WallJumpDirection: {x: -10, y: 4}
   WallJumpCoyoteTime: 0.02
-  WallJumpCancleTime: 0.1
+  WallJumpCancleTime: 0.18
   WallJumpGravityOnReleaseMultiplier: 2
+  WallJumpShortPressTime: 0.18
+  WallJumpShortSpeedRatio: 0.2
+  WallJumpHorizontalCutTime: 0.06
+  WallJumpShortUpwardsCancelTime: 0.06
   DebugShowIsGrounded: 1
   DebugShowWallHit: 1
   ExtraRayDebugDistance: 0.25

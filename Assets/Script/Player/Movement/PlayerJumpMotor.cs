@@ -29,14 +29,18 @@ public sealed class PlayerJumpMotor
     private float _jumpBufferTimer;
     private float _groundCoyoteTimer;
     private float _wallCoyoteTimer;
-    private float _horizontalLockTimer;
     private float _wallMoveTimer;
     private float _apexElapsed;
     private float _cutElapsed;
     private float _cutStartSpeed;
+    private float _cutDuration;
+    private float _wallJumpElapsed;
+    private float _wallHorizontalSpeed;
+    private float _wallHorizontalCurveTime;
+    private float _wallHorizontalSmoothVelocity;
 
     public JumpKind Kind { get; private set; }
-    public bool IsHorizontalControlLocked => _horizontalLockTimer > 0f;
+    public bool IsHorizontalControlLocked => Kind == JumpKind.Wall;
     public bool UsesWallMoveSettings => Kind == JumpKind.Wall && _wallMoveTimer > 0f;
     public float InitialVerticalSpeed => Kind == JumpKind.Wall
         ? _stats.InitialWallJumpVelocity : _stats.InitialJumpVelocity;
@@ -56,10 +60,12 @@ public sealed class PlayerJumpMotor
         _isGrounded = contacts.IsGrounded && verticalSpeed <= GroundedUpwardSpeedTolerance;
         _isTouchingWall = contacts.IsAgainstWall && contacts.WallDirection != 0;
 
+        if (Kind == JumpKind.Wall)
+            _wallJumpElapsed += timeStep;
+
         _jumpBufferTimer = Mathf.Max(0f, _jumpBufferTimer - timeStep);
         _groundCoyoteTimer = Mathf.Max(0f, _groundCoyoteTimer - timeStep);
         _wallCoyoteTimer = Mathf.Max(0f, _wallCoyoteTimer - timeStep);
-        _horizontalLockTimer = Mathf.Max(0f, _horizontalLockTimer - timeStep);
         _wallMoveTimer = Mathf.Max(0f, _wallMoveTimer - timeStep);
 
         if (_isGrounded)
@@ -93,8 +99,8 @@ public sealed class PlayerJumpMotor
         if (_jumpBufferTimer > 0f || pressed)
             _jumpReleasedDuringBuffer = true;
 
-        // 기존 벽점프의 벽 접촉 중 해제 무시 정책을 유지한다.
-        if (Kind == JumpKind.Wall && _isTouchingWall) return;
+        // 벽 감지가 남아 있어도 키를 떼면 상승을 줄인다.
+        // 짧은 벽점프라면 상승과 함께 수평으로 튕기는 힘도 줄인다.
         if (Kind != JumpKind.None && (verticalSpeed > 0f || _phase == JumpPhase.ApexHold))
             BeginJumpCut(verticalSpeed);
     }
@@ -138,7 +144,9 @@ public sealed class PlayerJumpMotor
         // 벽점프라면?
         if (kind == JumpKind.Wall)
         {
-            _horizontalLockTimer = _stats.WallJumpCancleTime;
+            // 모든 크기의 벽점프를 처음부터 같은 곡선 제어로 처리한다.
+            _wallHorizontalSpeed = Mathf.Abs(_stats.WallJumpDirection.x);
+            _wallHorizontalCurveTime = _stats.WallJumpCancleTime;
             _wallMoveTimer = _stats.TimeTillJumpApex;
         }
 
@@ -198,22 +206,72 @@ public sealed class PlayerJumpMotor
     private void BeginJumpCut(float verticalSpeed)
     {
         if (_phase == JumpPhase.Cutting || _phase == JumpPhase.CutFalling) return;
+
+        _cutDuration = _stats.TimeForUpwardsCancel;
+
+        if (Kind == JumpKind.Wall)
+        {
+            float heldRatio = Mathf.Clamp01(_wallJumpElapsed /
+                Mathf.Max(0.01f, _stats.WallJumpShortPressTime));
+
+            float speedRatio = Mathf.Lerp(_stats.WallJumpShortSpeedRatio, 1f, heldRatio);
+
+            // 작은 점프와 큰 점프 사이에 별도 제어로 전환되는 경계가 생기지 않게 보간한다.
+            _wallHorizontalSpeed = Mathf.Abs(_stats.WallJumpDirection.x) * speedRatio;
+            _wallHorizontalCurveTime = Mathf.Lerp(_stats.WallJumpHorizontalCutTime,
+                _stats.WallJumpCancleTime, heldRatio);
+            _cutDuration = Mathf.Lerp(_stats.WallJumpShortUpwardsCancelTime,
+                _stats.TimeForUpwardsCancel, heldRatio);
+        }
+
         _cutStartSpeed = _phase == JumpPhase.ApexHold ? 0f : Mathf.Max(0f, verticalSpeed);
         _cutElapsed = 0f;
         _phase = JumpPhase.Cutting;
     }
 
+    /// <summary>
+    /// 모든 벽점프는 착지하거나 새 점프를 시작할 때까지 같은 방식으로 수평 속도를 조절한다.
+    /// 벽 방향 입력이 있을 때만 돌아가며, 입력을 놓으면 감속한다.
+    /// 도약 크기는 속도와 전환 시간으로 조절하고 일반 공중 이동으로 갑자기 전환하지 않는다.
+    /// </summary>
+    public bool TryCalculateWallJumpSpeed(float currentSpeed, float moveInput,
+        float timeStep, out float speed)
+    {
+        speed = currentSpeed;
+
+        if (Kind != JumpKind.Wall)
+            return false;
+
+        float targetSpeed = Mathf.Abs(moveInput) >= _stats.MoveThreshold
+            ? Mathf.Sign(moveInput) * _wallHorizontalSpeed
+            : 0f;
+
+        // 초기 속도부터 감속과 방향 전환까지 같은 처리로 이어서 급격한 재가속을 막는다.
+        speed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref _wallHorizontalSmoothVelocity,
+            Mathf.Max(0.01f, _wallHorizontalCurveTime), Mathf.Infinity, timeStep);
+
+        if (targetSpeed == 0f && Mathf.Abs(speed) < 0.01f)
+        {
+            speed = 0f;
+            _wallHorizontalSmoothVelocity = 0f;
+        }
+
+        return true;
+    }
+
     /// <summary>점프컷 상태에서의 속도</summary>
     private float CalculateJumpCut(float verticalSpeed, float gravity, float timeStep)
     {
-        if (_cutStartSpeed <= 0f || _cutElapsed >= _stats.TimeForUpwardsCancel)
+        float duration = Mathf.Max(0.01f, _cutDuration);
+
+        if (_cutStartSpeed <= 0f || _cutElapsed >= duration)
         {
             _phase = JumpPhase.CutFalling;
             float fallStartSpeed = _cutStartSpeed <= 0f ? 0f : verticalSpeed;
             return fallStartSpeed + gravity * GetCutGravityMultiplier() * timeStep;
         }
 
-        float speed = Mathf.Lerp(_cutStartSpeed, 0f, _cutElapsed / _stats.TimeForUpwardsCancel);
+        float speed = Mathf.Lerp(_cutStartSpeed, 0f, _cutElapsed / duration);
         _cutElapsed += timeStep;
         return speed;
     }
@@ -233,8 +291,12 @@ public sealed class PlayerJumpMotor
         _apexElapsed = 0f;
         _cutElapsed = 0f;
         _cutStartSpeed = 0f;
-        _horizontalLockTimer = 0f;
+        _cutDuration = 0f;
         _wallMoveTimer = 0f;
+        _wallJumpElapsed = 0f;
+        _wallHorizontalSpeed = 0f;
+        _wallHorizontalCurveTime = 0f;
+        _wallHorizontalSmoothVelocity = 0f;
     }
 
     /// <summary>잠금·리스폰·비활성화 시 접촉 이력, 입력 버퍼, 모든 타이머까지 초기화한다.</summary>

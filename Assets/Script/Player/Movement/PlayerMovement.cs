@@ -124,6 +124,16 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>벽점프 제어 제한과 지상·공중 가속 설정에 따라 수평 속도를 계산한다.</summary>
     private void HandleHorizontalMovement(float timeStep)
     {
+        if (_jumpMotor.TryCalculateWallJumpSpeed(Velocity.x, _input.Move.x,
+            timeStep, out float wallJumpSpeed))
+        {
+            if (Mathf.Abs(_input.Move.x) >= moveStats.MoveThreshold)
+                TurnCheck(_input.Move);
+
+            Velocity.x = wallJumpSpeed;
+            return;
+        }
+
         if (_jumpMotor.IsHorizontalControlLocked)
         {
             return;
