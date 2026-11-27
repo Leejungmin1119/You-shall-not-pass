@@ -54,7 +54,8 @@ public class CapstoneLobbyUI : MonoBehaviour
     private int roomRosterFrame = -1;
     [SerializeField] private Texture2D mainMenuBackground;
     [SerializeField] private Texture2D settingsGearIcon;
-    private readonly GUIContent leaveGameContent = new GUIContent("", "로비로 나가기");
+    [SerializeField] private Texture2D gameMenuBoard;
+    private GameMenuUI gameMenu;
     [SerializeField] private LobbyTheme[] lobbyThemes = System.Array.Empty<LobbyTheme>();
     public string CurrentScreen => manager != null && !manager.IsLobby ? "Game" :
         manager != null && !manager.IsSoloTest && !manager.IsOpeningRelayRoom &&
@@ -149,6 +150,11 @@ public class CapstoneLobbyUI : MonoBehaviour
     private void Awake()
     {
         manager = GetComponent<CapstoneRoomManager>();
+        gameMenu = GetComponent<GameMenuUI>();
+        if (gameMenu == null)
+            gameMenu = gameObject.AddComponent<GameMenuUI>();
+        gameMenu.Initialize(manager, gameMenuBoard, stageFont, settingsGearIcon);
+
         gameTitle = Application.productName;
         string savedTheme = PlayerPrefs.GetString(ThemePreference, "castle");
         selectedTheme = System.Array.Find(lobbyThemes, theme =>
@@ -557,13 +563,14 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (screen == "Game")
         {
             IsEditingText = false;
-            if (settingsGearIcon != null)
+
+            // 메뉴는 별도 Canvas에서 표시한다. 뒤쪽 IMGUI 버튼은 입력을 받지 않는다.
+            if (gameMenu != null && gameMenu.IsOpen)
             {
-                Rect gearRect = new Rect(1196, 16, 64, 64);
-                if (GUI.Button(gearRect, leaveGameContent, GUIStyle.none)) Leave();
-                GUI.DrawTexture(gearRect, settingsGearIcon, ScaleMode.ScaleToFit, true);
+                GUI.matrix = oldMatrix;
+                return;
             }
-            else if (Action(new Rect(1100, 20, 160, 40), "로비로 나가기")) Leave();
+
             DrawNotice();
             GUI.matrix = oldMatrix;
             return;

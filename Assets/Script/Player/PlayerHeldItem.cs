@@ -90,7 +90,7 @@ public sealed class PlayerHeldItem : NetworkBehaviour
             foreach (SpriteRenderer marker in previews) if (marker != null) marker.enabled = false;
             return;
         }
-        if (!state.CanUseTraps)
+        if (GameMenuUI.BlocksGameplayInput || !state.CanUseTraps)
         {
             if (conveyor.HeldIcon != null)
                 conveyor.HeldIcon.enabled = false;

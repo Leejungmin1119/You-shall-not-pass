@@ -244,7 +244,7 @@ public sealed class SoundPlayer : MonoBehaviour
             gain = 1f - Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(near, far, distance));
         }
 
-        return masterVolume * setting.Volume * gain * voice.Gain;
+        return masterVolume * setting.Volume * gain * voice.Gain * GameAudioSettings.EffectsVolume;
     }
 
     /// <summary>씬 전환과 비활성화 시 재생을 끝내고 공용 참조를 정리한다.</summary>

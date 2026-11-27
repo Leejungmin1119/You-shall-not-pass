@@ -101,8 +101,9 @@ public sealed class BgmPlayer : MonoBehaviour
     /// <summary>재생을 끊지 않고 음량만 바꿔 두 음원의 박자를 유지한다.</summary>
     private void ApplyVolume()
     {
-        pianoSource.volume = pianoVolume * pianoLevel;
-        thumpSource.volume = slowThumpVolume * thumpLevel;
+        float volume = GameAudioSettings.MusicVolume;
+        pianoSource.volume = pianoVolume * pianoLevel * volume;
+        thumpSource.volume = slowThumpVolume * thumpLevel * volume;
     }
 
     /// <summary>비활성화와 씬 종료 시 두 음원을 함께 멈춘다. 다시 켜지면 처음부터 박자를 맞춰 시작한다.</summary>

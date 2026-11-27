@@ -111,6 +111,12 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
+        if (GameMenuUI.BlocksGameplayInput)
+        {
+            ClearInputs();
+            return;
+        }
+
         // 2. 실제로 사용자가 커스텀으로 설정한 값에 따라서 각 기능(걷기,달리기,w,a,s,d등 다양한 기능을 쓸 수 있도록 지원)
 
         Movement = moveAction.ReadValue<Vector2>();//w,a,s,d
@@ -152,8 +158,9 @@ public class InputManager : MonoBehaviour
 
     }
 
+    /// <summary>씬 시작과 메뉴 전환 시 남은 조작 입력을 비운다.</summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    static void Initialize() // SceneLoad할때 로드
+    public static void ClearInputs()
     {
         JumpWasPressed = false;
         JumpIsHeld = false;

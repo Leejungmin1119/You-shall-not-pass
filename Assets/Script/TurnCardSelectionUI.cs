@@ -217,7 +217,7 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
     /// <summary>참가자 본인이 아직 확정하지 않았고 서버가 선택을 받는 동안에만 조작한다.</summary>
     private bool CanChoose()
     {
-        return localProfile != null && roles.CardPhase == TurnCardPhase.Choosing &&
+        return !GameMenuUI.BlocksGameplayInput && localProfile != null && roles.CardPhase == TurnCardPhase.Choosing &&
             !requestPending && roles.FindChosenCard(localProfile.netId) < 0;
     }
 

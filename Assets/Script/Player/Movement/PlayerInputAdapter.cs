@@ -11,6 +11,13 @@ public sealed class PlayerInputAdapter
 
     public void Read()
     {
+        if (GameMenuUI.BlocksGameplayInput)
+        {
+            Move = Vector2.zero;
+            Clear();
+            return;
+        }
+
         Move = InputManager.Movement;
         JumpPressed |= InputManager.JumpWasPressed;
         JumpReleased |= InputManager.JumpWasReleased;
