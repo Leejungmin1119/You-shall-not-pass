@@ -53,6 +53,8 @@ public class CapstoneLobbyUI : MonoBehaviour
         (left, right) => left.netId.CompareTo(right.netId);
     private int roomRosterFrame = -1;
     [SerializeField] private Texture2D mainMenuBackground;
+    [SerializeField] private Texture2D settingsGearIcon;
+    private readonly GUIContent leaveGameContent = new GUIContent("", "로비로 나가기");
     [SerializeField] private LobbyTheme[] lobbyThemes = System.Array.Empty<LobbyTheme>();
     public string CurrentScreen => manager != null && !manager.IsLobby ? "Game" :
         manager != null && !manager.IsSoloTest && !manager.IsOpeningRelayRoom &&
@@ -555,7 +557,13 @@ public class CapstoneLobbyUI : MonoBehaviour
         if (screen == "Game")
         {
             IsEditingText = false;
-            if (Action(new Rect(1100, 20, 160, 40), "로비로 나가기")) Leave();
+            if (settingsGearIcon != null)
+            {
+                Rect gearRect = new Rect(1196, 16, 64, 64);
+                if (GUI.Button(gearRect, leaveGameContent, GUIStyle.none)) Leave();
+                GUI.DrawTexture(gearRect, settingsGearIcon, ScaleMode.ScaleToFit, true);
+            }
+            else if (Action(new Rect(1100, 20, 160, 40), "로비로 나가기")) Leave();
             DrawNotice();
             GUI.matrix = oldMatrix;
             return;

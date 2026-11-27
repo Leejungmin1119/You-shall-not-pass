@@ -21,6 +21,11 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
     private readonly TurnCardView[] cards = new TurnCardView[rolechangeManager.CardCount];
     private readonly Vector2[] positions = new Vector2[rolechangeManager.CardCount];
     private readonly Vector2[] positionVelocities = new Vector2[rolechangeManager.CardCount];
+    private readonly Vector2[] poseTargets = new Vector2[rolechangeManager.CardCount];
+    private readonly Quaternion[] rotationTargets = new Quaternion[rolechangeManager.CardCount];
+    private readonly bool[] moving = new bool[rolechangeManager.CardCount];
+    private readonly Vector2[] fanPositions = new Vector2[rolechangeManager.CardCount];
+    private readonly float[] fanAngles = new float[rolechangeManager.CardCount];
     private readonly Dictionary<uint, NetworkPlayerProfile> profiles = new Dictionary<uint, NetworkPlayerProfile>(4);
     private NetworkPlayerProfile localProfile;
     private int cursor = 4;
@@ -31,6 +36,10 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
     private int pendingCard = -1;
     private double rejectionUntil;
     private int lastCountdownSeconds = int.MinValue;
+    private int preparedMaterials;
+    private uint cachedWinnerId;
+    private string cachedWinnerName;
+    private string cachedWinnerInstruction;
 
     public rolechangeManager Roles => roles;
     public string LocalPlayerName => localProfile != null ? localProfile.PlayerName : string.Empty;
@@ -77,12 +86,17 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
         timer = MakeText("Timer", root, new Vector2(0, 235), new Vector2(300, 60), 46, Color.white);
 
         RectTransform fan = MakeRect("Cards", root, Vector2.zero, Vector2.zero);
+        // 움직이는 카드의 배칭을 제목·설명·배경과 분리한다. 카드 클릭도 이 Canvas에서 받는다.
+        fan.gameObject.AddComponent<Canvas>();
+        fan.gameObject.AddComponent<UnityEngine.UI.GraphicRaycaster>();
 
         for (int index = 0; index < cards.Length; index++)
         {
             RectTransform card = MakeRect($"Card{index + 1:00}", fan, Vector2.zero, new Vector2(190, 285));
             cards[index] = card.gameObject.AddComponent<TurnCardView>();
             cards[index].Initialize(this, index, cardBack, burnMaterial);
+            fanAngles[index] = Mathf.Lerp(-46f, 46f, index / (float)(cards.Length - 1));
+            fanPositions[index] = FanPosition(fanAngles[index]);
             positions[index] = new Vector2(0f, -200f);
             card.anchoredPosition = positions[index];
         }
@@ -135,6 +149,11 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
             return;
 
         BindLocalProfile();
+
+        // 재질을 한꺼번에 생성해 시작 프레임에 비용이 몰리지 않도록 분산한다.
+        if (preparedMaterials < cards.Length)
+            cards[preparedMaterials++].PrepareBurnMaterial();
+
         CountCards();
 
         if (CanChoose() && cursor < roles.Cards.Count && roles.Cards[cursor].OwnerId != 0)
@@ -268,9 +287,35 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
         return null;
     }
 
-    /// <summary>처음에는 부채꼴로 펼치고 소각 이후 선택된 카드만 중앙에 모아 차례로 뒤집는다.</summary>
+    /// <summary>부채꼴의 각도에 해당하는 카드 중심 위치를 구한다.</summary>
+    private static Vector2 FanPosition(float angle)
+    {
+        float radians = angle * Mathf.Deg2Rad;
+        return new Vector2(Mathf.Sin(radians) * 790f, Mathf.Cos(radians) * 420f - 430f);
+    }
+
+    /// <summary>시작하자마자 왼쪽의 패를 오른쪽으로 연속해서 펼친다.</summary>
+    private void IntroPose(int index, Vector2 fan, float angle, out Vector2 position, out float rotation)
+    {
+        float elapsed = PhaseElapsed;
+        float layer = index - (cards.Length - 1) * 0.5f;
+        Vector2 deckOffset = new Vector2(layer * 1.2f, layer * 0.9f);
+        Vector2 left = fanPositions[0];
+
+        // 카드마다 시작을 조금씩 늦추되 마지막 카드도 선택 시작 전에 펼쳐지게 한다.
+        float duration = Mathf.Max(0.01f,
+            rolechangeManager.SpreadDuration - (cards.Length - 1) * rolechangeManager.SpreadStagger);
+        float spread = Mathf.SmoothStep(0f, 1f,
+            (elapsed - index * rolechangeManager.SpreadStagger) / duration);
+
+        position = Vector2.Lerp(left + deckOffset, fan, spread);
+        rotation = Mathf.Lerp(46f, -angle, spread);
+    }
+
+    /// <summary>왼쪽에서 펼치는 연출 후 선택을 표시하고, 소각 이후 선택된 카드만 모아 뒤집는다.</summary>
     private void UpdateCards()
     {
+        bool introducing = roles.CardPhase == TurnCardPhase.Dealing;
         bool choosing = roles.CardPhase == TurnCardPhase.Choosing || roles.CardPhase == TurnCardPhase.Dealing;
         bool showingResults = roles.CardPhase == TurnCardPhase.ResultHold || roles.CardPhase == TurnCardPhase.Dismissing;
         float arrange = choosing ? 0f : Mathf.SmoothStep(0f, 1f, PhaseElapsed / rolechangeManager.BurnDuration);
@@ -288,14 +333,14 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
             TurnCardState card = roles.Cards[index];
             bool selected = card.OwnerId != 0;
             bool burnt = !selected && (roles.CardPhase == TurnCardPhase.Revealing || showingResults);
-            cards[index].gameObject.SetActive(!burnt);
+            if (cards[index].gameObject.activeSelf == burnt)
+                cards[index].gameObject.SetActive(!burnt);
 
             if (burnt)
                 continue;
 
-            float angle = Mathf.Lerp(-46f, 46f, index / 9f);
-            float radians = angle * Mathf.Deg2Rad;
-            Vector2 fan = new Vector2(Mathf.Sin(radians) * 790f, Mathf.Cos(radians) * 420f - 430f);
+            float angle = fanAngles[index];
+            Vector2 fan = fanPositions[index];
             // 서버 승인 대기 중에도 커서 표시를 유지해 강조가 잠깐 사라지는 현상을 막는다.
             bool awaitingConfirmation = requestPending && pendingCard == index && localProfile != null &&
                 roles.FindChosenCard(localProfile.netId) < 0;
@@ -305,20 +350,17 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
                 fan.y += 42f;
 
             Vector2 destination = selected ? new Vector2((selectedIndex++ - (selectedCount - 1) * 0.5f) * 300f, -65f) : fan;
-            float deal = roles.CardPhase == TurnCardPhase.Dealing ? Mathf.SmoothStep(0f, 1f, PhaseElapsed / rolechangeManager.DealDuration) : 1f;
-            Vector2 targetPosition = Vector2.Lerp(new Vector2(0f, -200f), Vector2.Lerp(fan, destination, selected ? arrange : 0f), deal);
+            Vector2 targetPosition = Vector2.Lerp(fan, destination, selected ? arrange : 0f);
+            float rotation = Mathf.Lerp(-angle, 0, selected ? arrange : 0);
+
+            if (introducing)
+                IntroPose(index, fan, angle, out targetPosition, out rotation);
 
             // 결과를 충분히 보여준 뒤 카드와 이름표를 함께 화면 아래로 보낸다.
             if (roles.CardPhase == TurnCardPhase.Dismissing)
                 targetPosition += Vector2.down * (900f * Mathf.SmoothStep(0f, 1f, PhaseElapsed / rolechangeManager.DismissDuration));
 
-            // 단계 변경이나 서버 상태 수신으로 목표가 바뀌어도 현재 보이는 위치에서 이어서 움직인다.
-            positions[index] = Vector2.SmoothDamp(positions[index], targetPosition,
-                ref positionVelocities[index], 0.09f, Mathf.Infinity, Time.unscaledDeltaTime);
-            cards[index].Rect.anchoredPosition = positions[index];
-            Quaternion targetRotation = Quaternion.Euler(0, 0, Mathf.Lerp(-angle, 0, selected ? arrange : 0));
-            cards[index].Rect.localRotation = Quaternion.Slerp(cards[index].Rect.localRotation,
-                targetRotation, 1f - Mathf.Exp(-24f * Time.unscaledDeltaTime));
+            ApplyCardPose(index, targetPosition, rotation, introducing);
 
             int rank = selectedCount;
 
@@ -336,7 +378,10 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
             float emphasis = index == highestCard && roles.CardPhase == TurnCardPhase.Revealing
                 ? Mathf.Sin(Mathf.Clamp01(HighestElapsed / 0.45f) * Mathf.PI) * 0.12f : 0f;
             float size = Mathf.Lerp(1f, 1.15f, selected ? arrange : 0f) + emphasis;
-            cards[index].Rect.localScale = new Vector3(width * size, size, 1f);
+            Vector3 scale = new Vector3(width * size, size, 1f);
+
+            if (cards[index].Rect.localScale != scale)
+                cards[index].Rect.localScale = scale;
 
             NetworkPlayerProfile profile = Profile(card.OwnerId);
             float burn = !selected && roles.CardPhase == TurnCardPhase.Burning ? Mathf.Clamp01(PhaseElapsed / rolechangeManager.BurnDuration) : 0f;
@@ -346,6 +391,52 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
                 localProfile != null && card.OwnerId == localProfile.netId, rank, burn, flip,
                 index == highestCard ? 0.5f + 0.5f * Mathf.Sin(HighestElapsed * 15f) : 0f);
         }
+    }
+
+    /// <summary>목표가 바뀐 카드만 이동시키고, 도착하면 보간과 Transform 갱신을 멈춘다.</summary>
+    private void ApplyCardPose(int index, Vector2 targetPosition, float angle, bool introducing)
+    {
+        RectTransform rect = cards[index].Rect;
+        Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle);
+
+        if (introducing)
+        {
+            positions[index] = targetPosition;
+            positionVelocities[index] = Vector2.zero;
+            moving[index] = false;
+        }
+        else
+        {
+            if (poseTargets[index] != targetPosition || !rotationTargets[index].Equals(targetRotation))
+                moving[index] = true;
+
+            if (!moving[index])
+                return;
+
+            positions[index] = Vector2.SmoothDamp(positions[index], targetPosition,
+                ref positionVelocities[index], 0.09f, Mathf.Infinity, Time.unscaledDeltaTime);
+            targetRotation = Quaternion.Slerp(rect.localRotation, targetRotation,
+                1f - Mathf.Exp(-24f * Time.unscaledDeltaTime));
+
+            if ((positions[index] - targetPosition).sqrMagnitude < 0.0001f &&
+                positionVelocities[index].sqrMagnitude < 0.0001f &&
+                Quaternion.Angle(targetRotation, Quaternion.Euler(0f, 0f, angle)) < 0.02f)
+            {
+                positions[index] = targetPosition;
+                positionVelocities[index] = Vector2.zero;
+                targetRotation = Quaternion.Euler(0f, 0f, angle);
+                moving[index] = false;
+            }
+        }
+
+        poseTargets[index] = targetPosition;
+        rotationTargets[index] = Quaternion.Euler(0f, 0f, angle);
+
+        if (rect.anchoredPosition != positions[index])
+            rect.anchoredPosition = positions[index];
+
+        if (!rect.localRotation.Equals(targetRotation))
+            rect.localRotation = targetRotation;
     }
 
     /// <summary>선택 대기, 확정, 순차 공개 상태에 맞는 안내와 남은 시간을 표시한다.</summary>
@@ -365,7 +456,7 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
         }
 
         if (roles.CardPhase == TurnCardPhase.Dealing)
-            nextInstruction = "카드를 펼치는 중";
+            nextInstruction = "카드를 왼쪽부터 펼치는 중";
         else if (roles.CardPhase == TurnCardPhase.Burning)
             nextInstruction = "선택되지 않은 카드는 재가 됩니다";
         else if (roles.CardPhase == TurnCardPhase.Revealing || roles.CardPhase == TurnCardPhase.ResultHold ||
@@ -374,7 +465,21 @@ public sealed class TurnCardSelectionUI : MonoBehaviour
             nextTitle = highestCard >= 0 ? "공격 순서가 정해졌습니다" : "카드를 공개합니다";
             nextSubtitle = "높은 숫자부터 차례대로 공격합니다";
             NetworkPlayerProfile highest = highestCard >= 0 ? Profile(roles.Cards[highestCard].OwnerId) : null;
-            nextInstruction = highest != null ? $"첫 번째 공격자 · {highest.PlayerName}" : "낮은 숫자부터 공개합니다";
+            if (highest != null)
+            {
+                if (cachedWinnerId != highest.netId || cachedWinnerName != highest.PlayerName)
+                {
+                    cachedWinnerId = highest.netId;
+                    cachedWinnerName = highest.PlayerName;
+                    cachedWinnerInstruction = $"첫 번째 공격자 · {cachedWinnerName}";
+                }
+
+                nextInstruction = cachedWinnerInstruction;
+            }
+            else
+            {
+                nextInstruction = "낮은 숫자부터 공개합니다";
+            }
         }
         else if (NetworkTime.time < rejectionUntil)
             nextInstruction = "다른 플레이어가 먼저 선택했습니다 · 다른 카드를 골라주세요";

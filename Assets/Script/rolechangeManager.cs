@@ -15,7 +15,9 @@ public struct TurnCardState
 public sealed class rolechangeManager : NetworkBehaviour
 {
     public const int CardCount = 10;
-    public const float DealDuration = 0.6f;
+    public const float SpreadDuration = 0.85f;
+    public const float SpreadStagger = 0.035f;
+    public const float DealDuration = SpreadDuration;
     public const float SelectionDuration = 10f;
     public const float BurnDuration = 0.7f;
     public const float RevealInterval = 0.7f;
