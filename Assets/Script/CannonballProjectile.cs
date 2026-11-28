@@ -109,6 +109,23 @@ public sealed class CannonballProjectile : NetworkBehaviour
         Vector3 scale = capsule.transform.lossyScale;
         float playerRadius = Mathf.Abs(capsule.size.x * scale.x) * 0.5f;
         float halfLine = Mathf.Max(0f, Mathf.Abs(capsule.size.y * scale.y) * 0.5f - playerRadius);
+        if (Mathf.Abs(direction.y) > 0.5f)
+        {
+            // 위·아래로 나는 탄환: 가로 거리가 닿는 폭 안이면, 세로 구간이 캡슐(양끝 둥근 부분 포함)과 겹치는 지점을 구한다.
+            float lateral = Mathf.Abs(from.x - center.x);
+            float reachRadius = radius + playerRadius;
+            if (lateral > reachRadius) return false;
+            float endReach = Mathf.Sqrt(reachRadius * reachRadius - lateral * lateral);
+            float lowY = center.y - halfLine - endReach;
+            float highY = center.y + halfLine + endReach;
+            float a = (lowY - from.y) * direction.y;
+            float b = (highY - from.y) * direction.y;
+            float verticalEntry = Mathf.Min(a, b);
+            float verticalExit = Mathf.Max(a, b);
+            if (verticalExit < 0f || verticalEntry > distance) return false;
+            travel = Mathf.Max(0f, verticalEntry);
+            return true;
+        }
         float verticalGap = Mathf.Max(0f, Mathf.Abs(from.y - center.y) - halfLine);
         float combinedRadius = radius + playerRadius;
         if (verticalGap > combinedRadius) return false;
